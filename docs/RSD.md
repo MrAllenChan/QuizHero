@@ -11,7 +11,7 @@ The group of instructors need an application that allows students to sign up and
 
 ## Proposed Solution
 
-Develop a quiz website that enables instructors to create quizzes and allows students to finish the quizzes online.
+Develop a website that enables instructors to create quizzes and slides from markdown and allows students to finish the quizzes online.
 
 
 ## Functional Requirements
