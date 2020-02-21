@@ -21,13 +21,13 @@ Develop a website that enables instructors to create slides and quizzes from mar
 ### Must have
 
 * As an instructor, I want to upload a markdown file containing the quiz questions and lecture slides, so that I can start a quiz during the class.
-* As a student, I want to answer the quiz so that I can interact with the instructor in class.
-* As an instructor, I also want to have a presenter mode to see all the contents, my notes and quiz statistics, so that I can learn my students’ performance.
-
+* As a student, I want to answer the quiz so that I can interact with the instructor during class.
+* As an instructor, I want all the answers from students automatically collected and sent to my computer, so that I can know how students perform.
+* As an instructor, I also want to have a presenter mode to see all the contents, my notes and quiz statistics, so that I can have a better overview of my teaching content and my students’ performance.
+* As an instructor, I want to log in to the website, so that I can review my presentation history.
 
 ### Nice to have
 
-* As an instructor, I want to log in to the website, so that I can review my presentation history.
 * As a student, I want to download the presentation in PDF format so that I can review it after class.
 * As an instructor, I want to set a timer module, so students need to complete the quiz or discussion within the time limit.  
 * As an instructor, I want to set a limitation of the slides, so that students cannot view the slides I haven’t presented.
