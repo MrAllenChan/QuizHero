@@ -16,15 +16,14 @@ You can draw it with hand and insert it here as an image.
 # Iteration Backlog
 List the User Stories that you will implement in this iteration.
 
-* As an instructor, I want to upload a Markdown file so that it can be converted to a html containing my slides.
-
-* As an instructor, I want to click and view the returned urls so that I can view my slides on the web browser.
+- As an instructor, I want to upload a Markdown file so that it can be converted to a html containing my slides.
+- As an instructor, I want to click and view the returned urls so that I can view my slides on the web browser.
 
 # Tasks
 A tentative list of the "to do" in order to sucessfully complete this iteration. 
 This list will change and it is good to keep it updated. 
 It does not need to be exhustive.
 
-* Implement classes described in the UML diagram
-
-* Incorporate Marpit modules
+- Implement a simple front-end interface that can interact with the instructor and communicate with the back-end.
+- Implement classes described in the UML diagram.
+- Explore the possibility of making use of the Marpit modules to convert the markdown file.
