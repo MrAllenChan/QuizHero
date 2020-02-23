@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Objects;
 
 public class FileHelper {
@@ -5,8 +7,7 @@ public class FileHelper {
     private String path;
     private String url;
 
-    public FileHelper(int fileId, String path, String url) {
-        this.fileId = fileId;
+    public FileHelper(String path, String url) {
         this.path = path;
         this.url = url;
     }
@@ -67,7 +68,7 @@ public class FileHelper {
 
     @Override
     public String toString() {
-        return "FileHelper{" +
+        return "model.FileHelper{" +
                 "fileId=" + fileId +
                 ", path='" + path + '\'' +
                 ", url='" + url + '\'' +

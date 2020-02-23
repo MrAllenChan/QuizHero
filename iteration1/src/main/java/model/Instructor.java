@@ -1,12 +1,13 @@
+package model;
+
 import java.util.Objects;
 
 public class Instructor {
     private int id;
     private int fileId;
 
-    public Instructor(int id, int fileId) {
-        this.id = id;
-        this.fileId = fileId;
+    //TODO:
+    public Instructor() {
     }
 
     //TODO:
@@ -51,7 +52,7 @@ public class Instructor {
 
     @Override
     public String toString() {
-        return "Instructor{" +
+        return "model.Instructor{" +
                 "id=" + id +
                 ", fileId=" + fileId +
                 '}';

@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Objects;
 
 public class Presenter {
@@ -5,8 +7,7 @@ public class Presenter {
     private int instructorId;
     private String path;
 
-    public Presenter(int id, int instructorId, String path) {
-        this.id = id;
+    public Presenter(int instructorId, String path) {
         this.instructorId = instructorId;
         this.path = path;
     }
@@ -52,7 +53,7 @@ public class Presenter {
 
     @Override
     public String toString() {
-        return "Presenter{" +
+        return "model.Presenter{" +
                 "id=" + id +
                 ", instructorId=" + instructorId +
                 ", path='" + path + '\'' +
