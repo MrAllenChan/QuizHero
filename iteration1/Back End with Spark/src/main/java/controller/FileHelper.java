@@ -1,3 +1,5 @@
+package controller;
+
 import java.util.Objects;
 
 public class FileHelper {
@@ -5,25 +7,12 @@ public class FileHelper {
     private String path;
     private String url;
 
+    public FileHelper() {}
+
     public FileHelper(int fileId, String path, String url) {
         this.fileId = fileId;
         this.path = path;
         this.url = url;
-    }
-
-    //TODO:
-    public void receiveFile() {
-
-    }
-
-    //TODO:
-    public void fileConverter() {
-
-    }
-
-    //TODO:
-    public void publishURL() {
-
     }
 
     public int getFileId() {
@@ -67,7 +56,7 @@ public class FileHelper {
 
     @Override
     public String toString() {
-        return "FileHelper{" +
+        return "controller.FileHelper{" +
                 "fileId=" + fileId +
                 ", path='" + path + '\'' +
                 ", url='" + url + '\'' +

@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Objects;
 
 public class Instructor {
@@ -9,12 +11,12 @@ public class Instructor {
         this.fileId = fileId;
     }
 
-    //TODO:
+    // TODO:
     public void createSlides() {
 
     }
 
-    //TODO:
+    // TODO:
     public void presenterMode() {
 
     }
@@ -51,7 +53,7 @@ public class Instructor {
 
     @Override
     public String toString() {
-        return "Instructor{" +
+        return "model.Instructor{" +
                 "id=" + id +
                 ", fileId=" + fileId +
                 '}';

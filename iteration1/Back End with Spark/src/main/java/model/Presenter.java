@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Objects;
 
 public class Presenter {
@@ -52,7 +54,7 @@ public class Presenter {
 
     @Override
     public String toString() {
-        return "Presenter{" +
+        return "model.Presenter{" +
                 "id=" + id +
                 ", instructorId=" + instructorId +
                 ", path='" + path + '\'' +
