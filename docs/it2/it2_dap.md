@@ -9,6 +9,7 @@ Upload the image and link it in here using this syntax.
 One (or a few) simple sketch of how the user interacts with the application. 
 This could be a sketch of your user interface. 
 You can draw it with hand and insert it here as an image.
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it2/it2%20Wireframe.jpg)
 
 
 
