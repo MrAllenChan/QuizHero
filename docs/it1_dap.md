@@ -31,3 +31,11 @@ It does not need to be exhustive.
 # Retrospective
 The retrospective is an opportunity for your team to inspect itself and create a plan for improvements to be enacted during the next iteration. Review what you had done in iteration 1; note things that you have and have not delivered, note the challenges you had, and reflect on how you shall proceed in the next iteration to do a better job.
 
+What went well?
+- Sucessfully delivered the feature of uploading a Markdown file and converting it to a html in presentation format.
+- Sucessfully delivered the feature of returning the url that redirects to the presentation.
+- Made the decision of using React and Node.js to implement frontend and web server.
+
+What to improve?
+- As iteration 1 went on, we found it hard to implement the tasks using the UML and framworkds we originally assumed; in future iterations we can leave some space in initial design and keep finalizing it as we push forward. 
+
