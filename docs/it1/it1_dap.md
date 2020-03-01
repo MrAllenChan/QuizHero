@@ -35,7 +35,7 @@ The retrospective is an opportunity for your team to inspect itself and create a
 - Successfully delivered the feature of uploading a Markdown file and converting it to a html in presentation format.
 - Successfully delivered the feature of returning the url that redirects to the presentation.
 - Made the decision of using React and Node.js to implement frontend and web server.
-- Nex
+- Next we will use Javalin or SpringBoot to develop our application server and connect it with the front-end.
 
 ### Challenges we met & Our solutions.
 - We found it hard to combine our web server developed using Spark and our front-end developed using React. After consulting the Professor, we decided to use React + Node.js and abandon SparkJava.
