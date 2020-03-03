@@ -2,14 +2,14 @@
 A UML class diagram reflecting the "model" for that iteration only.
 Use a software to draw this (e.g. draw.io) and save the diagram as an image. 
 Upload the image and link it in here using this syntax.
-
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it2/it2_UML.jpg)
 
 
 # Wireframe
 One (or a few) simple sketch of how the user interacts with the application. 
 This could be a sketch of your user interface. 
 You can draw it with hand and insert it here as an image.
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it2/it2%20Wireframe.jpg)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it2/it2_Wireframe.jpg)
 
 
 
@@ -19,11 +19,12 @@ List the User Stories that you will implement in this iteration.
 - As a student, I want to answer the quiz so that I can interact with the instructor during class.
 
 # Tasks
-A tentative list of the "to do" in order to sucessfully complete this iteration. 
+A tentative list of the "to do" in order to successfully complete this iteration. 
 This list will change and it is good to keep it updated. 
 It does not need to be exhustive.
-- Create quizzes using React
-- Build a database on backend to store quiz-related data
+- Create quizzes using markdown with pre-defined format.
+- Parse and extract quizzes content from markdown file and convert them into html using React.
+- Build backend **model** including application server to process quiz-related data sent from front-end.
 
 
 # Retrospective
