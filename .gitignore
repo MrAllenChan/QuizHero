@@ -1,0 +1,6 @@
+### macOS template
+# General
+# Ignore .DS_Store
+.DS_Store
+.AppleDouble
+.LSOverride
