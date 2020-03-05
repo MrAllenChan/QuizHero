@@ -22,9 +22,12 @@ List the User Stories that you will implement in this iteration.
 A tentative list of the "to do" in order to successfully complete this iteration. 
 This list will change and it is good to keep it updated. 
 It does not need to be exhustive.
-- Create quizzes using markdown with pre-defined format.
-- Parse and extract quizzes content from markdown file and convert them into html using React.
-- Build backend **model** including application server to process quiz-related data sent from front-end.
+- Define a <quiz> tag as a format in the markdown file for instructor to create the quiz.
+- Parse and extract quizzes content from markdown file.
+- Convert the parsed quiz text into html using React.
+- Enable communication between frontend and backend so that quiz information can be sent from front-end to back-end.
+- Build backend **model** including application server to process quiz-related data.
+- Create a database to store and modify the quiz-related data.
 
 
 # Retrospective
