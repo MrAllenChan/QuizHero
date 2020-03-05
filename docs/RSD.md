@@ -12,7 +12,7 @@ Instructors want to create slides including quizzes to share with students durin
 
 ## Proposed Solution
 
-Develop a website that enables instructors to create slides and quizzes from markdown file and allows students to view the slides and finish the quizzes online.
+Develop a web application, on which instructors can upload markdown files and get the converted pages, including slides and quizzes. After uploading the markdown file, the generated URL will allow students to view the slides and answer the quizzes online. The application is able to collect students' answers of quizzes, store the answers, and display the statistic results to instructors to show students' performance.
 
 
 ## Functional Requirements
