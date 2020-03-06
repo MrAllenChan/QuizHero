@@ -21,7 +21,7 @@ I'm sure you will have a start index page shown in your browser with our logo "Q
 
 We haven't finalized our markdown syntax yet, so a random markdown may not give you an ideal converted html slides. We would introduce our syntax in detail after we finalize it. Therefore, we recommend you to use the `example.md` to test the current function, you can find it in the project directory.
 
-# Some notes
+## Some notes
 
 This is the implementation of the back-end part of this project in iteration 1. We used SparkJava to develop the web server, and also implemented some simple front-end interfaces using html and hbs. Note that after the lastest discussion, we have decide to move onto Node.js to develop our web server and Javalin to develop our application server. Therefore, this implementation for back-end will be replaced in the future.
 
