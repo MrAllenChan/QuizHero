@@ -1,6 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Front-end: Some notes
 
-## How to run front end
+This is the implementation of the front-end part of this project in iteration 1. The front-end was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). We use an industrial React UI library `antd`, which contains a set of high quality components to develop our front-end. Marpit is credited for helping us creating slide deck from Markdown. 
+
+## How to run our front end
 
 In the project directory, you can run:
 
@@ -17,9 +19,9 @@ And again run:
 
 ### `npm start`
 
-I'm sure you will have a start index page shown in your browser with our logo "Quiz Hero" and a upload button, you can upload any markdown file and it will be convert to a slide format html. Currently, we are still on our way of development, the converted html can only be seen if you click the download button and open the downloaded html file.
+I'm sure you will have a start index page shown in your browser with our logo "Quiz Hero" and a upload button, you can upload any Markdown file and it will be convert to a slide format html. Currently, we are still on our way of development, the converted html can only be seen if you click the download button and open the downloaded html file.
 
-We haven't finalized our markdown syntax yet, so a random markdown may not give you an ideal converted html slides. We would introduce our syntax in detail after we finalize it. Therefore, we recommend you to use the `example.md` to test the current function, you can find it in the project directory.
+We haven't finalized our Markdown syntax yet, so a random Markdown may not give you an ideal converted html slides. We would introduce our syntax in detail after we finalize it. Therefore, we recommend you to use the `example.md` to test the current function. You can find it in the project directory.
 
 ---
 
@@ -27,7 +29,7 @@ We haven't finalized our markdown syntax yet, so a random markdown may not give 
 
 This is the implementation of the back-end part of this project in iteration 1. We used SparkJava to develop the web server, and also implemented some simple front-end interfaces using html and hbs. Note that after the lastest discussion, we have decide to move onto Node.js to develop our web server and Javalin to develop our application server. Therefore, this implementation for back-end will be replaced in the future.
 
-## How to run back end
+## How to run our back end
 
 1. In src/main/api, you will find the class RunServer. Run "RunServer.main" and go to http://localhost:4567/ in your browser. It directs you to a web page with a function of uploading local file.
 2. Click on "choose file" and select a local markdown file. Click "upload". Now you would notice a url is created.
