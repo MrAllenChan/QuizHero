@@ -4,7 +4,7 @@ This is the implementation of the front-end part of this project in iteration 1.
 
 ## How to run our front end
 
-In the project directory, you can run:
+In the project directory: [2020-spring-group-QuizHero](https://github.com/jhu-oose/2020-spring-group-QuizHero)/[code](https://github.com/jhu-oose/2020-spring-group-QuizHero/tree/master/code)/[Front End with React](https://github.com/jhu-oose/2020-spring-group-QuizHero/tree/master/code/Front End with React)/, you can run:
 
 ### `npm start`
 
