@@ -1,22 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the implementation of backend section of this project using spark. Note that after discussion, we decide to use Node.js to develop our web server and Javalin (or springboot) to develop our application server. Therefore this implementation will be replaced in future.
 
 ## How to run our project
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-If you encountered error loading the page, please run the following command to ensure that you have included the necessary external library: 
-
-### ` npm install @marp-team/marpit --save`
-
-And again run:
-
-### `npm start`
-
-I'm sure you will have a start index page shown in your browser with our logo "Quiz Hero" and a upload button, you can upload any markdown file and it will be convert to a slide format html. Currently, we are still on our way of development, the converted html can only be seen if you click the download button and open the downloaded html file.
-
-We haven't finalized our markdown syntax yet, so a random markdown may not give you an ideal converted html slides. We would introduce our syntax in detail after we finalize it. Therefore, we recommend you to use the `example.md` to test the current function, you can find it in the project directory.
+In src/main/api, you will find the class RunServer. Run "Runserber.main" and go to http://localhost:4567/ in your browser. It directs you to a web page with a function of uploading local file. Click on "choose file" and select a local markdown file. Click "upload". Now you would notice a url is created. Switch back to IntelliJ, you can see the file you chose has been uploaded and saved under src/main/resources/. This indicates a successful connetion between the client and web server.
+Idealy the created url should direct you to the html page that converts the markdown file you selected to a presentation-style html file. Since we decided to incorporate the upload function and markdown convertion function in frontend using react, this function is achieved following the steps in fronend.
