@@ -82,7 +82,7 @@ public final class ApiServer {
 
   private static void getCourses(CourseDao courseDao) {
     // handle HTTP Get request to retrieve all courses
-    app.get("/courses", ctx -> {
+    app.get("/ppppppp", ctx -> {
       List<Course> courses = courseDao.findAll();
       ctx.json(courses);
       ctx.status(200); // everything ok!
