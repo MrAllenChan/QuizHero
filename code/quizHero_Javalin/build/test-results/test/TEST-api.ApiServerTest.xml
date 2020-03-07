@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="api.ApiServerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-02-23T20:58:10" hostname="chenghaos-mbp.win.ad.jhu.edu" time="0.406">
+  <properties/>
+  <testcase name="postReviewMisMatchIDReturns400" classname="api.ApiServerTest" time="0.406"/>
+  <system-out><![CDATA[CCx
+]]></system-out>
+  <system-err><![CDATA[[Test worker] INFO io.javalin.Javalin - 
+           __                      __ _
+          / /____ _ _   __ ____ _ / /(_)____
+     __  / // __ `/| | / // __ `// // // __ \
+    / /_/ // /_/ / | |/ // /_/ // // // / / /
+    \____/ \__,_/  |___/ \__,_//_//_//_/ /_/
+
+        https://javalin.io/documentation
+
+[Test worker] INFO org.eclipse.jetty.util.log - Logging initialized @971ms to org.eclipse.jetty.util.log.Slf4jLog
+[Test worker] INFO io.javalin.Javalin - Starting Javalin ...
+[Test worker] INFO io.javalin.Javalin - Listening on http://localhost:7000/
+[Test worker] INFO io.javalin.Javalin - Javalin started in 193ms \o/
+[Test worker] INFO io.javalin.Javalin - Stopping Javalin ...
+[Test worker] INFO io.javalin.Javalin - Javalin has stopped
+]]></system-err>
+</testsuite>
