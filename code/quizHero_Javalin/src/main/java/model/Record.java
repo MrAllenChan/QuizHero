@@ -4,14 +4,23 @@ import java.util.Objects;
 
 public class Record {
 
+    private int id;
     private int fileId;
     private int questionId;
     private char choice;
 
-    public Record(int fileId, int questionId, char choice) {
+    public Record(int fileId, int questionId, char choice){
         this.fileId = fileId;
         this.questionId = questionId;
         this.choice = choice;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getFileId() {
