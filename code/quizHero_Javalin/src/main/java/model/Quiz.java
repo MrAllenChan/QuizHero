@@ -1,6 +1,9 @@
 package model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Quiz {
@@ -8,13 +11,12 @@ public class Quiz {
     private int id;
     private int fileId;
     private int questionId;
-    private HashMap count;
+    private HashMap<Character,Integer> count;
 
     public Quiz(int id, int fileId, int questionId) {
         this.id = id;
         this.fileId = fileId;
         this.questionId = questionId;
-        this.count = new HashMap();
     }
 
     public int getId() {
@@ -41,13 +43,39 @@ public class Quiz {
         this.questionId = questionId;
     }
 
-    public HashMap getCount() {
+    public HashMap<Character,Integer> getCount() {
         return count;
     }
 
-    public void setCount(HashMap count) {
-        this.count = count;
+
+    public HashMap<Character,String> getStatistic(@NotNull HashMap<Character,Integer> count){
+        int total=0;
+        HashMap<Character,String> result = new HashMap<>();
+
+        //get total students who answered
+        for (Map.Entry mapElement : count.entrySet()) {
+            total += (int)mapElement.getValue();
+        }
+
+        if(total==0) return result;
+
+        for (Map.Entry mapElement : count.entrySet()) {
+            char key = (char)mapElement.getKey();
+            int value = (int)mapElement.getValue();
+
+            String showResult = "";
+
+            showResult = String.valueOf(Math.round(value/total));
+            showResult += "%";
+
+            result.put(key,showResult);
+        }
+
+            return result;
     }
+
+
+
 
     @Override
     public boolean equals(Object o) {
