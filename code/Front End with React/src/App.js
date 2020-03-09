@@ -1,7 +1,7 @@
 import React from 'react';
-import logo from './logo.png';
+import logo from './fig/logo.png';
 import './App.css';
-import MyUpload from '../src/upload'
+import MyUpload from './components/Upload'
 import QuizPage from "./components/QuizPage";
 // import Convert from '../src/marp'
 // import InputFileReader from '../src/marked'
