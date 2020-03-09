@@ -3,7 +3,6 @@ package dao;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
-
 public class DaoFactory {
     public static boolean DROP_TABLES_IF_EXIST = false;
     public static String PATH_TO_DATABASE_FILE = "./Store.db";
@@ -18,7 +17,9 @@ public class DaoFactory {
             final String URI = "jdbc:sqlite:" + PATH_TO_DATABASE_FILE;
             final String USERNAME = "";
             final String PASSWORD = "";
+            System.out.println("here");
             sql2o = new Sql2o(URI, USERNAME, PASSWORD);
+            System.out.println("database instantiated successfully.");
         }
     }
 
@@ -45,14 +46,16 @@ public class DaoFactory {
         }
     }
 
-    public static RecordDao getRecordDao() {
+    public static QuizDao getQuizDao() {
         instantiateSql2o();
         createQuizTable(sql2o);
-        return new Sql2oRecordDao(sql2o);
+        return new Sql2oQuizDao(sql2o);
     }
 
-
-
-
+//    public static RecordDao getRecordDao() {
+//        instantiateSql2o();
+//        createQuizTable(sql2o);
+//        return new Sql2oRecordDao(sql2o);
+//    }
 
 }

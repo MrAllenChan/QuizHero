@@ -11,12 +11,46 @@ public class Quiz {
     private int id;
     private int fileId;
     private int questionId;
+    private int A;
+    private int B;
+    private int C;
+    private int D;
     private HashMap<Character,Integer> count;
 
-    public Quiz(int id, int fileId, int questionId) {
-        this.id = id;
+    public Quiz(int fileId, int questionId) {
         this.fileId = fileId;
         this.questionId = questionId;
+    }
+
+    public Quiz(int fileId, int questionId, int a, int b, int c, int d) {
+        this.fileId = fileId;
+        this.questionId = questionId;
+        A = a;
+        B = b;
+        C = c;
+        D = d;
+    }
+
+    public Quiz(int fileId, int questionId, HashMap<Character, Integer> count) {
+        this.fileId = fileId;
+        this.questionId = questionId;
+        this.count = count;
+    }
+
+    public int getA() {
+        return A;
+    }
+
+    public int getB() {
+        return B;
+    }
+
+    public int getC() {
+        return C;
+    }
+
+    public int getD() {
+        return D;
     }
 
     public int getId() {
@@ -43,12 +77,11 @@ public class Quiz {
         this.questionId = questionId;
     }
 
-    public HashMap<Character,Integer> getCount() {
+    public HashMap<Character, Integer> getCount() {
         return count;
     }
 
-
-    public HashMap<Character,String> getStatistic(@NotNull HashMap<Character,Integer> count){
+    public HashMap<Character, String> getStatistic(@NotNull HashMap<Character,Integer> count){
         int total=0;
         HashMap<Character,String> result = new HashMap<>();
 
@@ -57,7 +90,7 @@ public class Quiz {
             total += (int)mapElement.getValue();
         }
 
-        if(total==0) return result;
+        if(total == 0) return result;
 
         for (Map.Entry mapElement : count.entrySet()) {
             char key = (char)mapElement.getKey();
@@ -72,34 +105,5 @@ public class Quiz {
         }
 
             return result;
-    }
-
-
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Quiz quiz = (Quiz) o;
-        return id == quiz.id &&
-                fileId == quiz.fileId &&
-                questionId == quiz.questionId &&
-                Objects.equals(count, quiz.count);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, fileId, questionId, count);
-    }
-
-    @Override
-    public String toString() {
-        return "Quiz{" +
-                "id=" + id +
-                ", fileId=" + fileId +
-                ", questionId=" + questionId +
-                ", count=" + count +
-                '}';
     }
 }
