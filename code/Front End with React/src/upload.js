@@ -3,7 +3,7 @@ import React from "react";
 import Marpit from '@marp-team/marpit'
 import axios from 'axios'
 
-const fs = require('fs');
+// const fs = require('fs');
 // const fs = require('fs');
 const props = {
     name: 'file',
@@ -162,9 +162,6 @@ class MyUpload extends React.Component{
 
                 </Upload>
 
-                {/*<div>*/}
-                {/*    {this.state}*/}
-                {/*</div>*/}
             </div>
         )
     }
