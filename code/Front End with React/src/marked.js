@@ -28,7 +28,7 @@ class InputFileReader extends Component{
             self.setState({value:reader});
         }
         else {
-            alert('Soryy, your browser does\'nt support for preview');
+            alert('Sorry, your browser does\'nt support for preview');
         }
     }
     render(){
