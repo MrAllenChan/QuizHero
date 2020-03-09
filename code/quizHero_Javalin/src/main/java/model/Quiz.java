@@ -29,12 +29,22 @@ public class Quiz {
         B = b;
         C = c;
         D = d;
+
+//        this.count.put('A', a);
+//        this.count.put('B', b);
+//        this.count.put('C', c);
+//        this.count.put('D', d);
+
     }
 
     public Quiz(int fileId, int questionId, HashMap<Character, Integer> count) {
         this.fileId = fileId;
         this.questionId = questionId;
         this.count = count;
+//        this.A = count.get('A');
+//        this.B = count.get('B');
+//        this.C = count.get('C');
+//        this.D = count.get('D');
     }
 
     public int getA() {
