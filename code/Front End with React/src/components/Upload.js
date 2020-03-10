@@ -4,7 +4,7 @@ import Marpit from '@marp-team/marpit'
 import axios from 'axios'
 
 
-const fs = require('fs');
+// const fs = require('fs');
 const props = {
     name: 'file',
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
@@ -78,7 +78,7 @@ class MyUpload extends React.Component{
     constructor(props) {
         super(props);
         this.callback = props.callback;
-        this.beforeUpload.bind = this.beforeUpload.bind(this);
+        // this.beforeUpload.bind = this.beforeUpload.bind(this);
 
     }
     state = {
@@ -88,7 +88,7 @@ class MyUpload extends React.Component{
         quiz:[]
     }
 
-    beforeUpload = (file,fileList) => {
+    beforeUpload = (file) => {
         console.log("FILEEE",file);
         this.setState({
             file:file
@@ -201,7 +201,7 @@ class MyUpload extends React.Component{
 
     trans=()=>{
         var obj = JSON.parse(this.state.rawString);
-        var questions = [obj];
+        var questions = obj;
         console.log(questions)
         this.setState({
             quiz : questions
