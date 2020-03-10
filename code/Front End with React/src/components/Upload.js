@@ -79,12 +79,17 @@ class MyUpload extends React.Component{
     onDownload = (file) => {
         this.readFile(this.state.file).then(this.convertText);
 
+        // const formData = {
+        //     fileContent: { file },
+        //     userName: 'admin'
+        // }
         const formData = {
-            fileContent: { file },
-            userName: 'admin'
+            "fileId" : 1,
+            "questionId" : 1,
+            "choice" : 2
         }
         axios
-            .post("/", formData, {
+            .post("http://localhost:7001", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }

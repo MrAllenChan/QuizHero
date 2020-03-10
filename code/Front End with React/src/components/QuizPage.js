@@ -54,7 +54,7 @@ class QuizPage extends Component {
 
     handleAnswerSelected(event) {
         this.setUserAnswer(event.currentTarget.value);
-
+        console.log(event.currentTarget.value);
         if (this.state.questionId < quizQuestions.length) {
             setTimeout(() => this.setNextQuestion(), 300);
         } else {
