@@ -3,8 +3,8 @@ import React from "react";
 import Marpit from '@marp-team/marpit'
 import axios from 'axios'
 
-// const fs = require('fs');
-// const fs = require('fs');
+
+const fs = require('fs');
 const props = {
     name: 'file',
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
@@ -15,7 +15,7 @@ const props = {
 
 };
 
-const marpit = new Marpit()
+const marpit = new Marpit();
 // 2. Add theme CSS
 const theme = `
             /* @theme example */
@@ -43,6 +43,8 @@ marpit.themeSet.default = marpit.themeSet.add(theme)
 class MyUpload extends React.Component{
     constructor(props) {
         super(props);
+        this.onFileUploaded = props.onFileUploaded;
+        this.callback = props.callback;
         this.beforeUpload.bind = this.beforeUpload.bind(this);
 
     }
@@ -67,6 +69,7 @@ class MyUpload extends React.Component{
             // this.convertFile();
             console.log(info.file.name);
             message.success(`${info.file.name} file uploaded successfully`);
+            // this.trans();
         } else if (info.file.status === 'error') {
             console.log(info.file.name);
             message.error(`${info.file.name} file upload failed.`);
@@ -92,6 +95,10 @@ class MyUpload extends React.Component{
             .catch((error) => {
                 console.log("error")
             });
+    }
+
+    onPreview = (file) => {
+        this.trans();
     }
 
     readFile=(file)=>{
@@ -146,6 +153,10 @@ class MyUpload extends React.Component{
         exportRaw('filename.html', filestring)
     }
 
+    trans=()=>{
+        this.props.callback(this.state.result);
+    }
+
 
     render(){
         return(
@@ -154,6 +165,7 @@ class MyUpload extends React.Component{
                     onChange={this.onChange}
                     beforeUpload={this.beforeUpload}
                     onDownload={this.onDownload}
+                    onPreview={this.onPreview}
                     {...props}>
 
                     <Button>
