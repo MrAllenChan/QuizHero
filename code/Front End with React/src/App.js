@@ -16,8 +16,6 @@ class App extends Component {
 
     }
 
-
-
     callback=(quiz)=>{
         this.setState({quiz : quiz, quizFlag : 1});
     }
