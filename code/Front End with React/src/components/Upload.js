@@ -11,12 +11,10 @@ const props = {
     headers: {
         authorization: 'authorization-text',
     },
-
-
 };
 
 var quizList = new Array();
-var data = state.result;
+var data = this.state.result;
 for (int i = 0; i < data.length(); i ++) {
     var j = i;
     var quiz = {};
@@ -26,7 +24,7 @@ for (int i = 0; i < data.length(); i ++) {
         while (data.charAt(j) != '$') {
             j ++;
         }
-        String question = data.substring(i, j);
+        var question = data.substring(i, j);
         j = j + 1;
         i = j;
         quiz["question"] = question;
@@ -40,7 +38,7 @@ for (int i = 0; i < data.length(); i ++) {
         while (data.charAt(j) != '@' || data.charAt(j) != '$' || data.length() == j) {
             j ++;
         }
-        String content = data.substring(i + 1, j);
+        var content = data.substring(i + 1, j);
         answer["content"] = content;
         i = j;
         answers.push(answer);
