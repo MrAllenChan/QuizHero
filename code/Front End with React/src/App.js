@@ -37,13 +37,6 @@ class App extends Component {
         super(props);
 
         this.state = {
-            counter: 0,
-            questionId: 1,
-            question: '',
-            answerOptions: [],
-            answer: '',
-            answersCount: {},
-            result: '',
             quiz: [],
             quizFlag: 0
         };
@@ -51,15 +44,6 @@ class App extends Component {
     }
 
 
-    handleFileUploaded(event) {
-        this.setFile(event.currentTarget.value);
-    }
-
-    setFile(file) {
-        this.setState((state, props) => ({
-            file : file
-        }));
-    }
 
     callback=(quiz)=>{
         this.setState({quiz : quiz, quizFlag : 1});
