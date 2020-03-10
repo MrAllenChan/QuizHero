@@ -16,7 +16,7 @@ const props = {
 };
 
 var quizList = new Array();
-var data = state.result;
+var data = this.state.result;
 for (var i = 0; i < data.length(); i ++) {
     var j = i;
     var quiz = {};
