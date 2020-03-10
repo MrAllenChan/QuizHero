@@ -11,11 +11,13 @@ const props = {
     headers: {
         authorization: 'authorization-text',
     },
+
+
 };
 
 var quizList = new Array();
-var data = this.state.result;
-for (int i = 0; i < data.length(); i ++) {
+var data = state.result;
+for (var i = 0; i < data.length(); i ++) {
     var j = i;
     var quiz = {};
     if (data.charAt(i) == '$') {
@@ -121,7 +123,7 @@ class MyUpload extends React.Component{
             "choice" : 2
         }
         axios
-            .post("http://localhost:7001", formData, {
+            .post("http://localhost:7001/record", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }

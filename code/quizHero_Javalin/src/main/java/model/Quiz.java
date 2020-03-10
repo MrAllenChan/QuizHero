@@ -11,37 +11,48 @@ public class Quiz {
     private int id;
     private int fileId;
     private int questionId;
-    private int A;
-    private int B;
-    private int C;
-    private int D;
-    private HashMap<Character,Integer> count;
+    private int countA;
+    private int countB;
+    private int countC;
+    private int countD;
+
+//    private HashMap<Character,Integer> count;
+
+    public int getCountA() {
+        return countA;
+    }
+
+    public int getCountB() {
+        return countB;
+    }
+
+    public int getCountC() {
+        return countC;
+    }
+
+    public int getCountD() {
+        return countD;
+    }
 
     public Quiz(int fileId, int questionId) {
         this.fileId = fileId;
         this.questionId = questionId;
     }
 
-    public Quiz(int fileId, int questionId, int a, int b, int c, int d) {
+    public Quiz(int fileId, int questionId, int countA, int countB, int countC, int countD) {
         this.fileId = fileId;
         this.questionId = questionId;
-        A = a;
-        B = b;
-        C = c;
-        D = d;
-
-//        this.count.put('A', a);
-//        this.count.put('B', b);
-//        this.count.put('C', c);
-//        this.count.put('D', d);
-
+        this.countA = countA;
+        this.countB = countB;
+        this.countC = countC;
+        this.countD = countD;
     }
 
-    public Quiz(int fileId, int questionId, HashMap<Character, Integer> count) {
-        this.fileId = fileId;
-        this.questionId = questionId;
-        this.count = count;
-    }
+    //    public Quiz(int fileId, int questionId, HashMap<Character, Integer> count) {
+//        this.fileId = fileId;
+//        this.questionId = questionId;
+//        this.count = count;
+//    }
 
     public int getId() {
         return id;
@@ -55,21 +66,13 @@ public class Quiz {
         return fileId;
     }
 
-    public void setFileId(int fileId) {
-        this.fileId = fileId;
-    }
-
     public int getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
-    }
-
-    public HashMap<Character, Integer> getCount() {
-        return count;
-    }
+//    public HashMap<Character, Integer> getCount() {
+//        return count;
+//    }
 
     public HashMap<Character, String> getStatistic(@NotNull HashMap<Character,Integer> count){
         int total=0;

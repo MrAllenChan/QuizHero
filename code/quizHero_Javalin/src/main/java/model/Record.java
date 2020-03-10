@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class Record {
 
-    private int id;
     private int fileId;
     private int questionId;
     private char choice;
@@ -15,36 +14,16 @@ public class Record {
         this.choice = choice;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getFileId() {
         return fileId;
-    }
-
-    public void setFileId(int fileId) {
-        this.fileId = fileId;
     }
 
     public int getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
-    }
-
     public char getChoice() {
         return choice;
-    }
-
-    public void setChoice(char choice) {
-        this.choice = choice;
     }
 
     @Override

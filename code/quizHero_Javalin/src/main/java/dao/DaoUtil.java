@@ -13,13 +13,14 @@ public final class DaoUtil {
     }
 
     public static void addSampleQuizzes(QuizDao quizDao) {
-        HashMap<Character, Integer> count = new HashMap<>();
-        count.put('A', 5);
-        count.put('B', 12);
-        count.put('C', 6);
-        count.put('D', 7);
-//        quizDao.add(new Quiz(1, 1, 5, 12, 6, 7));
-        quizDao.add(new Quiz(1,1, count));
+//        HashMap<Character, Integer> count = new HashMap<>();
+//        count.put('A', 5);
+//        count.put('B', 12);
+//        count.put('C', 6);
+//        count.put('D', 100);
+        quizDao.add(new Quiz(1, 1, 10, 12, 6, 7));
+        quizDao.add(new Quiz(1, 1, 99, 2, 16, 8));
+//        quizDao.add(new Quiz(1,1, count));
     }
 
 //    public static void addSampleReviews(CourseDao courseDao, ReviewDao reviewDao) {

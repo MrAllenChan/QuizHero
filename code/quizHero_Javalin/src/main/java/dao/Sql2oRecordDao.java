@@ -15,8 +15,6 @@ public class Sql2oRecordDao implements RecordDao {
 
     @Override
     public void add(Record record) throws DaoException {
-//        char answer = record.getChoice();
-//
 //        try (Connection conn = sql2o.open()) {
 //            String sql = "INSERT INTO Quizzes(fileId, questionId, A, B, C, D) VALUES(:name, :url);";
 //            int id = (int) conn.createQuery(sql)
@@ -30,7 +28,8 @@ public class Sql2oRecordDao implements RecordDao {
         int fileId = record.getFileId();
         int questionId = record.getQuestionId();
         char answer = record.getChoice();
-        String sql = "UPDATE Quiz SET " + answer + " = " + answer + " + 1 " + "WHERE fileId = " + fileId + " AND questionId = " + questionId;
+        String col = "count" + answer;
+        String sql = "UPDATE Quiz SET " + col + " = " + col + " + 1 WHERE fileId = " + fileId + " AND questionId = " + questionId;
         System.out.println(sql);
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();

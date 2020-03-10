@@ -2,6 +2,7 @@ package dao;
 
 import exception.DaoException;
 import model.Quiz;
+import org.eclipse.jetty.websocket.api.util.QuoteUtil;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
@@ -26,16 +27,16 @@ public class Sql2oQuizDao implements QuizDao {
     @Override
     public void add(Quiz quiz) throws DaoException {
 
-//        System.out.println(quiz);
+        System.out.println(quiz.toString());
         try (Connection conn = sql2o.open()) {
-            String sql = "INSERT INTO Quiz(fileId, questionId, A, B, C, D) VALUES (:fileId, :questionId, :A, :B, :C, :D);";
+            String sql = "INSERT INTO Quiz(fileId, questionId, countA, countB, countC, countD) VALUES (:fileId, :questionId, :A, :B, :C, :D);";
             int id = (int) conn.createQuery(sql)
                     .addParameter("fileId", quiz.getFileId())
                     .addParameter("questionId", quiz.getQuestionId())
-                    .addParameter("A", quiz.getCount().get('A'))
-                    .addParameter("B", quiz.getCount().get('B'))
-                    .addParameter("C", quiz.getCount().get('C'))
-                    .addParameter("D", quiz.getCount().get('D'))
+                    .addParameter("A", quiz.getCountA())
+                    .addParameter("B", quiz.getCountB())
+                    .addParameter("C", quiz.getCountC())
+                    .addParameter("D", quiz.getCountD())
                     .executeUpdate()
                     .getKey();
 
