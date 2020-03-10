@@ -34,12 +34,19 @@ public final class ApiServer {
             DaoUtil.addSampleQuizzes(quizDao);
         }
 
-        app = startJavalin();
+//        app.config.addStaticFiles("/public");
+        app = Javalin.create(config -> {config.addStaticFiles("/public");
+                                        config.enableCorsForAllOrigins();}).start(7001);
+//                .addStaticFiles("/") // Other static assets, external to the ReactJS application
+//                .addSinglePageRoot("/", "/public/index.html")   // Catch-all route for the single-page application;   // The ReactJS application
+//                .enableCorsForAllOrigins();
 
         // Routing
-        getHomepage();
+//        getHomepage();
         getQuizStat(quizDao);
         postRecords(recordDao);
+
+        startJavalin();
 //        getReviewsForCourse(reviewDao);
 //        postReviewForCourse(reviewDao);
 
@@ -54,22 +61,22 @@ public final class ApiServer {
         });
 
         // runs after every request (even if an exception occurred)
-        app.after(ctx -> {
-            // run after all requests
-            ctx.contentType("application/json");
-        });
+//        app.after(ctx -> {
+//            // run after all requests
+//            ctx.contentType("application/json");
+//        });
     }
 
     public static void stop() {
         app.stop();
     }
 
-    private static Javalin startJavalin() {
+    private static void startJavalin() {
         Gson gson = new Gson();
         JavalinJson.setFromJsonMapper(gson::fromJson);
         JavalinJson.setToJsonMapper(gson::toJson);
 
-        return Javalin.create().start(PORT);
+//        app.start(PORT);
     }
 
     private static void getHomepage() {
@@ -81,6 +88,7 @@ public final class ApiServer {
         app.get("/quizstat", ctx -> {
             List<Quiz> quizzes = quizDao.getQuizStat();
             ctx.json(quizzes);
+            ctx.contentType("application/json");
             ctx.status(200); // everything ok!
         });
     }
@@ -93,6 +101,7 @@ public final class ApiServer {
                 recordDao.add(record);
                 ctx.status(201); // created successfully
                 ctx.json(record);
+                ctx.contentType("application/json");
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
             }
