@@ -83,6 +83,7 @@ class MyUpload extends React.Component{
     }
 
     onDownload = (file) => {
+        const BASE_URL = document.location.origin;
 
         // const formData = {
         //     fileContent: { file },
@@ -109,7 +110,7 @@ class MyUpload extends React.Component{
             choice : 2
         }
         axios
-            .post("http://localhost:7001/record", formData, {
+            .post(BASE_URL+"/record", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
