@@ -17,7 +17,7 @@ const props = {
 
 var quizList = new Array();
 var data = state.result;
-for (int i = 0; i < data.length(); i ++) {
+for (var i = 0; i < data.length(); i ++) {
     var j = i;
     var quiz = {};
     if (data.charAt(i) == '$') {
@@ -26,7 +26,7 @@ for (int i = 0; i < data.length(); i ++) {
         while (data.charAt(j) != '$') {
             j ++;
         }
-        String question = data.substring(i, j);
+        var question = data.substring(i, j);
         j = j + 1;
         i = j;
         quiz["question"] = question;
@@ -40,7 +40,7 @@ for (int i = 0; i < data.length(); i ++) {
         while (data.charAt(j) != '@' || data.charAt(j) != '$' || data.length() == j) {
             j ++;
         }
-        String content = data.substring(i + 1, j);
+        var content = data.substring(i + 1, j);
         answer["content"] = content;
         i = j;
         answers.push(answer);
@@ -123,7 +123,7 @@ class MyUpload extends React.Component{
             "choice" : 2
         }
         axios
-            .post("http://localhost:7001", formData, {
+            .post("http://localhost:7001/record", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
