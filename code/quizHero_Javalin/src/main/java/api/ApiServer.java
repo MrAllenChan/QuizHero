@@ -1,7 +1,6 @@
 package api;
 import com.google.gson.Gson;
 import dao.DaoFactory;
-//import dao.DaoUtil;
 import dao.DaoUtil;
 import dao.QuizDao;
 import dao.RecordDao;
@@ -19,7 +18,7 @@ import java.util.Map;
 public final class ApiServer {
 
     public static boolean INITIALIZE_WITH_SAMPLE_DATA = true;
-    public static int PORT = 7000;
+    public static int PORT = 7001;
     private static Javalin app;
 
     private ApiServer() {
@@ -28,19 +27,19 @@ public final class ApiServer {
 
     public static void start() {
         QuizDao quizDao = DaoFactory.getQuizDao();
-//        RecordDao recordDao = DaoFactory.getRecordDao();
+        RecordDao recordDao = DaoFactory.getRecordDao();
 
         // add some sample data
-//        if (INITIALIZE_WITH_SAMPLE_DATA) {
-//            DaoUtil.addSampleQuizzes(quizDao);
-//        }
+        if (INITIALIZE_WITH_SAMPLE_DATA) {
+            DaoUtil.addSampleQuizzes(quizDao);
+        }
 
         app = startJavalin();
 
         // Routing
         getHomepage();
-//        getQuizStat(quizDao);
-//        postRecord(recordDao);
+        getQuizStat(quizDao);
+        postRecords(recordDao);
 //        getReviewsForCourse(reviewDao);
 //        postReviewForCourse(reviewDao);
 
@@ -86,19 +85,19 @@ public final class ApiServer {
         });
     }
 
-//    private static void postRecords(RecordDao recordDao) {
-//        // student adds a record of a Quiz question through HTTP POST request
-//        app.post("/record", ctx -> {
-//            Record record = ctx.bodyAsClass(Record.class);
-//            try {
-//                recordDao.add(record);
-//                ctx.status(201); // created successfully
-//                ctx.json(record);
-//            } catch (DaoException ex) {
-//                throw new ApiError(ex.getMessage(), 500); // server internal error
-//            }
-//        });
-//    }
+    private static void postRecords(RecordDao recordDao) {
+        // student adds a record of a Quiz question through HTTP POST request
+        app.post("/record", ctx -> {
+            Record record = ctx.bodyAsClass(Record.class);
+            try {
+                recordDao.add(record);
+                ctx.status(201); // created successfully
+                ctx.json(record);
+            } catch (DaoException ex) {
+                throw new ApiError(ex.getMessage(), 500); // server internal error
+            }
+        });
+    }
 
 //    private static void getReviewsForCourse(ReviewDao reviewDao) {
 //        // handle HTTP Get request to retrieve all reviews for a course
