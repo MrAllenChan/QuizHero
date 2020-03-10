@@ -10,23 +10,28 @@ class App extends Component {
         super(props);
 
         this.state = {
-            quiz: [],
+            quiz:'',
             quizFlag: 0
         };
 
     }
 
     callback=(quiz)=>{
-        this.setState({quiz : quiz, quizFlag : 1});
+        this.setState({quiz})
+        this.setState({quizFlag : 1});
     }
 
     renderQuizPage() {
+        console.log(this.state.quiz)
         return (
-            <QuizPage/>
+            <QuizPage
+            questions={this.state.quiz}
+            />
         );
     }
 
-    renderUploadPage() {
+    renderUploadPage = () => {
+
         return (
             <div className="App">
                 <header className="App-header">

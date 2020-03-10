@@ -15,39 +15,39 @@ const props = {
 
 };
 
-var quizList = new Array();
-var data = state.result;
-for (var i = 0; i < data.length(); i ++) {
-    var j = i;
-    var quiz = {};
-    if (data.charAt(i) == '$') {
-        j = i + 1;
-        i = j;
-        while (data.charAt(j) != '$') {
-            j ++;
-        }
-        var question = data.substring(i, j);
-        j = j + 1;
-        i = j;
-        quiz["question"] = question;
-    }
-    var answers = [];
-    while (data.charAt(j) != '$' || data.length() == j) {
-        var answer = {};
-        i = i + 1;
-        j = j + 1;
-        answer["type"] = data.charAt(i);
-        while (data.charAt(j) != '@' || data.charAt(j) != '$' || data.length() == j) {
-            j ++;
-        }
-        var content = data.substring(i + 1, j);
-        answer["content"] = content;
-        i = j;
-        answers.push(answer);
-    }
-    quiz["answers"] = answers;
-    quizList.push(quiz);
-}
+// var quizList = new Array();
+// var data = state.result;
+// for (var i = 0; i < data.length(); i ++) {
+//     var j = i;
+//     var quiz = {};
+//     if (data.charAt(i) == '$') {
+//         j = i + 1;
+//         i = j;
+//         while (data.charAt(j) != '$') {
+//             j ++;
+//         }
+//         var question = data.substring(i, j);
+//         j = j + 1;
+//         i = j;
+//         quiz["question"] = question;
+//     }
+//     var answers = [];
+//     while (data.charAt(j) != '$' || data.length() == j) {
+//         var answer = {};
+//         i = i + 1;
+//         j = j + 1;
+//         answer["type"] = data.charAt(i);
+//         while (data.charAt(j) != '@' || data.charAt(j) != '$' || data.length() == j) {
+//             j ++;
+//         }
+//         var content = data.substring(i + 1, j);
+//         answer["content"] = content;
+//         i = j;
+//         answers.push(answer);
+//     }
+//     quiz["answers"] = answers;
+//     quizList.push(quiz);
+// }
 
 const marpit = new Marpit();
 // 2. Add theme CSS
@@ -77,14 +77,15 @@ marpit.themeSet.default = marpit.themeSet.add(theme)
 class MyUpload extends React.Component{
     constructor(props) {
         super(props);
-        this.onFileUploaded = props.onFileUploaded;
         this.callback = props.callback;
         this.beforeUpload.bind = this.beforeUpload.bind(this);
 
     }
     state = {
         file:"",
-        result:""
+        result:"",
+        rawString:"",
+        quiz:[]
     }
 
     beforeUpload = (file,fileList) => {
@@ -103,6 +104,7 @@ class MyUpload extends React.Component{
             // this.convertFile();
             console.log(info.file.name);
             message.success(`${info.file.name} file uploaded successfully`);
+            this.readFile(this.state.file).then(this.convertText);
             // this.trans();
         } else if (info.file.status === 'error') {
             console.log(info.file.name);
@@ -111,16 +113,30 @@ class MyUpload extends React.Component{
     }
 
     onDownload = (file) => {
-        this.readFile(this.state.file).then(this.convertText);
 
         // const formData = {
         //     fileContent: { file },
         //     userName: 'admin'
         // }
+        function fakeClick(obj) {
+            var ev = document.createEvent("MouseEvents");
+            ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            obj.dispatchEvent(ev);
+        }
+        function exportRaw(name, data) {
+            var urlObject = window.URL || window.webkitURL || window;
+            var export_blob = new Blob([data]);
+            var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
+            save_link.href = urlObject.createObjectURL(export_blob);
+            save_link.download = name;
+            fakeClick(save_link);
+        }
+        exportRaw('filename.html', this.state.result);
+        console.log(this.state.rawString);
         const formData = {
-            "fileId" : 1,
-            "questionId" : 1,
-            "choice" : 2
+            fileId : 1,
+            questionId : 1,
+            choice : 2
         }
         axios
             .post("http://localhost:7001/record", formData, {
@@ -137,6 +153,7 @@ class MyUpload extends React.Component{
     }
 
     onPreview = (file) => {
+
         this.trans();
     }
 
@@ -146,9 +163,9 @@ class MyUpload extends React.Component{
             console.log("1");
             reader.readAsText(file);
             console.log("2")
-            reader.onload = function (e) {
+            reader.onload = (e) => {
                 // let content = e.target.result;
-                resolve(this.result);
+                resolve(reader.result);
                 console.log("3");
                 // console.log(content);
             };
@@ -159,7 +176,11 @@ class MyUpload extends React.Component{
     };
 
     convertText=(result)=> {
-        console.log(result)
+        console.log(result);
+        this.setState({
+            rawString : result
+        });
+        console.log(this.state.rawString);
         // 3. Render markdown
         const {html, css} = marpit.render(result);
         // 4. Use output in your HTML
@@ -176,24 +197,16 @@ class MyUpload extends React.Component{
             result: filestring
         },);
 
-        function fakeClick(obj) {
-            var ev = document.createEvent("MouseEvents");
-            ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-            obj.dispatchEvent(ev);
-        }
-        function exportRaw(name, data) {
-            var urlObject = window.URL || window.webkitURL || window;
-            var export_blob = new Blob([data]);
-            var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
-            save_link.href = urlObject.createObjectURL(export_blob);
-            save_link.download = name;
-            fakeClick(save_link);
-        }
-        exportRaw('filename.html', filestring)
     }
 
     trans=()=>{
-        this.props.callback(this.state.result);
+        var obj = JSON.parse(this.state.rawString);
+        var questions = [obj];
+        console.log(questions)
+        this.setState({
+            quiz : questions
+        })
+        this.props.callback(questions);
     }
 
 

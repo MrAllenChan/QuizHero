@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import quizQuestions from "../api/quizQuestions";
+// import quizQuestions from "../api/quizQuestions";
 import Quiz from './Quiz';
 import Result from './Result';
 // import logo from '../svg/logo.svg';
@@ -16,18 +16,20 @@ class QuizPage extends Component {
             answerOptions: [],
             answer: '',
             answersCount: {},
-            result: ''
+            result: '',
+            quizQuestions: props.questions
         };
 
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
     }
 
     componentDidMount() {
-        const shuffledAnswerOptions = quizQuestions.map(question =>
+
+        const shuffledAnswerOptions = this.state.quizQuestions.map(question =>
             this.shuffleArray(question.answers)
         );
         this.setState({
-            question: quizQuestions[0].question,
+            question: this.state.quizQuestions[0].question,
             answerOptions: shuffledAnswerOptions[0]
         });
     }
@@ -55,7 +57,7 @@ class QuizPage extends Component {
     handleAnswerSelected(event) {
         this.setUserAnswer(event.currentTarget.value);
         console.log(event.currentTarget.value);
-        if (this.state.questionId < quizQuestions.length) {
+        if (this.state.questionId < this.state.quizQuestions.length) {
             setTimeout(() => this.setNextQuestion(), 300);
         } else {
             setTimeout(() => this.setResults(this.getResults()), 300);
@@ -75,12 +77,12 @@ class QuizPage extends Component {
     setNextQuestion() {
         const counter = this.state.counter + 1;
         const questionId = this.state.questionId + 1;
-
+        console.log(this.state.quizQuestions);
         this.setState({
             counter: counter,
             questionId: questionId,
-            question: quizQuestions[counter].question,
-            answerOptions: quizQuestions[counter].answers,
+            question: this.state.quizQuestions[counter].question,
+            answerOptions: this.state.quizQuestions[counter].answers,
             answer: ''
         });
     }
@@ -109,7 +111,7 @@ class QuizPage extends Component {
                 answerOptions={this.state.answerOptions}
                 questionId={this.state.questionId}
                 question={this.state.question}
-                questionTotal={quizQuestions.length}
+                questionTotal={this.state.quizQuestions.length}
                 onAnswerSelected={this.handleAnswerSelected}
             />
         );
