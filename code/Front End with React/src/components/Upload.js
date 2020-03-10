@@ -15,6 +15,40 @@ const props = {
 
 };
 
+var quizList = new Array();
+var data = state.result;
+for (int i = 0; i < data.length(); i ++) {
+    var j = i;
+    var quiz = {};
+    if (data.charAt(i) == '$') {
+        j = i + 1;
+        i = j;
+        while (data.charAt(j) != '$') {
+            j ++;
+        }
+        String question = data.substring(i, j);
+        j = j + 1;
+        i = j;
+        quiz["question"] = question;
+    }
+    var answers = [];
+    while (data.charAt(j) != '$' || data.length() == j) {
+        var answer = {};
+        i = i + 1;
+        j = j + 1;
+        answer["type"] = data.charAt(i);
+        while (data.charAt(j) != '@' || data.charAt(j) != '$' || data.length() == j) {
+            j ++;
+        }
+        String content = data.substring(i + 1, j);
+        answer["content"] = content;
+        i = j;
+        answers.push(answer);
+    }
+    quiz["answers"] = answers;
+    quizList.push(quiz);
+}
+
 const marpit = new Marpit();
 // 2. Add theme CSS
 const theme = `
