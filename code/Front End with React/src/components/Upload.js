@@ -172,7 +172,9 @@ class MyUpload extends React.Component{
         var quizList = new Array();
         var data = rawString;
         var quizzes = data.split("\n\n");
+
         for (var i = 0; i < quizzes.length; i++) {
+            var choice = "A";
             var quiz = {
                 question : "",
                 answers : []
@@ -189,15 +191,19 @@ class MyUpload extends React.Component{
                     } else if (line[1].charAt(0) == '*') {
                         // parse correct answers
                         quiz.answers.push({
-                            type : "right",
+                            type : choice,
                             content : line[1].substring(2, line[1].length - 2)
                         });
+                        var charCode = choice.charCodeAt(0);
+                        choice = String.fromCharCode(charCode + 1);
                     } else {
                         // parse wrong answers
                         quiz.answers.push({
-                            type : "wrong",
+                            type : choice,
                             content : line[1]
                         });
+                        var charCode = choice.charCodeAt(0);
+                        choice = String.fromCharCode(charCode + 1);
                     }
                 }
             }

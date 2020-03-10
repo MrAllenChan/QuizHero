@@ -70,6 +70,7 @@ class QuizPage extends Component {
         var type = answerArray[0];
         var questionId = answerArray[1];
         var answerContent = answerArray[2];
+        console.log(answerArray)
         this.setState((state, props) => ({
             answersCount: {
                 ...state.answersCount,
@@ -82,9 +83,10 @@ class QuizPage extends Component {
         const BASE_URL = document.location.origin;
         const formData = {
             fileId : 1,
-            questionId : questionId,
-            choice : answerContent
+            questionId : parseInt(questionId),
+            choice : type
         }
+        console.log(formData)
         axios
             .post(BASE_URL+"/record", formData, {
                 headers: {
