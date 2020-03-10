@@ -27,13 +27,24 @@ public class Sql2oQuizDao implements QuizDao {
     public void add(Quiz quiz) throws DaoException {
 //        int A = quiz.getCount().get('A'), B = quiz.getCount().get('B'),
 //                C = quiz.getCount().get('C'), D = quiz.getCount().get('D');
+        System.out.println(quiz);
         try (Connection conn = sql2o.open()) {
-            String sql = "INSERT INTO Quiz(fileId, questionId, A, B, C, D) " +
-                    "VALUES(:fileId, :questionId, :A, :B, :C, :D);";
+            String sql = "INSERT INTO Quiz(fileId, questionId, A, B, C, D) VALUES (:fileId, :questionId, :A, :B, :C, :D);";
             int id = (int) conn.createQuery(sql)
-                    .bind(quiz)
+                    .addParameter("fileId", quiz.getFileId())
+                    .addParameter("questionId", quiz.getQuestionId())
+                    .addParameter("A", quiz.getCount().get('A'))
+                    .addParameter("B", quiz.getCount().get('B'))
+                    .addParameter("C", quiz.getCount().get('C'))
+                    .addParameter("D", quiz.getCount().get('D'))
                     .executeUpdate()
                     .getKey();
+
+//            int id = (int) conn.createQuery(sql)
+//                    .bind(quiz)
+//                    .executeUpdate()
+//                    .getKey();
+
             quiz.setId(id);
         } catch (Sql2oException ex) {
             throw new DaoException("Unable to add the course", ex);
