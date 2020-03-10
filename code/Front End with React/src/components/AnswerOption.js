@@ -10,7 +10,7 @@ function AnswerOption(props) {
                 name="radioGroup"
                 checked={props.answerType === props.answer}
                 id={props.answerType}
-                value={props.answerType}
+                value={props.answerType+" "+props.questionId+" "+props.answerContent}
                 disabled={props.answer}
                 onChange={props.onAnswerSelected}
             />

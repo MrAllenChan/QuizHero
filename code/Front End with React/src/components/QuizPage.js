@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Quiz from './Quiz';
 import Result from './Result';
 // import logo from '../svg/logo.svg';
+import axios from 'axios'
 
 class QuizPage extends Component {
     constructor(props) {
@@ -65,19 +66,43 @@ class QuizPage extends Component {
     }
 
     setUserAnswer(answer) {
+        var answerArray = answer.split(" ");
+        var type = answerArray[0];
+        var questionId = answerArray[1];
+        var answerContent = answerArray[2];
         this.setState((state, props) => ({
             answersCount: {
                 ...state.answersCount,
-                [answer]: (state.answersCount[answer] || 0) + 1
+                [answer]: (state.answersCount[type] || 0) + 1
             },
-            answer: answer
+            answer: type
         }));
+
+        //send choice to back-end
+        const BASE_URL = document.location.origin;
+        const formData = {
+            fileId : 1,
+            questionId : questionId,
+            choice : answerContent
+        }
+        axios
+            .post(BASE_URL+"/record", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            })
+            .then(() => {
+                console.log("upload success");
+            })
+            .catch((error) => {
+                console.log("error")
+            });
     }
 
     setNextQuestion() {
         const counter = this.state.counter + 1;
         const questionId = this.state.questionId + 1;
-        console.log(this.state.quizQuestions);
+        // console.log(this.state.quizQuestions);
         this.setState({
             counter: counter,
             questionId: questionId,

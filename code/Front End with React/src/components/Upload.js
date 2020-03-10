@@ -83,7 +83,7 @@ class MyUpload extends React.Component{
     }
 
     onDownload = (file) => {
-        const BASE_URL = document.location.origin;
+        // const BASE_URL = document.location.origin;
 
         // const formData = {
         //     fileContent: { file },
@@ -104,23 +104,23 @@ class MyUpload extends React.Component{
         }
         exportRaw('filename.html', this.state.result);
         console.log(this.state.rawString);
-        const formData = {
-            fileId : 1,
-            questionId : 1,
-            choice : 2
-        }
-        axios
-            .post(BASE_URL+"/record", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            })
-            .then(() => {
-                console.log("upload success");
-            })
-            .catch((error) => {
-                console.log("error")
-            });
+        // const formData = {
+        //     fileId : 1,
+        //     questionId : 1,
+        //     choice : 2
+        // }
+        // axios
+        //     .post(BASE_URL+"/record", formData, {
+        //         headers: {
+        //             "Content-Type": "multipart/form-data"
+        //         }
+        //     })
+        //     .then(() => {
+        //         console.log("upload success");
+        //     })
+        //     .catch((error) => {
+        //         console.log("error")
+        //     });
     }
 
     onPreview=(file)=>{
