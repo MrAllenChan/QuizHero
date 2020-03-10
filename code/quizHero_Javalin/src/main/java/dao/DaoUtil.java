@@ -19,7 +19,7 @@ public final class DaoUtil {
 //        count.put('C', 6);
 //        count.put('D', 100);
         quizDao.add(new Quiz(1, 1, 10, 12, 6, 7));
-        quizDao.add(new Quiz(1, 1, 99, 2, 16, 8));
+        quizDao.add(new Quiz(1, 2, 99, 2, 16, 8));
 //        quizDao.add(new Quiz(1,1, count));
     }
 
