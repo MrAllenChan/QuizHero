@@ -15,39 +15,7 @@ const props = {
 
 };
 
-// var quizList = new Array();
-// var data = state.result;
-// for (var i = 0; i < data.length(); i ++) {
-//     var j = i;
-//     var quiz = {};
-//     if (data.charAt(i) == '$') {
-//         j = i + 1;
-//         i = j;
-//         while (data.charAt(j) != '$') {
-//             j ++;
-//         }
-//         var question = data.substring(i, j);
-//         j = j + 1;
-//         i = j;
-//         quiz["question"] = question;
-//     }
-//     var answers = [];
-//     while (data.charAt(j) != '$' || data.length() == j) {
-//         var answer = {};
-//         i = i + 1;
-//         j = j + 1;
-//         answer["type"] = data.charAt(i);
-//         while (data.charAt(j) != '@' || data.charAt(j) != '$' || data.length() == j) {
-//             j ++;
-//         }
-//         var content = data.substring(i + 1, j);
-//         answer["content"] = content;
-//         i = j;
-//         answers.push(answer);
-//     }
-//     quiz["answers"] = answers;
-//     quizList.push(quiz);
-// }
+
 
 const marpit = new Marpit();
 // 2. Add theme CSS
@@ -87,6 +55,8 @@ class MyUpload extends React.Component{
         rawString:"",
         quiz:[]
     }
+
+
 
     beforeUpload = (file) => {
         console.log("FILEEE",file);
@@ -153,8 +123,7 @@ class MyUpload extends React.Component{
             });
     }
 
-    onPreview = (file) => {
-
+    onPreview=(file)=>{
         this.trans();
     }
 
@@ -177,11 +146,11 @@ class MyUpload extends React.Component{
     };
 
     convertText=(result)=> {
-        console.log(result);
+        // console.log(result);
         this.setState({
             rawString : result
         });
-        console.log(this.state.rawString);
+        // console.log(this.state.rawString);
         // 3. Render markdown
         const {html, css} = marpit.render(result);
         // 4. Use output in your HTML
@@ -192,23 +161,92 @@ class MyUpload extends React.Component{
               ${html}
             </body></html>
             `
-        console.log(filestring)
+        // console.log(filestring)
         ;
         this.setState({
             result: filestring
         },);
-
     }
+
+    parseString = (rawString) => {
+        var quizList = new Array();
+        var data = rawString;
+        var quizzes = data.split("\n\n");
+        for (var i = 0; i < quizzes.length; i++) {
+            var quiz = {
+                question : "",
+                answers : []
+            };
+            var quizArray = quizzes[i].split("\n");
+            for (var j = 0; j < quizArray.length; j++) {
+                var line = quizArray[j].split(" ");
+                if (line.length > 1) {
+                    console.log(line)
+                    if (line[1]=="Question:") {
+                        // parse question
+                        var parsedQuestion = line.slice(2, line.length);
+                        quiz.question = parsedQuestion.join(" ");
+                    } else if (line[1].charAt(0) == '*') {
+                        // parse correct answers
+                        quiz.answers.push({
+                            type : "right",
+                            content : line[1].substring(2, line[1].length - 2)
+                        });
+                    } else {
+                        // parse wrong answers
+                        quiz.answers.push({
+                            type : "wrong",
+                            content : line[1]
+                        });
+                    }
+                }
+            }
+            quizList.push(quiz);
+        }
+        return quizList;
+        // for (var i = 0; i < data.length(); i ++) {
+        //     var j = i;
+        //     var quiz = {};
+        //     if (data.charAt(i) == '$') {
+        //         j = i + 1;
+        //         i = j;
+        //         while (data.charAt(j) != '$') {
+        //             j ++;
+        //         }
+        //         var question = data.substring(i, j);
+        //         j = j + 1;
+        //         i = j;
+        //         quiz["question"] = question;
+        //     }
+        //     var answers = [];
+        //     while (data.charAt(j) != '$' || data.length() == j) {
+        //         var answer = {};
+        //         i = i + 1;
+        //         j = j + 1;
+        //         answer["type"] = data.charAt(i);
+        //         while (data.charAt(j) != '@' || data.charAt(j) != '$' || data.length() == j) {
+        //             j ++;
+        //         }
+        //         var content = data.substring(i + 1, j);
+        //         answer["content"] = content;
+        //         i = j;
+        //         answers.push(answer);
+        //     }
+        //     quiz["answers"] = answers;
+        //     quizList.push(quiz);
+        // }
+    };
 
     trans=()=>{
-        var obj = JSON.parse(this.state.rawString);
-        var questions = obj;
-        console.log(questions)
+        // var obj = JSON.parse(this.state.rawString);
+        // var questions = obj;
+        var questions = this.parseString(this.state.rawString);
+        console.log(questions);
         this.setState({
             quiz : questions
-        })
+        });
         this.props.callback(questions);
-    }
+    };
 
 
     render(){
