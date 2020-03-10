@@ -41,26 +41,6 @@ public class Quiz {
         this.fileId = fileId;
         this.questionId = questionId;
         this.count = count;
-//        this.A = count.get('A');
-//        this.B = count.get('B');
-//        this.C = count.get('C');
-//        this.D = count.get('D');
-    }
-
-    public int getA() {
-        return A;
-    }
-
-    public int getB() {
-        return B;
-    }
-
-    public int getC() {
-        return C;
-    }
-
-    public int getD() {
-        return D;
     }
 
     public int getId() {

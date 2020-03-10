@@ -30,27 +30,10 @@ public class Sql2oRecordDao implements RecordDao {
         int fileId = record.getFileId();
         int questionId = record.getQuestionId();
         char answer = record.getChoice();
-        String sql = null;
-        switch(answer) {
-            case 'A':
-                sql = "UPDATE Quizzes SET A = A + 1 WHERE fileId = " + fileId + "&& questionId = " + questionId;
-                break;
-            case 'B':
-                sql = "UPDATE Quizzes SET A = B + 1 WHERE fileId = " + fileId + "&& questionId = " + questionId;
-                break;
-            case 'C':
-                sql = "UPDATE Quizzes SET A = C + 1 WHERE fileId = " + fileId + "&& questionId = " + questionId;
-                break;
-            case 'D':
-                sql = "UPDATE Quizzes SET A = D + 1 WHERE fileId = " + fileId + "&& questionId = " + questionId;
-                break;
-        }
+        String sql = "UPDATE Quiz SET " + answer + " = " + answer + " + 1 " + "WHERE fileId = " + fileId + " AND questionId = " + questionId;
+        System.out.println(sql);
         try (Connection conn = sql2o.open()) {
-            int id = (int) conn.createQuery(sql)
-                    .bind(record)
-                    .executeUpdate()
-                    .getKey();
-            record.setId(id);
+            conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
             throw new DaoException("Unable to add record to quiz", ex);
         }

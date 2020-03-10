@@ -25,9 +25,8 @@ public class Sql2oQuizDao implements QuizDao {
 
     @Override
     public void add(Quiz quiz) throws DaoException {
-//        int A = quiz.getCount().get('A'), B = quiz.getCount().get('B'),
-//                C = quiz.getCount().get('C'), D = quiz.getCount().get('D');
-        System.out.println(quiz);
+
+//        System.out.println(quiz);
         try (Connection conn = sql2o.open()) {
             String sql = "INSERT INTO Quiz(fileId, questionId, A, B, C, D) VALUES (:fileId, :questionId, :A, :B, :C, :D);";
             int id = (int) conn.createQuery(sql)

@@ -56,10 +56,10 @@ public class DaoFactory {
         return new Sql2oQuizDao(sql2o);
     }
 
-//    public static RecordDao getRecordDao() {
-//        instantiateSql2o();
-//        createQuizTable(sql2o);
-//        return new Sql2oRecordDao(sql2o);
-//    }
+    public static RecordDao getRecordDao() {
+        instantiateSql2o();
+        createQuizTable(sql2o);
+        return new Sql2oRecordDao(sql2o);
+    }
 
 }
