@@ -1,7 +1,9 @@
 package dao;
 
+import exception.DaoException;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import org.sql2o.Sql2oException;
 
 public class DaoFactory {
     public static boolean DROP_TABLES_IF_EXIST = false;
@@ -17,7 +19,7 @@ public class DaoFactory {
             final String URI = "jdbc:sqlite:" + PATH_TO_DATABASE_FILE;
             final String USERNAME = "";
             final String PASSWORD = "";
-            System.out.println("here");
+//            System.out.println("here");
             sql2o = new Sql2o(URI, USERNAME, PASSWORD);
             System.out.println("database instantiated successfully.");
         }
@@ -32,10 +34,12 @@ public class DaoFactory {
                 "A INTEGER," +
                 "B INTEGER," +
                 "C INTEGER," +
-                "D INTEGER," +
+                "D INTEGER" +
                 ");";
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
+        } catch (Sql2oException ex) {
+            throw new DaoException("Unable to create Quiz table", ex);
         }
     }
 

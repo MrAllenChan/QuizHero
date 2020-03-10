@@ -1,7 +1,6 @@
 package api;
 import com.google.gson.Gson;
 import dao.DaoFactory;
-//import dao.DaoUtil;
 import dao.DaoUtil;
 import dao.QuizDao;
 import dao.RecordDao;
@@ -19,7 +18,7 @@ import java.util.Map;
 public final class ApiServer {
 
     public static boolean INITIALIZE_WITH_SAMPLE_DATA = true;
-    public static int PORT = 7000;
+    public static int PORT = 7001;
     private static Javalin app;
 
     private ApiServer() {
@@ -31,15 +30,15 @@ public final class ApiServer {
 //        RecordDao recordDao = DaoFactory.getRecordDao();
 
         // add some sample data
-//        if (INITIALIZE_WITH_SAMPLE_DATA) {
-//            DaoUtil.addSampleQuizzes(quizDao);
-//        }
+        if (INITIALIZE_WITH_SAMPLE_DATA) {
+            DaoUtil.addSampleQuizzes(quizDao);
+        }
 
         app = startJavalin();
 
         // Routing
         getHomepage();
-//        getQuizStat(quizDao);
+        getQuizStat(quizDao);
 //        postRecord(recordDao);
 //        getReviewsForCourse(reviewDao);
 //        postReviewForCourse(reviewDao);
