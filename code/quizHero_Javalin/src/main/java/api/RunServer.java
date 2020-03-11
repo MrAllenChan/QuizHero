@@ -9,7 +9,7 @@ public class RunServer {
         DaoFactory.PATH_TO_DATABASE_FILE = Paths.get("src", "main", "resources").toFile().
                 getAbsolutePath()
                 + "/db/Store.db";
-        ApiServer.INITIALIZE_WITH_SAMPLE_DATA = false;
+//        ApiServer.INITIALIZE_WITH_SAMPLE_DATA = false;
         ApiServer.start();
     }
 }

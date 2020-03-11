@@ -29,7 +29,8 @@ public class Sql2oQuizDao implements QuizDao {
 
         System.out.println(quiz.toString());
         try (Connection conn = sql2o.open()) {
-            String sql = "INSERT INTO Quiz(fileId, questionId, countA, countB, countC, countD) VALUES (:fileId, :questionId, :A, :B, :C, :D);";
+            String sql = "INSERT INTO Quiz(fileId, questionId, countA, countB, countC, countD) " +
+                    "VALUES (:fileId, :questionId, :A, :B, :C, :D);";
             int id = (int) conn.createQuery(sql)
                     .addParameter("fileId", quiz.getFileId())
                     .addParameter("questionId", quiz.getQuestionId())

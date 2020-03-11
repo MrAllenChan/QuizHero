@@ -17,7 +17,7 @@ import java.util.Map;
 
 public final class ApiServer {
 
-    public static boolean INITIALIZE_WITH_SAMPLE_DATA = true;
+    public static boolean INITIALIZE_WITH_SAMPLE_DATA = false;
     public static int PORT = 7001;
     private static Javalin app;
 
@@ -36,7 +36,7 @@ public final class ApiServer {
 
 //        app.config.addStaticFiles("/public");
         app = Javalin.create(config -> {config.addStaticFiles("/public");
-                                        config.enableCorsForAllOrigins();}).start(7001);
+                                        config.enableCorsForAllOrigins();}).start(PORT);
 //                .addStaticFiles("/") // Other static assets, external to the ReactJS application
 //                .addSinglePageRoot("/", "/public/index.html")   // Catch-all route for the single-page application;   // The ReactJS application
 //                .enableCorsForAllOrigins();
@@ -47,8 +47,6 @@ public final class ApiServer {
         postRecords(recordDao);
 
         startJavalin();
-//        getReviewsForCourse(reviewDao);
-//        postReviewForCourse(reviewDao);
 
         // Handle exceptions
         app.exception(ApiError.class, (exception, ctx) -> {
@@ -75,7 +73,6 @@ public final class ApiServer {
         Gson gson = new Gson();
         JavalinJson.setFromJsonMapper(gson::fromJson);
         JavalinJson.setToJsonMapper(gson::toJson);
-
 //        app.start(PORT);
     }
 

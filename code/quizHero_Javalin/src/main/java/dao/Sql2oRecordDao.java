@@ -52,16 +52,18 @@ public class Sql2oRecordDao implements RecordDao {
                         .addParameter("countC", map.getOrDefault('C', 0))
                         .addParameter("countD", map.getOrDefault('D', 0))
                         .executeUpdate();
+                System.out.println("New record inserted into Quiz table.");
             } catch (Sql2oException e2) {
                 throw new DaoException("Unable to add new record to quiz", e2);
             }
         }
         else { // record of an existing quiz question
-            sql = "UPDATE Quiz Set " + answer + " = " + answer + " + 1 WHERE fileId = " + fileId + " AND questionId = " + questionId;
+            sql = "UPDATE Quiz Set " + answer + " = " + answer + " + 1 " +
+                    "WHERE fileId = " + fileId + " AND questionId = " + questionId;
             System.out.println(sql);
-
             try (Connection conn = sql2o.open()) {
                 conn.createQuery(sql).executeUpdate();
+                System.out.println("New record updated in Quiz table.");
             } catch (Sql2oException ex) {
                 throw new DaoException("Unable to update record to quiz", ex);
             }
