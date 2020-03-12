@@ -1,7 +1,7 @@
 import { Upload, message, Button, Icon } from 'antd';
 import React from "react";
 import Marpit from '@marp-team/marpit'
-import axios from 'axios'
+// import axios from 'axios'
 
 
 // const fs = require('fs');
@@ -184,11 +184,11 @@ class MyUpload extends React.Component{
                 var line = quizArray[j].split(" ");
                 if (line.length > 1) {
                     console.log(line)
-                    if (line[1]=="Question:") {
+                    if (line[1]==="Question:") {
                         // parse question
                         var parsedQuestion = line.slice(2, line.length);
                         quiz.question = parsedQuestion.join(" ");
-                    } else if (line[1].charAt(0) == '*') {
+                    } else if (line[1].charAt(0) === '*') {
                         // parse correct answers
                         quiz.answers.push({
                             type : choice,
@@ -266,7 +266,7 @@ class MyUpload extends React.Component{
                     {...props}>
 
                     <Button>
-                        <Icon type="upload" /> Click to Upload
+                        <Icon type = 'upload' /> Click to Upload
                     </Button>
 
                 </Upload>

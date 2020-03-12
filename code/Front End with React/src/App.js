@@ -39,9 +39,9 @@ class App extends Component {
 
                     <MyUpload callback={this.callback}/>
 
-                    <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-                        Learn QuizHero
-                    </a>
+                    {/*<a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">*/}
+                    {/*    Learn QuizHero*/}
+                    {/*</a>*/}
                 </header>
             </div>
         )
