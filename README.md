@@ -19,10 +19,10 @@ This project uses Marpit framework to convert Markdown and CSS themes to slide d
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/configuration.jpg)
 
-## Project Instrctions
+## After you run the project
 
-The front-end was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). We use an industrial React UI library `antd`, which contains a set of high quality components to develop our front-end. Marpit is credited for helping us creating slide deck from Markdown. 
+Once you start running the project, you can go to http://localhost:7000/ (or the url displayed after "[main] INFO io.javalin.Javalin - Listening on") on your browser. You will have a start index page displayed on your browser with our logo "Quiz Hero" and an upload button.
 
-Once you start running the project, you can go to http://localhost:7000/ (or the url displayed after "[main] INFO io.javalin.Javalin - Listening on") on your browser. You will have a start index page displayed on your browser with our logo "Quiz Hero" and an upload button. 
+Now, You can upload any Markdown file as long as the markdown format observes the rules we make. We provide a sample markdown file called "questions.md" that contains quiz questions, and you can upload this file as a test. The markdown file will be convert to a slide-type html page. After successfully uploading the file, you can click the name of the file to start a quiz, or click the download button and open the downloaded html file. Every reponse to quiz questions will be recorded in the table created on backend side. You can see this communication in the run window.
 
-Now, You can upload any Markdown file as long as the markdown format observes the rules we make. We provide a sample markdown file called "**questions.md**" that contains quiz questions, and you can upload this file as a test. The markdown file will be convert to a slide-type html page. After successfully uploading the file, you can click the name of the file to start a quiz, or click the download button and open the downloaded html file. Every reponse to quiz questions will be recorded in the table created on backend side. You can see this communication in the run window.
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/UploadPage.jpg)
