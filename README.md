@@ -25,4 +25,4 @@ Once you start running the project, you can go to http://localhost:7000/ (or the
 
 Now, You can upload any Markdown file as long as the markdown format observes the rules we make. We provide a sample markdown file called "questions.md" that contains quiz questions, and you can upload this file as a test. The markdown file will be convert to a slide-type html page. After successfully uploading the file, you can click the name of the file to start a quiz, or click the download button and open the downloaded html file. Every reponse to quiz questions will be recorded in the table created on backend side. You can see this communication in the run window.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/UploadPage.jpg)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/UploadPage.png)
