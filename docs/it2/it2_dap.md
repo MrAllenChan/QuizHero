@@ -5,15 +5,12 @@
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it2/it2_UML.jpg)
 
-
 # Wireframe
 > One (or a few) simple sketch of how the user interacts with the application. 
 > This could be a sketch of your user interface. 
 > You can draw it with hand and insert it here as an image.
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it2/it2_Wireframe.jpg)
-
-
 
 # Iteration Backlog
 > List the User Stories that you will implement in this iteration.
@@ -40,10 +37,10 @@
 ### What went well?
 - Successfully delivered the feature of uploading a Markdown file with quiz content and convert it to online quiz.
 - Successfully delivered the feature of students answering quiz questions online. Additionally the quiz choices are shuffled every time a student click on the quiz link.
-- Successfully delivered the feature of communicating between frontend and backend. Now quiz reponses can be stored in the table created on backend side.
+- Successfully delivered the feature of communicating between frontend and backend. Now quiz responses can be stored in the table created on backend side.
 
 ### Challenges we met & Our solutions.
-- We found it hard to decide on the syntax for creating quiz questions and choices. For now we land on using ">", " * []" and " * [ x ]" to represent questions, choices and correct choice. See question.md for example question syntax.
-- We met some difficulties when we tried to connect our frontend with backend. We solved it by adding static files built by frontend project to Javalin configurations.
-- It was hard to decide on how to store quiz responses in backend. For now we limit the quiz questions to be multiple choices with four choices (A B C D) and the database table store the number of responses in A, B, C, D respectively.
+- We discussed a lot on the syntax for creating quiz questions and choices. For now we land on using `>`, `* []` and `* [ x ]` to represent questions, choices and the correct choice. See `questions.md` for example question syntax.
+- We met some difficulties when we tried to connect our frontend with backend. We solved it by adding static files built from React project to Javalin Resources folder.
+- We discussed a lot on the database design and the format of the JSON object. We needed to decide on how to store quiz responses in backend. For now we limit the quiz questions to be multiple choices with four choices (A B C D) and the database table store the number of responses of A, B, C, D respectively.
 
