@@ -13,7 +13,7 @@ Users can create different versions of presentations for instructors and student
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/configuration.jpg)
 
-## Front-end: Instrctions
+## Project Instrctions
 
 The front-end was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). We use an industrial React UI library `antd`, which contains a set of high quality components to develop our front-end. Marpit is credited for helping us creating slide deck from Markdown. 
 
