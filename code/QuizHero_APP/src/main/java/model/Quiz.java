@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+// A Quiz object corresponds to a single question in a file
 public class Quiz {
 
     private int id;
@@ -17,22 +18,6 @@ public class Quiz {
     private int countD;
 
 //    private HashMap<Character,Integer> count;
-
-    public int getCountA() {
-        return countA;
-    }
-
-    public int getCountB() {
-        return countB;
-    }
-
-    public int getCountC() {
-        return countC;
-    }
-
-    public int getCountD() {
-        return countD;
-    }
 
     public Quiz(int fileId, int questionId) {
         this.fileId = fileId;
@@ -53,6 +38,22 @@ public class Quiz {
 //        this.questionId = questionId;
 //        this.count = count;
 //    }
+
+    public int getCountA() {
+        return countA;
+    }
+
+    public int getCountB() {
+        return countB;
+    }
+
+    public int getCountC() {
+        return countC;
+    }
+
+    public int getCountD() {
+        return countD;
+    }
 
     public int getId() {
         return id;

@@ -21,6 +21,7 @@ public class Sql2oRecordDao implements RecordDao {
 
     @Override
     public void add(Record record) throws DaoException {
+//        get file id, question id and the answer of a student
         int fileId = record.getFileId();
         int questionId = record.getQuestionId();
         String answer = "count" + record.getChoice();

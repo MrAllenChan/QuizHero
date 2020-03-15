@@ -2,7 +2,6 @@ package dao;
 
 import exception.DaoException;
 import model.Quiz;
-import org.eclipse.jetty.websocket.api.util.QuoteUtil;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
@@ -17,7 +16,33 @@ public class Sql2oQuizDao implements QuizDao {
     }
 
     @Override
-    public List<Quiz> getQuizStat() {
+    public List<Quiz> getQuizStatByFileId(int fileId) {
+        try (Connection conn = sql2o.open()) {
+            String sql = "SELECT * FROM Quiz Where FileId = " +
+                    fileId + ";";
+            return conn.createQuery(sql).executeAndFetch(Quiz.class);
+        }
+        catch (Sql2oException ex) {
+            throw new DaoException("Cannot find any quiz with file ID: " + fileId, ex);
+        }
+    }
+
+    @Override
+    public List<Quiz> getSingleQuizStat(int fileId, int questionId) {
+        try (Connection conn = sql2o.open()) {
+            String sql = "SELECT * FROM Quiz Where FileId = " +
+                    fileId + " AND QuestionId = " + questionId + ";";
+            return conn.createQuery(sql).executeAndFetch(Quiz.class);
+        }
+        catch (Sql2oException ex) {
+            throw new DaoException("Cannot find this single Quiz with file ID: " +
+                    fileId + " and question ID: " + questionId, ex);
+        }
+    }
+
+
+    @Override
+    public List<Quiz> getAllQuizStat() {
         try (Connection conn = sql2o.open()) {
             String sql = "SELECT * FROM Quiz;";
             return conn.createQuery(sql).executeAndFetch(Quiz.class);

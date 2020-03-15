@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface QuizDao {
     void add(Quiz quiz) throws DaoException;
-    List<Quiz> getQuizStat();
+    List<Quiz> getAllQuizStat();
+    List<Quiz> getQuizStatByFileId(int fileId);
+    List<Quiz> getSingleQuizStat(int fileId, int questionId);
 }

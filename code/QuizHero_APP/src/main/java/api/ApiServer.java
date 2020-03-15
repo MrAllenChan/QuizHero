@@ -34,16 +34,11 @@ public final class ApiServer {
             DaoUtil.addSampleQuizzes(quizDao);
         }
 
-//        app.config.addStaticFiles("/public");
-        app = Javalin.create(config -> {config.addStaticFiles("/public");
-                                        config.enableCorsForAllOrigins();}).start(PORT);
-//                .addStaticFiles("/") // Other static assets, external to the ReactJS application
-//                .addSinglePageRoot("/", "/public/index.html")   // Catch-all route for the single-page application;   // The ReactJS application
-//                .enableCorsForAllOrigins();
-
         // Routing
-//        getHomepage();
-        getQuizStat(quizDao);
+        getHomepage();
+        getAllQuizStat(quizDao);
+        getQuizStatByFileId(quizDao);
+        getSingleQuizStat(quizDao);
         postRecords(recordDao);
 
         startJavalin();
@@ -58,7 +53,7 @@ public final class ApiServer {
             ctx.json(jsonMap);
         });
 
-        // runs after every request (even if an exception occurred)
+//        runs after every request (even if an exception occurred)
 //        app.after(ctx -> {
 //            // run after all requests
 //            ctx.contentType("application/json");
@@ -69,24 +64,48 @@ public final class ApiServer {
         app.stop();
     }
 
-    private static void startJavalin() {
-        Gson gson = new Gson();
-        JavalinJson.setFromJsonMapper(gson::fromJson);
-        JavalinJson.setToJsonMapper(gson::toJson);
-//        app.start(PORT);
-    }
-
     private static void getHomepage() {
-        app.get("/", ctx -> ctx.result("Welcome to QuizHero!"));
+//        app.config.addStaticFiles("/public");
+        app = Javalin.create(config -> {
+            config.addStaticFiles("/public");
+            config.enableCorsForAllOrigins();
+            config.addSinglePageRoot("/", "/public/index.html");
+        // Catch-all route for the single-page application;   // The ReactJS application
+        });
+
+//        app.get("/", ctx -> ctx.result("Welcome to QuizHero!"));
     }
 
-    private static void getQuizStat(QuizDao quizDao) {
+    private static void getAllQuizStat(QuizDao quizDao) {
         // handle HTTP Get request to retrieve all Quiz statistics
         app.get("/quizstat", ctx -> {
-            List<Quiz> quizzes = quizDao.getQuizStat();
+            List<Quiz> quizzes = quizDao.getAllQuizStat();
             ctx.json(quizzes);
             ctx.contentType("application/json");
             ctx.status(200); // everything ok!
+        });
+    }
+
+    private static void getQuizStatByFileId(QuizDao quizDao) {
+        // handle HTTP Get request to retrieve all Quiz statistics of a single file
+        app.get("/quizstat/:fileid", ctx -> {
+            // TODO: implement me
+            int fileId = Integer.parseInt(ctx.pathParam("fileid"));
+            List<Quiz> quizzes = quizDao.getQuizStatByFileId(fileId);
+            ctx.json(quizzes);
+            ctx.status(200);
+        });
+    }
+
+    private static void getSingleQuizStat(QuizDao quizDao) {
+        // handle HTTP Get request to retrieve all Quiz statistics of a single file
+        app.get("/quizstat/:fileid/:questionid", ctx -> {
+            // TODO: implement me
+            int fileId = Integer.parseInt(ctx.pathParam("fileid"));
+            int questionId = Integer.parseInt(ctx.pathParam("questionid"));
+            List<Quiz> quizzes = quizDao.getSingleQuizStat(fileId, questionId);
+            ctx.json(quizzes.get(0));
+            ctx.status(200);
         });
     }
 
@@ -105,34 +124,10 @@ public final class ApiServer {
         });
     }
 
-//    private static void getReviewsForCourse(ReviewDao reviewDao) {
-//        // handle HTTP Get request to retrieve all reviews for a course
-//        app.get("/courses/:id/reviews", ctx -> {
-//            // TODO: implement me
-//            int courseId = Integer.parseInt(ctx.pathParam("id"));
-//            List<Review> reviews = reviewDao.findByCourseId(courseId);
-//            ctx.json(reviews);
-//            ctx.status(200);
-//        });
-//    }
-//
-//    private static void postReviewForCourse(ReviewDao reviewDao) {
-//        // client adds a review for a course (given its id) using HTTP POST request
-//        app.post("/courses/:id/reviews", ctx -> {
-//            // TODO: implement me
-//            Review review = ctx.bodyAsClass(Review.class);
-//            if (Integer.parseInt(ctx.pathParam("id")) != review.getCourseId()) {
-//                throw new ApiError("course id in the review not matched with course id " +
-//                        "in the http request!", 400);
-//            }
-//
-//            try {
-//                reviewDao.add(review);
-//                ctx.status(201); // successfully created
-//                ctx.json(review);
-//            } catch (DaoException ex) {
-//                throw new ApiError(ex.getMessage(), 500); // server internal error
-//            }
-//        });
-//    }
+    private static void startJavalin() {
+        Gson gson = new Gson();
+        JavalinJson.setFromJsonMapper(gson::fromJson);
+        JavalinJson.setToJsonMapper(gson::toJson);
+        app.start(PORT);
+    }
 }
