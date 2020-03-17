@@ -1,10 +1,8 @@
 package model;
 
-import org.jetbrains.annotations.NotNull;
-
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 // A Quiz object corresponds to a single question in a file
 public class Quiz {
@@ -16,8 +14,8 @@ public class Quiz {
     private int countB;
     private int countC;
     private int countD;
-
-//    private HashMap<Character,Integer> count;
+    private HashMap<Character, String> count;
+//    private HashMap<Character, String> statistics;
 
     public Quiz(int fileId, int questionId) {
         this.fileId = fileId;
@@ -31,13 +29,9 @@ public class Quiz {
         this.countB = countB;
         this.countC = countC;
         this.countD = countD;
+        getCountMap();
+//        statistics = calPercentage();
     }
-
-    //    public Quiz(int fileId, int questionId, HashMap<Character, Integer> count) {
-//        this.fileId = fileId;
-//        this.questionId = questionId;
-//        this.count = count;
-//    }
 
     public int getCountA() {
         return countA;
@@ -71,33 +65,42 @@ public class Quiz {
         return questionId;
     }
 
-//    public HashMap<Character, Integer> getCount() {
-//        return count;
-//    }
-
-    public HashMap<Character, String> getStatistic(@NotNull HashMap<Character,Integer> count){
-        int total=0;
-        HashMap<Character,String> result = new HashMap<>();
-
-        //get total students who answered
-        for (Map.Entry mapElement : count.entrySet()) {
-            total += (int)mapElement.getValue();
+    public void getCountMap() {
+        count = new HashMap<>();
+        DecimalFormat df = new DecimalFormat("0.00");
+        float total = countA + countB + countC + countD;
+        count.put('A', df.format(countA / total * 100) + "%");
+        count.put('B', df.format(countB / total * 100) + "%");
+        count.put('C', df.format(countC / total * 100) + "%");
+        count.put('D', df.format(countD / total * 100) + "%");
+        for (String val : count.values()) {
+            System.out.println(val);
         }
-
-        if(total == 0) return result;
-
-        for (Map.Entry mapElement : count.entrySet()) {
-            char key = (char)mapElement.getKey();
-            int value = (int)mapElement.getValue();
-
-            String showResult = "";
-
-            showResult = String.valueOf(Math.round(value/total));
-            showResult += "%";
-
-            result.put(key,showResult);
-        }
-
-            return result;
     }
+
+//    public HashMap<Character, String> calPercentage(){
+//        int total = 0;
+//        HashMap<Character, String> result = new HashMap<>();
+//
+//        // get the total number of students who answered this Quiz question
+//        for (Integer num : count.values()) {
+//            total += num;
+//        }
+//
+//        if (total == 0) return result;
+//
+//        for (Map.Entry<Character, Integer> entry : count.entrySet()) {
+//            char key = entry.getKey();
+//            int value = entry.getValue();
+//
+//            String percentage = "";
+//
+//            percentage = String.valueOf((float)value/(float)total);
+//            percentage += "%";
+//
+//            result.put(key, percentage);
+//        }
+//
+//        return result;
+//    }
 }

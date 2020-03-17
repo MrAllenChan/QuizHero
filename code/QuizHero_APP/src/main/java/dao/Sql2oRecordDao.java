@@ -31,16 +31,16 @@ public class Sql2oRecordDao implements RecordDao {
 //        Record tempRecord = new Record(9,9,'N');
 
         List<Map<String, Object>> listFromTable = new ArrayList<>();
-        Map<String,Object> tmp = new HashMap<String,Object>();
-        listFromTable.add(tmp);
+//        Map<String,Object> tmp = new HashMap<>();
+//        listFromTable.add(tmp);
         String sql = "SELECT * FROM Quiz WHERE fileId = " + fileId + " AND questionId = " + questionId + ";";
         try (Connection conn = sql2o.open()) {
             listFromTable = conn.createQuery(sql).executeAndFetchTable().asList();
         } catch (Sql2oException ex) {
-            throw new DaoException("Unable to add new record to quiz", ex);
+            throw new DaoException("Unable to find this single quiz!", ex);
         }
 
-//        record of a new Quiz question
+        // record of a new Quiz question
         if (listFromTable.isEmpty()) {
             sql = "INSERT INTO Quiz(fileId, questionId, countA, countB, countC, countD) " +
                     "VALUES (:fileId, :questionId, :countA, :countB, :countC, :countD);";
@@ -66,7 +66,7 @@ public class Sql2oRecordDao implements RecordDao {
                 conn.createQuery(sql).executeUpdate();
                 System.out.println("New record updated in Quiz table.");
             } catch (Sql2oException ex) {
-                throw new DaoException("Unable to update record to quiz", ex);
+                throw new DaoException("Unable to update record to Quiz table", ex);
             }
         }
     }

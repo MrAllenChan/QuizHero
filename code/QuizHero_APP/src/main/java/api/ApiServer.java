@@ -65,15 +65,15 @@ public final class ApiServer {
     }
 
     private static void getHomepage() {
-//        app.config.addStaticFiles("/public");
+        // Catch-all route for the single-page application;
+        // The ReactJS application
         app = Javalin.create(config -> {
             config.addStaticFiles("/public");
             config.enableCorsForAllOrigins();
             config.addSinglePageRoot("/", "/public/index.html");
-        // Catch-all route for the single-page application;   // The ReactJS application
         });
 
-//        app.get("/", ctx -> ctx.result("Welcome to QuizHero!"));
+        // app.get("/", ctx -> ctx.result("Welcome to QuizHero!"));
     }
 
     private static void getAllQuizStat(QuizDao quizDao) {
