@@ -29,9 +29,8 @@ this is iteration 3 design and planning document.
 - Combine the slides html (converted from Markdown in iteration 1) and the interactive Quiz html (parsed from Markdown in interation 2) to a complete functional student version (Combine the first two must haves listed in iteration backlog above).
 - As the first step of the instructor version, a Quiz statistics page is created to show the instructor how students performed in the Quiz.
 
-```# Retrospective
+<!---# Retrospective--->
 
-### What went well?
+<!---### What went well?--->
 
-### Challenges we met & Our solutions.
-```
+<!---### Challenges we met & Our solutions.--->
