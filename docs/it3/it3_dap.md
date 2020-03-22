@@ -17,6 +17,7 @@ this is iteration 3 design and planning document.
 # Iteration Backlog
 > List the User Stories that you will implement in this iteration.
 
+- As a student, I want to answer the quiz so that I can interact with the instructor during class.
 - As a student, I want to view the slides uploaded by the instructer so that I can keep pace with the lesson.
 - As an instructor, I want to collect students' answers and see the statistical data on my computer, so that I can know how students perform.
 
@@ -25,11 +26,12 @@ this is iteration 3 design and planning document.
 > This list will change and it is good to keep it updated. 
 > It does not need to be exhustive.
 
-- Combine the slide html and the Quiz html to a functional student version.
-- Statistic (Quiz final page) First step of instructor version.
+- Combine the slides html (converted from Markdown in iteration 1) and the interactive Quiz html (parsed from Markdown in interation 2) to a complete functional student version (Combine the first two must haves listed in iteration backlog above).
+- As the first step of the instructor version, a Quiz statistics page is created to show the instructor how students performed in the Quiz.
 
 ```# Retrospective
 
-```### What went well?
+### What went well?
 
-```### Challenges we met & Our solutions.
+### Challenges we met & Our solutions.
+```
