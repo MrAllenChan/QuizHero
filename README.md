@@ -14,7 +14,7 @@ This project uses Marpit framework to convert Markdown and CSS themes to slide d
 2. Use any popular IDE (IntelliJ IDEA recommended) to open the project **code/QuizHero_APP** and import as a **Gradle** project.
 3. Make sure you have installed JDK 11. Also, set Project SDK as Java 11 (In IntelliJ, open File -> Project Structure -> Project Settings/Project, set Project SDK as 11). 
 4. Under Run/Debug Configurations, set the classpath of module as "QuizHero.main". We also recommend that JRE 11 is used to run the project.
-5. Try to build the project, if build successfully, run "RunServer.main" under src/main/java/api. 
+5. Try to build the project, if build successfully, run "**RunServer.main**" under src/main/java/api. 
 6. If there is something wrong when building the project, in Gradle settings under Preferences, use Gradle from 'wrapper task' in Gradle build script (see below). Then build the project and run "RunServer.main" again, you should see the Javalin framework has begun to work now.
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/configuration.jpg)
@@ -23,7 +23,9 @@ This project uses Marpit framework to convert Markdown and CSS themes to slide d
 
 Once you start running the project, you can go to http://localhost:7000/ (or the url displayed after "[main] INFO io.javalin.Javalin - Listening on") on your browser. You will see a start index page displayed on your browser with our logo "Quiz Hero" and an upload button.
 
-Now, You can upload any Markdown file as long as the markdown format observes the rules we make. We provide a sample markdown file called **"questions.md"** that contains sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page. After successfully uploading the file, you can click the **name** of the file to start a quiz, or click the download button and open the downloaded html file. Every response to a single quiz question will be recorded into the database created on back-end side. You can see this communication in the run window.
+Now, You can upload any Markdown file as long as the markdown format observes the rules we make. We provide a sample markdown file called **"questions.md"** that contains sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page. 
+
+After successfully uploading the file, you can click the **name** of the file to start a quiz, or click the **download button** and open the downloaded html file. Every response to a single quiz question will be recorded into the database created on back-end side. You can see this communication in the run window.
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/UploadPage.png)
 
