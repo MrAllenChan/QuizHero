@@ -10,7 +10,7 @@
 > This could be a sketch of your user interface. 
 > You can draw it with hand and insert it here as an image.
 - Students can enter the quiz by clicking next button on slides, and do the quiz in a new web page
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it1/wireframe1.PNG)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it1/it1_wireframe2.png)
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it2/it2_Wireframe.jpg)
 - Instructor can see the statistical data of each question
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/it3_wireframe.jpg)
