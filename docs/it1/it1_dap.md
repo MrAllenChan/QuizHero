@@ -11,7 +11,7 @@ This could be a sketch of your user interface.
 You can draw it with hand and insert it here as an image.
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it1/wireframe1.PNG)
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it1/wireframe2.PNG)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it1/it1_wireframe2.png)
 
 # Iteration Backlog
 List the User Stories that you will implement in this iteration.
