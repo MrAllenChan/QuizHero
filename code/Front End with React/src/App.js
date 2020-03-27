@@ -1,8 +1,16 @@
 import React , { Component } from  'react';
 import logo from './fig/logo.png';
 import './App.css';
+import {Button} from 'antd';
 import MyUpload from './components/Upload'
 import QuizPage from "./components/QuizPage";
+import QuizStatisticPage from './components/QuizStatisticPage'
+import {
+    BrowserRouter,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
 
 class App extends Component {
 
@@ -19,6 +27,11 @@ class App extends Component {
     callback=(quiz)=>{
         this.setState({quiz})
         this.setState({quizFlag : 1});
+    }
+
+    statisticButtonClicked=()=>{
+        // window.location.reload("/quizStatistic");
+        window.location = "/quizStatistic"
     }
 
     renderQuizPage() {
@@ -38,7 +51,7 @@ class App extends Component {
                     <img src={logo} className="App-logo" alt="logo"/>
 
                     <MyUpload callback={this.callback}/>
-
+                    <Button onClick={this.statisticButtonClicked} style={{margin:"20px"}} type="primary">Show Statistic</Button>
                     {/*<a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">*/}
                     {/*    Learn QuizHero*/}
                     {/*</a>*/}
@@ -51,7 +64,15 @@ class App extends Component {
         return (
             <div>
                 {this.state.quizFlag ? this.renderQuizPage() : this.renderUploadPage()}
-            </div>
+            
+                <BrowserRouter>
+       <div>
+         <Route path="/" component={App}>
+           <Route path="/quizStatistic" component={QuizStatisticPage}/>
+         </Route>
+      </div>
+    </BrowserRouter>
+    </div>
         );
     }
 
