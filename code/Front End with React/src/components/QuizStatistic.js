@@ -41,7 +41,7 @@ class QuizStatistic extends React.Component {
             },
             xAxis: {
                 name:"Answer",
-                data: ["A", "B", "C", "D"],
+                data: ["Q1", "Q2", "Q3", "Q4"],
                 //data: ["技师1", "技师2", "技师3", "技师4", "技师5", "技师6"]
             },
             yAxis: {
