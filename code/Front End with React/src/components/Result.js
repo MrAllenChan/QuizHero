@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransitionGroup } from 'react-transition-group';
+import QuizStatictic from './QuizStatistic'
 
 function Result(props) {
     return (
+        <div>
         <CSSTransitionGroup
             className="container result"
             component="div"
@@ -17,6 +19,8 @@ function Result(props) {
                 Thank you for taking the quiz, your score is <strong>{props.quizResult}</strong>!
             </div>
         </CSSTransitionGroup>
+        <QuizStatictic/>
+        </div>
     );
 }
 
