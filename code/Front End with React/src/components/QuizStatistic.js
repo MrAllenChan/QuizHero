@@ -1,11 +1,29 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
+import axios from 'axios'
+
 
 
 class QuizStatistic extends React.Component {
 
     constructor(props){
         super(props);
+    }
+
+    componentDidMount(){
+        const BASE_URL = document.location.origin;
+        let params = {
+            fileId : 1,
+            questionId: 1,
+        }
+        axios
+        .get(BASE_URL+"/quizstat", {params})
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((error) => {
+            console.log("error")
+        });
     }
 
     render() {
