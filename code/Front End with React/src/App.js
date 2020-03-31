@@ -4,6 +4,7 @@ import './App.css';
 import {Button} from 'antd';
 import MyUpload from './components/Upload'
 import QuizPage from "./components/QuizPage";
+import quizStatistic from "./components/QuizStatistic"
 // import {
 //     BrowserRouter,
 //     Switch,

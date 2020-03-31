@@ -32,6 +32,7 @@ public class DaoFactory {
                 "id INTEGER PRIMARY KEY," +
                 "fileId INTEGER," +
                 "questionId INTEGER," +
+                "answer VARCHAR(30)," +
                 "countA INTEGER," +
                 "countB INTEGER," +
                 "countC INTEGER," +
