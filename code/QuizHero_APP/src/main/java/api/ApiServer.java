@@ -80,9 +80,10 @@ public final class ApiServer {
         // handle HTTP Get request to retrieve all Quiz statistics
         app.get("/quizstat", ctx -> {
             List<Quiz> quizzes = quizDao.getAllQuizStat();
-            String fileId = ctx.queryParam("fileId");
+            int fileId = Integer.parseInt(ctx.queryParam("fileId"));
             System.out.println("File id: " + fileId);
-            ctx.json(quizzes);
+            List<Quiz> quizzesByFileId = quizDao.getQuizStatByFileId(fileId);
+            ctx.json(quizzesByFileId);
             ctx.contentType("application/json");
             ctx.status(200); // everything ok!
         });
