@@ -2,6 +2,7 @@ import { Upload, message, Button, Icon } from 'antd';
 import React from "react";
 import Marpit from '@marp-team/marpit'
 // import axios from 'axios'
+import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading } from 'spectacle';
 
 
 // const fs = require('fs');
@@ -15,10 +16,31 @@ const props = {
 
 };
 
+// SPECTACLE_CLI_THEME_START
+const theme_s = {};
+// SPECTACLE_CLI_THEME_END
 
+// SPECTACLE_CLI_TEMPLATE_START
+const template = () => (
+    <FlexBox
+        justifyContent="space-between"
+        position="absolute"
+        bottom={0}
+        width={1}
+    >
+        <Box padding="0 1em">
+            <FullScreen />
+        </Box>
+        <Box padding="1em">
+            <Progress />
+        </Box>
+    </FlexBox>
+);
+// SPECTACLE_CLI_TEMPLATE_END
 
+// Marpit
 const marpit = new Marpit();
-// 2. Add theme CSS
+// Add Marpit theme CSS
 const theme = `
             /* @theme example */
 
