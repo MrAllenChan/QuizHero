@@ -16,7 +16,8 @@ function Result(props) {
             transitionAppearTimeout={500}
         >
             <div>
-                Thank you for taking the quiz, your score is <strong>{props.quizResult}</strong>!
+                {/* Thank you for taking the quiz, your score is <strong>{props.quizResult}</strong>! */}
+                Thank you for finishing the quiz, here is the statistics:
             </div>
         </CSSTransitionGroup>
         <QuizStatictic/>
