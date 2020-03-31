@@ -54,7 +54,7 @@ class QuizStatistic extends React.Component {
                 axisPointer: {type: 'shadow'},
             },
             legend: {
-                data:['台次','钣面数','平均(面/天)'],
+                data:['A', 'B', 'C', 'D'],
                 x:'left'
             },
             xAxis: {
@@ -67,7 +67,7 @@ class QuizStatistic extends React.Component {
             },
             series: [
                 {
-                    name: '台次',
+                    name: 'A',
                     type: 'bar',
                     barGap: 0,
                     barWidth : 30,
@@ -78,7 +78,7 @@ class QuizStatistic extends React.Component {
                     }
                 },
                 {
-                    name: '钣面数',
+                    name: 'B',
                     type: 'bar',
                     barWidth : 30,
                     data:[10, 22, 5, 20],
@@ -88,12 +88,21 @@ class QuizStatistic extends React.Component {
                     }
                 },
                 {
-                    name:'平均(面/天)',
-                    type:'line',
-                    data:[5.5, 10.2, 22, 15],
-                    //data:[5.5, 10.2, 22, 15, 6.3, 10.2],
+                    name:'C',
+                    type:'bar',
+                    data:[5, 10, 22, 15],
+                    barWidth: 30,
                     itemStyle:{
                         normal:{color:'#e5d930'}
+                    }
+                },
+                {
+                    name:'D',
+                    type:'bar',
+                    data:[17, 8, 5, 13],
+                    barWidth: 30,
+                    itemStyle:{
+                        normal:{color:'#4cabce'}
                     }
                 }
             ]
