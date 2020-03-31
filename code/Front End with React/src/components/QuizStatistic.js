@@ -8,6 +8,9 @@ class QuizStatistic extends React.Component {
 
     constructor(props){
         super(props);
+        this.state = {
+            quizData : []
+        }
     }
 
     componentDidMount(){
@@ -19,6 +22,7 @@ class QuizStatistic extends React.Component {
         axios
         .get(BASE_URL+"/quizstat", {params})
         .then((res) => {
+            this.setState({quizData : res});
             console.log(res);
         })
         .catch((error) => {
