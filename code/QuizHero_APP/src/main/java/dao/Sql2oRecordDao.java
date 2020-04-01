@@ -24,7 +24,7 @@ public class Sql2oRecordDao implements RecordDao {
 //        get file id, question id and the answer of a student
         int fileId = record.getFileId();
         int questionId = record.getQuestionId();
-        String answer = "count" + record.getChoice();
+        String choice = "count" + record.getChoice();
         Map<Character, Integer> map = new HashMap<>();
         map.put(record.getChoice(), 1);
 
@@ -42,12 +42,13 @@ public class Sql2oRecordDao implements RecordDao {
 
         // record of a new Quiz question
         if (listFromTable.isEmpty()) {
-            sql = "INSERT INTO Quiz(fileId, questionId, countA, countB, countC, countD) " +
-                    "VALUES (:fileId, :questionId, :countA, :countB, :countC, :countD);";
+            sql = "INSERT INTO Quiz(fileId, questionId, answer, countA, countB, countC, countD) " +
+                    "VALUES (:fileId, :questionId, :answer, :countA, :countB, :countC, :countD);";
             try (Connection conn = sql2o.open()) {
                 conn.createQuery(sql)
                         .addParameter("fileId", fileId)
                         .addParameter("questionId", questionId)
+                        .addParameter("answer", "N/A")
                         .addParameter("countA", map.getOrDefault('A', 0))
                         .addParameter("countB", map.getOrDefault('B', 0))
                         .addParameter("countC", map.getOrDefault('C', 0))
@@ -59,7 +60,7 @@ public class Sql2oRecordDao implements RecordDao {
             }
         }
         else { // record of an existing quiz question
-            sql = "UPDATE Quiz Set " + answer + " = " + answer + " + 1 " +
+            sql = "UPDATE Quiz Set " + choice + " = " + choice + " + 1 " +
                     "WHERE fileId = " + fileId + " AND questionId = " + questionId;
             System.out.println(sql);
             try (Connection conn = sql2o.open()) {

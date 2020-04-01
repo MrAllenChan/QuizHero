@@ -10,6 +10,7 @@ public class Quiz {
     private int id;
     private int fileId;
     private int questionId;
+    private String answer;
     private int countA;
     private int countB;
     private int countC;
@@ -22,9 +23,10 @@ public class Quiz {
         this.questionId = questionId;
     }
 
-    public Quiz(int fileId, int questionId, int countA, int countB, int countC, int countD) {
+    public Quiz(int fileId, int questionId, String answer, int countA, int countB, int countC, int countD) {
         this.fileId = fileId;
         this.questionId = questionId;
+        this.answer = answer;
         this.countA = countA;
         this.countB = countB;
         this.countC = countC;
@@ -32,6 +34,10 @@ public class Quiz {
         getCountMap();
 //        statistics = calPercentage();
     }
+
+    public String getAnswer() {return answer;}
+
+    public String setAnswer() {return answer;}
 
     public int getCountA() {
         return countA;
