@@ -19,6 +19,7 @@ class App extends Component {
 
         this.state = {
             quiz:'',
+            slidesFlag: 0,
             quizFlag: 0
         };
 
@@ -26,7 +27,11 @@ class App extends Component {
 
     callback=(quiz)=>{
         this.setState({quiz})
-        this.setState({quizFlag : 1});
+        this.setState({slidesFlag : 1});
+    }
+
+    callback2=()=>{
+        this.setState({quizFlag : 1})
     }
 
     statisticButtonClicked=()=>{
@@ -34,10 +39,14 @@ class App extends Component {
         window.location = "/quizStatistic"
     }
 
-    renderQuizPage() {
+    renderStudentPage() {
         console.log(this.state.quiz)
         return (
-            <Slides />
+            <div>
+                {this.state.quizFlag ? <QuizPage questions={this.state.quiz}/> : <Slides callback2={this.callback2}/>}
+            </div>
+
+            // <Slides />
             // <QuizPage
             // questions={this.state.quiz}
             // />
@@ -63,7 +72,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                {this.state.quizFlag ? this.renderQuizPage() : this.renderUploadPage()}
+                {this.state.slidesFlag ? this.renderStudentPage() : this.renderUploadPage()}
             
                 {/* <BrowserRouter>
        <div>

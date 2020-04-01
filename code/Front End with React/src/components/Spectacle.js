@@ -30,26 +30,52 @@ const template = () => (
 );
 // SPECTACLE_CLI_TEMPLATE_END
 
-const Presentation = () => (
-    <Deck loop theme={theme} template={template}>
-        {/*<Markdown containsSlides>{mdContent}</Markdown>*/}
-        <Slide>
-            <Heading>Welcome to Spectacle</Heading>
-        </Slide>
-        <Slide>
-            <Heading>Next, We will do some in class quiz</Heading>
-            <Upload>
-                <Button>
-                    <Icon type = 'upload' /> Click to Next page
-                </Button>
-            </Upload>
-        </Slide>
-    </Deck>
-);
+// const Presentation = () => (
+//     <Deck loop theme={theme} template={template}>
+//         {/*<Markdown containsSlides>{mdContent}</Markdown>*/}
+//         <Slide>
+//             <Heading>Welcome to Spectacle</Heading>
+//         </Slide>
+//         <Slide>
+//             <Heading>Next, We will do some in class quiz</Heading>
+//             <Upload>
+//                 <Button
+//                     onDownload={this.onDownload}>
+//                     <Icon type = 'upload' /> Click to Next page
+//                 </Button>
+//             </Upload>
+//         </Slide>
+//     </Deck>
+// );
 
 class Slides extends React.Component{
+    constructor(props) {
+        super(props);
+        this.callback2 = props.callback2;
+        // this.beforeUpload.bind = this.beforeUpload.bind(this);
+
+    }
+
+    onClick = () => {
+        this.props.callback2(1);
+    }
+
     render(){
-        return (<Presentation />);
+        return (
+            <Deck loop theme={theme} template={template}>
+                {/*<Markdown containsSlides>{mdContent}</Markdown>*/}
+                <Slide>
+                    <Heading>Welcome to Spectacle</Heading>
+                </Slide>
+                <Slide>
+                    <Heading>Next, We will do some in class quiz</Heading>
+                    <Button
+                        onClick={this.onClick}>
+                        <Icon type = 'upload' /> Click to Next page
+                    </Button>
+                </Slide>
+            </Deck>
+        );
     }
     // render (<Presentation />, document.getElementById('root'));
 }
