@@ -1,6 +1,7 @@
 import { Upload, message, Button, Icon } from 'antd';
 import React from "react";
 import Marpit from '@marp-team/marpit'
+import axios from 'axios';
 // import axios from 'axios'
 
 
@@ -196,6 +197,32 @@ class MyUpload extends React.Component{
                         });
                         var charCode = choice.charCodeAt(0);
                         choice = String.fromCharCode(charCode + 1);
+
+                        // send correct answer to backend
+                        const BASE_URL = document.location.origin;
+                        const formData = {
+                            fileId : 1,
+                            questionId : quizList.length + 1,
+                            answer : String.fromCharCode(charCode),
+                            countA : 0,
+                            countB : 0,
+                            countC : 0,
+                            countD : 0,
+                        }
+                        console.log(formData)
+                        axios
+                            .post(BASE_URL+"/quiz", formData, {
+                                headers: {
+                                "Content-Type": "multipart/form-data"
+                                }
+                            })
+                            .then(() => {
+                                console.log("quiz initialize success");
+                            })
+                            .catch((error) => {
+                                 console.log("error")
+                            });
+
                     } else {
                         // parse wrong answers
                         quiz.answers.push({
