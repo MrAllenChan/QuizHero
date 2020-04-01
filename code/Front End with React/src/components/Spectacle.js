@@ -9,7 +9,12 @@ import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading } fr
 // SPECTACLE_CLI_MD_END
 
 // SPECTACLE_CLI_THEME_START
-const theme = {};
+const theme = {
+    // colors: {
+    //     primary: '#f00',
+    //     secondary: '#00f'
+    // }
+};
 // SPECTACLE_CLI_THEME_END
 
 // SPECTACLE_CLI_TEMPLATE_START
@@ -69,10 +74,13 @@ class Slides extends React.Component{
                 </Slide>
                 <Slide>
                     <Heading>Next, We will do some in class quiz</Heading>
-                    <Button
-                        onClick={this.onClick}>
-                        <Icon type = 'upload' /> Click to Next page
-                    </Button>
+                    <Box padding="1em">
+                        <Button
+                            onClick={this.onClick}>
+                            <Icon type = 'upload' /> Click to Next page
+                        </Button>
+                    </Box>
+
                 </Slide>
             </Deck>
         );

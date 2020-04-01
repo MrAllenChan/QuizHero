@@ -150,7 +150,7 @@ class QuizPage extends Component {
 
     render() {
         return (
-            <div className="App">
+            <div className="Quiz-page">
                 <div className="Quiz-header">
                     {/*<img src={logo} className="App-logo" alt="logo" />*/}
                     {/*<h2>React Quiz</h2>*/}

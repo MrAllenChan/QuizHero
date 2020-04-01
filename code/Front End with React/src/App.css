@@ -19,6 +19,13 @@
   color: black;
 }
 
+.Quiz-page {
+  background-color: aliceblue;
+  color: black;
+  text-align: center;
+  min-height: 100vh;
+}
+
 .Quiz-header {
   background-color: #b3ccff;
   min-height: 20vh;
