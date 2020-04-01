@@ -88,6 +88,7 @@ class Slides extends React.Component{
                     </Box>
 
                 </Slide>
+                <Markdown containsSlides>{this.slides}</Markdown>
             </Deck>
         );
     }
