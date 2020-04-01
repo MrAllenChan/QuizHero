@@ -40,6 +40,10 @@ class App extends Component {
         this.setState({quizFlag : 1})
     }
 
+    callback3=()=>(
+        this.setState({quizFlag : 0})
+    )
+
     statisticButtonClicked=()=>{
         // window.location.reload("/quizStatistic");
         window.location = "/quizStatistic"
@@ -49,7 +53,7 @@ class App extends Component {
         console.log(this.state.quiz)
         return (
             <div>
-                {this.state.quizFlag ? <QuizPage questions={this.state.quiz}/> : <Slides callback2={this.callback2} slidesString={this.state.slidesString}/>}
+                {this.state.quizFlag ? <QuizPage questions={this.state.quiz} callback3={this.callback3}/> : <Slides callback2={this.callback2} slidesString={this.state.slidesString}/>}
             </div>
 
             // <Slides />

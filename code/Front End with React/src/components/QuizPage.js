@@ -21,6 +21,8 @@ class QuizPage extends Component {
             quizQuestions: props.questions
         };
 
+        this.callback3 = props.callback3;
+
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
     }
 
@@ -144,8 +146,9 @@ class QuizPage extends Component {
         );
     }
 
+
     renderResult() {
-        return <Result quizResult={this.state.result} />;
+        return <Result quizResult={this.state.result} callback3={this.callback3} />;
     }
 
     render() {

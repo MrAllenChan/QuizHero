@@ -83,7 +83,7 @@ class Slides extends React.Component{
                     <Box padding="1em">
                         <Button
                             onClick={this.onClick}>
-                            <Icon type = 'upload' /> Click to Next page
+                            <Icon /> Click to start quiz
                         </Button>
                     </Box>
 
