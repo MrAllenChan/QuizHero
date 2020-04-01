@@ -17,7 +17,7 @@ function Result(props) {
         >
             <div>
                 {/* Thank you for taking the quiz, your score is <strong>{props.quizResult}</strong>! */}
-                Thank you for finishing the quiz, here is the statistics:
+                Thank you for finishing the quiz, here are the statistics:
             </div>
         </CSSTransitionGroup>
         <QuizStatictic/>

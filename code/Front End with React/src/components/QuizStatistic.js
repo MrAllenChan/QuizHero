@@ -6,7 +6,6 @@ import axios from 'axios'
 
 class QuizStatistic extends React.Component {
 
-    
     constructor(props){
         super(props);
         this.state = {
@@ -27,10 +26,7 @@ class QuizStatistic extends React.Component {
                 this.setState({quizData : res.data});
                 console.log("res",res);
             }
-            
-
             // console.log(res.data);
-            // console.log(res.status);
         })
         .catch((error) => {
             console.log("error")
@@ -55,32 +51,34 @@ class QuizStatistic extends React.Component {
         // });
 
         // console.log("quiz data",typeof(this.state.quizData))
-        // var jsonArray = this.state.quizData;
+        var jsonArray = this.state.quizData;
         // for(let i=0;i<jsonArray.length;i++){
         //     jsonArray[i].answer = 'B';
         // }
-        var jsonArray = [
-            {
-                "id": 1,
-                "fileId": 1,
-                "questionId": 1,
-                "answer": 'B',
-                "countA": 13,
-                "countB": 14,
-                "countC": 8,
-                "countD": 9
-            },
-            {
-                "id": 2,
-                "fileId": 1,
-                "questionId": 2,
-                "answer": 'C',
-                "countA": 8,
-                "countB": 6,
-                "countC": 25,
-                "countD": 11
-            }
-        ];
+
+        // var jsonArray = [
+        //     {
+        //         "id": 1,
+        //         "fileId": 1,
+        //         "questionId": 1,
+        //         "answer": 'B',
+        //         "countA": 13,
+        //         "countB": 14,
+        //         "countC": 8,
+        //         "countD": 9
+        //     },
+        //     {
+        //         "id": 2,
+        //         "fileId": 1,
+        //         "questionId": 2,
+        //         "answer": 'C',
+        //         "countA": 8,
+        //         "countB": 6,
+        //         "countC": 25,
+        //         "countD": 11
+        //     }
+        // ];
+     
         var quizNum = 0;
         var xAxisData = [];
         var countA = [];
@@ -88,6 +86,8 @@ class QuizStatistic extends React.Component {
         var countC = [];
         var countD = [];
         var answers = [];
+        var correntPercent = [];
+        var color = ['#FE8463', '#C6E579', '#32D3EB'];
 
         for (var index in jsonArray) {
             quizNum = quizNum + 1;
@@ -97,6 +97,22 @@ class QuizStatistic extends React.Component {
             countC.push(jsonArray[index].countC);
             countD.push(jsonArray[index].countD);
             answers.push(jsonArray[index].answer);
+            var total = jsonArray[index].countA + jsonArray[index].countB + jsonArray[index].countC + jsonArray[index].countD;
+            var num = 0;
+            if (jsonArray[index].answer === "A") {
+                num = jsonArray[index].countA;
+            }
+            else if (jsonArray[index].answer === "B") {
+                num = jsonArray[index].countB;
+            }
+            else if (jsonArray[index].answer === "C") {
+                num = jsonArray[index].countC;
+            }
+            else if (jsonArray[index].answer === "D") {
+                num = jsonArray[index].countD;
+            }
+            var percent = num / total * 100;
+            correntPercent.push(percent.toFixed(1));
         }
 
        
@@ -108,46 +124,67 @@ class QuizStatistic extends React.Component {
                 trigger: 'axis',
                 axisPointer: {type: 'shadow'},
             },
-            legend: {
-                // x:'left',
-                // data:["A","B","C","D"]
-                orient: 'horizontal',
-                x:'left',
-                y: 'top',
-                data: [
-                    {
-                        name:'Correct Answer',
-                        // icon : 'image://http://www.webcodepro.net/demos/echarts2/asset/ico/favicon.png',
-                        textStyle:{fontWeight:'bold', color:'green'}
-                    },
-                    {
-                        name:'Incorrect Answer',
-                        // icon : 'image://http://www.webcodepro.net/demos/echarts2/asset/ico/favicon.png',
-                        textStyle:{fontWeight:'bold', color:'blue'}
-                    },
+            // legend: {
+            //     // x:'left',
+            //     // data:["A","B","C","D"]
+            //     orient: 'horizontal',
+            //     x:'center',
+            //     y: 'top',
+            //     data: [
+            //         {
+            //             name: 'Correct Answer',
+            //             textStyle:{fontWeight:'bold', color:'green'}
+            //         },
+            //         {
+            //             name: 'Wrong Answer',
+            //             textStyle:{fontWeight:'bold', color:'blue'}
+            //         },
                 
-                ],  
-            },
+            //     ],  
+            // },
+            
             xAxis: {
-                name:"Quiz Number",
+                // name:"Quiz Number",
                 // data: ["Q1", "Q2", "Q3", "Q4"],
                 data: xAxisData,
             },
-            yAxis: {
-                name:"Amount of Choices",
-            },
+            yAxis: [
+                {
+                    type: 'value',
+                    name:"Amount of Choices",
+                    position: 'left',
+                    axisLine: {
+                        lineStyle: {
+                            color: 'black'
+                        }
+                    },
+                },
+                {
+                    type: 'value',
+                    name: 'Correct Percentage',
+                    position: 'right',
+                    axisLine: {
+                        lineStyle: {
+                            color: 'black'
+                        }
+                    },
+                    axisLabel: {
+                        formatter: '{value} %'
+                    }
+                }
+            ],
+            
             series: [
                 {
                     name: 'A',
                     type: 'bar',
                     barGap: 0.1,
                     barWidth : 30,
-                    // data:[5, 20, 36, 10],
                     data: countA,
-                    itemStyle:{
-                        normal:{
+                    itemStyle: {
+                        normal: {
                             color: function(params) {                        
-                                return answers[params.dataIndex] == 'A' ? '#FE8463' : '#C6E579';
+                                return answers[params.dataIndex] === 'A' ? color[0] : color[1];
                             }
                         }
                     }
@@ -156,12 +193,11 @@ class QuizStatistic extends React.Component {
                     name: 'B',
                     type: 'bar',
                     barWidth : 30,
-                    // data:[10, 22, 5, 20],
                     data: countB,
-                    itemStyle:{
-                        normal:{
+                    itemStyle: {
+                        normal: {
                             color: function(params) {
-                                return answers[params.dataIndex] == 'B' ? '#FE8463' : '#C6E579';
+                                return answers[params.dataIndex] === 'B' ? color[0] : color[1];
                             }
                         }
                     }
@@ -170,12 +206,11 @@ class QuizStatistic extends React.Component {
                     name:'C',
                     type:'bar',
                     barWidth: 30,
-                    // data:[5, 10, 22, 15],
                     data: countC,
-                    itemStyle:{
-                        normal:{
+                    itemStyle: {
+                        normal: {
                             color: function(params) {
-                                return answers[params.dataIndex] == 'C' ? '#FE8463' : '#C6E579';
+                                return answers[params.dataIndex] === 'C' ? color[0] : color[1];
                             }
                         }
                     }
@@ -184,14 +219,22 @@ class QuizStatistic extends React.Component {
                     name:'D',
                     type:'bar',
                     barWidth: 30,
-                    // data:[17, 8, 5, 13],
                     data: countD,
-                    itemStyle:{
-                        normal:{
+                    itemStyle: {
+                        normal: {
                             color: function(params) {
-                                return answers[params.dataIndex] == 'D' ? '#FE8463' : '#C6E579';
+                                return answers[params.dataIndex] === 'D' ? color[0] : color[1];
                             }
                         }
+                    }
+                },
+                {
+                    name: 'Corrent Percentage',
+                    type: 'line',
+                    data: correntPercent,
+                    yAxisIndex: 1,
+                    itemStyle: {
+                        normal: {color: color[2]}
                     }
                 }
             ]
@@ -207,16 +250,7 @@ class QuizStatistic extends React.Component {
             //             normal:{color:'#4cabce'}
             //         }
             //     },
-            //     {
-            //         name: '钣面数',
-            //         type: 'bar',
-            //         barWidth : 30,
-            //         data:shfArray.length!==0?shfArray:[10, 22, 5, 20, 20, 20],
-            //         //data: [10, 22, 5, 20, 20, 20],
-            //         itemStyle:{
-            //             normal:{color:'#e5323e'}
-            //         }
-            //     },
+        
             //     {
             //         name:'平均(面/天)',
             //         type:'line',
@@ -249,7 +283,7 @@ class QuizStatistic extends React.Component {
             <div>
                 <div className="legend" style={{float:"left"}}>
             <span style={{marginLeft:"10px"}}>Correct Answer</span><button style={firstButtonStyle}></button>
-            <span style={{marginLeft:"10px"}}>Incorrect Answer</span><button style={secondButtonStyle}></button>
+            <span style={{marginLeft:"10px"}}>Wrong Answer</span><button style={secondButtonStyle}></button>
             </div>
             <ReactEcharts
                 ref={(e) => {this.echartsElement = e }}
