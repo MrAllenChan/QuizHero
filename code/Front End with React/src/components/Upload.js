@@ -233,15 +233,19 @@ class MyUpload extends React.Component{
                 var line = quizArray[j].split(" ");
                 if (line.length > 1) {
                     console.log(line)
-                    if (line[1]==="Question:") {
+                    if (line[0] == ">" && line[1] == "Question:") {
                         // parse question
                         var parsedQuestion = line.slice(2, line.length);
                         quiz.question = parsedQuestion.join(" ");
-                    } else if (line[1].charAt(0) === '*') {
-                        // parse correct answers
+                    }
+                     
+                    if (line[0] == '*' && line[1] == "[x]") {
+                        // parse correct choice
+                        var parsedChoice = line.slice(2, line.length);
+                        parsedChoice = parsedChoice.join(" ");
                         quiz.answers.push({
                             type : choice,
-                            content : line[1].substring(2, line[1].length - 2)
+                            content : parsedChoice
                         });
                         var charCode = choice.charCodeAt(0);
                         choice = String.fromCharCode(charCode + 1);
@@ -271,11 +275,15 @@ class MyUpload extends React.Component{
                                  console.log("error")
                             });
 
-                    } else {
-                        // parse wrong answers
+                    } 
+                    
+                    if (line[0] == '*' && line[1] == "[" && line[2] == "]") {
+                        // parse wrong choice
+                        var parsedChoice = line.slice(3, line.length);
+                        parsedChoice = parsedChoice.join(" ");
                         quiz.answers.push({
                             type : choice,
-                            content : line[1]
+                            content : parsedChoice
                         });
                         var charCode = choice.charCodeAt(0);
                         choice = String.fromCharCode(charCode + 1);

@@ -6,7 +6,7 @@ import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
 public class DaoFactory {
-    public static boolean DROP_TABLES_IF_EXIST = false;
+    public static boolean DROP_TABLES_IF_EXIST = true;
     public static String PATH_TO_DATABASE_FILE = "./Store.db";
     private static Sql2o sql2o;
 
