@@ -54,7 +54,7 @@ class App extends Component {
         console.log(this.state.quiz)
         return (
             <div>
-                {this.state.quizFlag ? <QuizPageStudent questions={this.state.quiz} callback3={this.callback3}/> : <Slides callback2={this.callback2} slidesString={this.state.slidesString}/>}
+                {this.state.quizFlag ? <QuizPagePresenter questions={this.state.quiz} callback3={this.callback3}/> : <Slides callback2={this.callback2} slidesString={this.state.slidesString}/>}
             </div>
 
             // <Slides />
