@@ -4,6 +4,7 @@ import './App.css';
 import {Button} from 'antd';
 import MyUpload from './components/Upload'
 import QuizPage from "./components/QuizPage";
+import Slides from "./components/Spectacle"
 // import {
 //     BrowserRouter,
 //     Switch,
@@ -36,9 +37,10 @@ class App extends Component {
     renderQuizPage() {
         console.log(this.state.quiz)
         return (
-            <QuizPage
-            questions={this.state.quiz}
-            />
+            <Slides />
+            // <QuizPage
+            // questions={this.state.quiz}
+            // />
         );
     }
 
