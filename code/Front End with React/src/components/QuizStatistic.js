@@ -55,32 +55,32 @@ class QuizStatistic extends React.Component {
         // });
 
         // console.log("quiz data",typeof(this.state.quizData))
-        // var jsonArray = this.state.quizData;
+        var jsonArray = this.state.quizData;
         // for(let i=0;i<jsonArray.length;i++){
         //     jsonArray[i].answer = 'B';
         // }
-        var jsonArray = [
-            {
-                "id": 1,
-                "fileId": 1,
-                "questionId": 1,
-                "answer": 'B',
-                "countA": 13,
-                "countB": 14,
-                "countC": 8,
-                "countD": 9
-            },
-            {
-                "id": 2,
-                "fileId": 1,
-                "questionId": 2,
-                "answer": 'C',
-                "countA": 8,
-                "countB": 6,
-                "countC": 25,
-                "countD": 11
-            }
-        ];
+        // var jsonArray = [
+        //     {
+        //         "id": 1,
+        //         "fileId": 1,
+        //         "questionId": 1,
+        //         "answer": 'B',
+        //         "countA": 13,
+        //         "countB": 14,
+        //         "countC": 8,
+        //         "countD": 9
+        //     },
+        //     {
+        //         "id": 2,
+        //         "fileId": 1,
+        //         "questionId": 2,
+        //         "answer": 'C',
+        //         "countA": 8,
+        //         "countB": 6,
+        //         "countC": 25,
+        //         "countD": 11
+        //     }
+        // ];
         var quizNum = 0;
         var xAxisData = [];
         var countA = [];
