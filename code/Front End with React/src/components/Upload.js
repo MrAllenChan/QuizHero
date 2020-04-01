@@ -68,6 +68,7 @@ class MyUpload extends React.Component{
     constructor(props) {
         super(props);
         this.callback = props.callback;
+        this.callback1 = props.callback1;
         // this.beforeUpload.bind = this.beforeUpload.bind(this);
 
     }
@@ -273,7 +274,9 @@ class MyUpload extends React.Component{
         this.setState({
             quiz : questions
         });
+        const rawString = this.state.rawString;
         this.props.callback(questions);
+        this.props.callback1(rawString);
     };
 
 

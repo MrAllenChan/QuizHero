@@ -2,13 +2,14 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Upload, message, Button, Icon } from 'antd';
 
-import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading } from 'spectacle';
+import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Notes} from 'spectacle';
 
 // SPECTACLE_CLI_MD_START
-// import mdContent from './slides.md';
+// import mdContent from './questions.md';
 // SPECTACLE_CLI_MD_END
-
+const mdContent = `> Question: What is your favorite course?`
 // SPECTACLE_CLI_THEME_START
+console.log(mdContent)
 const theme = {
     // colors: {
     //     primary: '#f00',
@@ -33,6 +34,7 @@ const template = () => (
         </Box>
     </FlexBox>
 );
+
 // SPECTACLE_CLI_TEMPLATE_END
 
 // const Presentation = () => (
@@ -57,6 +59,7 @@ class Slides extends React.Component{
     constructor(props) {
         super(props);
         this.callback2 = props.callback2;
+        this.slides = props.rawString;
         // this.beforeUpload.bind = this.beforeUpload.bind(this);
 
     }
@@ -66,12 +69,15 @@ class Slides extends React.Component{
     }
 
     render(){
+        console.log(mdContent)
         return (
             <Deck loop theme={theme} template={template}>
-                {/*<Markdown containsSlides>{mdContent}</Markdown>*/}
-                <Slide>
-                    <Heading>Welcome to Spectacle</Heading>
-                </Slide>
+
+                <Markdown containsSlides>{this.slides}</Markdown>
+                {/*<Slide>*/}
+                {/*    <Heading>Welcome to Spectacle</Heading>*/}
+
+                {/*</Slide>*/}
                 <Slide>
                     <Heading>Next, We will do some in class quiz</Heading>
                     <Box padding="1em">

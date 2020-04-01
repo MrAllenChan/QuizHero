@@ -19,6 +19,7 @@ class App extends Component {
 
         this.state = {
             quiz:'',
+            rawString:'',
             slidesFlag: 0,
             quizFlag: 0
         };
@@ -26,8 +27,12 @@ class App extends Component {
     }
 
     callback=(quiz)=>{
-        this.setState({quiz})
+        this.setState({quiz:quiz})
         this.setState({slidesFlag : 1});
+    }
+
+    callback1=(rawString)=>{
+        this.setState({rawString:rawString})
     }
 
     callback2=()=>{
@@ -43,7 +48,7 @@ class App extends Component {
         console.log(this.state.quiz)
         return (
             <div>
-                {this.state.quizFlag ? <QuizPage questions={this.state.quiz}/> : <Slides callback2={this.callback2}/>}
+                {this.state.quizFlag ? <QuizPage questions={this.state.quiz}/> : <Slides callback2={this.callback2} rawString={this.state.rawString}/>}
             </div>
 
             // <Slides />
@@ -60,7 +65,7 @@ class App extends Component {
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo"/>
 
-                    <MyUpload callback={this.callback}/>
+                    <MyUpload callback={this.callback} callback1={this.callback1}/>
                     {/*<a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">*/}
                     {/*    Learn QuizHero*/}
                     {/*</a>*/}
