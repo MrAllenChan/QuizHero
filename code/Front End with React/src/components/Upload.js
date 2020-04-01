@@ -77,6 +77,8 @@ class MyUpload extends React.Component{
         file:"",
         result:"",
         rawString:"",
+        slideString:"",
+        quizString:"",
         quiz:[]
     }
 
@@ -148,7 +150,7 @@ class MyUpload extends React.Component{
     }
 
     onPreview=(file)=>{
-        this.trans();
+        this.separateQuestion(this.state.rawString);
     }
 
     readFile=(file)=>{
@@ -192,7 +194,30 @@ class MyUpload extends React.Component{
         },);
     }
 
+    separateQuestion = (fileString) => {
+        var slides = new Array();
+        var questions = new Array();
+        var data = fileString;
+        var sections = data.split("---\n\n")
+        for (var i = 0; i < sections.length; i++) {
+            console.log(sections[i].split(" ", 2)[0] === ">");
+            const section = sections[i].split(" ");
+            console.log(section[0]);
+            if (section[0] === ">") {
+                questions.push(sections[i]);
+            } else {
+                slides.push(sections[i]);
+            }
+        }
+        console.log(questions)
+        this.setState({
+            slideString: slides.join("---\n\n"),
+            quizString: questions.join("---\n\n")
+        }, this.trans)
+    }
+
     parseString = (rawString) => {
+        // this.separateQuestion(this.state.rawString);
         var quizList = new Array();
         var data = rawString;
         var quizzes = data.split("\n\n");
@@ -296,14 +321,17 @@ class MyUpload extends React.Component{
     trans=()=>{
         // var obj = JSON.parse(this.state.rawString);
         // var questions = obj;
-        var questions = this.parseString(this.state.rawString);
+        // this.separateQuestion(this.state.rawString);
+        console.log(this.state.quizString)
+        console.log(this.state.slideString)
+        var questions = this.parseString(this.state.quizString);
         console.log(questions);
         this.setState({
             quiz : questions
         });
-        const rawString = this.state.rawString;
+        const slidesString = this.state.slideString;
         this.props.callback(questions);
-        this.props.callback1(rawString);
+        this.props.callback1(slidesString);
     };
 
 

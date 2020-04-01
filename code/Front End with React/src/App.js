@@ -32,8 +32,8 @@ class App extends Component {
         this.setState({slidesFlag : 1});
     }
 
-    callback1=(rawString)=>{
-        this.setState({rawString:rawString})
+    callback1=(slidesString)=>{
+        this.setState({slidesString:slidesString})
     }
 
     callback2=()=>{
@@ -49,7 +49,7 @@ class App extends Component {
         console.log(this.state.quiz)
         return (
             <div>
-                {this.state.quizFlag ? <QuizPage questions={this.state.quiz}/> : <Slides callback2={this.callback2} rawString={this.state.rawString}/>}
+                {this.state.quizFlag ? <QuizPage questions={this.state.quiz}/> : <Slides callback2={this.callback2} slidesString={this.state.slidesString}/>}
             </div>
 
             // <Slides />

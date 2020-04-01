@@ -59,7 +59,7 @@ class Slides extends React.Component{
     constructor(props) {
         super(props);
         this.callback2 = props.callback2;
-        this.slides = props.rawString;
+        this.slides = props.slidesString;
         // this.beforeUpload.bind = this.beforeUpload.bind(this);
 
     }
