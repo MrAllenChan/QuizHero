@@ -39,6 +39,7 @@ public final class ApiServer {
         getAllQuizStat(quizDao);
         getQuizStatByFileId(quizDao);
         getSingleQuizStat(quizDao);
+        postQuiz(quizDao);
         postRecords(recordDao);
 
         startJavalin();
@@ -109,6 +110,22 @@ public final class ApiServer {
             List<Quiz> quizzes = quizDao.getSingleQuizStat(fileId, questionId);
             ctx.json(quizzes.get(0));
             ctx.status(200);
+        });
+    }
+
+    //add postQuiz method
+    private static void postQuiz(QuizDao quizDao) {
+        // quizzes are initialized once a markdown in quiz format is uploaded
+        app.post("/quiz", ctx -> {
+            Quiz quiz = ctx.bodyAsClass(Quiz.class);
+            try {
+                quizDao.add(quiz);
+                ctx.status(201); // created successfully
+                ctx.json(quiz);
+                ctx.contentType("application/json");
+            } catch (DaoException ex) {
+                throw new ApiError(ex.getMessage(), 500);
+            }
         });
     }
 

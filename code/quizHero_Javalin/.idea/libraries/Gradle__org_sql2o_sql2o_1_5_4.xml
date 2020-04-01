@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.sql2o:sql2o:1.5.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.sql2o/sql2o/1.5.4/6a3589e3e86209f66776c6a108bf929df3ea299b/sql2o-1.5.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.sql2o/sql2o/1.5.4/be8814367c1f4b0965bbeb605a779f69bd6c3487/sql2o-1.5.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
