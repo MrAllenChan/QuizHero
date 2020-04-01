@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-// import quizQuestions from "../api/quizQuestions";
 import Quiz from './Quiz';
-import Result from './Result';
-// import logo from '../svg/logo.svg';
+import ResultPresenter from './ResultPresenter';
 import axios from 'axios'
+import {Button, Icon} from "antd";
 
-class QuizPage extends Component {
+class QuizPagePresenter extends Component {
     constructor(props) {
         super(props);
 
@@ -24,6 +23,7 @@ class QuizPage extends Component {
         this.callback3 = props.callback3;
 
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
+        this.skipQuestion = this.skipQuestion.bind(this);
     }
 
     componentDidMount() {
@@ -116,6 +116,14 @@ class QuizPage extends Component {
         });
     }
 
+    skipQuestion() {
+        if (this.state.questionId < this.state.quizQuestions.length) {
+            setTimeout(() => this.setNextQuestion(), 300);
+        } else {
+            setTimeout(() => this.setResults(this.getResults()), 300);
+        }
+    }
+
     getResults() {
         const answersCount = this.state.answersCount;
         const answersCountKeys = Object.keys(answersCount);
@@ -135,20 +143,26 @@ class QuizPage extends Component {
 
     renderQuiz() {
         return (
-            <Quiz
-                answer={this.state.answer}
-                answerOptions={this.state.answerOptions}
-                questionId={this.state.questionId}
-                question={this.state.question}
-                questionTotal={this.state.quizQuestions.length}
-                onAnswerSelected={this.handleAnswerSelected}
-            />
+            <div>
+                <Quiz
+                    answer={this.state.answer}
+                    answerOptions={this.state.answerOptions}
+                    questionId={this.state.questionId}
+                    question={this.state.question}
+                    questionTotal={this.state.quizQuestions.length}
+                    onAnswerSelected={this.handleAnswerSelected}
+                />
+                <Button
+                    onClick={this.skipQuestion}>
+                    <Icon /> Skip
+                </Button>
+            </div>
         );
     }
 
 
     renderResult() {
-        return <Result quizResult={this.state.result} callback3={this.callback3} />;
+        return <ResultPresenter quizResult={this.state.result} callback3={this.callback3} />;
     }
 
     render() {
@@ -166,4 +180,4 @@ class QuizPage extends Component {
     }
 }
 
-export default QuizPage;
+export default QuizPagePresenter;

@@ -3,7 +3,8 @@ import logo from './fig/logo.png';
 import './App.css';
 import {Button} from 'antd';
 import MyUpload from './components/Upload'
-import QuizPage from "./components/QuizPage";
+import QuizPagePresenter from "./components/QuizPagePresenter";
+import QuizPageStudent from "./components/QuizPageStudent";
 import Slides from "./components/Spectacle"
 import quizStatistic from "./components/QuizStatistic"
 // import {
@@ -53,11 +54,11 @@ class App extends Component {
         console.log(this.state.quiz)
         return (
             <div>
-                {this.state.quizFlag ? <QuizPage questions={this.state.quiz} callback3={this.callback3}/> : <Slides callback2={this.callback2} slidesString={this.state.slidesString}/>}
+                {this.state.quizFlag ? <QuizPageStudent questions={this.state.quiz} callback3={this.callback3}/> : <Slides callback2={this.callback2} slidesString={this.state.slidesString}/>}
             </div>
 
             // <Slides />
-            // <QuizPage
+            // <QuizPagePresenter
             // questions={this.state.quiz}
             // />
         );
