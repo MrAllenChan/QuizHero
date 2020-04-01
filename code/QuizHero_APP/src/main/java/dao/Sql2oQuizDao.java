@@ -21,7 +21,7 @@ public class Sql2oQuizDao implements QuizDao {
     public List<Quiz> getQuizStatByFileId(int fileId) {
         try (Connection conn = sql2o.open()) {
             String sql = "SELECT * FROM Quiz Where fileId = " +
-                    fileId + ";";
+                    fileId + " ORDER By questionId;";
             return conn.createQuery(sql).executeAndFetch(Quiz.class);
         }
         catch (Sql2oException ex) {
@@ -42,7 +42,6 @@ public class Sql2oQuizDao implements QuizDao {
         }
     }
 
-
     @Override
     public List<Quiz> getAllQuizStat() {
         try (Connection conn = sql2o.open()) {
@@ -54,12 +53,12 @@ public class Sql2oQuizDao implements QuizDao {
     @Override
     public void add(Quiz quiz) throws DaoException {
 
-        System.out.println(quiz.toString());
+//        System.out.println(quiz.toString());
 
         int fileId = quiz.getFileId();
         int questionId = quiz.getQuestionId();
         String answer = quiz.getAnswer();
-        List<Map<String, Object>> listFromTable = new ArrayList<>();
+        List<Map<String, Object>> listFromTable;
         String sql = "SELECT * FROM Quiz WHERE fileId = " + fileId + " AND questionId = " + questionId + ";";
         try (Connection conn = sql2o.open()) {
             listFromTable = conn.createQuery(sql).executeAndFetchTable().asList();

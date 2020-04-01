@@ -3,7 +3,6 @@ import ReactEcharts from 'echarts-for-react';
 import axios from 'axios'
 
 
-
 class QuizStatistic extends React.Component {
 
     constructor(props){
@@ -12,7 +11,7 @@ class QuizStatistic extends React.Component {
             quizData : []
         }
     }
-
+    
     componentDidMount(){
         const BASE_URL = document.location.origin;
         let params = {
@@ -125,8 +124,6 @@ class QuizStatistic extends React.Component {
                 axisPointer: {type: 'shadow'},
             },
             // legend: {
-            //     // x:'left',
-            //     // data:["A","B","C","D"]
             //     orient: 'horizontal',
             //     x:'center',
             //     y: 'top',
@@ -139,7 +136,7 @@ class QuizStatistic extends React.Component {
             //             name: 'Wrong Answer',
             //             textStyle:{fontWeight:'bold', color:'blue'}
             //         },
-                
+
             //     ],  
             // },
             
@@ -173,7 +170,6 @@ class QuizStatistic extends React.Component {
                     }
                 }
             ],
-            
             series: [
                 {
                     name: 'A',
@@ -238,29 +234,6 @@ class QuizStatistic extends React.Component {
                     }
                 }
             ]
-            // series: [
-            //     {
-            //         name: '台次',
-            //         type: 'bar',
-            //         barGap: 0,
-            //         barWidth : 30,
-            //         data:roArray.length!==0?roArray:[5, 20, 36, 10, 10, 20],
-            //         //data: [5, 20, 36, 10, 10, 20],
-            //         itemStyle:{
-            //             normal:{color:'#4cabce'}
-            //         }
-            //     },
-        
-            //     {
-            //         name:'平均(面/天)',
-            //         type:'line',
-            //         data:avgArray.length!==0?avgArray:[5.5, 10.2, 22, 15, 6.3, 10.2],
-            //         //data:[5.5, 10.2, 22, 15, 6.3, 10.2],
-            //         itemStyle:{
-            //             normal:{color:'#e5d930'}
-            //         }
-            //     }
-            // ]
         };
 
         const firstButtonStyle = {

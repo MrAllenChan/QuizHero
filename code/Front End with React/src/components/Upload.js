@@ -13,8 +13,6 @@ const props = {
     headers: {
         authorization: 'authorization-text',
     },
-
-
 };
 
 // Marpit
@@ -199,6 +197,7 @@ class MyUpload extends React.Component{
         var quizList = new Array();
         var data = rawString;
         var quizzes = data.split("\n\n");
+        var parsedChoice;
 
         for (var i = 0; i < quizzes.length; i++) {
             var choice = "A";
@@ -208,19 +207,17 @@ class MyUpload extends React.Component{
             };
             var quizArray = quizzes[i].split("\n");
             for (var j = 0; j < quizArray.length; j++) {
-                var line = quizArray[j].split(" ");
+                var line = quizArray[j];
                 if (line.length > 1) {
                     console.log(line)
-                    if (line[0] == ">" && line[1] == "Question:") {
+                    if (line.slice(0, 11) === "> Question:") {
                         // parse question
-                        var parsedQuestion = line.slice(2, line.length);
-                        quiz.question = parsedQuestion.join(" ");
-                    }
-                     
-                    if (line[0] == '*' && line[1] == "[x]") {
+                        quiz.question = line.slice(12, line.length);
+                        // quiz.question = parsedQuestion.join(" ");
+                    } else if (line[0] === '*' && line.slice(2, 5) === "[x]") {
                         // parse correct choice
-                        var parsedChoice = line.slice(2, line.length);
-                        parsedChoice = parsedChoice.join(" ");
+                        parsedChoice = line.slice(6, line.length);
+                        // parsedChoice = parsedChoice.join(" ");
                         quiz.answers.push({
                             type : choice,
                             content : parsedChoice
@@ -241,7 +238,7 @@ class MyUpload extends React.Component{
                         }
                         console.log(formData)
                         axios
-                            .post(BASE_URL+"/quiz", formData, {
+                            .post(BASE_URL + "/quiz", formData, {
                                 headers: {
                                 "Content-Type": "multipart/form-data"
                                 }
@@ -252,13 +249,10 @@ class MyUpload extends React.Component{
                             .catch((error) => {
                                  console.log("error")
                             });
-
-                    } 
-                    
-                    if (line[0] == '*' && line[1] == "[" && line[2] == "]") {
+                    } else if (line[0] === '*' && line.slice(2, 5) === "[ ]") {
                         // parse wrong choice
-                        var parsedChoice = line.slice(3, line.length);
-                        parsedChoice = parsedChoice.join(" ");
+                        parsedChoice = line.slice(6, line.length);
+                        // parsedChoice = parsedChoice.join(" ");
                         quiz.answers.push({
                             type : choice,
                             content : parsedChoice
@@ -271,37 +265,6 @@ class MyUpload extends React.Component{
             quizList.push(quiz);
         }
         return quizList;
-        // for (var i = 0; i < data.length(); i ++) {
-        //     var j = i;
-        //     var quiz = {};
-        //     if (data.charAt(i) == '$') {
-        //         j = i + 1;
-        //         i = j;
-        //         while (data.charAt(j) != '$') {
-        //             j ++;
-        //         }
-        //         var question = data.substring(i, j);
-        //         j = j + 1;
-        //         i = j;
-        //         quiz["question"] = question;
-        //     }
-        //     var answers = [];
-        //     while (data.charAt(j) != '$' || data.length() == j) {
-        //         var answer = {};
-        //         i = i + 1;
-        //         j = j + 1;
-        //         answer["type"] = data.charAt(i);
-        //         while (data.charAt(j) != '@' || data.charAt(j) != '$' || data.length() == j) {
-        //             j ++;
-        //         }
-        //         var content = data.substring(i + 1, j);
-        //         answer["content"] = content;
-        //         i = j;
-        //         answers.push(answer);
-        //     }
-        //     quiz["answers"] = answers;
-        //     quizList.push(quiz);
-        // }
     };
 
     trans=()=>{
@@ -319,7 +282,6 @@ class MyUpload extends React.Component{
         this.props.callback(questions);
         this.props.callback1(slidesString);
     };
-
 
     render(){
         return(
