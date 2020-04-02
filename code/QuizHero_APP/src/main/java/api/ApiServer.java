@@ -18,7 +18,7 @@ import java.util.Map;
 public final class ApiServer {
 
     public static boolean INITIALIZE_WITH_SAMPLE_DATA = true;
-    public static int PORT = 8888;
+    public static int PORT = 7000;
     private static Javalin app;
 
     private ApiServer() {

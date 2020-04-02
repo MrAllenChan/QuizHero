@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import axios from 'axios'
+import {Button} from 'antd'
 
 
 class QuizStatistic extends React.Component {
@@ -13,6 +14,15 @@ class QuizStatistic extends React.Component {
     }
     
     componentDidMount(){
+        this.getStatistic();
+    }
+
+    refreshStatistic = () =>{
+        console.log("Push");
+        this.getStatistic();
+    } 
+
+    getStatistic = ()=>{
         const BASE_URL = document.location.origin;
         let params = {
             fileId : 1,
@@ -255,14 +265,15 @@ class QuizStatistic extends React.Component {
         return (
             <div>
                 <div className="legend" style={{float:"left"}}>
-            <span style={{marginLeft:"10px"}}>Correct Answer</span><button style={firstButtonStyle}></button>
-            <span style={{marginLeft:"10px"}}>Wrong Answer</span><button style={secondButtonStyle}></button>
-            </div>
-            <ReactEcharts
-                ref={(e) => {this.echartsElement = e }}
-                option={echartOption}
-                theme="clear"
-            />
+                    <span style={{marginLeft:"10px"}}>Correct Answer</span><button style={firstButtonStyle}></button>
+                    <span style={{marginLeft:"10px"}}>Wrong Answer</span><button style={secondButtonStyle}></button>   
+                </div>
+                <Button onClick={this.refreshStatistic}>Refresh</Button>
+                <ReactEcharts
+                    ref={(e) => {this.echartsElement = e }}
+                    option={echartOption}
+                    theme="clear"
+                />
             </div>
         )
     }
