@@ -70,6 +70,14 @@ class Slides extends React.Component{
 
     render(){
         console.log(mdContent)
+        const buttonStyle = {
+            backgroundColor:"#ecc",
+            width:"200px",
+            height:"50px",
+            margin:"0px 10px",
+            boarderRadius:"3px",
+            fontSize:"20px"
+        };
         return (
             <Deck loop theme={theme} template={template}>
 
@@ -80,12 +88,12 @@ class Slides extends React.Component{
                 {/*</Slide>*/}
                 <Slide>
                     <Heading>Next, We will do some in class quiz</Heading>
-                    <Box padding="1em">
+                    <Heading>
                         <Button
-                            onClick={this.onClick}>
+                            onClick={this.onClick} style={buttonStyle}>
                             <Icon /> Click to start quiz
                         </Button>
-                    </Box>
+                    </Heading>
 
                 </Slide>
                 <Markdown containsSlides>{this.slides}</Markdown>
