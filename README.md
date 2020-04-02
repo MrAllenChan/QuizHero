@@ -41,7 +41,7 @@ You can click the **Refersh** button on the statistics page from time to time to
 
 ## How to test our project
 
-1. You can test our project as a whole, you can open two tabs on your browser. On the first tab, enter Presenter mode and stay on the result page that displays statistics. On the second one, enter Student mode and answer the quiz questions several times to simulate different students doing the same quizzes simultaneously (or you can open several tabs or even browsers to do the quiz if you like). 
+1. You can test our project as a whole by opening two tabs on your browser. On the first tab, enter Presenter mode and stay on the result page that displays statistics. On the second one, enter Student mode and answer the quiz questions several times to simulate the situation that a group of students are doing the same quizzes simultaneously (or you can open several tabs or even browsers to do the quiz if you like). 
 
 2. We recommend using Postman to test our back-end server. We have uploaded a Postman collection under directory **code/QuizHero_APP/src/main/resources/postman/QuizHero.postman_collection.json**, and you can import this json file into your Postman application to test if the back-end server functions well as expected.
 
