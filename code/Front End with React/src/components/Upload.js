@@ -191,13 +191,13 @@ class MyUpload extends React.Component{
                 var line = quizArray[j].split(" ");
                 if (line.length > 1) {
                     console.log(line)
-                    if (line[0] == ">" && line[1] == "Question:") {
+                    if (line[0] === ">" && line[1] === "Question:") {
                         // parse question
                         var parsedQuestion = line.slice(2, line.length);
                         quiz.question = parsedQuestion.join(" ");
                     }
                      
-                    if (line[0] == '*' && line[1] == "[x]") {
+                    if (line[0] === '*' && line[1] === "[x]") {
                         // parse correct choice
                         var parsedChoice = line.slice(2, line.length);
                         parsedChoice = parsedChoice.join(" ");
@@ -235,7 +235,7 @@ class MyUpload extends React.Component{
 
                     } 
                     
-                    if (line[0] == '*' && line[1] == "[" && line[2] == "]") {
+                    if (line[0] === '*' && line[1] === "[" && line[2] === "]") {
                         // parse wrong choice
                         var parsedChoice = line.slice(3, line.length);
                         parsedChoice = parsedChoice.join(" ");
@@ -279,11 +279,11 @@ class MyUpload extends React.Component{
     };
 
     display_name () {
-        if (this.state.display_name == 'none') {
+        if (this.state.display_name === 'none') {
             this.setState({
                 display_name:'block'
             })
-        }else if (this.state.display_name == 'block'){
+        }else if (this.state.display_name === 'block'){
             this.setState({
                 display_name:'none'
             })
