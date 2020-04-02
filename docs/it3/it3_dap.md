@@ -10,11 +10,21 @@
 > This could be a sketch of your user interface. 
 > You can draw it with hand and insert it here as an image.
 
-- Students can enter quiz page by clicking arrow button on slides, and answer the quiz in a new web page.
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it1/it1_wireframe2.png)
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it2/it2_Wireframe.jpg)
-- Instructors can view the statistical data of each question.
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/it3_wireframe.jpg)
+- Instructor can upload a markdown file by clicking the upload button.
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/upload1.jpg)
+- Choosing a markdown file from local.
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/upload2.jpg)
+-Then, instructor can see the transferred slides and quiz page by clicking different modes.
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/upload3.jpg)
+- Both the student mode and presentation mode can show the slides, and users can join the quiz by clicking "start quiz" button in slides.
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/pre1.jpg)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/pre2.jpg)
+- Students can choose answer for the quiz questions, but they cannot see the result data.
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/quiz-stu.jpg)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/stu-result.jpg)
+- Instructors can answer or skip(clicking "skip" button) the quiestions and view the statistical data of each question.
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/quiz-presentation.jpg)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/presentation-statistic.jpg)
 
 # Iteration Backlog
 > List the User Stories that you will implement in this iteration.
