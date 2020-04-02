@@ -2,8 +2,7 @@ import { Upload, message, Button, Icon } from 'antd';
 import React from "react";
 import Marpit from '@marp-team/marpit'
 import axios from 'axios';
-// import axios from 'axios'
-import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading } from 'spectacle';
+
 
 
 // const fs = require('fs');
@@ -48,6 +47,7 @@ class MyUpload extends React.Component{
         super(props);
         this.callback = props.callback;
         this.callback1 = props.callback1;
+        this.callback4 = props.callback4;
         // this.beforeUpload.bind = this.beforeUpload.bind(this);
 
     }
@@ -57,7 +57,8 @@ class MyUpload extends React.Component{
         rawString:"",
         slideString:"",
         quizString:"",
-        quiz:[]
+        quiz:[],
+        display_name:'none'
     }
 
 
@@ -80,6 +81,7 @@ class MyUpload extends React.Component{
             message.success(`${info.file.name} file uploaded successfully`);
             this.readFile(this.state.file).then(this.convertText);
             // this.trans();
+            this.state.display_name = this.display_name(this.state.display_name);
         } else if (info.file.status === 'error') {
             console.log(info.file.name);
             message.error(`${info.file.name} file upload failed.`);
@@ -87,12 +89,6 @@ class MyUpload extends React.Component{
     }
 
     onDownload = (file) => {
-        // const BASE_URL = document.location.origin;
-
-        // const formData = {
-        //     fileContent: { file },
-        //     userName: 'admin'
-        // }
         function fakeClick(obj) {
             var ev = document.createEvent("MouseEvents");
             ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
@@ -108,23 +104,7 @@ class MyUpload extends React.Component{
         }
         exportRaw('filename.html', this.state.result);
         console.log(this.state.rawString);
-        // const formData = {
-        //     fileId : 1,
-        //     questionId : 1,
-        //     choice : 2
-        // }
-        // axios
-        //     .post(BASE_URL+"/record", formData, {
-        //         headers: {
-        //             "Content-Type": "multipart/form-data"
-        //         }
-        //     })
-        //     .then(() => {
-        //         console.log("upload success");
-        //     })
-        //     .catch((error) => {
-        //         console.log("error")
-        //     });
+
     }
 
     onPreview=(file)=>{
@@ -271,38 +251,16 @@ class MyUpload extends React.Component{
             quizList.push(quiz);
         }
         return quizList;
-        // for (var i = 0; i < data.length(); i ++) {
-        //     var j = i;
-        //     var quiz = {};
-        //     if (data.charAt(i) == '$') {
-        //         j = i + 1;
-        //         i = j;
-        //         while (data.charAt(j) != '$') {
-        //             j ++;
-        //         }
-        //         var question = data.substring(i, j);
-        //         j = j + 1;
-        //         i = j;
-        //         quiz["question"] = question;
-        //     }
-        //     var answers = [];
-        //     while (data.charAt(j) != '$' || data.length() == j) {
-        //         var answer = {};
-        //         i = i + 1;
-        //         j = j + 1;
-        //         answer["type"] = data.charAt(i);
-        //         while (data.charAt(j) != '@' || data.charAt(j) != '$' || data.length() == j) {
-        //             j ++;
-        //         }
-        //         var content = data.substring(i + 1, j);
-        //         answer["content"] = content;
-        //         i = j;
-        //         answers.push(answer);
-        //     }
-        //     quiz["answers"] = answers;
-        //     quizList.push(quiz);
-        // }
     };
+
+    toStudentMode = () => {
+        this.separateQuestion(this.state.rawString);
+        this.callback4()
+    }
+
+    toPresenterMode = () => {
+        this.separateQuestion(this.state.rawString);
+    }
 
     trans=()=>{
         // var obj = JSON.parse(this.state.rawString);
@@ -320,23 +278,49 @@ class MyUpload extends React.Component{
         this.props.callback1(slidesString);
     };
 
+    display_name () {
+        if (this.state.display_name == 'none') {
+            this.setState({
+                display_name:'block'
+            })
+        }else if (this.state.display_name == 'block'){
+            this.setState({
+                display_name:'none'
+            })
+        }
+    };
+
 
     render(){
         return(
             <div>
-                <Upload
-                    onChange={this.onChange}
-                    beforeUpload={this.beforeUpload}
-                    onDownload={this.onDownload}
-                    onPreview={this.onPreview}
-                    {...props}>
+                <div>
+                    <Upload
+                        onChange={this.onChange}
+                        beforeUpload={this.beforeUpload}
+                        onDownload={this.onDownload}
+                        onPreview={this.onPreview}
+                        {...props}>
 
-                    <Button>
-                        <Icon type = 'upload' /> Click to Upload
-                    </Button>
+                        <Button>
+                            <Icon type = 'upload' /> Click to Upload
+                        </Button>
 
-                </Upload>
+                    </Upload>
+                </div>
+                <div style={{display:this.state.display_name}}>
+                    <div>
+                        <Button onClick={this.toPresenterMode}>
+                            <Icon/>Presenter mode
+                        </Button>
+                    </div>
+                    <div>
+                        <Button onClick={this.toStudentMode}>
+                            <Icon/>Student mode
+                        </Button>
+                    </div>
 
+                </div>
             </div>
         )
     }
