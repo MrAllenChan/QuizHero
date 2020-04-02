@@ -96,7 +96,7 @@ class QuizStatistic extends React.Component {
         var countD = [];
         var answers = [];
         var correntPercent = [];
-        var color = ['#FE8463', '#C6E579', '#32D3EB'];
+        var color = ['#C6E579', '#FE8463', '#32D3EB'];
 
         for (var index in jsonArray) {
             quizNum = quizNum + 1;
@@ -247,7 +247,7 @@ class QuizStatistic extends React.Component {
         };
 
         const firstButtonStyle = {
-            backgroundColor:"#FE8463",
+            backgroundColor:'#C6E579',
             width:"30px",
             height:"15px",
             margin:"0px 10px",
@@ -255,7 +255,7 @@ class QuizStatistic extends React.Component {
           };
 
           const secondButtonStyle = {
-            backgroundColor:"#C6E579",
+            backgroundColor:'#FE8463',
             width:"30px",
             height:"15px",
             margin:"0px 10px",
