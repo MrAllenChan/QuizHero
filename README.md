@@ -35,9 +35,9 @@ You can click the **Refersh** button on the statistics page from time to time to
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/index.png)
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/quiz.png)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/quiz.jpg)
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/statistics.png)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/statistics.jpg)
 
 ## How to test our project
 
