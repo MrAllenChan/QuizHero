@@ -14,15 +14,18 @@
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/upload1.jpg)
 - Choosing a markdown file from local.
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/upload2.jpg)
--Then, instructor can see the transferred slides and quiz page by clicking different modes.
+- Then, instructor can see the transferred slides and quiz page by clicking different modes.
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/upload3.jpg)
+
 - Both the student mode and presentation mode can show the slides, and users can join the quiz by clicking "start quiz" button in slides.
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/pre1.jpg)
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/pre2.jpg)
+
 - Students can choose answer for the quiz questions, but they cannot see the result data.
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/quiz-stu.jpg)
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/stu-result.jpg)
-- Instructors can answer or skip(clicking "skip" button) the quiestions and view the statistical data of each question.
+
+- Instructors can answer or skip(clicking "skip" button) the questions and view the statistical data of each question.
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/quiz-presentation.jpg)
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/presentation-statistic.jpg)
 
