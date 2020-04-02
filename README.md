@@ -23,11 +23,11 @@ This project uses Marpit framework to convert Markdown and CSS themes to slide d
 
 Once you start running the project, you can go to http://localhost:7000/ (or the url displayed after "[main] INFO io.javalin.Javalin - Listening on") on your browser. You will see a start index page displayed on your browser with our logo "Quiz Hero" and an upload button.
 
-Now, You can upload any Markdown file as long as the markdown format observes the rules we make. We provide a sample markdown file called **"questions.md"** that contains sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page. 
+Now, You can upload any Markdown file as long as the markdown format observes the rules we make. We provide a sample markdown file called **"demo.md"** that contains a demo slides with two sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page. 
 
-After successfully uploading the file, you can click the **name** of the file to start a quiz, or click the **download button** and open the downloaded html file. Every response to a single quiz question will be recorded into the database created on back-end side. You can see this communication in the run window.
+After successfully uploading the file, you can click the two button **Presenter mode** or **Stundent mode** to go to slides prepared for presenter or students, or click the **download button** to download the static html file. In **Presenter mode** or **Stundent mode**, every response to the quiz questions will be recorded into the database created on back-end side. You can visualize every detailed statistics on the result page of the Presenter mode. You may test it by open two tabs in your browser, the first one click Presenter mode and stay on the statistics page, the second one click the Student mode and do the quiz questions several times to simulate different students doing the quiz (or you can open several tabs or even browsers to do the quiz if you like, but it has to be on your machine, because we haven't deploy it yet). You can click the **Refersh** button on the statistics page from time to time to see the up-to-dated statistics.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/UploadPage.png)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/index.png)
 
 ## How to test our project
 
