@@ -87,7 +87,7 @@ class Slides extends React.Component{
 
                 {/*</Slide>*/}
                 <Slide>
-                    <Heading>Next, We will do some in class quiz</Heading>
+                    <Heading>Now lets do some funny quizzes!</Heading>
                     <Heading>
                         <Button
                             onClick={this.onClick} style={buttonStyle}>
