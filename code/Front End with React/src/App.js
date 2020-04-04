@@ -8,6 +8,7 @@ import QuizPageStudent from "./components/QuizPageStudent";
 import Slides from "./components/Spectacle"
 import quizStatistic from "./components/QuizStatistic"
 import {dimValueGetter} from "echarts/src/component/marker/markerHelper";
+import 'antd/dist/antd.css';
 // import {
 //     BrowserRouter,
 //     Switch,
