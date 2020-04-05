@@ -56,5 +56,9 @@
 - Delivered the alpha instructor version. Instructors can now view slides, quiz contents and quiz statistics. The third must-have in this iteration is finished.
 
 ### Challenges we met & Our solutions.
+- In the beginning of this iteration we were a bit confused with using branches in our development. Later on we quickly adapted to this workflow and managed our branches well.
+- At this stage we found some of our code implementations not very organized or object-oriented. We have made some changes and will refractor our code if necessary in the next iteration.
+- Our web page styling (quiz and lectur format, button sizes and icons) is not well-thought. We will think have a better design implemented in the next iteration.
 
 ### What we plan to improve during iteration 4.
+- In addition to code refractoring and web page design, we plan to deploy our application to heroku with database shifted to PostgreSQL and add a login interface.
