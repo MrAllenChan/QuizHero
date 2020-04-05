@@ -29,7 +29,7 @@ It does not need to be exhustive.
 - Explore the possibility of making use of the Marpit modules to convert the markdown file.
 
 # Retrospective
-The retrospective is an opportunity for your team to inspect itself and create a plan for improvements to be enacted during the next iteration. Review what you had done in iteration 1; note things that you have and have not delivered, note the challenges you had, and reflect on how you shall proceed in the next iteration to do a better job.
+> The retrospective is an opportunity for your team to inspect itself and create a plan for improvements to be enacted during the next iteration. Review what you had done in iteration 1; note things that you have and have not delivered, note the challenges you had, and reflect on how you shall proceed in the next iteration to do a better job.
 
 ### What went well?
 - Successfully delivered the feature of uploading a Markdown file and converting it to a html in presentation format.

@@ -46,8 +46,15 @@
 - Build front-end using React to receive quiz statistics sent from back-end.
 - Create a page including some diagrams on front-end to visually display the quiz statistics. This is also the first step of the instructor version.
 
-<!--# Retrospective
+# Retrospective
+> The retrospective is an opportunity for your team to inspect itself and create a plan for improvements to be enacted during the next iteration. Review what you had done in iteration 2; note things that you have and have not delivered, note the challenges you had, and reflect on how you shall proceed in the next iteration to do a better job.
 
 ### What went well?
+- Successfully combined slides and quizzes into a single html page, students can now view slides as well as participating quizzes. The first two must-haves listed in this iteration are finished.
+- Refined backend Model, DAO and API. Business logic is updated and now every action of uploading a file or answering a quiz question will initiate updates in backend database. 
+- Successfully delivered the feature of receiving quiz statistics from backend and visually displaying them with diagrams using React. Instructors can also refresh the diagram to keep track of the latest statistics.
+- Delivered the alpha instructor version. Instructors can now view slides, quiz contents and quiz statistics. The third must-have in this iteration is finished.
 
-### Challenges we met & Our solutions.-->
+### Challenges we met & Our solutions.
+
+### What we plan to improve during iteration 4.
