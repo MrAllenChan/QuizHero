@@ -13,10 +13,10 @@
 - Instructor can sign up to create an account.
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/signup.png)
 
--Instructor can log in by entering username and password.
+- Instructor can log in by entering username and password.
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/login.png)
 
--Instructor can upload a markdown file after login.
+- Instructor can upload a markdown file after login.
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/upload.png)
 
 - Instructor can upload a markdown file by clicking the upload button.
