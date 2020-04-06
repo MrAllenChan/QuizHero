@@ -20,7 +20,7 @@
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/upload.png)
 
 - Instrucor can view and download former markdown file in the file history.
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/history.png)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/historypage.png)
 
 - Both the student mode and presentation mode can show the slides, and users can join the quiz by clicking "start quiz" button in slides.
 
