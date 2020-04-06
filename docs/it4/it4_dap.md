@@ -10,6 +10,15 @@
 > This could be a sketch of your user interface. 
 > You can draw it with hand and insert it here as an image.
 
+- Instructor can sign up to create an account.
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/signup.png)
+
+-Instructor can log in by entering username and password.
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/login.png)
+
+-Instructor can upload a markdown file after login.
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/upload.png)
+
 - Instructor can upload a markdown file by clicking the upload button.
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/upload1.jpg)
@@ -43,7 +52,7 @@
 > List the User Stories that you will implement in this iteration.
 - As a student, I want to view the slides uploaded by the instructer so that I can keep pace with the lesson.
 - As an instructor, I want to have a presenter mode to see all my notes and quizzes, so that I can teach a course and have a better overview of my teaching content.
--As an instructor, I want to log in to the website, so that I can review my presentation history.
+- As an instructor, I want to log in to the website, so that I can review my presentation history.
 
 
 # Tasks
