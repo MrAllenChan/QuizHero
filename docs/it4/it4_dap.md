@@ -16,19 +16,11 @@
 - Instructor can log in by entering username and password.
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/login.png)
 
-- Instructor can upload a markdown file after login.
+- Instructor can upload a markdown file after login. Then, instructor can see the transferred slides and quiz page by clicking different modes.
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/upload.png)
 
-- Instructor can upload a markdown file by clicking the upload button.
-
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/upload1.jpg)
-
-- Choosing a markdown file from local.
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/upload2.jpg)
-
-- Then, instructor can see the transferred slides and quiz page by clicking different modes.
-
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/upload3.jpg)
+- Instrucor can view and download former markdown file in the file history.
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/history.png)
 
 - Both the student mode and presentation mode can show the slides, and users can join the quiz by clicking "start quiz" button in slides.
 
