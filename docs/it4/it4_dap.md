@@ -24,21 +24,21 @@
 
 - Both the student mode and presentation mode can show the slides, and users can join the quiz by clicking "start quiz" button in slides.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/pre1.jpg)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/pre1.png)
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/pre2.jpg)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/pre2.png)
 
 - Students can choose answer for the quiz questions, but they cannot see the result data.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/quiz-stu.jpg)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/quiz-stu.png)
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/stu-result.jpg)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/stu-result.png)
 
 - Instructors can answer or skip(clicking "skip" button) the questions and view the statistical data of each question.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/quiz-presentation.jpg)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/quiz-presentation.png)
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/presentation-statistic.jpg)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/presentation-statistic.png)
 
 # Iteration Backlog
 > List the User Stories that you will implement in this iteration.
