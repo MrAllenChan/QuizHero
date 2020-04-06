@@ -51,14 +51,14 @@
 
 ### What went well?
 - Successfully combined slides and quizzes into a single html page, students can now view slides as well as participating quizzes. The first two must-haves listed in this iteration are finished.
-- Refined backend Model, DAO and API. Business logic is updated and now every action of uploading a file or answering a quiz question will initiate updates in backend database. 
+- Refined backend Model, DAO and API. Business logic is updated and now every action of uploading a file or answering a quiz question will initiate updates in the backend database. 
 - Successfully delivered the feature of receiving quiz statistics from backend and visually displaying them with diagrams using React. Instructors can also refresh the diagram to keep track of the latest statistics.
 - Delivered the alpha instructor version. Instructors can now view slides, quiz contents and quiz statistics. The third must-have in this iteration is finished.
 
 ### Challenges we met & Our solutions.
 - In the beginning of this iteration we were a bit confused with using branches in our development. Later on we quickly adapted to this workflow and managed our branches well.
-- At this stage we found some of our code implementations not very organized or object-oriented. We have made some changes and will refractor our code if necessary in the next iteration.
-- Our web page styling (quiz and lectur format, button sizes and icons) is not well-thought. We will have a better design implemented in the next iteration.
+- At this stage we found some of our code implementations not much organized or object-oriented. We have discussed and made many changes and are keeping refractoring our code.
+- Our web page styling and business logic (quiz and lecture format, button sizes and icons) right now is relatively rough, and we are refining them and will have a better design presented in the next iteration. Stay tuned!
 
 ### What we plan to improve during iteration 4.
-- In addition to code refractoring and web page design, we plan to deploy our application to heroku with database shifted to PostgreSQL and add a login interface.
+- In addition to code refractoring and web page design, we plan to implement the login feature so that instructor-version file and student-version file will be separated. We will also deploy our application to heroku with database shifted to PostgreSQL.
