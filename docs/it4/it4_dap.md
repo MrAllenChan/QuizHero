@@ -57,7 +57,7 @@
 - Make decisions on web page styling.
 - Add login iterface on frontend-side using react framework.
 - Design and add DAOs for login information and file management in database on backend-side.
-- Deploy alpha (beta?) release on heroku.
+- Implement the function of uploading files on front-end and receiving and storing files on back-end server.
 
 
 <!--# Retrospective
