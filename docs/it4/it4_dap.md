@@ -3,7 +3,7 @@
 > Use a software to draw this (e.g. draw.io) and save the diagram as an image. 
 > Upload the image and link it in here using this syntax.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/it3_UML.png)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/it4_UML.png)
 
 # Wireframe
 > One (or a few) simple sketch of how the user interacts with the application. 
