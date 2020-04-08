@@ -44,7 +44,7 @@
 > List the User Stories that you will implement in this iteration.
 - As a student, I want to view the slides uploaded by the instructor so that I can keep pace with the lesson.
 - As an instructor, I want to have a presenter mode to see all my notes and quizzes, so that I can teach a course and have a better overview of my teaching content.
-- As an instructor, I want to log in to the website, so that I can review my presentation history.
+- As an instructor, I want to log in to the website, so that I can have my personal record.
 
 
 # Tasks
