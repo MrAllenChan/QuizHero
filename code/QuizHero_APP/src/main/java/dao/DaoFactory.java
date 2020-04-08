@@ -5,6 +5,11 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class DaoFactory {
     public static boolean DROP_TABLES_IF_EXIST = true;
     public static String PATH_TO_DATABASE_FILE = "./Store.db";
@@ -14,9 +19,27 @@ public class DaoFactory {
         // This class is not meant to be instantiated!
     }
 
-    private static void instantiateSql2o() {
+    private static String getURI() throws URISyntaxException, SQLException {
+        String databaseUrl = System.getenv("DATABASE_URL");
+        if (databaseUrl == null) {
+            // Not on Heroku, so use SQLite
+            return "jdbc:sqlite:" + PATH_TO_DATABASE_FILE;
+        }
+
+        URI dbUri = new URI(databaseUrl);
+
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':'
+                + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+
+        return dbUrl;
+    }
+
+
+    private static void instantiateSql2o() throws URISyntaxException, SQLException {
         if (sql2o == null) {
-            final String URI = "jdbc:sqlite:" + PATH_TO_DATABASE_FILE;
+            final String URI = getURI();
             final String USERNAME = "";
             final String PASSWORD = "";
             sql2o = new Sql2o(URI, USERNAME, PASSWORD);
@@ -56,13 +79,13 @@ public class DaoFactory {
         }
     }
 
-    public static QuizDao getQuizDao() {
+    public static QuizDao getQuizDao() throws URISyntaxException, SQLException {
         instantiateSql2o();
         createQuizTable(sql2o);
         return new Sql2oQuizDao(sql2o);
     }
 
-    public static RecordDao getRecordDao() {
+    public static RecordDao getRecordDao() throws URISyntaxException, SQLException {
         instantiateSql2o();
         createQuizTable(sql2o);
         return new Sql2oRecordDao(sql2o);
