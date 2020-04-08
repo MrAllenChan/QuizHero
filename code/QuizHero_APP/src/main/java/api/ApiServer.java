@@ -19,7 +19,7 @@ import java.util.Map;
 
 public final class ApiServer {
 
-    public static boolean INITIALIZE_WITH_SAMPLE_DATA = true;
+    public static boolean INITIALIZE_WITH_SAMPLE_DATA = false;
 //    public static int PORT = 7000;
     public static int PORT = getHerokuAssignedPort();
     private static Javalin app;
@@ -36,7 +36,7 @@ public final class ApiServer {
         return 7000;
     }
 
-    public static void start() throws URISyntaxException, SQLException {
+    public static void start() throws URISyntaxException {
         QuizDao quizDao = DaoFactory.getQuizDao();
         RecordDao recordDao = DaoFactory.getRecordDao();
 

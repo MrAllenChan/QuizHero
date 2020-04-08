@@ -38,3 +38,5 @@ heroku {
             web: "java -jar build/libs/quiz_hero-1.0-SNAPSHOT.jar"
     )
 }
+
+

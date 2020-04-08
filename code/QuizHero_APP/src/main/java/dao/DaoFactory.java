@@ -11,7 +11,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DaoFactory {
-    public static boolean DROP_TABLES_IF_EXIST = true;
+    public static boolean DROP_TABLES_IF_EXIST = false;
     public static String PATH_TO_DATABASE_FILE = "./Store.db";
     private static Sql2o sql2o;
 
@@ -19,29 +19,27 @@ public class DaoFactory {
         // This class is not meant to be instantiated!
     }
 
-    private static String getURI() throws URISyntaxException, SQLException {
-        String databaseUrl = System.getenv("DATABASE_URL");
-        if (databaseUrl == null) {
-            // Not on Heroku, so use SQLite
-            return "jdbc:sqlite:" + PATH_TO_DATABASE_FILE;
-        }
 
-        URI dbUri = new URI(databaseUrl);
-
-        String username = dbUri.getUserInfo().split(":")[0];
-        String password = dbUri.getUserInfo().split(":")[1];
-        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':'
-                + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
-
-        return dbUrl;
-    }
-
-
-    private static void instantiateSql2o() throws URISyntaxException, SQLException {
+    private static void instantiateSql2o() throws URISyntaxException {
         if (sql2o == null) {
-            final String URI = getURI();
-            final String USERNAME = "";
-            final String PASSWORD = "";
+            final String URI;
+            final String USERNAME;
+            final String PASSWORD;
+            String databaseUrl = System.getenv("DATABASE_URL");
+            if (databaseUrl == null) {
+                //Not on heroku, use SQLite
+                URI = "jdbc:sqlite:" + PATH_TO_DATABASE_FILE;
+                USERNAME = "";
+                PASSWORD = "";
+            } else {
+                //use postgreSQL
+                URI dbUri = new URI(databaseUrl);
+                URI = "jdbc:postgresql://" + dbUri.getHost() + ':'
+                        + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+                USERNAME = dbUri.getUserInfo().split(":")[0];
+                PASSWORD = dbUri.getUserInfo().split(":")[1];
+            }
+
             sql2o = new Sql2o(URI, USERNAME, PASSWORD);
             System.out.println("database instantiated successfully.");
         }
@@ -79,13 +77,13 @@ public class DaoFactory {
         }
     }
 
-    public static QuizDao getQuizDao() throws URISyntaxException, SQLException {
+    public static QuizDao getQuizDao() throws URISyntaxException {
         instantiateSql2o();
         createQuizTable(sql2o);
         return new Sql2oQuizDao(sql2o);
     }
 
-    public static RecordDao getRecordDao() throws URISyntaxException, SQLException {
+    public static RecordDao getRecordDao() throws URISyntaxException {
         instantiateSql2o();
         createQuizTable(sql2o);
         return new Sql2oRecordDao(sql2o);
