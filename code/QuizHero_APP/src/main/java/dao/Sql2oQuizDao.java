@@ -69,7 +69,7 @@ public class Sql2oQuizDao implements QuizDao {
 
         List<Quiz> listFromTable  = getSingleQuizStat(fileId, questionId);
 
-        // quiz not exist then insert, otherwise return
+        // quiz not exist then insert, otherwise do nothing
         if (listFromTable.isEmpty()) {
             try (Connection conn = sql2o.open()) {
                 String sql = "INSERT INTO Quiz(fileId, questionId, answer, countA, countB, countC, countD) " +
@@ -91,8 +91,9 @@ public class Sql2oQuizDao implements QuizDao {
                 throw new DaoException("Unable to add the Quiz", ex);
             }
         }
-        // for now, uploading a markdown containing the same questionIds is not handled
-        // update answer? reset counts? not decided yet
+
+//         for now, uploading a markdown containing the same questionIds is not handled
+//         update answer? reset counts? not decided yet
 //        } else {
 //            sql = "UPDATE Quiz Set " + answer + " = " + answer +
 //                    "WHERE fileId = " + fileId + " AND questionId = " + questionId;

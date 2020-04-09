@@ -1,13 +1,17 @@
 package api;
 import com.google.gson.Gson;
 import dao.*;
-import exception.ApiError;
-import exception.DaoException;
+import exception.*;
+import model.*;
 import io.javalin.Javalin;
 import io.javalin.plugin.json.JavalinJson;
-import model.Quiz;
-import model.Record;
-import model.User;
+import io.javalin.http.UploadedFile;
+import org.apache.commons.io.FileUtils;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +44,8 @@ public final class ApiServer {
         getSingleQuizStat(quizDao);
         postQuiz(quizDao);
         postRecords(recordDao);
+        login(userDao);
+        register(userDao);
 
         startJavalin();
 
@@ -138,7 +144,7 @@ public final class ApiServer {
                 ctx.json(record);
                 ctx.contentType("application/json");
             } catch (DaoException ex) {
-                throw new ApiError(ex.getMessage(), 500); // server internal error
+                throw new ApiError(ex.getMessage(), 404); // quiz not found
             }
         });
     }
@@ -148,13 +154,15 @@ public final class ApiServer {
         app.post("/login", ctx -> {
             User user = ctx.bodyAsClass(User.class);
             try {
-                Integer userId = userDao.checkUserIdentity(user);
-                user.setUserId(userId.intValue());
+                int userId = userDao.checkUserIdentity(user);
+                user.setUserId(userId);
                 ctx.status(201); // created successfully
                 ctx.json(user);
                 ctx.contentType("application/json");
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
+            } catch (LoginException ex) {
+                throw new ApiError(ex.getMessage(), 404); // user not find
             }
         });
     }
@@ -170,7 +178,48 @@ public final class ApiServer {
                 ctx.contentType("application/json");
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
+            } catch (RegisterException ex) {
+                throw new ApiError(ex.getMessage(), 403); // request forbidden, user already exists
             }
+        });
+    }
+
+//    private static void upload(UserDao userDao) {
+//        // instructor login action, return user including his/her id
+//        app.post("/upload", ctx -> {
+//            User user = ctx.bodyAsClass(User.class);
+//            try {
+//                userDao.uploadFile(user.getUserId(), );
+//                ctx.status(201); // created successfully
+//                ctx.json(user);
+//                ctx.contentType("application/json");
+//            } catch (DaoException ex) {
+//                throw new ApiError(ex.getMessage(), 500); // server internal error
+//            }
+//        });
+//    }
+
+    // Upload a file and save it to the local file system
+    private static void uploadFile(UserDao userDao) {
+        app.post("/upload", context -> {
+            UploadedFile uploadedFile = context.uploadedFile("file");
+            try (InputStream inputStream = uploadedFile.getContent()) {
+                File localFile = new File(uploadedFile.getFilename());
+                FileUtils.copyInputStreamToFile(inputStream, localFile);
+                String url = localFile.getAbsolutePath();
+//                userDao.storeUserFileInfo();
+            }
+        });
+    }
+
+    // Download the specified file
+    private static void downloadFile(UserDao userDao) {
+        app.get("/download/:name", context -> {
+            File localFile = new File(context.pathParam("name"));
+            InputStream inputStream = new BufferedInputStream(new FileInputStream(localFile));
+            context.header("Content-Disposition", "attachment; filename=\"" + localFile.getName() + "\"");
+            context.header("Content-Length", String.valueOf(localFile.length()));
+            context.result(inputStream);
         });
     }
 

@@ -8,8 +8,8 @@ public class RunServer {
         DaoFactory.PATH_TO_DATABASE_FILE = Paths.get("src", "main", "resources").toFile().
                 getAbsolutePath()
                 + "/db/Store.db";
-        DaoFactory.DROP_TABLES_IF_EXIST = true;
-        ApiServer.INITIALIZE_WITH_SAMPLE_DATA = true;
+        DaoFactory.DROP_TABLES_IF_EXIST = false;
+        ApiServer.INITIALIZE_WITH_SAMPLE_DATA = false;
         ApiServer.start();
     }
 }

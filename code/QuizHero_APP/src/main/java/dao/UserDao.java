@@ -8,5 +8,5 @@ import java.util.UUID;
 public interface UserDao {
     int checkUserIdentity(User user);
     void registerUser(User user);
-    void uploadFile(int userId, UUID uuid, String url);
+    void storeUserFileInfo(int userId, UUID uuid, String url);
 }
