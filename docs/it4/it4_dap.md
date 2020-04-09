@@ -44,7 +44,7 @@
 > List the User Stories that you will implement in this iteration.
 - As a student, I want to view the slides uploaded by the instructor so that I can keep pace with the lesson.
 - As an instructor, I want to have a presenter mode to see all my notes and quizzes, so that I can teach a course and have a better overview of my teaching content.
-- As an instructor, I want to log in to the website, so that I can have my personal record.
+- As an instructor, I want to log in to the website, so that I can prevent others from accessing my files.
 
 
 # Tasks
@@ -52,14 +52,15 @@
 > This list will change and it is good to keep it updated. 
 > It does not need to be exhastive.
 - Convert current SQLite database to PostgreSQL, which is officially supported by heroku.
+- Develop separate student page for students to access the slides and quizzes from open Internet using secrect code provided by their instructors. 
 - Deploy our alpha release on heroku.
-- Refactor code to make it more object-oriented.
-- Make decisions on web page styling.
 - Add login interface on front-end side using react framework.
 - Implement communication between front-end and back-end regarding login information.
 - Refine API and DAOs on back-end for processing and storing login information.
 - Design and refine Model, API and DAOs for managing user-file information in database on back-end.
 - Implement the function of uploading files on front-end and receiving and storing files on back-end server.
+- Refactor code to make it more object-oriented.
+
 
 
 
