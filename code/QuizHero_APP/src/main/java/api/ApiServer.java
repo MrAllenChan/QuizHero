@@ -1,15 +1,13 @@
 package api;
 import com.google.gson.Gson;
-import dao.DaoFactory;
-import dao.DaoUtil;
-import dao.QuizDao;
-import dao.RecordDao;
+import dao.*;
 import exception.ApiError;
 import exception.DaoException;
 import io.javalin.Javalin;
 import io.javalin.plugin.json.JavalinJson;
 import model.Quiz;
 import model.Record;
+import model.User;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,12 +24,13 @@ public final class ApiServer {
     }
 
     public static void start() {
+        UserDao userDao = DaoFactory.getUserDao();
         QuizDao quizDao = DaoFactory.getQuizDao();
         RecordDao recordDao = DaoFactory.getRecordDao();
-
         // add some sample data
         if (INITIALIZE_WITH_SAMPLE_DATA) {
             DaoUtil.addSampleQuizzes(quizDao);
+            DaoUtil.addSampleUsers(userDao);
         }
 
         // Routing
@@ -102,7 +101,7 @@ public final class ApiServer {
     }
 
     private static void getSingleQuizStat(QuizDao quizDao) {
-        // handle HTTP Get request to retrieve all Quiz statistics of a single file
+        // handle HTTP Get request to retrieve statistics of a single question in a file
         app.get("/quizstat/:fileid/:questionid", ctx -> {
             // TODO: implement me
             int fileId = Integer.parseInt(ctx.pathParam("fileid"));
@@ -113,7 +112,7 @@ public final class ApiServer {
         });
     }
 
-    //add postQuiz method
+    // add postQuiz method
     private static void postQuiz(QuizDao quizDao) {
         // quizzes are initialized once a markdown in quiz format is uploaded
         app.post("/quiz", ctx -> {
@@ -137,6 +136,37 @@ public final class ApiServer {
                 recordDao.add(record);
                 ctx.status(201); // created successfully
                 ctx.json(record);
+                ctx.contentType("application/json");
+            } catch (DaoException ex) {
+                throw new ApiError(ex.getMessage(), 500); // server internal error
+            }
+        });
+    }
+
+    private static void login(UserDao userDao) {
+        // instructor login action, return user including his/her id
+        app.post("/login", ctx -> {
+            User user = ctx.bodyAsClass(User.class);
+            try {
+                Integer userId = userDao.checkUserIdentity(user);
+                user.setUserId(userId.intValue());
+                ctx.status(201); // created successfully
+                ctx.json(user);
+                ctx.contentType("application/json");
+            } catch (DaoException ex) {
+                throw new ApiError(ex.getMessage(), 500); // server internal error
+            }
+        });
+    }
+
+    private static void register(UserDao userDao) {
+        // instructor login action, return user including his/her id
+        app.post("/register", ctx -> {
+            User user = ctx.bodyAsClass(User.class);
+            try {
+                userDao.registerUser(user);
+                ctx.status(201); // created successfully
+                ctx.json(user);
                 ctx.contentType("application/json");
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
