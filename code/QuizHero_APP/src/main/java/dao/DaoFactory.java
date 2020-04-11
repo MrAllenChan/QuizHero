@@ -11,7 +11,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DaoFactory {
-    public static boolean DROP_TABLES_IF_EXIST = false;
+    public static boolean DROP_TABLES_IF_EXIST = true;
     public static String PATH_TO_DATABASE_FILE = "./Store.db";
     private static Sql2o sql2o;
 
@@ -28,8 +28,8 @@ public class DaoFactory {
             String databaseUrl = System.getenv("DATABASE_URL");
             if (databaseUrl == null) {
                 //Not on heroku, use SQLite
-                URI = "jdbc:sqlite:" + PATH_TO_DATABASE_FILE;
-                USERNAME = "";
+                URI = "jdbc:postgresql://localhost:5432/postgres";
+                USERNAME = "postgres";
                 PASSWORD = "";
             } else {
                 //use postgreSQL
@@ -50,7 +50,7 @@ public class DaoFactory {
             dropQuizTableIfExists(sql2o);
         }
         String sql = "CREATE TABLE IF NOT EXISTS Quiz(" +
-                "id INTEGER PRIMARY KEY," +
+                "id SERIAL PRIMARY KEY," +
                 "fileId INTEGER," +
                 "questionId INTEGER," +
                 "answer VARCHAR(30)," +

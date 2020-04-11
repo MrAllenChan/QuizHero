@@ -70,7 +70,7 @@ public class Sql2oQuizDao implements QuizDao {
             try (Connection conn = sql2o.open()) {
                 sql = "INSERT INTO Quiz(fileId, questionId, answer, countA, countB, countC, countD) " +
                         "VALUES (:fileId, :questionId, :answer, :A, :B, :C, :D);";
-                int id = (int) conn.createQuery(sql)
+                int id = (int) conn.createQuery(sql, true)
                         .addParameter("fileId", quiz.getFileId())
                         .addParameter("questionId", quiz.getQuestionId())
                         .addParameter("answer", quiz.getAnswer())
@@ -80,6 +80,7 @@ public class Sql2oQuizDao implements QuizDao {
                         .addParameter("D", quiz.getCountD())
                         .executeUpdate()
                         .getKey();
+
 
                 quiz.setId(id);
 
