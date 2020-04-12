@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,14 +22,23 @@ import java.util.Map;
 public final class ApiServer {
 
     public static boolean INITIALIZE_WITH_SAMPLE_DATA = true;
-    public static int PORT = 7000;
+//    public static int PORT = 7000;
+    public static int PORT = getHerokuAssignedPort();
     private static Javalin app;
 
     private ApiServer() {
         // This class is not meant to be instantiated!
     }
 
-    public static void start() {
+    private static int getHerokuAssignedPort() {
+        String herokuPort = System.getenv("PORT");
+        if (herokuPort != null) {
+            return Integer.parseInt(herokuPort);
+        }
+        return 7000;
+    }
+
+    public static void start() throws URISyntaxException{
         UserDao userDao = DaoFactory.getUserDao();
         QuizDao quizDao = DaoFactory.getQuizDao();
         RecordDao recordDao = DaoFactory.getRecordDao();

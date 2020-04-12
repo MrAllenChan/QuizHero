@@ -6,6 +6,11 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class DaoFactory {
     public static boolean DROP_TABLES_IF_EXIST = true;
     public static String PATH_TO_DATABASE_FILE = "./Store.db";
@@ -15,11 +20,27 @@ public class DaoFactory {
         // This class is not meant to be instantiated!
     }
 
-    private static void instantiateSql2o() {
+
+    private static void instantiateSql2o() throws URISyntaxException {
         if (sql2o == null) {
-            final String URI = "jdbc:sqlite:" + PATH_TO_DATABASE_FILE;
-            final String USERNAME = "";
-            final String PASSWORD = "";
+            final String URI;
+            final String USERNAME;
+            final String PASSWORD;
+            String databaseUrl = System.getenv("DATABASE_URL");
+            if (databaseUrl == null) {
+                //Not on heroku, use SQLite
+                URI = "jdbc:postgresql://localhost:5432/postgres";
+                USERNAME = "postgres";
+                PASSWORD = "";
+            } else {
+                //use postgreSQL
+                URI dbUri = new URI(databaseUrl);
+                URI = "jdbc:postgresql://" + dbUri.getHost() + ':'
+                        + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+                USERNAME = dbUri.getUserInfo().split(":")[0];
+                PASSWORD = dbUri.getUserInfo().split(":")[1];
+            }
+
             sql2o = new Sql2o(URI, USERNAME, PASSWORD);
             System.out.println("database instantiated successfully.");
         }
@@ -30,7 +51,7 @@ public class DaoFactory {
             dropUserTableIfExists(sql2o);
         }
         String sql = "CREATE TABLE IF NOT EXISTS user(" +
-                "userId INTEGER PRIMARY KEY," +
+                "userId SERIAL PRIMARY KEY," +
                 "name VARCHAR(30)," +
                 "email VARCHAR(30)," +
                 "pswd VARCHAR(30)" +
@@ -47,7 +68,7 @@ public class DaoFactory {
             dropQuizTableIfExists(sql2o);
         }
         String sql = "CREATE TABLE IF NOT EXISTS user_file(" +
-                "userId INTEGER PRIMARY KEY," +
+                "userId SERIAL PRIMARY KEY," +
                 "fileId VARCHAR(30)," +
                 "url VARCHAR(30)" +
                 ");";
@@ -63,7 +84,7 @@ public class DaoFactory {
             dropQuizTableIfExists(sql2o);
         }
         String sql = "CREATE TABLE IF NOT EXISTS Quiz(" +
-                "id INTEGER PRIMARY KEY," +
+                "id SERIAL PRIMARY KEY," +
                 "fileId INTEGER," +
                 "questionId INTEGER," +
                 "answer VARCHAR(30)," +
@@ -101,19 +122,19 @@ public class DaoFactory {
         }
     }
 
-    public static QuizDao getQuizDao() {
+    public static QuizDao getQuizDao() throws URISyntaxException {
         instantiateSql2o();
         createQuizTable(sql2o);
         return new Sql2oQuizDao(sql2o);
     }
 
-    public static RecordDao getRecordDao() {
+    public static RecordDao getRecordDao() throws URISyntaxException {
         instantiateSql2o();
 //        createQuizTable(sql2o);
         return new Sql2oRecordDao(sql2o);
     }
 
-    public static UserDao getUserDao() {
+    public static UserDao getUserDao() throws URISyntaxException {
         instantiateSql2o();
         createUserTable(sql2o);
         return new Sql2oUserDao(sql2o);
