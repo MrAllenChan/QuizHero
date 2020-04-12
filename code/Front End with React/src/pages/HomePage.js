@@ -29,19 +29,23 @@ class HomePage extends Component {
 
     }
 
+    // quizString
     callback=(quiz)=>{
         this.setState({quiz:quiz})
         this.setState({slidesFlag : 1});
     }
 
+    // slidesString
     callback1=(slidesString)=>{
         this.setState({slidesString : slidesString})
     }
-
+    
+    // take quiz button (Spectacle)
     callback2=()=>{
         this.setState({quizFlag : 1})
     }
 
+    // back button from quiz (Button, Result, QuizPage
     callback3=()=>(
         this.setState({quizFlag : 0})
     )
