@@ -69,15 +69,9 @@ public class Sql2oQuizDao implements QuizDao {
         if (listFromTable.isEmpty()) {
             try (Connection conn = sql2o.open()) {
                 sql = "INSERT INTO Quiz(fileId, questionId, answer, countA, countB, countC, countD) " +
-                        "VALUES (:fileId, :questionId, :answer, :A, :B, :C, :D);";
+                        "VALUES (:fileId, :questionId, :answer, :countA, :countB, :countC, :countD);";
                 int id = (int) conn.createQuery(sql, true)
-                        .addParameter("fileId", quiz.getFileId())
-                        .addParameter("questionId", quiz.getQuestionId())
-                        .addParameter("answer", quiz.getAnswer())
-                        .addParameter("A", quiz.getCountA())
-                        .addParameter("B", quiz.getCountB())
-                        .addParameter("C", quiz.getCountC())
-                        .addParameter("D", quiz.getCountD())
+                        .bind(quiz)
                         .executeUpdate()
                         .getKey();
 
