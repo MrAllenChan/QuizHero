@@ -2,7 +2,7 @@
 import React, {Component} from "react";
 import {Switch, Route, Redirect} from "react-router-dom";
 // import HomePage from '../pages/HomePage'
-import MyUpload from "../components/Upload";
+import MyUpload from "../pages/UploadPage";
 import PresentPage from '../pages/PresentPage'
 import StudentPage from "../pages/StudentPage";
 

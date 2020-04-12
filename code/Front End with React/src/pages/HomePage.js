@@ -1,7 +1,7 @@
 import React , { Component } from  'react';
 import logo from '../fig/logo.png';
 import {Button} from 'antd';
-import MyUpload from '../components/Upload'
+import MyUpload from './UploadPage'
 import PresentPage from "./PresentPage";
 import StudentPage from "./StudentPage";
 import Slides from "../components/Spectacle"
