@@ -39,9 +39,9 @@ public final class ApiServer {
     }
 
     public static void start() throws URISyntaxException{
-        UserDao userDao = DaoFactory.getUserDao();
         QuizDao quizDao = DaoFactory.getQuizDao();
         RecordDao recordDao = DaoFactory.getRecordDao();
+        InstructorDao userDao = DaoFactory.getInstructorDao();
         // add some sample data
         if (INITIALIZE_WITH_SAMPLE_DATA) {
             DaoUtil.addSampleQuizzes(quizDao);
@@ -55,8 +55,8 @@ public final class ApiServer {
         getSingleQuizStat(quizDao);
         postQuiz(quizDao);
         postRecords(recordDao);
-        login(userDao);
-        register(userDao);
+//        login(userDao);
+//        register(userDao);
 
         startJavalin();
 
@@ -160,13 +160,13 @@ public final class ApiServer {
         });
     }
 
-    private static void login(UserDao userDao) {
+    private static void login(InstructorDao instructorDao) {
         // instructor login action, return user including his/her id
         app.post("/login", ctx -> {
-            User user = ctx.bodyAsClass(User.class);
+            Instructor user = ctx.bodyAsClass(Instructor.class);
             try {
-                int userId = userDao.checkUserIdentity(user);
-                user.setUserId(userId);
+                int userId = instructorDao.checkUserIdentity(user);
+                user.setInstructorId(userId);
                 ctx.status(201); // created successfully
                 ctx.json(user);
                 ctx.contentType("application/json");
@@ -178,12 +178,12 @@ public final class ApiServer {
         });
     }
 
-    private static void register(UserDao userDao) {
+    private static void register(InstructorDao instructorDao) {
         // instructor login action, return user including his/her id
         app.post("/register", ctx -> {
-            User user = ctx.bodyAsClass(User.class);
+            Instructor user = ctx.bodyAsClass(Instructor.class);
             try {
-                userDao.registerUser(user);
+                instructorDao.registerUser(user);
                 ctx.status(201); // created successfully
                 ctx.json(user);
                 ctx.contentType("application/json");
@@ -211,7 +211,7 @@ public final class ApiServer {
 //    }
 
     // Upload a file and save it to the local file system
-    private static void uploadFile(UserDao userDao) {
+    private static void uploadFile(InstructorDao instructorDao) {
         app.post("/upload", context -> {
             UploadedFile uploadedFile = context.uploadedFile("file");
             try (InputStream inputStream = uploadedFile.getContent()) {
@@ -224,7 +224,7 @@ public final class ApiServer {
     }
 
     // Download the specified file
-    private static void downloadFile(UserDao userDao) {
+    private static void downloadFile(InstructorDao instructorDao) {
         app.get("/download/:name", context -> {
             File localFile = new File(context.pathParam("name"));
             InputStream inputStream = new BufferedInputStream(new FileInputStream(localFile));

@@ -58,23 +58,23 @@ public class Sql2oQuizDao implements QuizDao {
         int fileId = quiz.getFileId();
         int questionId = quiz.getQuestionId();
         String answer = quiz.getAnswer();
-//        List<Map<String, Object>> listFromTable;
-//        String sql = "SELECT * FROM Quiz WHERE fileId = " + fileId + " AND questionId = " + questionId + ";";
-//        try (Connection conn = sql2o.open()) {
-//            listFromTable = conn.createQuery(sql).executeAndFetchTable().asList();
-//        } catch (Sql2oException ex) {
-//            System.out.println("quiz already exists");
-//            throw new DaoException("Unable to find this single quiz!", ex);
-//        }
+        List<Map<String, Object>> listFromTable;
+        String sql = "SELECT * FROM Quiz WHERE fileId = " + fileId + " AND questionId = " + questionId + ";";
+        try (Connection conn = sql2o.open()) {
+            listFromTable = conn.createQuery(sql).executeAndFetchTable().asList();
+        } catch (Sql2oException ex) {
+            System.out.println("quiz already exists");
+            throw new DaoException("Unable to find this single quiz!", ex);
+        }
 
-        List<Quiz> listFromTable  = getSingleQuizStat(fileId, questionId);
+//        List<Quiz> listFromTable  = getSingleQuizStat(fileId, questionId);
 
         // quiz not exist then insert, otherwise do nothing
         if (listFromTable.isEmpty()) {
             try (Connection conn = sql2o.open()) {
-                String sql = "INSERT INTO Quiz(fileId, questionId, answer, countA, countB, countC, countD) " +
+                sql = "INSERT INTO Quiz(fileId, questionId, answer, countA, countB, countC, countD) " +
                         "VALUES (:fileId, :questionId, :answer, :A, :B, :C, :D);";
-                int id = (int) conn.createQuery(sql)
+                int id = (int) conn.createQuery(sql, true)
                         .addParameter("fileId", quiz.getFileId())
                         .addParameter("questionId", quiz.getQuestionId())
                         .addParameter("answer", quiz.getAnswer())

@@ -1,7 +1,7 @@
 package dao;
 
 import exception.DaoException;
-import model.User;
+import model.Instructor;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
@@ -28,12 +28,12 @@ public class DaoFactory {
             final String PASSWORD;
             String databaseUrl = System.getenv("DATABASE_URL");
             if (databaseUrl == null) {
-                //Not on heroku, use SQLite
+                // Not on heroku, use SQLite
                 URI = "jdbc:postgresql://localhost:5432/postgres";
                 USERNAME = "postgres";
-                PASSWORD = "";
+                PASSWORD = "1009";
             } else {
-                //use postgreSQL
+                // use postgreSQL
                 URI dbUri = new URI(databaseUrl);
                 URI = "jdbc:postgresql://" + dbUri.getHost() + ':'
                         + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
@@ -46,12 +46,12 @@ public class DaoFactory {
         }
     }
 
-    private static void createUserTable(Sql2o sql2o) {
+    private static void createInstructorTable(Sql2o sql2o) {
         if (DROP_TABLES_IF_EXIST) {
-            dropUserTableIfExists(sql2o);
+            dropInstructorTableIfExists(sql2o);
         }
-        String sql = "CREATE TABLE IF NOT EXISTS user(" +
-                "userId SERIAL PRIMARY KEY," +
+        String sql = "CREATE TABLE IF NOT EXISTS Instructor(" +
+                "instructorId SERIAL PRIMARY KEY," +
                 "name VARCHAR(30)," +
                 "email VARCHAR(30)," +
                 "pswd VARCHAR(30)" +
@@ -59,7 +59,7 @@ public class DaoFactory {
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
-            throw new DaoException("Unable to create user table", ex);
+            throw new DaoException("Unable to create Instructor table", ex);
         }
     }
 
@@ -75,7 +75,7 @@ public class DaoFactory {
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
-            throw new DaoException("Unable to create user table", ex);
+            throw new DaoException("Unable to create Instructor table", ex);
         }
     }
 
@@ -111,14 +111,14 @@ public class DaoFactory {
         }
     }
 
-    private static void dropUserTableIfExists(Sql2o sql2o) {
-        String sql = "DROP TABLE IF EXISTS user;";
+    private static void dropInstructorTableIfExists(Sql2o sql2o) {
+        String sql = "DROP TABLE IF EXISTS Instructor;";
 
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
-            System.out.println("drop user table successfully.");
+            System.out.println("drop Instructor table successfully.");
         } catch (Sql2oException ex) {
-            throw new DaoException("Fail dropping user table.", ex);
+            throw new DaoException("Fail dropping Instructor table.", ex);
         }
     }
 
@@ -129,14 +129,14 @@ public class DaoFactory {
     }
 
     public static RecordDao getRecordDao() throws URISyntaxException {
-        instantiateSql2o();
+//        instantiateSql2o();
 //        createQuizTable(sql2o);
         return new Sql2oRecordDao(sql2o);
     }
 
-    public static UserDao getUserDao() throws URISyntaxException {
-        instantiateSql2o();
-        createUserTable(sql2o);
-        return new Sql2oUserDao(sql2o);
+    public static InstructorDao getInstructorDao() throws URISyntaxException {
+//        instantiateSql2o();
+        createInstructorTable(sql2o);
+        return new Sql2oInstructorDao(sql2o);
     }
 }

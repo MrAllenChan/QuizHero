@@ -1,23 +1,23 @@
 package model;
 
-public class User {
-    private Integer userId;
+public class Instructor {
+    private Integer instructorId;
     private String name;
     private String email;
     private String pswd;
 
-    public User(String name, String email, String pswd) {
+    public Instructor(String name, String email, String pswd) {
         this.name = name;
         this.email = email;
         this.pswd = pswd;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setInstructorId(Integer instructorId) {
+        this.instructorId = instructorId;
     }
 
     public Integer getUserId() {
-        return userId;
+        return instructorId;
     }
 
     public String getName() {
