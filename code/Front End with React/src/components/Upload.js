@@ -80,10 +80,34 @@ class MyUpload extends React.Component{
             this.readFile(this.state.file).then(this.convertText);
             // this.trans();
             this.state.display_name = this.display_name(this.state.display_name);
+
+            // send markdown file to backend
+            const BASE_URL = document.location.origin;
+            const formData = {
+                userId : 1,
+                fileName : this.state.file
+            }
+            console.log(formData)
+            axios
+                .post(BASE_URL+"/upload", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                })
+                .then(() => {
+                    console.log("upload success");
+                })
+                .catch((error) => {
+                    console.log("error")
+                });
         } else if (info.file.status === 'error') {
             console.log(info.file.name);
             message.error(`${info.file.name} file upload failed.`);
         }
+    }
+
+    onRemove = (file) => {
+        this.state.display_name = this.display_name(this.state.display_name);
     }
 
     onDownload = (file) => {
@@ -294,6 +318,7 @@ class MyUpload extends React.Component{
                         beforeUpload={this.beforeUpload}
                         onDownload={this.onDownload}
                         onPreview={this.onPreview}
+                        onRemove={this.onRemove}
                         {...props}>
 
                         <Button>
@@ -303,16 +328,15 @@ class MyUpload extends React.Component{
                     </Upload>
                 </div>
                 <div style={{display:this.state.display_name}}>
-                    <div>
-                        <Button onClick={this.toPresenterMode}>
-                            <Icon/>Presenter mode
-                        </Button>
-                    </div>
-                    <div>
-                        <Button onClick={this.toStudentMode}>
-                            <Icon/>Student mode
-                        </Button>
-                    </div>
+
+                    <Button onClick={this.toPresenterMode} size={"large"} style={{marginRight: 10}}>
+                        <Icon/>Presenter mode
+                    </Button>
+
+                    <Button onClick={this.toStudentMode} size={"large"} style={{marginLeft: 10}}>
+                        <Icon/>Student mode
+                    </Button>
+
 
                 </div>
             </div>

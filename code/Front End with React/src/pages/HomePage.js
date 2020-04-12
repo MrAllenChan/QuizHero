@@ -35,7 +35,7 @@ class HomePage extends Component {
     }
 
     callback1=(slidesString)=>{
-        this.setState({slidesString:slidesString})
+        this.setState({slidesString : slidesString})
     }
 
     callback2=()=>{
