@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Quiz from './Quiz';
-import ResultPresenter from './ResultPresenter';
+import Quiz from '../components/Quiz';
+import ResultPresenter from '../components/ResultPresenter';
 import axios from 'axios'
 import {Button, Icon} from "antd";
-import Slides from "./Spectacle";
+import Slides from "../components/Spectacle";
 
-class QuizPagePresenter extends Component {
+class PresentPage extends Component {
     constructor(props) {
         super(props);
 
@@ -18,14 +18,10 @@ class QuizPagePresenter extends Component {
             answer: '',
             answersCount: {},
             result: '',
-            // quizQuestions: props.quiz,
-            // slides: props.slidesString,
             quizQuestions: props.location.query.quiz,
             slides: props.location.query.slidesString,
             quizFlag : 0
         };
-
-
 
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
         this.skipQuestion = this.skipQuestion.bind(this);
@@ -171,13 +167,13 @@ class QuizPagePresenter extends Component {
         )
     };
 
-    callback3=()=>(
+    toSlidesCallback=()=>(
         this.setState({quizFlag : 0})
     )
 
 
     renderResult() {
-        return <ResultPresenter quizResult={this.state.result} callback3={this.callback3} />;
+        return <ResultPresenter quizResult={this.state.result} toSlidesCallback={this.toSlidesCallback} />;
     }
 
     renderQuizPages () {
@@ -213,4 +209,4 @@ class QuizPagePresenter extends Component {
     }
 }
 
-export default QuizPagePresenter;
+export default PresentPage;

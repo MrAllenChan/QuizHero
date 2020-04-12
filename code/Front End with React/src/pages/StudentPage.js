@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Quiz from './Quiz';
-import ResultStudent from './ResultStudent';
+import Quiz from '../components/Quiz';
+import ResultStudent from '../components/ResultStudent';
 import axios from 'axios'
-import Slides from "./Spectacle";
+import Slides from "../components/Spectacle";
 
-class QuizPageStudent extends Component {
+class StudentPage extends Component {
     constructor(props) {
         super(props);
 
@@ -20,8 +20,6 @@ class QuizPageStudent extends Component {
             quizQuestions: props.location.query.quiz,
             slides: props.location.query.slidesString,
         };
-
-
 
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
     }
@@ -148,7 +146,7 @@ class QuizPageStudent extends Component {
 
 
     renderResult() {
-        return <ResultStudent quizResult={this.state.result} callback3={this.callback3} />;
+        return <ResultStudent quizResult={this.state.result} toSlidesCallback={this.toSlidesCallback} />;
     }
 
     toQuizCallback = () => {
@@ -157,7 +155,7 @@ class QuizPageStudent extends Component {
         )
     };
 
-    callback3=()=>(
+    toSlidesCallback=()=>(
         this.setState({quizFlag : 0})
     )
 
@@ -194,4 +192,4 @@ class QuizPageStudent extends Component {
     }
 }
 
-export default QuizPageStudent;
+export default StudentPage;

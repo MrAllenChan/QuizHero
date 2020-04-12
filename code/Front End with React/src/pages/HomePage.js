@@ -2,8 +2,8 @@ import React , { Component } from  'react';
 import logo from '../fig/logo.png';
 import {Button} from 'antd';
 import MyUpload from '../components/Upload'
-import QuizPagePresenter from "../components/QuizPagePresenter";
-import QuizPageStudent from "../components/QuizPageStudent";
+import PresentPage from "./PresentPage";
+import StudentPage from "./StudentPage";
 import Slides from "../components/Spectacle"
 import quizStatistic from "../components/QuizStatistic"
 import {dimValueGetter} from "echarts/src/component/marker/markerHelper";
@@ -66,28 +66,28 @@ class HomePage extends Component {
         console.log(this.state.quiz)
         return (
             <div>
-                {this.state.quizFlag ? <QuizPageStudent questions={this.state.quiz} callback3={this.callback3}/> : <Slides callback2={this.callback2} slidesString={this.state.slidesString}/>}
+                {this.state.quizFlag ? <StudentPage questions={this.state.quiz} callback3={this.callback3}/> : <Slides callback2={this.callback2} slidesString={this.state.slidesString}/>}
             </div>
 
             // <Slides />
-            // <QuizPagePresenter
+            // <PresentPage
             // questions={this.state.quiz}
             // />
         );
     }
 
-    // renderPresenterPage() {
-    //     return (
-    //         <div>
-    //             {this.state.quizFlag ? <QuizPagePresenter questions={this.state.quiz} callback3={this.callback3}/> : <Slides callback2={this.callback2} slidesString={this.state.slidesString}/>}
-    //         </div>
-    //
-    //         // <Slides />
-    //         // <QuizPagePresenter
-    //         // questions={this.state.quiz}
-    //         // />
-    //     );
-    // }
+    renderPresenterPage() {
+        return (
+            <div>
+                {this.state.quizFlag ? <PresentPage questions={this.state.quiz} callback3={this.callback3}/> : <Slides callback2={this.callback2} slidesString={this.state.slidesString}/>}
+            </div>
+
+            // <Slides />
+            // <PresentPage
+            // questions={this.state.quiz}
+            // />
+        );
+    }
 
     renderUploadPage = () => {
 

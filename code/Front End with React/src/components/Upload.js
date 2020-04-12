@@ -3,6 +3,7 @@ import React from "react";
 import Marpit from '@marp-team/marpit'
 import axios from 'axios';
 import {Link} from "react-router-dom"
+import logo from "../fig/logo.png";
 
 
 // const fs = require('fs');
@@ -43,11 +44,7 @@ marpit.themeSet.default = marpit.themeSet.add(theme)
 class MyUpload extends React.Component{
     constructor(props) {
         super(props);
-        this.quizCallback = props.quizCallback;
-        this.slidesCallback = props.slidesCallback;
-        this.callback4 = props.callback4;
         // this.beforeUpload.bind = this.beforeUpload.bind(this);
-
     }
     state = {
         file:"",
@@ -59,7 +56,6 @@ class MyUpload extends React.Component{
         display_name:'none',
         data:""
     }
-
 
 
     beforeUpload = (file) => {
@@ -270,17 +266,6 @@ class MyUpload extends React.Component{
         return quizList;
     };
 
-    toStudentMode = () => {
-        this.separateQuestion(this.state.rawString);
-        this.callback4()
-    }
-
-    toPresenterMode = () => {
-        this.separateQuestion(this.state.rawString);
-
-        // window.location = "/presenter";
-    }
-
     trans=()=>{
         // var obj = JSON.parse(this.state.rawString);
         // var questions = obj;
@@ -293,8 +278,6 @@ class MyUpload extends React.Component{
             quiz : questions
         });
         const slidesString = this.state.slideString;
-        // this.quizCallback(questions);
-        // this.slidesCallback(slidesString);
         var data = {
             quiz: questions,
             slidesString: slidesString
@@ -321,37 +304,43 @@ class MyUpload extends React.Component{
 
     render(){
         return(
-            <div>
-                <div>
-                    <Upload
-                        onChange={this.onChange}
-                        beforeUpload={this.beforeUpload}
-                        onDownload={this.onDownload}
-                        onPreview={this.onPreview}
-                        onRemove={this.onRemove}
-                        {...props}>
+            <div className="App">
+                <header className="App-header">
 
-                        <Button>
-                            <Icon type = 'upload' /> Click to Upload
-                        </Button>
+                    <img src={logo} className="App-logo" alt="logo"/>
+                    <div>
+                        {/* Upload button*/}
+                        <div>
+                            <Upload
+                                onChange={this.onChange}
+                                beforeUpload={this.beforeUpload}
+                                onDownload={this.onDownload}
+                                onPreview={this.onPreview}
+                                onRemove={this.onRemove}
+                                {...props}>
 
-                    </Upload>
-                </div>
-                <div style={{display:this.state.display_name}}>
-                    <Link to={{pathname: '/presenter', query: this.state.data}}>
-                        <Button size={"large"} style={{marginRight: 10}}>
-                            <Icon/>Presenter mode
-                        </Button>
-                    </Link>
-                    <Link to={{pathname: '/student', query: this.state.data}}>
-                        <Button size={"large"} style={{marginLeft: 10}}>
-                            <Icon/>Student mode
-                        </Button>
-                    </Link>
+                                <Button>
+                                    <Icon type = 'upload' /> Click to Upload
+                                </Button>
 
+                            </Upload>
+                        </div>
+                        {/*Presenter/Student mode button*/}
+                        <div style={{display:this.state.display_name}}>
+                            <Link to={{pathname: '/presenter', query: this.state.data}}>
+                                <Button size={"large"} style={{marginRight: 10}}>
+                                    <Icon/>Presenter mode
+                                </Button>
+                            </Link>
+                            <Link to={{pathname: '/student', query: this.state.data}}>
+                                <Button size={"large"} style={{marginLeft: 10}}>
+                                    <Icon/>Student mode
+                                </Button>
+                            </Link>
+                        </div>
+                    </div>
 
-
-                </div>
+                </header>
             </div>
         )
     }
