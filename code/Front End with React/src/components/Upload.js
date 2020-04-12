@@ -2,7 +2,7 @@ import { Upload, message, Button, Icon } from 'antd';
 import React from "react";
 import Marpit from '@marp-team/marpit'
 import axios from 'axios';
-
+import {Link} from "react-router-dom"
 
 
 // const fs = require('fs');
@@ -43,8 +43,8 @@ marpit.themeSet.default = marpit.themeSet.add(theme)
 class MyUpload extends React.Component{
     constructor(props) {
         super(props);
-        this.callback = props.callback;
-        this.callback1 = props.callback1;
+        this.quizCallback = props.quizCallback;
+        this.slidesCallback = props.slidesCallback;
         this.callback4 = props.callback4;
         // this.beforeUpload.bind = this.beforeUpload.bind(this);
 
@@ -56,7 +56,8 @@ class MyUpload extends React.Component{
         slideString:"",
         quizString:"",
         quiz:[],
-        display_name:'none'
+        display_name:'none',
+        data:""
     }
 
 
@@ -78,6 +79,7 @@ class MyUpload extends React.Component{
             console.log(info.file.name);
             message.success(`${info.file.name} file uploaded successfully`);
             this.readFile(this.state.file).then(this.convertText);
+            // this.separateQuestion(this.state.rawString);
             // this.trans();
             this.state.display_name = this.display_name(this.state.display_name);
 
@@ -129,9 +131,6 @@ class MyUpload extends React.Component{
 
     }
 
-    onPreview=(file)=>{
-        this.separateQuestion(this.state.rawString);
-    }
 
     readFile=(file)=>{
         return new Promise(function (resolve, reject) {
@@ -155,7 +154,7 @@ class MyUpload extends React.Component{
         // console.log(result);
         this.setState({
             rawString : result
-        });
+        }, () => {this.separateQuestion(this.state.rawString);});
         // console.log(this.state.rawString);
         // 3. Render markdown
         const {html, css} = marpit.render(result);
@@ -278,6 +277,8 @@ class MyUpload extends React.Component{
 
     toPresenterMode = () => {
         this.separateQuestion(this.state.rawString);
+
+        // window.location = "/presenter";
     }
 
     trans=()=>{
@@ -292,8 +293,17 @@ class MyUpload extends React.Component{
             quiz : questions
         });
         const slidesString = this.state.slideString;
-        this.props.callback(questions);
-        this.props.callback1(slidesString);
+        // this.quizCallback(questions);
+        // this.slidesCallback(slidesString);
+        var data = {
+            quiz: questions,
+            slidesString: slidesString
+        }
+        // data = JSON.stringify(data);
+        // var path = `/presenter/${data}`;
+        this.setState({
+            data: data
+        })
     };
 
     display_name () {
@@ -328,14 +338,17 @@ class MyUpload extends React.Component{
                     </Upload>
                 </div>
                 <div style={{display:this.state.display_name}}>
+                    <Link to={{pathname: '/presenter', query: this.state.data}}>
+                        <Button size={"large"} style={{marginRight: 10}}>
+                            <Icon/>Presenter mode
+                        </Button>
+                    </Link>
+                    <Link to={{pathname: '/student', query: this.state.data}}>
+                        <Button size={"large"} style={{marginLeft: 10}}>
+                            <Icon/>Student mode
+                        </Button>
+                    </Link>
 
-                    <Button onClick={this.toPresenterMode} size={"large"} style={{marginRight: 10}}>
-                        <Icon/>Presenter mode
-                    </Button>
-
-                    <Button onClick={this.toStudentMode} size={"large"} style={{marginLeft: 10}}>
-                        <Icon/>Student mode
-                    </Button>
 
 
                 </div>

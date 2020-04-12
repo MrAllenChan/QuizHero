@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Quiz from './Quiz';
 import ResultStudent from './ResultStudent';
 import axios from 'axios'
+import Slides from "./Spectacle";
 
 class QuizPageStudent extends Component {
     constructor(props) {
@@ -16,10 +17,11 @@ class QuizPageStudent extends Component {
             answer: '',
             answersCount: {},
             result: '',
-            quizQuestions: props.questions
+            quizQuestions: props.location.query.quiz,
+            slides: props.location.query.slidesString,
         };
 
-        this.callback3 = props.callback3;
+
 
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
     }
@@ -149,17 +151,45 @@ class QuizPageStudent extends Component {
         return <ResultStudent quizResult={this.state.result} callback3={this.callback3} />;
     }
 
-    render() {
+    toQuizCallback = () => {
+        this.setState(
+            {quizFlag : 1}
+        )
+    };
+
+    callback3=()=>(
+        this.setState({quizFlag : 0})
+    )
+
+    renderQuizPages () {
         return (
             <div className="Quiz-page">
                 <div className="Quiz-header">
                     {/*<img src={logo} className="App-logo" alt="logo" />*/}
                     {/*<h2>React Quiz</h2>*/}
                 </div>
-
                 {this.state.result ? this.renderResult() : this.renderQuiz()}
 
             </div>
+        )
+    }
+
+    renderSlides () {
+        return (
+            <div>
+                <Slides toQuizCallback={this.toQuizCallback}
+                        slides={this.state.slides}/>
+            </div>
+        )
+    }
+
+    render() {
+        return (
+            <div>
+                {this.state.quizFlag ? this.renderQuizPages() : this.renderSlides()}
+            </div>
+
+
         );
     }
 }
