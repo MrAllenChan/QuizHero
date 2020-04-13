@@ -1,0 +1,44 @@
+.ant-form-item{
+  margin-bottom: 12px !important;
+}
+
+  .login-page-container{
+    text-align: center;
+    margin-top: 12vh;
+  }
+
+  .login-form{
+    width:400px;
+    height: 400px;
+    margin: 0 auto !important;
+  }
+.login-form-button {
+  width: 400px;
+  background-color: #8150D4 !important;
+  border-color: #8150D4 !important;
+  }
+
+  .register-button{
+    width: 400px;
+    color: #8150D4 !important;
+  background-color: #ffffff !important;
+  border-color: #8150D4 !important;
+
+  }
+
+  .remember-me-box{
+    float: left;
+  }
+  
+
+  .login-input{
+    width: 400px;
+  }
+
+  .login-input:hover{
+    border-color: #8150D4 !important;
+  }
+
+  .login-form-forgot {
+    float: right;
+  }
