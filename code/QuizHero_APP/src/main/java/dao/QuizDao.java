@@ -9,5 +9,5 @@ public interface QuizDao {
     void add(Quiz quiz) throws DaoException;
     List<Quiz> getAllQuizStat();
     List<Quiz> getQuizStatByFileId(int fileId);
-    List<Quiz> getSingleQuizStat(int fileId, int questionId);
+    Quiz getSingleQuizStat(int fileId, int questionId);
 }

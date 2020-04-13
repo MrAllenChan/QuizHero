@@ -18,53 +18,58 @@ public class Sql2oInstructorDao implements InstructorDao{
     }
 
     @Override
-    public int checkUserIdentity(Instructor instructor) {
-        Integer userId;
+    public Instructor checkUserIdentity(String email, String pswd) {
+        Instructor instructor;
         try (Connection conn = sql2o.open()) {
-            String sql = "SELECT instructorId FROM Instructor Where name = :name And email = :email" +
-                    " And pswd = :pswd;";
-            userId =  conn.createQuery(sql)
-                    .addParameter("name", instructor.getName())
+            String sql = "SELECT instructorId, name, email FROM instructor Where email = :email AND pswd = :pswd;";
+            instructor =  conn.createQuery(sql)
+                    .addParameter("email", email)
+                    .addParameter("pswd", pswd)
+                    .executeAndFetchFirst(Instructor.class);
+        } catch (Sql2oException ex) {
+            throw new DaoException("Database error", ex);
+        }
+
+        if (instructor == null) {
+            throw new LoginException("User authentication failure. Please input again.");
+        }
+
+        return instructor; // return userId if find this instructor
+    }
+
+    @Override
+    public void registerUser(Instructor instructor) {
+        Integer id;
+        // user not exist then register, otherwise throw UserException
+        // email must be unique
+        try (Connection conn = sql2o.open()) {
+            String sql = "SELECT instructorId FROM instructor Where email = :email;";
+            id =  conn.createQuery(sql)
                     .addParameter("email", instructor.getEmail())
-                    .addParameter("pswd", instructor.getPswd())
                     .executeScalar(Integer.class);
         } catch (Sql2oException ex) {
             throw new DaoException("Database error", ex);
         }
 
-        if (userId == null) {
-            throw new LoginException("User authentication failure. Please input again.");
+        if (id != null) {
+            throw new RegisterException("User already exists with the same email. " +
+                    "Please modify your register info.");
         }
 
-        return userId; // return userId if find this instructor
-    }
+        System.out.println("user not exists, register permit.");
+        try (Connection conn = sql2o.open()) {
+            String sql = "INSERT INTO instructor(name, email, pswd) VALUES (:name, :email, :pswd);";
+            id = (int) conn.createQuery(sql, true)
+                    .addParameter("name", instructor.getName())
+                    .addParameter("email", instructor.getEmail())
+                    .addParameter("pswd", instructor.getPswd())
+                    .executeUpdate()
+                    .getKey(); // Returns the key this connection is associated with.
 
-    @Override
-    public void registerUser(Instructor instructor) {
-        int userId = 0;
-        // user not exist then register, otherwise throw UserException
-        try {
-            userId = checkUserIdentity(instructor);
-            System.out.println(userId);
-            if (userId != 0) {
-                throw new RegisterException("User already exists. Please modify your register info.");
-            }
-        } catch (LoginException ex) {
-            System.out.println("user not exists, register permit.");
-            try (Connection conn = sql2o.open()) {
-                String sql = "INSERT INTO Instructor(name, email, pswd) VALUES (:name, :email, :pswd);";
-                userId = (int) conn.createQuery(sql, true)
-                        .addParameter("name", instructor.getName())
-                        .addParameter("email", instructor.getEmail())
-                        .addParameter("pswd", instructor.getPswd())
-                        .executeUpdate()
-                        .getKey();
-
-                instructor.setInstructorId(userId);
-                System.out.println("Register user successfully.");
-            } catch (Sql2oException ex1) {
-                throw new DaoException("Unable to register the user.", ex1);
-            }
+            instructor.setInstructorId(id);
+            System.out.println("Register user successfully.");
+        } catch (Sql2oException ex1) {
+            throw new DaoException("Unable to register the user.", ex1);
         }
     }
 

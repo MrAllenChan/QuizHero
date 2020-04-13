@@ -30,11 +30,11 @@ public class Sql2oQuizDao implements QuizDao {
     }
 
     @Override
-    public List<Quiz> getSingleQuizStat(int fileId, int questionId) {
+    public Quiz getSingleQuizStat(int fileId, int questionId) {
         try (Connection conn = sql2o.open()) {
             String sql = "SELECT * FROM Quiz Where fileId = " +
                     fileId + " AND questionId = " + questionId + ";";
-            return conn.createQuery(sql).executeAndFetch(Quiz.class);
+            return conn.createQuery(sql).executeAndFetchFirst(Quiz.class);
         }
         catch (Sql2oException ex) {
             throw new DaoException("Cannot find this single Quiz with file ID: " +
