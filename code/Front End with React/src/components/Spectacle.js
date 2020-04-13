@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Upload, message, Button, Icon } from 'antd';
-
+import defaultTheme from '../theme/deault-theme';
 import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Notes} from 'spectacle';
 
 // SPECTACLE_CLI_MD_START
@@ -80,14 +80,11 @@ class Slides extends React.Component{
             fontSize:"20px"
         };
         return (
-            <Deck loop theme={theme} template={template}>
+            <Deck loop theme={defaultTheme} template={template}>
 
                 <Markdown containsSlides>{this.slides}</Markdown>
-                {/*<Slide>*/}
-                {/*    <Heading>Welcome to Spectacle</Heading>*/}
-
-                {/*</Slide>*/}
-                <Slide>
+                {/*quiz reminder page*/}
+                <Slide backgroundColor={"#fff"}>
                     <Heading>Now lets do some funny quizzes!</Heading>
                     <Heading>
                         <Button
