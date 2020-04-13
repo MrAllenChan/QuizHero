@@ -6,9 +6,9 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost:7000/quizstat",
+			"name": "http://localhost:7000/login",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -16,17 +16,80 @@
 						"type": "text"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fileId\": 1,\n\t\"questionId\": 3,\n\t\"choice\": 'A'\n}"
+				},
 				"url": {
-					"raw": "http://localhost:7000/quizstat",
+					"raw": "http://localhost:7000/record",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "7000",
 					"path": [
-						"quizstat"
+						"record"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:7000/register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"allen\",\n\t\"email\": \"zchen85@jhu.edu\",\n\t\"pswd\": \"9999\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:7000/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:7000/register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"nanxi\",\n\t\"email\": \"nanxi@jhu.edu\",\n\t\"pswd\": \"6666\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:7000/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"register"
+					]
+				},
+				"description": "register successfully"
 			},
 			"response": []
 		},
@@ -60,7 +123,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:7000/record",
+			"name": "http://localhost:7000/quiz",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -89,7 +152,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:7000/quizstat/1/2",
+			"name": "http://localhost:7000/quizstat",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -100,16 +163,14 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:7000/quizstat/1/2",
+					"raw": "http://localhost:7000/quizstat",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "7000",
 					"path": [
-						"quizstat",
-						"1",
-						"2"
+						"quizstat"
 					]
 				}
 			},
@@ -136,6 +197,33 @@
 					"path": [
 						"quizstat",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:7000/quizstat/1/2",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/quizstat/1/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"quizstat",
+						"1",
+						"2"
 					]
 				}
 			},
