@@ -17,11 +17,14 @@ class StudentPage extends Component {
             answer: '',
             answersCount: {},
             result: '',
-            quizQuestions: props.location.query.quiz,
+            quizCounter : -1,
+            quizList: props.location.query.quiz,
+            quizQuestions:props.location.query.quiz[0],
             slides: props.location.query.slidesString,
         };
 
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
+        console.log(this.state.quizQuestions)
     }
 
     componentDidMount() {
@@ -124,11 +127,16 @@ class StudentPage extends Component {
     }
 
     setResults(result) {
-        if (result.length === 1) {
-            this.setState({ result: result[0] });
-        } else {
-            this.setState({ result: 'Undetermined' });
-        }
+        this.setState({
+            result : 1
+        });
+
+
+        // if (result.length === 1) {
+        //     this.setState({ result: result[0] });
+        // } else {
+        //     this.setState({ result: 'Undetermined' });
+        // }
     }
 
     renderQuiz() {
@@ -151,12 +159,16 @@ class StudentPage extends Component {
 
     toQuizCallback = () => {
         this.setState(
-            {quizFlag : 1}
+            {quizFlag : 1,
+            quizQuestions : this.state.quizList[this.state.quizCounter + 1],
+            quizCounter : this.state.quizCounter + 1}
         )
+
     };
 
     toSlidesCallback=()=>(
-        this.setState({quizFlag : 0})
+        this.setState({quizFlag : 0,
+        result : 0})
     )
 
     renderQuizPages () {

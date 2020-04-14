@@ -46,7 +46,7 @@ marpit.themeSet.default = marpit.themeSet.add(theme)
 class MyUpload extends React.Component{
     constructor(props) {
         super(props);
-        // this.beforeUpload.bind = this.beforeUpload.bind(this);
+        this.beforeUpload.bind = this.beforeUpload.bind(this);
     }
     state = {
         file:"",
@@ -130,8 +130,6 @@ class MyUpload extends React.Component{
 
     }
 
-    //onPreview
-
     readFile=(file)=>{
         return new Promise(function (resolve, reject) {
             const reader = new FileReader();
@@ -173,7 +171,6 @@ class MyUpload extends React.Component{
         },);
     }
 
-
     onPreview=(file)=>{
         this.separateQuestion(this.state.rawString);
     }
@@ -201,7 +198,7 @@ class MyUpload extends React.Component{
             const section = sections[i].split(" ");
             if (section[0] === ">") {
                 questions[index].push(sections[i]);
-                slides[index].push("---quiz---\n\n");
+                slides[index].push("$$$quiz$$$\n\n");
 
                 console.log(index);
                 console.log(questions[index]);
@@ -238,7 +235,7 @@ class MyUpload extends React.Component{
 
     }
 
-    //question变成quizLists(single question---quiz, quizBlock, quizLists)
+    //question变成quizLists(quiz, quizBlock, quizLists)
     parseString = (quizStringList) => {
         // this.separateQuestion(this.state.rawString);
         console.log(quizStringList);
@@ -340,24 +337,17 @@ class MyUpload extends React.Component{
     };
 
     trans=()=>{
-        // var obj = JSON.parse(this.state.rawString);
-        // var questions = obj;
-        // this.separateQuestion(this.state.rawString);
         var questions = this.parseString(this.state.quizStringList);
         console.log(questions);
         this.setState({
             quiz : questions
         });
         const slidesList = this.state.slideStringList;
-        this.props.callback(questions);
-        this.props.callback1(slidesList);
-        const slidesString = this.state.slideString;
+        console.log(slidesList);
         var data = {
             quiz: questions,
-            slidesString: slidesString
+            slidesString: slidesList
         }
-        // data = JSON.stringify(data);
-        // var path = `/presenter/${data}`;
         this.setState({
             data: data
         })

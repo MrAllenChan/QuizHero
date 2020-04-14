@@ -84,31 +84,34 @@ class Slides extends React.Component{
         for (var i = 0; i < this.slides.length; i ++) {
             var data = this.slides[i];
             var slideBlock = data.split("---\n\n");
-            if (slideBlock[slideBlock.length - 1].contains("---quiz---")) {
+            console.log(slideBlock);
+            if (slideBlock[slideBlock.length - 1] === "$$$quiz$$$\n\n") {
                 slideBlock.splice(slideBlock.length - 1, 1);
                 data = slideBlock.join("---\n\n");
                 content.push(
-                    <Deck loop theme={defaultTheme} template={template}>
-                        <Markdown containsSlides>{data}</Markdown>
-                        {/*quiz reminder page*/}
-                        <Slide backgroundColor={"#fff"}>
-                            <Heading>Now lets do some funny quizzes!</Heading>
-                            <Heading>
-                                <Button
-                                    onClick={this.onClick} style={buttonStyle}>
-                                    <Icon /> Click to start quiz
-                                </Button>
-                            </Heading>
+                    <Markdown containsSlides>{data}</Markdown>
 
-                        </Slide>
-                    </Deck>
+                )
+                content.push(
+                    <Slide backgroundColor={"#fff"}>
+                        <Heading>Now lets do some funny quizzes!</Heading>
+                        <Heading>
+                            <Button
+                                onClick={this.onClick} style={buttonStyle}>
+                                <Icon /> Click to start quiz
+                            </Button>
+                        </Heading>
+
+                    </Slide>
+                )
+            } else {
+                content.push(
+
+                    <Markdown containsSlides>{data}</Markdown>
+
                 )
             }
-            content.push(
-                <Deck loop theme={defaultTheme} template={template}>
-                    <Markdown containsSlides>{data}</Markdown>
-                </Deck>
-            )
+
 
         }
 
@@ -130,9 +133,9 @@ class Slides extends React.Component{
             //     </Slide>
             //     <Markdown containsSlides>{this.slides}</Markdown>
             // </Deck>
-            <div>
+            <Deck loop theme={defaultTheme} template={template}>
                 {content}
-            </div>
+            </Deck>
         );
     }
     // render (<Presentation />, document.getElementById('root'));
