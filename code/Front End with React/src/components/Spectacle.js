@@ -79,23 +79,60 @@ class Slides extends React.Component{
             boarderRadius:"3px",
             fontSize:"20px"
         };
+
+        const content = [];
+        for (var i = 0; i < this.slides.length; i ++) {
+            var data = this.slides[i];
+            var slideBlock = data.split("---\n\n");
+            if (slideBlock[slideBlock.length - 1].contains("---quiz---")) {
+                slideBlock.splice(slideBlock.length - 1, 1);
+                data = slideBlock.join("---\n\n");
+                content.push(
+                    <Deck loop theme={defaultTheme} template={template}>
+                        <Markdown containsSlides>{data}</Markdown>
+                        {/*quiz reminder page*/}
+                        <Slide backgroundColor={"#fff"}>
+                            <Heading>Now lets do some funny quizzes!</Heading>
+                            <Heading>
+                                <Button
+                                    onClick={this.onClick} style={buttonStyle}>
+                                    <Icon /> Click to start quiz
+                                </Button>
+                            </Heading>
+
+                        </Slide>
+                    </Deck>
+                )
+            }
+            content.push(
+                <Deck loop theme={defaultTheme} template={template}>
+                    <Markdown containsSlides>{data}</Markdown>
+                </Deck>
+            )
+
+        }
+
+
         return (
-            <Deck loop theme={defaultTheme} template={template}>
-
-                <Markdown containsSlides>{this.slides}</Markdown>
-                {/*quiz reminder page*/}
-                <Slide backgroundColor={"#fff"}>
-                    <Heading>Now lets do some funny quizzes!</Heading>
-                    <Heading>
-                        <Button
-                            onClick={this.onClick} style={buttonStyle}>
-                            <Icon /> Click to start quiz
-                        </Button>
-                    </Heading>
-
-                </Slide>
-                <Markdown containsSlides>{this.slides}</Markdown>
-            </Deck>
+            // <Deck loop theme={defaultTheme} template={template}>
+            //
+            //     <Markdown containsSlides>{this.slides}</Markdown>
+            //     {/*quiz reminder page*/}
+            //     <Slide backgroundColor={"#fff"}>
+            //         <Heading>Now lets do some funny quizzes!</Heading>
+            //         <Heading>
+            //             <Button
+            //                 onClick={this.onClick} style={buttonStyle}>
+            //                 <Icon /> Click to start quiz
+            //             </Button>
+            //         </Heading>
+            //
+            //     </Slide>
+            //     <Markdown containsSlides>{this.slides}</Markdown>
+            // </Deck>
+            <div>
+                {content}
+            </div>
         );
     }
     // render (<Presentation />, document.getElementById('root'));
