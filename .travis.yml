@@ -8,8 +8,8 @@ script:
   - cd code/QuizHero_APP/
 
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+  - rm -f  $HOME/code/QuizHero_APP/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/code/QuizHero_APP/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
     - "$HOME/.gradle/caches/"
