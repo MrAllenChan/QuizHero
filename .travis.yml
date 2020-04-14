@@ -7,7 +7,6 @@ before_install:
   - cd code/QuizHero_APP/
 
 script:
-  - cd code/QuizHero_APP/
   - ./gradlew build --scan -s
 
 before_cache:
