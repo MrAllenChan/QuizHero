@@ -19,8 +19,8 @@ public final class DaoUtil {
     }
 
     public static void addSampleUsers(InstructorDao instructorDao) {
-        instructorDao.registerUser(new Instructor("allen", "zchen85@jhu.edu", "9999"));
-        instructorDao.registerUser(new Instructor("bob", "bob@jhu.edu", "8888"));
-        instructorDao.registerUser(new Instructor("richard", "richard@jhu.edu", "7777"));
+        instructorDao.registerUser(new Instructor("Allen", "zchen85@jhu.edu", "9999"));
+        instructorDao.registerUser(new Instructor("Bob Wang", "bob@jhu.edu", "8888"));
+        instructorDao.registerUser(new Instructor("Richard", "richard@jhu.edu", "7777"));
     }
 }

@@ -51,9 +51,9 @@ public class DaoFactory {
             dropInstructorTableIfExists(sql2o);
         }
         String sql = "CREATE TABLE IF NOT EXISTS Instructor(" +
-                "instructorId SERIAL PRIMARY KEY," +
+                "instructorId SERIAL," +
                 "name VARCHAR(30)," +
-                "email VARCHAR(30)," +
+                "email VARCHAR(30) PRIMARY KEY," +
                 "pswd VARCHAR(30)" +
                 ");";
         try (Connection conn = sql2o.open()) {

@@ -55,8 +55,8 @@ public final class ApiServer {
         getSingleQuizStat(quizDao);
         postQuiz(quizDao);
         postRecords(recordDao);
-//        login(userDao);
-//        register(userDao);
+        login(userDao);
+        register(userDao);
 
         startJavalin();
 
@@ -123,8 +123,8 @@ public final class ApiServer {
             // TODO: implement me
             int fileId = Integer.parseInt(ctx.pathParam("fileid"));
             int questionId = Integer.parseInt(ctx.pathParam("questionid"));
-            List<Quiz> quizzes = quizDao.getSingleQuizStat(fileId, questionId);
-            ctx.json(quizzes.get(0));
+            Quiz quiz = quizDao.getSingleQuizStat(fileId, questionId);
+            ctx.json(quiz);
             ctx.status(200);
         });
     }
@@ -163,12 +163,15 @@ public final class ApiServer {
     private static void login(InstructorDao instructorDao) {
         // instructor login action, return user including his/her id
         app.post("/login", ctx -> {
-            Instructor user = ctx.bodyAsClass(Instructor.class);
+            String email = ctx.queryParam("email");
+            String pswd = ctx.queryParam("pswd");
+            System.out.println("email: " + email + " pswd: " + pswd);
+//            Instructor user = ctx.bodyAsClass(Instructor.class);
             try {
-                int userId = instructorDao.checkUserIdentity(user);
-                user.setInstructorId(userId);
+                Instructor instructor = instructorDao.checkUserIdentity(email, pswd);
+//                instructor.setInstructorId(userId);
                 ctx.status(201); // created successfully
-                ctx.json(user);
+                ctx.json(instructor);
                 ctx.contentType("application/json");
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
@@ -181,11 +184,11 @@ public final class ApiServer {
     private static void register(InstructorDao instructorDao) {
         // instructor login action, return user including his/her id
         app.post("/register", ctx -> {
-            Instructor user = ctx.bodyAsClass(Instructor.class);
+            Instructor instructor = ctx.bodyAsClass(Instructor.class);
             try {
-                instructorDao.registerUser(user);
+                instructorDao.registerUser(instructor);
                 ctx.status(201); // created successfully
-                ctx.json(user);
+                ctx.json(instructor);
                 ctx.contentType("application/json");
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error

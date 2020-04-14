@@ -16,7 +16,7 @@ public class Instructor {
         this.instructorId = instructorId;
     }
 
-    public Integer getUserId() {
+    public Integer getInstructorId() {
         return instructorId;
     }
 
