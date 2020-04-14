@@ -12,8 +12,8 @@ before_cache:
   - rm -fr $HOME/code/QuizHero_APP/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - "$HOME/.gradle/caches/"
-    - "$HOME/.gradle/wrapper/"
+    - "$HOME/code/QuizHero_APP/.gradle/caches/"
+    - "$HOME/code/QuizHero_APP/.gradle/wrapper/"
 deploy:
   provider: heroku
   api_key:
