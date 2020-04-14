@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import Quiz from './Quiz';
-import ResultPresenter from './ResultPresenter';
+import Quiz from '../components/Quiz';
+import ResultPresenter from '../components/ResultPresenter';
 import axios from 'axios'
 import {Button, Icon} from "antd";
+import Slides from "../components/Spectacle";
 
-class QuizPagePresenter extends Component {
+class PresentPage extends Component {
     constructor(props) {
         super(props);
 
@@ -17,17 +18,17 @@ class QuizPagePresenter extends Component {
             answer: '',
             answersCount: {},
             result: '',
-            quizQuestions: props.questions
+            quizQuestions: props.location.query.quiz,
+            slides: props.location.query.slidesString,
+            quizFlag : 0
         };
-
-        this.callback3 = props.callback3;
 
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
         this.skipQuestion = this.skipQuestion.bind(this);
     }
 
     componentDidMount() {
-
+        console.log(this.state.quizQuestions)
         const shuffledAnswerOptions = this.state.quizQuestions.map(question =>
             this.shuffleArray(question.answers)
         );
@@ -160,24 +161,52 @@ class QuizPagePresenter extends Component {
         );
     }
 
+    toQuizCallback = () => {
+        this.setState(
+            {quizFlag : 1}
+        )
+    };
+
+    toSlidesCallback=()=>(
+        this.setState({quizFlag : 0})
+    )
+
 
     renderResult() {
-        return <ResultPresenter quizResult={this.state.result} callback3={this.callback3} />;
+        return <ResultPresenter quizResult={this.state.result} toSlidesCallback={this.toSlidesCallback} />;
     }
 
-    render() {
+    renderQuizPages () {
         return (
             <div className="Quiz-page">
                 <div className="Quiz-header">
                     {/*<img src={logo} className="App-logo" alt="logo" />*/}
                     {/*<h2>React Quiz</h2>*/}
                 </div>
-
                 {this.state.result ? this.renderResult() : this.renderQuiz()}
 
             </div>
+        )
+    }
+
+    renderSlides () {
+        return (
+            <div>
+                <Slides toQuizCallback={this.toQuizCallback}
+                        slides={this.state.slides}/>
+            </div>
+        )
+    }
+
+    render() {
+        return (
+            <div>
+                {this.state.quizFlag ? this.renderQuizPages() : this.renderSlides()}
+            </div>
+
+
         );
     }
 }
 
-export default QuizPagePresenter;
+export default PresentPage;

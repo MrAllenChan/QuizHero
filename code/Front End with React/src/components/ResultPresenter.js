@@ -22,7 +22,7 @@ function ResultPresenter(props) {
             </div>
             </CSSTransitionGroup>
             <QuizStatictic/>
-            <BackButton callback3={props.callback3}/>
+            <BackButton toSlidesCallback={props.toSlidesCallback}/>
         </div>
     );
 }

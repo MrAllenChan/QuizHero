@@ -7,6 +7,9 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import { GuardProvider, GuardedRoute } from "react-router-guards";
 import getUserLoginStatus from '../utils/getUserLoginStatus';
+import MyUpload from "../components/Upload";
+import PresentPage from '../pages/PresentPage'
+import StudentPage from "../pages/StudentPage";
 
 
 const history = createBrowserHistory();
@@ -36,7 +39,9 @@ export default class AppRouter extends Component {
             ></GuardedRoute>
             <GuardProvider guards={[requireLogin]}>
               <GuardedRoute path="/" exact render={() => <Redirect to="/HomePage" />} />
-              <GuardedRoute path="/HomePage/:username/:instructorId" exact component={HomePage} />
+              <GuardedRoute path="/HomePage/:username/:instructorId" exact component={MyUpload} />
+              <GuardedRoute path="/presenter" component={PresentPage}/>
+              <GuardedRoute path="/student" component={StudentPage}/>
             </GuardProvider>
             {/* <Route path="/" exact render={() => <Redirect to="/HomePage" />} /> */}
             {/* <Route path="/RecordPersonTable" component={RecordPersonTable} />
