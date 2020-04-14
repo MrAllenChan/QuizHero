@@ -1,13 +1,9 @@
 language: java
-install: true
 jdk: openjdk8
 
 
-before_install:
-  - cd code/QuizHero_APP/
-
 script:
-  - ./gradlew build --scan -s
+  - cd code/QuizHero_APP/
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
