@@ -1,21 +1,20 @@
 import Axios from "axios";
-import BASE_URL from "../../config/config"
+import {BASE_URL} from "../../config/config"
 
 
 
+export const ADD_USERNAME = "ADD_USERNAME";
 
 
+export const userLoginAction = (username, instructionId) => {
 
-export const userLogin = (email, password) => {
-    let params = {
-        email : email,
-        pswd: password
+    let userInfo = {
+        username:username,
+        instructionId:instructionId
     }
 
-    const response = await Axios.post(BASE_URL+"/login",params)
-    
     return {
         type: ADD_USERNAME,
-        username: response
+        userInfo: userInfo
     }
 };

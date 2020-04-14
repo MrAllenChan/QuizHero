@@ -36,7 +36,7 @@ export default class AppRouter extends Component {
             ></GuardedRoute>
             <GuardProvider guards={[requireLogin]}>
               <GuardedRoute path="/" exact render={() => <Redirect to="/HomePage" />} />
-              <GuardedRoute path="/HomePage" exact component={HomePage} />
+              <GuardedRoute path="/HomePage/:username/:instructorId" exact component={HomePage} />
             </GuardProvider>
             {/* <Route path="/" exact render={() => <Redirect to="/HomePage" />} /> */}
             {/* <Route path="/RecordPersonTable" component={RecordPersonTable} />

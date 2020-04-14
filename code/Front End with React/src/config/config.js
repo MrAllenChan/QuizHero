@@ -1,6 +1,7 @@
 
 //const httpHost = "http://192.168.0.130:7001";
-const BASE_URL = document.location.origin;
+// export const BASE_URL = document.location.origin;
+export const BASE_URL = "https://quiz-hero.herokuapp.com";
 
 
 /**

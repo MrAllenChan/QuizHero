@@ -1,17 +1,33 @@
 import React, { Component } from "react";
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined,MailOutlined } from '@ant-design/icons';
 import { connect } from "react-redux";
 import "../style/loginPageStyle.css";
+import {BASE_URL} from "../config/config"
 import logo from "../fig/logo.png";
+
+const mapStateToProps = state => {}
+const mapDispatchToProps = (dispatch) => {}
 
 class RegisterPage extends Component{
   onFinish = values => {
     console.log('Received values of form: ', values);
   };
 
-  ButtonHandler = ()=>{
-    window.location = "/login"
+  handleSubmit = (err,values)=>{
+    // e.preventDefault();
+    //     this.props.form.validateFields((err, values) => {
+    //         if(formIsNvl(values)){
+    //             message.warning("请输入需要查询的值");
+    //             return;
+    //         }
+    //         const json = getSearchForm(values);
+    //         this.props.search(json);
+    //     });
+  }
+
+  backButtonHandler = ()=>{
+    window.location.replace(BASE_URL+"/login")
 }
 
   render(){
@@ -25,6 +41,7 @@ class RegisterPage extends Component{
         remember: true,
       }}
       onFinish={this.onFinish}
+      onSubmit={this.handleSubmit}
     >
       <Form.Item
         name="username"
@@ -69,7 +86,7 @@ class RegisterPage extends Component{
         <Button type="primary" htmlType="submit" className="login-form-button">
           Register
         </Button>
-        <Button type="primary" htmlType="submit" className="register-button" onClick={this.backButtonHandler}>
+        <Button type="primary" className="register-button" onClick={this.backButtonHandler}>
           Back
         </Button>
       </Form.Item>
