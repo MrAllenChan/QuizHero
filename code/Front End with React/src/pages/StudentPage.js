@@ -9,22 +9,21 @@ class StudentPage extends Component {
         super(props);
 
         this.state = {
-            upload: 0,
             counter: 0,
             questionId: 1,
             question: '',
             answerOptions: [],
-            answer: '',
-            answersCount: {},
+            // answer: '',
+            // answersCount: {},
             result: '',
-            quizCounter : -1,
+            quizCounter : 0,
             quizList: props.location.query.quiz,
             quizQuestions:props.location.query.quiz[0],
             slides: props.location.query.slidesString,
         };
 
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
-        console.log(this.state.quizQuestions)
+        console.log(this.state.quizList)
     }
 
     componentDidMount() {
@@ -32,6 +31,7 @@ class StudentPage extends Component {
         const shuffledAnswerOptions = this.state.quizQuestions.map(question =>
             this.shuffleArray(question.answers)
         );
+
         this.setState({
             question: this.state.quizQuestions[0].question,
             answerOptions: shuffledAnswerOptions[0]
@@ -63,8 +63,13 @@ class StudentPage extends Component {
         console.log(event.currentTarget.value);
         if (this.state.questionId < this.state.quizQuestions.length) {
             setTimeout(() => this.setNextQuestion(), 300);
+        } else if (this.state.questionId === this.state.quizQuestions.length && this.state.quizCounter < this.state.quizList.length - 1) {
+            console.log("111")
+            setTimeout(() => {this.setNextPart();
+            this.setResults()}, 300);
+
         } else {
-            setTimeout(() => this.setResults(this.getResults()), 300);
+            setTimeout(() => this.setResults(), 300);
         }
     }
 
@@ -72,15 +77,15 @@ class StudentPage extends Component {
         var answerArray = answer.split(" ");
         var type = answerArray[0];
         var questionId = answerArray[1];
-        var answerContent = answerArray[2];
+        // var answerContent = answerArray[2];
         console.log(answerArray)
-        this.setState((state, props) => ({
-            answersCount: {
-                ...state.answersCount,
-                [answer]: (state.answersCount[type] || 0) + 1
-            },
-            answer: type
-        }));
+        // this.setState((state, props) => ({
+        //     answersCount: {
+        //         ...state.answersCount,
+        //         [answer]: (state.answersCount[type] || 0) + 1
+        //     },
+        //     answer: type
+        // }));
 
         //send choice to back-end
         const BASE_URL = document.location.origin;
@@ -117,14 +122,35 @@ class StudentPage extends Component {
         });
     }
 
-    getResults() {
-        const answersCount = this.state.answersCount;
-        const answersCountKeys = Object.keys(answersCount);
-        const answersCountValues = answersCountKeys.map(key => answersCount[key]);
-        const maxAnswerCount = Math.max.apply(null, answersCountValues);
+    setNextPart() {
+        const questionId = 1;
+        const counter = 0;
+        const quizCounter = this.state.quizCounter + 1;
+        const quizQuestions = this.state.quizList[quizCounter];
+        const shuffledAnswerOptions = quizQuestions.map(question =>
+            this.shuffleArray(question.answers)
+        );
 
-        return answersCountKeys.filter(key => answersCount[key] === maxAnswerCount);
+        this.setState({
+            questionId : questionId,
+            counter : counter,
+            quizCounter : quizCounter,
+            quizQuestions : quizQuestions,
+            question: quizQuestions[0].question,
+            answerOptions: shuffledAnswerOptions[0]
+
+        })
+
     }
+
+    // getResults() {
+    //     const answersCount = this.state.answersCount;
+    //     const answersCountKeys = Object.keys(answersCount);
+    //     const answersCountValues = answersCountKeys.map(key => answersCount[key]);
+    //     const maxAnswerCount = Math.max.apply(null, answersCountValues);
+    //
+    //     return answersCountKeys.filter(key => answersCount[key] === maxAnswerCount);
+    // }
 
     setResults(result) {
         this.setState({
@@ -159,16 +185,15 @@ class StudentPage extends Component {
 
     toQuizCallback = () => {
         this.setState(
-            {quizFlag : 1,
-            quizQuestions : this.state.quizList[this.state.quizCounter + 1],
-            quizCounter : this.state.quizCounter + 1}
+            {quizFlag : 1}
         )
 
     };
-
     toSlidesCallback=()=>(
-        this.setState({quizFlag : 0,
-        result : 0})
+        this.setState({
+            quizFlag : 0,
+            result: 0
+        })
     )
 
     renderQuizPages () {
