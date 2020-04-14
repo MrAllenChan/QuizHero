@@ -7,7 +7,7 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import { GuardProvider, GuardedRoute } from "react-router-guards";
 import getUserLoginStatus from '../utils/getUserLoginStatus';
-import MyUpload from "../components/Upload";
+import MyUpload from "../pages/UploadPage";
 import PresentPage from '../pages/PresentPage'
 import StudentPage from "../pages/StudentPage";
 
