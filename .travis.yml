@@ -1,5 +1,7 @@
 language: java
+install: true
 jdk: openjdk8
+
 
 before_install:
   - cd code/QuizHero_APP/
@@ -9,12 +11,12 @@ script:
   - ./gradlew build --scan -s
 
 before_cache:
-  - rm -f  $HOME/code/QuizHero_APP/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/code/QuizHero_APP/.gradle/caches/*/plugin-resolution/
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - "$HOME/code/QuizHero_APP/.gradle/caches/"
-    - "$HOME/code/QuizHero_APP/.gradle/wrapper/"
+    - "$HOME/.gradle/caches/"
+    - "$HOME/.gradle/wrapper/"
 deploy:
   provider: heroku
   api_key:
