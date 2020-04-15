@@ -4,8 +4,7 @@ import setUserNameReducer from './store/reducers/login';
 // import apartmentsReducer from './store/reducers/apartments'
 
 const rootReducer = combineReducers({
-    setUserNameReducer: setUserNameReducer,
- 
+    setUserName: setUserNameReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
