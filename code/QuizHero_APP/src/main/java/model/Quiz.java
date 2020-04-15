@@ -3,6 +3,7 @@ package model;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 // A Quiz object corresponds to a single question in a file
 public class Quiz {
@@ -15,7 +16,7 @@ public class Quiz {
     private int countB;
     private int countC;
     private int countD;
-    private HashMap<Character, String> count;
+//    private HashMap<Character, String> count;
 //    private HashMap<Character, String> statistics;
 
     public Quiz(int fileId, int questionId) {
@@ -31,7 +32,6 @@ public class Quiz {
         this.countB = countB;
         this.countC = countC;
         this.countD = countD;
-        getCountMap();
 //        statistics = calPercentage();
     }
 
@@ -71,20 +71,55 @@ public class Quiz {
         return questionId;
     }
 
-    public void getCountMap() {
-        count = new HashMap<>();
-        DecimalFormat df = new DecimalFormat("0.00");
-        float total = countA + countB + countC + countD;
-        count.put('A', df.format(countA / total * 100) + "%");
-        count.put('B', df.format(countB / total * 100) + "%");
-        count.put('C', df.format(countC / total * 100) + "%");
-        count.put('D', df.format(countD / total * 100) + "%");
-//        for (String val : count.values()) {
-//            System.out.println(val);
-//        }
+//    public void getCountMap() {
+//        count = new HashMap<>();
+//        DecimalFormat df = new DecimalFormat("0.00");
+//        float total = countA + countB + countC + countD;
+//        count.put('A', df.format(countA / total * 100) + "%");
+//        count.put('B', df.format(countB / total * 100) + "%");
+//        count.put('C', df.format(countC / total * 100) + "%");
+//        count.put('D', df.format(countD / total * 100) + "%");
+////        for (String val : count.values()) {
+////            System.out.println(val);
+////        }
+//
+//    }
+
+    @Override
+    public String toString() {
+        return "Quiz{" +
+                "id=" + id +
+                ", fileId=" + fileId +
+                ", questionId=" + questionId +
+                ", answer='" + answer + '\'' +
+                ", countA=" + countA +
+                ", countB=" + countB +
+                ", countC=" + countC +
+                ", countD=" + countD +
+                '}';
     }
 
-//    public HashMap<Character, String> calPercentage(){
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Quiz quiz = (Quiz) o;
+        return id == quiz.id &&
+                fileId == quiz.fileId &&
+                questionId == quiz.questionId &&
+                countA == quiz.countA &&
+                countB == quiz.countB &&
+                countC == quiz.countC &&
+                countD == quiz.countD &&
+                Objects.equals(answer, quiz.answer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, fileId, questionId, answer, countA, countB, countC, countD);
+    }
+
+    //    public HashMap<Character, String> calPercentage(){
 //        int total = 0;
 //        HashMap<Character, String> result = new HashMap<>();
 //

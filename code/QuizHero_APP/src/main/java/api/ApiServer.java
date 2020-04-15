@@ -121,6 +121,9 @@ public final class ApiServer {
         app.get("/quizstat/:fileid", ctx -> {
             int fileId = Integer.parseInt(ctx.pathParam("fileid"));
             List<Quiz> quizzes = quizDao.getQuizStatByFileId(fileId);
+            if (quizzes.isEmpty()) {
+                throw new ApiError("Unable to find quizzes", 500);
+            }
             ctx.json(quizzes);
             ctx.status(200);
         });
@@ -132,6 +135,9 @@ public final class ApiServer {
             int fileId = Integer.parseInt(ctx.pathParam("fileid"));
             int questionId = Integer.parseInt(ctx.pathParam("questionid"));
             Quiz quiz = quizDao.getSingleQuizStat(fileId, questionId);
+            if (quiz == null) {
+                throw new ApiError("Unable to find quiz", 500);
+            }
             ctx.json(quiz);
             ctx.status(200);
         });
