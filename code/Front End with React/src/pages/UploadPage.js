@@ -5,6 +5,7 @@ import axios from 'axios';
 import {BASE_URL} from "../config/config"
 import {Link} from "react-router-dom"
 import logo from "../fig/logo.png";
+import {func} from "prop-types";
 
 // const fs = require('fs');
 const props = {
@@ -74,7 +75,9 @@ class MyUpload extends React.Component{
             // this.convertFile();
             console.log(info.file.name);
             message.success(`${info.file.name} file uploaded successfully`);
-            this.readFile(this.state.file).then(this.convertText);
+            this.sendFile()
+                .then(this.readFile)
+                .then(this.convertText);
             // this.separateQuestion(this.state.rawString);
             // this.trans();
             this.state.display_name = this.display_name();
@@ -87,17 +90,6 @@ class MyUpload extends React.Component{
             //     userId : 1,
             //     file: this.state.file
             // }
-            const formData = new FormData();
-            formData.append('file', this.state.file);
-            formData.append('userId', localStorage.getItem("instructorId"));
-            console.log("Send data to backend", formData);
-            axios.post(BASE_URL + "/upload", formData)
-                .then(res => {
-                        console.log("CCC",res.data);
-                        this.setState({fileId : res.data.fileId})
-                        alert("File uploaded successfully.")
-                });
-            
             // axios
             //     .post(BASE_URL + "/upload", formData, {
             //         headers: {
@@ -139,9 +131,32 @@ class MyUpload extends React.Component{
 
     }
 
+    sendFile =() => {
+        var file = this.state.file;
+        var p = new Promise(function (resolve, reject){
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('userId', localStorage.getItem("instructorId"));
+            console.log("Send data to backend", formData);
+            axios.post(BASE_URL + "/upload", formData)
+                .then(res => {
+                    console.log("CCC",res.data);
+                    // this.setState({fileId : res.data.fileId})
+                    resolve(res.data.fileId);
+                    alert("File uploaded successfully.");
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+        return p;
+    }
 
-    readFile=(file)=>{
-        return new Promise(function (resolve, reject) {
+    readFile=(fileId)=>{
+        this.setState({fileId : fileId});
+        console.log(fileId);
+        var file = this.state.file;
+        var p = new Promise(function (resolve, reject) {
             const reader = new FileReader();
             console.log("1");
             reader.readAsText(file);
@@ -156,7 +171,8 @@ class MyUpload extends React.Component{
                 reject(e);
             };
         });
-    };
+        return p;
+    }
 
     convertText=(result)=> {
         // console.log(result);
@@ -285,7 +301,6 @@ class MyUpload extends React.Component{
         console.log(this.state.quizString)
         console.log(this.state.slideString)
         var questions = this.parseString();
-        console.log(questions);
         var data = {
             quiz: questions,
             slidesString: this.state.slideString,
