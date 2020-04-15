@@ -224,12 +224,12 @@ class MyUpload extends React.Component{
         // var obj = JSON.parse(this.state.rawString);
         // var questions = obj;
         // this.separateQuestion(this.state.rawString);
-        console.log(this.state.quizString)
-        console.log(this.state.slideString)
+        console.log(this.state.quizStringList)
+        console.log(this.state.slideStringList)
         var questions = this.parseQuiz();
         var data = {
             quiz: questions,
-            slidesString: this.state.slideString,
+            slidesString: this.state.slideStringList,
             fileId: this.state.fileId
         }
         // data = JSON.stringify(data);
