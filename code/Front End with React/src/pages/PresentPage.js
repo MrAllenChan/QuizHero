@@ -18,6 +18,7 @@ class PresentPage extends Component {
             // answer: '',
             // answersCount: {},
             result: '',
+            fileId: props.location.query.fileId,
             quizCounter : 0,
             quizList: props.location.query.quiz,
             quizQuestions:props.location.query.quiz[0],
@@ -89,7 +90,7 @@ class PresentPage extends Component {
         //send choice to back-end
         const BASE_URL = document.location.origin;
         const formData = {
-            fileId : 1,
+            fileId : this.state.fileId,
             questionId : parseInt(questionCounter),
             choice : type
         }

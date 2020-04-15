@@ -17,6 +17,7 @@ class StudentPage extends Component {
             // answer: '',
             // answersCount: {},
             result: '',
+            fileId: props.location.query.fileId,
             quizBlockCounter : 0,
             quizList: props.location.query.quiz,
             quizQuestions:props.location.query.quiz[0],
@@ -24,7 +25,6 @@ class StudentPage extends Component {
         };
 
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
-        console.log(this.state.quizList)
     }
 
     componentDidMount() {
@@ -32,7 +32,6 @@ class StudentPage extends Component {
         const shuffledAnswerOptions = this.state.quizQuestions.map(question =>
             this.shuffleArray(question.answers)
         );
-
         this.setState({
             question: this.state.quizQuestions[0].question,
             answerOptions: shuffledAnswerOptions[0]
@@ -91,7 +90,7 @@ class StudentPage extends Component {
         //send choice to back-end
         const BASE_URL = document.location.origin;
         const formData = {
-            fileId : 1,
+            fileId : this.fileId,
             questionId : parseInt(questionCounter),
             choice : type
         }
@@ -192,7 +191,6 @@ class StudentPage extends Component {
         this.setState(
             {quizFlag : 1}
         )
-
     };
     toSlidesCallback=()=>(
         this.setState({

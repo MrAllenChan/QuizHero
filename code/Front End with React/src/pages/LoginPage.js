@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Form, Input, Button, Checkbox,message } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { UserOutlined, LockOutlined, WindowsOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 import { userLoginAction } from "../store/actions/loginActions";
 import "../style/loginPageStyle.css";
@@ -8,7 +8,12 @@ import logo from "../fig/logo.png";
 import axios from "axios";
 import {BASE_URL} from "../config/config"
 
-const mapStateToProps = (state) => {};
+const mapStateToProps = state => {
+    return{
+        instructorId: state.setUserName.instructorId,
+        username:state.setUserName.username
+    }
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -29,8 +34,12 @@ class LoginPage extends Component {
   componentWillReceiveProps(nextProps){
     //invoke function with updated store
     //this.foo(nextProps)
-    console.log(this.props); // prevProps
-    console.log(nextProps); // currentProps after updating the store
+    // console.log("last",this.props.instructorId); // prevProps
+    // console.log("now",nextProps.instructorId); // currentProps after updating the store
+    if(nextProps.instructorId!==0){
+      localStorage.setItem("isLogin",true);
+      console.log("USer logined")
+    }
     }
 
   onFinish = (values) => {
@@ -55,9 +64,13 @@ class LoginPage extends Component {
 
       axios.post(BASE_URL+"/login",{},{params}).then(res=>{
           console.log(res.status)
-          if(res.status === "201"){
+          if(res.status === 201){
+            console.log("Login success")
+            console.log(res)
             this.props.login(res.data.name, res.data.instructorId);
-
+            localStorage.setItem("instructorId", res.data.instructorId)
+            localStorage.setItem("username", res.data.name)
+            window.location = "/HomePage"
           }
       }).catch(err=>{
           console.log(err)
@@ -71,6 +84,11 @@ class LoginPage extends Component {
 
   render() {
     const { getFieldProps } = this.props.form;
+    const {instructorId,username} = this.props;
+
+    console.log("Name",username)
+    console.log("ID",instructorId)
+
     return (
       <div className="login-page-container">
         <img src={logo} className="App-logo" alt="logo" />
