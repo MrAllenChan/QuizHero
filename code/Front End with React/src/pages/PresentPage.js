@@ -10,7 +10,6 @@ class PresentPage extends Component {
         super(props);
 
         this.state = {
-            upload: 0,
             counter: 0,
             questionId: 1,
             questionCounter : 1,

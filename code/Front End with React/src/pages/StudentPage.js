@@ -9,7 +9,6 @@ class StudentPage extends Component {
         super(props);
 
         this.state = {
-            upload: 0,
             counter: 0,
             questionCounter : 1,
             questionId: 1,

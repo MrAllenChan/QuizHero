@@ -7,7 +7,7 @@ import {Link} from "react-router-dom"
 import logo from "../fig/logo.png";
 import {func} from "prop-types";
 import {enableTopologicalTravel} from "echarts/src/util/component";
- const { Header, Content, Footer } = Layout;
+const { Header, Content, Footer } = Layout;
 
 // const fs = require('fs');
 const props = {
@@ -41,14 +41,12 @@ class MyUpload extends React.Component{
             file:file
         });
     }
-    onChange = (info) => {
-        // console.log("file!!!:",info.file)
 
+    onChange = (info) => {
         if (info.file.status !== 'uploading') {
             console.log(info.file, info.fileList);
         }
         if (info.file.status === 'done') {
-            // this.convertFile();
             console.log(info.file.name);
             message.success(`${info.file.name} file uploaded successfully`);
             this.sendFile()
@@ -61,26 +59,6 @@ class MyUpload extends React.Component{
 
             this.state.display_name = this.display_name();
 
-            // send markdown file to backend
-
-            // const BASE_URL = "https://quiz-hero.herokuapp.com";
-            // const BASE_URL = document.location.origin;
-            // const formData = {
-            //     userId : 1,
-            //     file: this.state.file
-            // }
-            // axios
-            //     .post(BASE_URL + "/upload", formData, {
-            //         headers: {
-            //             "Content-Type": "multipart/form-data"
-            //         }
-            //     })
-            //     .then(() => {
-            //         console.log("upload success");
-            //     })
-            //     .catch((error) => {
-            //         console.log("error")
-            //     });
         } else if (info.file.status === 'error') {
             console.log(info.file.name);
             message.error(`${info.file.name} file upload failed.`);
@@ -106,8 +84,6 @@ class MyUpload extends React.Component{
             fakeClick(save_link);
         }
         exportRaw('filename.html', this.state.marpitResult);
-        console.log(this.state.rawString);
-
     }
 
     // send markdown file to backend and pass the database fileId to readFile
@@ -123,7 +99,7 @@ class MyUpload extends React.Component{
                     console.log("CCC",res.data);
                     // this.setState({fileId : res.data.fileId})
                     resolve(res.data.fileId);
-                    alert("File uploaded successfully.");
+                    // alert("File uploaded successfully.");
                 })
                 .catch((error) => {
                     reject(error);
@@ -134,18 +110,13 @@ class MyUpload extends React.Component{
 
     readFile=(fileId)=>{
         this.setState({fileId : fileId});
-        console.log(fileId);
         var file = this.state.file;
         var p = new Promise(function (resolve, reject) {
             const reader = new FileReader();
-            console.log("1");
             reader.readAsText(file);
-            console.log("2")
             reader.onload = (e) => {
                 // let content = e.target.result;
                 resolve(reader.result);
-                console.log("3");
-                // console.log(content);
             };
             reader.onerror = function (e) {
                 reject(e);
@@ -160,19 +131,8 @@ class MyUpload extends React.Component{
             rawString : result
         });
 
-    //     var slides = new Array();
-    //     var questions = new Array();
-    //     // var data = this.state.rawString;
-    //     var sections = result.split("---\n\n")
-    // onPreview=(file)=>{
-    //     this.separateQuestion(this.state.rawString);
-    // }
-
-    // rawstring分成slide array 和 question array,
-    // 赋值给slideStringList, quizStringList
-    // separateQuestion = (fileString) => {
-        console.log("this is fileString/rawString:")
-        // console.log(fileString)
+        // rawstring分成slide array 和 question array,
+        // 赋值给slideStringList, quizStringList
 
         var slides = new Array(100);
         var questions = new Array(100);
@@ -181,8 +141,6 @@ class MyUpload extends React.Component{
             questions[i] = new Array();
         }
 
-
-        // var data = fileString;
         var sections = result.split("---\n\n")  // => section[]
 
         var index = 0;
@@ -210,8 +168,6 @@ class MyUpload extends React.Component{
             }
             i ++;
         }
-        console.log(slideString);
-        console.log(quizString);
 
         this.setState({
             slideStringList: slideString,
@@ -224,8 +180,6 @@ class MyUpload extends React.Component{
         // var obj = JSON.parse(this.state.rawString);
         // var questions = obj;
         // this.separateQuestion(this.state.rawString);
-        console.log(this.state.quizStringList)
-        console.log(this.state.slideStringList)
         var questions = this.parseQuiz();
         var data = {
             quiz: questions,
@@ -278,7 +232,6 @@ class MyUpload extends React.Component{
               ${html}
             </body></html>
             `
-            // console.log(filestring)
         ;
         this.setState({
             marpitResult: filestring
