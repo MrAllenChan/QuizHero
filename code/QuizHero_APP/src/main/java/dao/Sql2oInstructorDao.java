@@ -74,7 +74,18 @@ public class Sql2oInstructorDao implements InstructorDao{
     }
 
     @Override
-    public void storeUserFileInfo(int userId, UUID uuid, String url) {
+    public void storeUserFileInfo(int userId, int fileId, String url) {
+        try (Connection conn = sql2o.open()) {
+            String sql = "INSERT INTO ins_file(instructorId, fileId, url) VALUES (:userId, :fileId, :url);";
+            conn.createQuery(sql, true)
+                    .addParameter("userId", userId)
+                    .addParameter("fileId", fileId)
+                    .addParameter("url", url)
+                    .executeUpdate();
 
+            System.out.println("user-file information stored.");
+        } catch (Sql2oException ex1) {
+            throw new DaoException("Unable to store user-file information.", ex1);
+        }
     }
 }

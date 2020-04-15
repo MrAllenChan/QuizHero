@@ -80,24 +80,34 @@ class MyUpload extends React.Component{
             this.state.display_name = this.display_name(this.state.display_name);
 
             // send markdown file to backend
-            const BASE_URL = "https://quiz-hero.herokuapp.com";
-            const formData = {
-                userId : 1,
-                MarkdownFile : this.state.file
-            }
-            console.log("Send data to backend", formData)
-            axios
-                .post(BASE_URL+"/upload", formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data"
-                    }
-                })
-                .then(() => {
-                    console.log("upload success");
-                })
-                .catch((error) => {
-                    console.log("error")
+            // const BASE_URL = "https://quiz-hero.herokuapp.com";
+            const BASE_URL = document.location.origin;
+            // const formData = {
+            //     userId : 1,
+            //     file: this.state.file
+            // }
+            const formData = new FormData();
+            formData.append('file', this.state.file);
+            formData.append('userId', 1);
+            console.log("Send data to backend", formData);
+            axios.post(BASE_URL + "/upload", formData)
+                .then(res => {
+                        console.log(res.data);
+                        alert("File uploaded successfully.")
                 });
+            
+            // axios
+            //     .post(BASE_URL + "/upload", formData, {
+            //         headers: {
+            //             "Content-Type": "multipart/form-data"
+            //         }
+            //     })
+            //     .then(() => {
+            //         console.log("upload success");
+            //     })
+            //     .catch((error) => {
+            //         console.log("error")
+            //     });
         } else if (info.file.status === 'error') {
             console.log(info.file.name);
             message.error(`${info.file.name} file upload failed.`);

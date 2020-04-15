@@ -1,9 +1,6 @@
 package dao;
 import model.Instructor;
 import model.Quiz;
-import model.Instructor;
-
-import java.util.HashMap;
 
 public final class DaoUtil {
 
@@ -22,5 +19,11 @@ public final class DaoUtil {
         instructorDao.registerUser(new Instructor("Allen", "zchen85@jhu.edu", "9999"));
         instructorDao.registerUser(new Instructor("Bob Wang", "bob@jhu.edu", "8888"));
         instructorDao.registerUser(new Instructor("Richard", "richard@jhu.edu", "7777"));
+    }
+
+    public static void addSampleUserFiles(InstructorDao instructorDao) {
+        instructorDao.storeUserFileInfo(1, 1, "allen_file1");
+        instructorDao.storeUserFileInfo(1, 2, "allen_file2");
+        instructorDao.storeUserFileInfo(2, 1, "bob_file1");
     }
 }
