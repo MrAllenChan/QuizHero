@@ -53,7 +53,6 @@ class MyUpload extends React.Component{
         rawString:"",
         slideString:"",
         quizString:"",
-        quiz:[],
         display_name:'none',
         data:""
     }
@@ -78,7 +77,7 @@ class MyUpload extends React.Component{
             this.readFile(this.state.file).then(this.convertText);
             // this.separateQuestion(this.state.rawString);
             // this.trans();
-            this.state.display_name = this.display_name(this.state.display_name);
+            this.state.display_name = this.display_name();
 
             // send markdown file to backend
 
@@ -117,11 +116,11 @@ class MyUpload extends React.Component{
         }
     }
 
-    onRemove = (file) => {
-        this.state.display_name = this.display_name(this.state.display_name);
+    onRemove = () => {
+        this.state.display_name = this.display_name();
     }
 
-    onDownload = (file) => {
+    onDownload = () => {
         function fakeClick(obj) {
             var ev = document.createEvent("MouseEvents");
             ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
@@ -163,7 +162,7 @@ class MyUpload extends React.Component{
         // console.log(result);
         this.setState({
             rawString : result
-        }, () => {this.separateQuestion(this.state.rawString);});
+        }, () => {this.separateQuestion();});
         // console.log(this.state.rawString);
         // 3. Render markdown
         const {html, css} = marpit.render(result);
@@ -182,10 +181,10 @@ class MyUpload extends React.Component{
         },);
     }
 
-    separateQuestion = (fileString) => {
+    separateQuestion = () => {
         var slides = new Array();
         var questions = new Array();
-        var data = fileString;
+        var data = this.state.rawString;
         var sections = data.split("---\n\n")
         for (var i = 0; i < sections.length; i++) {
             console.log(sections[i].split(" ", 2)[0] === ">");
@@ -204,10 +203,10 @@ class MyUpload extends React.Component{
         }, this.trans)
     }
 
-    parseString = (rawString) => {
+    parseString = () => {
         // this.separateQuestion(this.state.rawString);
         var quizList = new Array();
-        var data = rawString;
+        var data = this.state.quizString;
         var quizzes = data.split("\n\n");
         var parsedChoice;
 
@@ -285,17 +284,12 @@ class MyUpload extends React.Component{
         // this.separateQuestion(this.state.rawString);
         console.log(this.state.quizString)
         console.log(this.state.slideString)
-        var questions = this.parseString(this.state.quizString);
+        var questions = this.parseString();
         console.log(questions);
-        this.setState({
-            quiz : questions
-        });
-        const slidesString = this.state.slideString;
-        const fileId = this.state.fileId;
         var data = {
             quiz: questions,
-            slidesString: slidesString,
-            fileId: fileId
+            slidesString: this.state.slideString,
+            fileId: this.state.fileId
         }
         // data = JSON.stringify(data);
         // var path = `/presenter/${data}`;
