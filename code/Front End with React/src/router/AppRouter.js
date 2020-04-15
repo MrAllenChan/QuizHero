@@ -26,7 +26,7 @@ const requireLogin = (to, from, next) => {
   if (true) {
     // if (false) {
     console.log("Checking passsssssssssss")
-    next.redirect("/HomePage");
+    // next.redirect("/HomePage");
   }
   next.redirect("/login");
 };
@@ -59,7 +59,8 @@ class AppRouter extends Component {
               exact
               component={RegisterPage}
             ></GuardedRoute>
-            <GuardProvider guards={[requireLogin]}>
+            {/* <GuardProvider guards={[requireLogin]}> */}
+            <GuardProvider>
               <GuardedRoute path="/" exact render={() => <Redirect to="/login" />} />
               <GuardedRoute path="/HomePage" exact component={MyUpload} />
               <GuardedRoute path="/presenter" component={PresentPage}/>

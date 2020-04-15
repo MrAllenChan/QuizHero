@@ -94,7 +94,7 @@ class MyUpload extends React.Component{
             console.log("Send data to backend", formData);
             axios.post(BASE_URL + "/upload", formData)
                 .then(res => {
-                        console.log(res.data);
+                        console.log("CCC",res.data);
                         this.setState({fileId : res.data.fileId})
                         alert("File uploaded successfully.")
                 });
@@ -240,7 +240,7 @@ class MyUpload extends React.Component{
                         // send correct answer to backend
             
                         const formData = {
-                            fileId : 1,
+                            fileId : this.state.fileId,
                             questionId : quizList.length + 1,
                             answer : String.fromCharCode(charCode),
                             countA : 0,
