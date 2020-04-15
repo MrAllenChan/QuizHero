@@ -19,7 +19,7 @@ class StudentPage extends Component {
             result: '',
             fileId: props.location.query.fileId,
             quizQuestions: props.location.query.quiz,
-            slides: props.location.query.slidesString
+            slides: props.location.query.slidesString,
         };
 
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
@@ -83,7 +83,7 @@ class StudentPage extends Component {
         //send choice to back-end
         const BASE_URL = document.location.origin;
         const formData = {
-            fileId : 1,
+            fileId : this.fileId,
             questionId : parseInt(questionId),
             choice : type
         }
