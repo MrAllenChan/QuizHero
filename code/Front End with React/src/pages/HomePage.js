@@ -40,7 +40,7 @@ class HomePage extends Component {
     callback1=(slidesString)=>{
         this.setState({slidesString : slidesString})
     }
-    
+
     // take quiz button (Spectacle)
     callback2=()=>{
         this.setState({quizFlag : 1})
