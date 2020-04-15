@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class QuizDaoTest {
         assertNotEquals(0, quiz.getId());
     }
 
+
     @Test (expected = DaoException.class)
     public void addExistingQuizDao() {
         Quiz quiz = new Quiz (100, 100, "A", 0, 0, 0, 0);
@@ -43,7 +45,7 @@ public class QuizDaoTest {
         Quiz quiz_1 = new Quiz (100, 100, "A", 0, 0, 0, 0);
         Quiz quiz_2 = new Quiz (100, 101, "B", 9, 8, 7, 6);
         Quiz quiz_3 = new Quiz (101, 100, "C", 12, 44, 99, 7777);
-        List<Quiz> quizList = new LinkedList<>();
+        List<Quiz> quizList = new ArrayList<>();
         quizList.add(quiz_1);
         quizList.add(quiz_2);
         quizList.add(quiz_3);

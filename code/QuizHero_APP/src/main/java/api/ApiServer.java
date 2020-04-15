@@ -117,9 +117,11 @@ public final class ApiServer {
     private static void getQuizStatByFileId(QuizDao quizDao) {
         // handle HTTP Get request to retrieve all Quiz statistics of a single file
         app.get("/quizstat/:fileid", ctx -> {
-            // TODO: implement me
             int fileId = Integer.parseInt(ctx.pathParam("fileid"));
             List<Quiz> quizzes = quizDao.getQuizStatByFileId(fileId);
+            if (quizzes.isEmpty()) {
+                throw new ApiError("Unable to find quizzes", 500);
+            }
             ctx.json(quizzes);
             ctx.status(200);
         });
@@ -128,10 +130,12 @@ public final class ApiServer {
     private static void getSingleQuizStat(QuizDao quizDao) {
         // handle HTTP Get request to retrieve statistics of a single question in a file
         app.get("/quizstat/:fileid/:questionid", ctx -> {
-            // TODO: implement me
             int fileId = Integer.parseInt(ctx.pathParam("fileid"));
             int questionId = Integer.parseInt(ctx.pathParam("questionid"));
             Quiz quiz = quizDao.getSingleQuizStat(fileId, questionId);
+            if (quiz == null) {
+                throw new ApiError("Unable to find quiz", 500);
+            }
             ctx.json(quiz);
             ctx.status(200);
         });

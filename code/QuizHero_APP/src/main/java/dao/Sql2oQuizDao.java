@@ -57,6 +57,10 @@ public class Sql2oQuizDao implements QuizDao {
 
         int fileId = quiz.getFileId();
         int questionId = quiz.getQuestionId();
+        //handel the case that quiz is initialized with null fileId and questionId values
+        if (fileId == 0 || questionId == 0) {
+            throw new DaoException("FileId and questionId can not be 0!");
+        }
         String answer = quiz.getAnswer();
         List<Map<String, Object>> listFromTable;
         String sql = "SELECT * FROM Quiz WHERE fileId = " + fileId + " AND questionId = " + questionId + ";";

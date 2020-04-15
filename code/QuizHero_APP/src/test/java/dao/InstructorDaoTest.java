@@ -27,7 +27,10 @@ public class InstructorDaoTest {
     public void registerUser() {
         Instructor johnSmith = new Instructor("John Smith", "js@gmail.com", "jsjsjs");
         instructorDao.registerUser(johnSmith);
-        assertEquals(johnSmith, instructorDao.checkUserIdentity("js@gmail.com", "jsjsjs"));
+        Instructor result = instructorDao.checkUserIdentity("js@gmail.com", "jsjsjs");
+        assertEquals(johnSmith.getInstructorId(), result.getInstructorId());
+        assertEquals(johnSmith.getName(), result.getName());
+        assertEquals(johnSmith.getEmail(), result.getEmail());
     }
 
     @Test (expected = RegisterException.class)
@@ -39,19 +42,31 @@ public class InstructorDaoTest {
 
     @Test
     public void storeUserInfo() {
-
+        //TODO
     }
 
     @Test
     public void checkUserIdentity() {
-
+        Instructor johnSmith = new Instructor("John Smith", "js@gmail.com", "jsjsjs");
+        instructorDao.registerUser(johnSmith);
+        Instructor result = instructorDao.checkUserIdentity("js@gmail.com", "jsjsjs");
+        assertEquals(johnSmith.getInstructorId(), result.getInstructorId());
+        assertEquals(johnSmith.getName(), result.getName());
+        assertEquals(johnSmith.getEmail(), result.getEmail());
     }
 
     @Test (expected = LoginException.class)
-    public void checkNullUserIdentity() {
-        Instructor nullInstructor = null;
-        String email = nullInstructor.getEmail();
-        String pswd = nullInstructor.getPswd();
+    public void checkWrongPswdUserIdentity() {
+        Instructor johnSmith = new Instructor("John Smith", "js@gmail.com", "jsjsjs");
+        instructorDao.registerUser(johnSmith);
+        Instructor result = instructorDao.checkUserIdentity("js@gmail.com", "js");
+    }
+
+    @Test (expected = LoginException.class)
+    public void checkWrongEmailUserIdentity() {
+        Instructor johnSmith = new Instructor("John Smith", "js@gmail.com", "jsjsjs");
+        instructorDao.registerUser(johnSmith);
+        Instructor result = instructorDao.checkUserIdentity("js@jhu.edu", "jsjsjs");
     }
 
 }
