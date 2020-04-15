@@ -1,12 +1,11 @@
-import { Upload, message, Button, Icon } from 'antd';
+import { Upload, message, Button, Icon, Layout, Menu} from 'antd';
 import React from "react";
 import Marpit from '@marp-team/marpit'
 import axios from 'axios';
 import {Link} from "react-router-dom"
 import logo from "../fig/logo.png";
 import {enableTopologicalTravel} from "echarts/src/util/component";
-
-
+ const { Header, Content, Footer } = Layout;
 
 // const fs = require('fs');
 const props = {
@@ -374,8 +373,24 @@ class MyUpload extends React.Component{
     render(){
         return(
             <div className="App">
-                <header className="App-header">
+                <Header style={{height: 0, padding: 0, position: 'fixed', zIndex: 1, width: '100%' }}>
+                    <div className="logo" />
+                    <Menu theme="white" mode="horizontal" defaultSelectedKeys={['1']}>
 
+                        {/*<Menu.Item key="1">Upload </Menu.Item>*/}
+
+                        {/*<Menu.Item key="2">History </Menu.Item>*/}
+                        <Menu.Item key="1">
+                            <Link to={'/HomePage'}>Upload</Link>
+                        </Menu.Item>
+                        <Menu.Item key="2">
+                            <Link to={'/history'}>History</Link>
+                        </Menu.Item>
+
+                    </Menu>
+                </Header>
+
+                <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo"/>
                     <div>
                         {/* Upload button*/}
