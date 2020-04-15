@@ -1,6 +1,7 @@
 package dao;
+import model.Instructor;
 import model.Quiz;
-import model.Record;
+import model.Instructor;
 
 import java.util.HashMap;
 
@@ -11,15 +12,15 @@ public final class DaoUtil {
     }
 
     public static void addSampleQuizzes(QuizDao quizDao) {
-//        HashMap<Character, Integer> count = new HashMap<>();
-//        count.put('A', 5);
-//        count.put('B', 12);
-//        count.put('C', 6);
-//        count.put('D', 100);
-        quizDao.add(new Quiz(9, 1, "A", 10, 12, 6, 7));
-        quizDao.add(new Quiz(99, 2, "B", 8, 3, 21, 9));
-        quizDao.add(new Quiz(999, 1, "C", 5, 1, 6, 25));
+        quizDao.add(new Quiz(1, 1, "A", 10, 12, 6, 7));
+        quizDao.add(new Quiz(1, 2, "B", 8, 3, 21, 9));
+        quizDao.add(new Quiz(2, 1, "C", 5, 1, 6, 25));
         quizDao.add(new Quiz(9999, 1, "D", 11, 20, 2, 3));
-//        quizDao.add(new Quiz(1,1, count));
+    }
+
+    public static void addSampleUsers(InstructorDao instructorDao) {
+        instructorDao.registerUser(new Instructor("Allen", "zchen85@jhu.edu", "9999"));
+        instructorDao.registerUser(new Instructor("Bob Wang", "bob@jhu.edu", "8888"));
+        instructorDao.registerUser(new Instructor("Richard", "richard@jhu.edu", "7777"));
     }
 }
