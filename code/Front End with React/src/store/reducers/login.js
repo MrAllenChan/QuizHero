@@ -3,7 +3,7 @@ import { ADD_USERNAME } from "../actions/loginActions";
 
 const initialState = {
     username: null,
-    instructorId: null,
+    instructorId: 0,
 };
 
 const setUserNameReducer = (state,action) => {

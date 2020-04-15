@@ -3,8 +3,8 @@ import React from "react";
 import Marpit from '@marp-team/marpit'
 import axios from 'axios';
 import {BASE_URL} from "../config/config"
-
-
+import {Link} from "react-router-dom"
+import logo from "../fig/logo.png";
 
 // const fs = require('fs');
 const props = {
@@ -44,22 +44,19 @@ marpit.themeSet.default = marpit.themeSet.add(theme)
 class MyUpload extends React.Component{
     constructor(props) {
         super(props);
-        this.callback = props.callback;
-        this.callback1 = props.callback1;
-        this.callback4 = props.callback4;
         // this.beforeUpload.bind = this.beforeUpload.bind(this);
-
     }
     state = {
         file:"",
+        fileId:"",
         result:"",
         rawString:"",
         slideString:"",
         quizString:"",
         quiz:[],
-        display_name:'none'
+        display_name:'none',
+        data:""
     }
-
 
 
     beforeUpload = (file) => {
@@ -79,12 +76,38 @@ class MyUpload extends React.Component{
             console.log(info.file.name);
             message.success(`${info.file.name} file uploaded successfully`);
             this.readFile(this.state.file).then(this.convertText);
+            // this.separateQuestion(this.state.rawString);
             // this.trans();
             this.state.display_name = this.display_name(this.state.display_name);
+
+            // send markdown file to backend
+            const BASE_URL = "https://quiz-hero.herokuapp.com";
+            const formData = {
+                userId : 1,
+                MarkdownFile : this.state.file
+            }
+            console.log("Send data to backend", formData)
+            axios
+                .post(BASE_URL+"/upload", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                })
+                .then(res => {
+                    console.log("upload success");
+                    this.setState({fileId:res.data.fileId})
+                })
+                .catch((error) => {
+                    console.log("error")
+                });
         } else if (info.file.status === 'error') {
             console.log(info.file.name);
             message.error(`${info.file.name} file upload failed.`);
         }
+    }
+
+    onRemove = (file) => {
+        this.state.display_name = this.display_name(this.state.display_name);
     }
 
     onDownload = (file) => {
@@ -106,9 +129,6 @@ class MyUpload extends React.Component{
 
     }
 
-    onPreview=(file)=>{
-        this.separateQuestion(this.state.rawString);
-    }
 
     readFile=(file)=>{
         return new Promise(function (resolve, reject) {
@@ -132,7 +152,7 @@ class MyUpload extends React.Component{
         // console.log(result);
         this.setState({
             rawString : result
-        });
+        }, () => {this.separateQuestion(this.state.rawString);});
         // console.log(this.state.rawString);
         // 3. Render markdown
         const {html, css} = marpit.render(result);
@@ -224,7 +244,7 @@ class MyUpload extends React.Component{
                                 "Content-Type": "multipart/form-data"
                                 }
                             })
-                            .then(() => {
+                            .then(res => {
                                 console.log("quiz initialize success");
                             })
                             .catch((error) => {
@@ -248,15 +268,6 @@ class MyUpload extends React.Component{
         return quizList;
     };
 
-    toStudentMode = () => {
-        this.separateQuestion(this.state.rawString);
-        this.callback4()
-    }
-
-    toPresenterMode = () => {
-        this.separateQuestion(this.state.rawString);
-    }
-
     trans=()=>{
         // var obj = JSON.parse(this.state.rawString);
         // var questions = obj;
@@ -269,8 +280,17 @@ class MyUpload extends React.Component{
             quiz : questions
         });
         const slidesString = this.state.slideString;
-        this.props.callback(questions);
-        this.props.callback1(slidesString);
+        const fileId = this.state.fileId;
+        var data = {
+            quiz: questions,
+            slidesString: slidesString,
+            fileId: fileId
+        }
+        // data = JSON.stringify(data);
+        // var path = `/presenter/${data}`;
+        this.setState({
+            data: data
+        })
     };
 
     display_name () {
@@ -288,34 +308,43 @@ class MyUpload extends React.Component{
 
     render(){
         return(
-            <div>
-                <div>
-                    <Upload
-                        onChange={this.onChange}
-                        beforeUpload={this.beforeUpload}
-                        onDownload={this.onDownload}
-                        onPreview={this.onPreview}
-                        {...props}>
+            <div className="App">
+                <header className="App-header">
 
-                        <Button>
-                            <Icon type = 'upload' /> Click to Upload
-                        </Button>
-
-                    </Upload>
-                </div>
-                <div style={{display:this.state.display_name}}>
+                    <img src={logo} className="App-logo" alt="logo"/>
                     <div>
-                        <Button onClick={this.toPresenterMode}>
-                            <Icon/>Presenter mode
-                        </Button>
-                    </div>
-                    <div>
-                        <Button onClick={this.toStudentMode}>
-                            <Icon/>Student mode
-                        </Button>
+                        {/* Upload button*/}
+                        <div>
+                            <Upload
+                                onChange={this.onChange}
+                                beforeUpload={this.beforeUpload}
+                                onDownload={this.onDownload}
+                                onPreview={this.onPreview}
+                                onRemove={this.onRemove}
+                                {...props}>
+
+                                <Button>
+                                    <Icon type = 'upload' /> Click to Upload
+                                </Button>
+
+                            </Upload>
+                        </div>
+                        {/*Presenter/Student mode button*/}
+                        <div style={{display:this.state.display_name}}>
+                            <Link to={{pathname: '/presenter', query: this.state.data}}>
+                                <Button size={"large"} style={{marginRight: 10}}>
+                                    <Icon/>Presenter mode
+                                </Button>
+                            </Link>
+                            <Link to={{pathname: '/student', query: this.state.data}}>
+                                <Button size={"large"} style={{marginLeft: 10}}>
+                                    <Icon/>Student mode
+                                </Button>
+                            </Link>
+                        </div>
                     </div>
 
-                </div>
+                </header>
             </div>
         )
     }

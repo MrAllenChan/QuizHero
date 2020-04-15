@@ -1,15 +1,13 @@
-# QuizHero Demo Example
-
----
+#  QuizHero Demo Example 
 
 ## QuizHero: a lightweight web app for creating presentations with quizzes from Markdown.
 
-- See our Github homepage [here](https://github.com/jhu-oose/2020-spring-group-QuizHero
-  ).
+See our Github homepage [here](https://github.com/jhu-oose/2020-spring-group-QuizHero
+).
 
 ---
 
-# What is it for?
+# What is it for?  
 
 - QuizHero is a lightweight web app for creating presentations with quizzes from Markdown. 
 - Through this platform, instructors can create different versions of presentations, and students are able to view the slides and answer the quizzes online. 
@@ -17,34 +15,69 @@
 
 ---
 
-# How is it built?
+# How is it built?  
 
 This project uses Marpit framework to convert Markdown and CSS themes to slide decks, and an original framework to convert Markdown content to quizzes. The front-end is based on React framework, the application server is developed using Javalin, and the database is based on SQLite.
 
 ---
 
-### Our Backend design (UML)
+# Our Backend design (UML)
 
-![](https://tva1.sinaimg.cn/large/00831rSTgy1gdfcbvjz8cj30hl0cb0u7.jpg)
-
-
+![](https://tva1.sinaimg.cn/large/00831rSTgy1gdfbcv29cxj30ju084jrs.jpg)
 
 ---
 
-> Question: What is your favorite course?
+# Now let's do some funny quizzes!
+
+---
+
+> Question: 1What is your favorite course?
 * [x] OOSE
 * [ ] AI
 * [ ] Algorithm
 * [ ] Computer Network
 
-> Question: Which design pattern do you apply?
+> Question: 2Which design pattern do you apply?
 * [ ] Singleton
 * [ ] Decorater
 * [x] Dependency Injection
 * [ ] Abstract Factory
 
-> Question: Which framework do you use to develop your backend server?
+> Question: 3Which framework do you use to develop your backend server?
 * [ ] SpringBoot
 * [x] Javalin
 * [ ] SparkJava
 * [ ] Tomcat
+
+---
+
+# the end of first part
+
+---
+
+# Next is the second part!
+
+let's do some funny quizzes!
+
+---
+
+> Question: 4Which design pattern do you apply?
+* [ ] Singleton
+* [ ] Decorater
+* [x] Dependency Injection
+* [ ] Abstract Factory
+
+> Question: 5Which framework do you use to develop your backend server?
+* [ ] SpringBoot
+* [x] Javalin
+* [ ] SparkJava
+* [ ] Tomcat
+
+---
+
+# the end of second part
+
+---
+
+# class over!! have fun!!
+

@@ -8,6 +8,9 @@ class App extends Component {
   constructor(props) {
     super(props);
   }
+  componentDidMount(){
+    localStorage.setItem('isLogin', false);
+  }
 
   render() {
     return (

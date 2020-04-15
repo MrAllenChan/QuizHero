@@ -6,12 +6,11 @@ import Slides from "./Spectacle";
 class BackButton extends React.Component{
     constructor(props) {
         super(props);
-        this.callback3 = props.callback3;
-
+        // this.toSlidesCallback = props.toSlidesCallback;
 
     }
     OnClick =()=> {
-        this.props.callback3();
+        this.props.toSlidesCallback();
     }
     render () {
         return (

@@ -57,6 +57,7 @@ public final class ApiServer {
         postRecords(recordDao);
         login(userDao);
         register(userDao);
+        uploadFile(userDao);
 
         startJavalin();
 
@@ -176,7 +177,7 @@ public final class ApiServer {
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
             } catch (LoginException ex) {
-                throw new ApiError(ex.getMessage(), 404); // user not find
+                throw new ApiError(ex.getMessage(), 500); // user not found
             }
         });
     }
@@ -216,11 +217,13 @@ public final class ApiServer {
     // Upload a file and save it to the local file system
     private static void uploadFile(InstructorDao instructorDao) {
         app.post("/upload", context -> {
+//            context.
             UploadedFile uploadedFile = context.uploadedFile("file");
             try (InputStream inputStream = uploadedFile.getContent()) {
                 File localFile = new File(uploadedFile.getFilename());
                 FileUtils.copyInputStreamToFile(inputStream, localFile);
                 String url = localFile.getAbsolutePath();
+                context.status(201);
 //                userDao.storeUserFileInfo();
             }
         });

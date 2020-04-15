@@ -21,7 +21,7 @@ function ResultStudent(props) {
                     Thank you for finishing the quiz, please go back to the slides.
                 </div>
             </CSSTransitionGroup>
-            <BackButton callback3={props.callback3}/>
+            <BackButton toSlidesCallback={props.toSlidesCallback}/>
         </div>
     );
 }

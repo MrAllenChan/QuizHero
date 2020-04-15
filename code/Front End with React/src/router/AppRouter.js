@@ -8,7 +8,9 @@ import RegisterPage from "../pages/RegisterPage";
 import { GuardProvider, GuardedRoute } from "react-router-guards";
 import getUserLoginStatus from '../utils/getUserLoginStatus';
 import { connect } from "react-redux";
-
+import MyUpload from "../pages/UploadPage";
+import PresentPage from '../pages/PresentPage'
+import StudentPage from "../pages/StudentPage";
 
 const history = createBrowserHistory();
 
@@ -19,19 +21,30 @@ const mapStateToProps = state =>{
 }
 
 const requireLogin = (to, from, next) => {
-  if (this.props.instructorId !== 0) {
-    // next();
+  console.log("Checking")
+  // setTimeout(() => {  console.log("Checking"); }, 8000);
+  if (true) {
+    // if (false) {
+    console.log("Checking passsssssssssss")
     next.redirect("/HomePage");
   }
   next.redirect("/login");
 };
 
 class AppRouter extends Component {
+
+  componentWillReceiveProps(nextProps){
+    //invoke function with updated store
+    //this.foo(nextProps)
+      console.log("last1",this.props.instructorId); // prevProps
+      console.log("now1",nextProps.instructorId); // currentProps after updating the store
+    }
+
+
+
+
   render() {
-
-    
-
-
+    const {instructorId} = this.props;
     return (
       <Switch>
         <Route history={history}>
@@ -47,8 +60,10 @@ class AppRouter extends Component {
               component={RegisterPage}
             ></GuardedRoute>
             <GuardProvider guards={[requireLogin]}>
-              <GuardedRoute path="/" exact render={() => <Redirect to="/HomePage" />} />
-              <GuardedRoute path="/HomePage" exact component={HomePage} />
+              <GuardedRoute path="/" exact render={() => <Redirect to="/login" />} />
+              <GuardedRoute path="/HomePage" exact component={MyUpload} />
+              <GuardedRoute path="/presenter" component={PresentPage}/>
+              <GuardedRoute path="/student" component={StudentPage}/>
             </GuardProvider>
             {/* <Route path="/" exact render={() => <Redirect to="/HomePage" />} /> */}
             {/* <Route path="/RecordPersonTable" component={RecordPersonTable} />

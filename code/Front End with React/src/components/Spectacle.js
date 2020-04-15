@@ -58,14 +58,15 @@ const template = () => (
 class Slides extends React.Component{
     constructor(props) {
         super(props);
-        this.callback2 = props.callback2;
-        this.slides = props.slidesString;
+        this.toQuizCallback = props.toQuizCallback;
+        this.slides = props.slides;
         // this.beforeUpload.bind = this.beforeUpload.bind(this);
 
     }
 
     onClick = () => {
-        this.props.callback2(1);
+        this.toQuizCallback(1);
+        console.log(this.slides)
     }
 
     render(){

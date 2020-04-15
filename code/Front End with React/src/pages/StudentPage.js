@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Quiz from './Quiz';
-import ResultPresenter from './ResultPresenter';
+import Quiz from '../components/Quiz';
+import ResultStudent from '../components/ResultStudent';
 import axios from 'axios'
-import {Button, Icon} from "antd";
+import Slides from "../components/Spectacle";
 
-class QuizPagePresenter extends Component {
+class StudentPage extends Component {
     constructor(props) {
         super(props);
 
@@ -17,13 +17,12 @@ class QuizPagePresenter extends Component {
             answer: '',
             answersCount: {},
             result: '',
-            quizQuestions: props.questions
+            fileId: props.location.query.fileId,
+            quizQuestions: props.location.query.quiz,
+            slides: props.location.query.slidesString
         };
 
-        this.callback3 = props.callback3;
-
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
-        this.skipQuestion = this.skipQuestion.bind(this);
     }
 
     componentDidMount() {
@@ -116,14 +115,6 @@ class QuizPagePresenter extends Component {
         });
     }
 
-    skipQuestion() {
-        if (this.state.questionId < this.state.quizQuestions.length) {
-            setTimeout(() => this.setNextQuestion(), 300);
-        } else {
-            setTimeout(() => this.setResults(this.getResults()), 300);
-        }
-    }
-
     getResults() {
         const answersCount = this.state.answersCount;
         const answersCountKeys = Object.keys(answersCount);
@@ -143,41 +134,63 @@ class QuizPagePresenter extends Component {
 
     renderQuiz() {
         return (
-            <div>
-                <Quiz
-                    answer={this.state.answer}
-                    answerOptions={this.state.answerOptions}
-                    questionId={this.state.questionId}
-                    question={this.state.question}
-                    questionTotal={this.state.quizQuestions.length}
-                    onAnswerSelected={this.handleAnswerSelected}
-                />
-                <Button
-                    onClick={this.skipQuestion}>
-                    <Icon /> Skip
-                </Button>
-            </div>
+            <Quiz
+                answer={this.state.answer}
+                answerOptions={this.state.answerOptions}
+                questionId={this.state.questionId}
+                question={this.state.question}
+                questionTotal={this.state.quizQuestions.length}
+                onAnswerSelected={this.handleAnswerSelected}
+            />
         );
     }
 
 
     renderResult() {
-        return <ResultPresenter quizResult={this.state.result} callback3={this.callback3} />;
+        return <ResultStudent quizResult={this.state.result} toSlidesCallback={this.toSlidesCallback} />;
     }
 
-    render() {
+    toQuizCallback = () => {
+        this.setState(
+            {quizFlag : 1}
+        )
+    };
+
+    toSlidesCallback=()=>(
+        this.setState({quizFlag : 0})
+    )
+
+    renderQuizPages () {
         return (
             <div className="Quiz-page">
                 <div className="Quiz-header">
                     {/*<img src={logo} className="App-logo" alt="logo" />*/}
                     {/*<h2>React Quiz</h2>*/}
                 </div>
-
                 {this.state.result ? this.renderResult() : this.renderQuiz()}
 
             </div>
+        )
+    }
+
+    renderSlides () {
+        return (
+            <div>
+                <Slides toQuizCallback={this.toQuizCallback}
+                        slides={this.state.slides}/>
+            </div>
+        )
+    }
+
+    render() {
+        return (
+            <div>
+                {this.state.quizFlag ? this.renderQuizPages() : this.renderSlides()}
+            </div>
+
+
         );
     }
 }
 
-export default QuizPagePresenter;
+export default StudentPage;
