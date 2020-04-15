@@ -2,6 +2,7 @@ import { Upload, message, Button, Icon } from 'antd';
 import React from "react";
 import Marpit from '@marp-team/marpit'
 import axios from 'axios';
+import {BASE_URL} from "../config/config"
 
 
 

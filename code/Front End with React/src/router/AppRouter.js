@@ -7,19 +7,31 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import { GuardProvider, GuardedRoute } from "react-router-guards";
 import getUserLoginStatus from '../utils/getUserLoginStatus';
+import { connect } from "react-redux";
 
 
 const history = createBrowserHistory();
 
+const mapStateToProps = state =>{
+  return{
+    instructorId: state.setUserName.instructorId
+  }
+}
+
 const requireLogin = (to, from, next) => {
-  if (getUserLoginStatus()) {
-    next();
+  if (this.props.instructorId !== 0) {
+    // next();
+    next.redirect("/HomePage");
   }
   next.redirect("/login");
 };
 
-export default class AppRouter extends Component {
+class AppRouter extends Component {
   render() {
+
+    
+
+
     return (
       <Switch>
         <Route history={history}>
@@ -36,7 +48,7 @@ export default class AppRouter extends Component {
             ></GuardedRoute>
             <GuardProvider guards={[requireLogin]}>
               <GuardedRoute path="/" exact render={() => <Redirect to="/HomePage" />} />
-              <GuardedRoute path="/HomePage/:username/:instructorId" exact component={HomePage} />
+              <GuardedRoute path="/HomePage" exact component={HomePage} />
             </GuardProvider>
             {/* <Route path="/" exact render={() => <Redirect to="/HomePage" />} /> */}
             {/* <Route path="/RecordPersonTable" component={RecordPersonTable} />
@@ -47,3 +59,6 @@ export default class AppRouter extends Component {
     );
   }
 }
+
+
+export default connect(mapStateToProps)(AppRouter)

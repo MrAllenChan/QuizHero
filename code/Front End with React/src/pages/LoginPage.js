@@ -8,7 +8,12 @@ import logo from "../fig/logo.png";
 import axios from "axios";
 import {BASE_URL} from "../config/config"
 
-const mapStateToProps = (state) => {};
+const mapStateToProps = state => {
+    return{
+        instructorId: state.setUserName.instructorId,
+        username:state.setUserName.username
+    }
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -29,8 +34,8 @@ class LoginPage extends Component {
   componentWillReceiveProps(nextProps){
     //invoke function with updated store
     //this.foo(nextProps)
-    console.log(this.props); // prevProps
-    console.log(nextProps); // currentProps after updating the store
+    console.log("last",this.props.instructorId); // prevProps
+    console.log("now",nextProps.instructorId); // currentProps after updating the store
     }
 
   onFinish = (values) => {
@@ -53,9 +58,13 @@ class LoginPage extends Component {
           pswd : password
       }
 
+
+
       axios.post(BASE_URL+"/login",{},{params}).then(res=>{
           console.log(res.status)
-          if(res.status === "201"){
+          if(res.status === 201){
+            console.log("Login success")
+            console.log(res)
             this.props.login(res.data.name, res.data.instructorId);
 
           }
@@ -71,6 +80,11 @@ class LoginPage extends Component {
 
   render() {
     const { getFieldProps } = this.props.form;
+    const {instructorId,username} = this.props;
+
+    console.log("Name",username)
+    console.log("ID",instructorId)
+
     return (
       <div className="login-page-container">
         <img src={logo} className="App-logo" alt="logo" />

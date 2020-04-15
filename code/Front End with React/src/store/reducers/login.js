@@ -9,12 +9,15 @@ const initialState = {
 const setUserNameReducer = (state,action) => {
     switch (action.type) {
         case ADD_USERNAME:
-           
+            // const {userInfo} = action;
+            const username=action.username || ""
+            const instructorId=action.instructorId || 0
+
 
             return {
                 ...state,
-                username:action.userInfo.username,
-                instructorId:action.userInfo.instructorId
+                username,
+                instructorId
             };
 
         default:
