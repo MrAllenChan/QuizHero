@@ -12,6 +12,7 @@ class PresentPage extends Component {
         this.state = {
             counter: 0,
             questionId: 1,
+            questionCounter : 1,
             question: '',
             answerOptions: [],
             // answer: '',
@@ -74,7 +75,7 @@ class PresentPage extends Component {
     setUserAnswer(answer) {
         var answerArray = answer.split(" ");
         var type = answerArray[0];
-        var questionId = answerArray[1];
+        var questionCounter = answerArray[1];
         // var answerContent = answerArray[2];
         console.log(answerArray)
         // this.setState((state, props) => ({
@@ -89,7 +90,7 @@ class PresentPage extends Component {
         const BASE_URL = document.location.origin;
         const formData = {
             fileId : 1,
-            questionId : parseInt(questionId),
+            questionId : parseInt(questionCounter),
             choice : type
         }
         console.log(formData)
@@ -110,13 +111,15 @@ class PresentPage extends Component {
     setNextQuestion() {
         const counter = this.state.counter + 1;
         const questionId = this.state.questionId + 1;
+        const questionCounter = this.state.questionCounter + 1;
         // console.log(this.state.quizQuestions);
         this.setState({
             counter: counter,
             questionId: questionId,
             question: this.state.quizQuestions[counter].question,
             answerOptions: this.state.quizQuestions[counter].answers,
-            answer: ''
+            answer: '',
+            questionCounter: questionCounter
         });
     }
 
@@ -124,6 +127,7 @@ class PresentPage extends Component {
         const questionId = 1;
         const counter = 0;
         const quizCounter = this.state.quizCounter + 1;
+        const questionCounter = this.state.questionCounter + 1;
         const quizQuestions = this.state.quizList[quizCounter];
         const shuffledAnswerOptions = quizQuestions.map(question =>
             this.shuffleArray(question.answers)
@@ -135,7 +139,8 @@ class PresentPage extends Component {
             quizCounter : quizCounter,
             quizQuestions : quizQuestions,
             question: quizQuestions[0].question,
-            answerOptions: shuffledAnswerOptions[0]
+            answerOptions: shuffledAnswerOptions[0],
+            questionCounter: questionCounter
 
         })
 
@@ -179,6 +184,7 @@ class PresentPage extends Component {
                     question={this.state.question}
                     questionTotal={this.state.quizQuestions.length}
                     onAnswerSelected={this.handleAnswerSelected}
+                    questionCounter={this.state.questionCounter}
                 />
                 <Button
                     onClick={this.skipQuestion}>

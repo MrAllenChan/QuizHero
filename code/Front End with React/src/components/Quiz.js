@@ -15,6 +15,7 @@ function Quiz(props) {
                 answer={props.answer}
                 questionId={props.questionId}
                 onAnswerSelected={props.onAnswerSelected}
+                questionCounter={props.questionCounter}
             />
         );
     }

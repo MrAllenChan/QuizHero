@@ -10,13 +10,14 @@ class StudentPage extends Component {
 
         this.state = {
             counter: 0,
+            questionCounter : 1,
             questionId: 1,
             question: '',
             answerOptions: [],
             // answer: '',
             // answersCount: {},
             result: '',
-            quizCounter : 0,
+            quizBlockCounter : 0,
             quizList: props.location.query.quiz,
             quizQuestions:props.location.query.quiz[0],
             slides: props.location.query.slidesString,
@@ -63,7 +64,7 @@ class StudentPage extends Component {
         console.log(event.currentTarget.value);
         if (this.state.questionId < this.state.quizQuestions.length) {
             setTimeout(() => this.setNextQuestion(), 300);
-        } else if (this.state.questionId === this.state.quizQuestions.length && this.state.quizCounter < this.state.quizList.length - 1) {
+        } else if (this.state.questionId === this.state.quizQuestions.length && this.state.quizBlockCounter < this.state.quizList.length - 1) {
             console.log("111")
             setTimeout(() => {this.setNextPart();
             this.setResults()}, 300);
@@ -76,7 +77,7 @@ class StudentPage extends Component {
     setUserAnswer(answer) {
         var answerArray = answer.split(" ");
         var type = answerArray[0];
-        var questionId = answerArray[1];
+        var questionCounter = answerArray[1];
         // var answerContent = answerArray[2];
         console.log(answerArray)
         // this.setState((state, props) => ({
@@ -91,7 +92,7 @@ class StudentPage extends Component {
         const BASE_URL = document.location.origin;
         const formData = {
             fileId : 1,
-            questionId : parseInt(questionId),
+            questionId : parseInt(questionCounter),
             choice : type
         }
         console.log(formData)
@@ -112,21 +113,24 @@ class StudentPage extends Component {
     setNextQuestion() {
         const counter = this.state.counter + 1;
         const questionId = this.state.questionId + 1;
+        const questionCounter = this.state.questionCounter + 1;
         // console.log(this.state.quizQuestions);
         this.setState({
             counter: counter,
             questionId: questionId,
             question: this.state.quizQuestions[counter].question,
             answerOptions: this.state.quizQuestions[counter].answers,
-            answer: ''
+            answer: '',
+            questionCounter: questionCounter
         });
     }
 
     setNextPart() {
         const questionId = 1;
+        const questionCounter = this.state.questionCounter + 1;
         const counter = 0;
-        const quizCounter = this.state.quizCounter + 1;
-        const quizQuestions = this.state.quizList[quizCounter];
+        const quizBlockCounter = this.state.quizBlockCounter + 1;
+        const quizQuestions = this.state.quizList[quizBlockCounter];
         const shuffledAnswerOptions = quizQuestions.map(question =>
             this.shuffleArray(question.answers)
         );
@@ -134,11 +138,11 @@ class StudentPage extends Component {
         this.setState({
             questionId : questionId,
             counter : counter,
-            quizCounter : quizCounter,
+            quizBlockCounter : quizBlockCounter,
             quizQuestions : quizQuestions,
             question: quizQuestions[0].question,
-            answerOptions: shuffledAnswerOptions[0]
-
+            answerOptions: shuffledAnswerOptions[0],
+            questionCounter: questionCounter
         })
 
     }
@@ -174,6 +178,7 @@ class StudentPage extends Component {
                 question={this.state.question}
                 questionTotal={this.state.quizQuestions.length}
                 onAnswerSelected={this.handleAnswerSelected}
+                questionCounter={this.state.questionCounter}
             />
         );
     }
