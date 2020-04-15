@@ -7,23 +7,45 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import { GuardProvider, GuardedRoute } from "react-router-guards";
 import getUserLoginStatus from '../utils/getUserLoginStatus';
+import { connect } from "react-redux";
 import MyUpload from "../pages/UploadPage";
 import PresentPage from '../pages/PresentPage'
 import StudentPage from "../pages/StudentPage";
 import uploadHistory from "../pages/uploadHistory"
 
-
 const history = createBrowserHistory();
 
+const mapStateToProps = state =>{
+  return{
+    instructorId: state.setUserName.instructorId
+  }
+}
+
 const requireLogin = (to, from, next) => {
-  if (getUserLoginStatus()) {
-    next();
+  console.log("Checking")
+  // setTimeout(() => {  console.log("Checking"); }, 8000);
+  if (true) {
+    // if (false) {
+    console.log("Checking passsssssssssss")
+    // next.redirect("/HomePage");
   }
   next.redirect("/login");
 };
 
-export default class AppRouter extends Component {
+class AppRouter extends Component {
+
+  componentWillReceiveProps(nextProps){
+    //invoke function with updated store
+    //this.foo(nextProps)
+      console.log("last1",this.props.instructorId); // prevProps
+      console.log("now1",nextProps.instructorId); // currentProps after updating the store
+    }
+
+
+
+
   render() {
+    const {instructorId} = this.props;
     return (
       <Switch>
         <Route history={history}>
@@ -38,8 +60,9 @@ export default class AppRouter extends Component {
               exact
               component={RegisterPage}
             ></GuardedRoute>
-            <GuardProvider guards={[requireLogin]}>
-              <GuardedRoute path="/" exact render={() => <Redirect to="/HomePage" />} />
+            {/* <GuardProvider guards={[requireLogin]}> */}
+            <GuardProvider>
+              <GuardedRoute path="/" exact render={() => <Redirect to="/login" />} />
               <GuardedRoute path="/HomePage" exact component={MyUpload} />
               <GuardedRoute path="/presenter" component={PresentPage}/>
               <GuardedRoute path="/student" component={StudentPage}/>
@@ -54,3 +77,6 @@ export default class AppRouter extends Component {
     );
   }
 }
+
+
+export default connect(mapStateToProps)(AppRouter)

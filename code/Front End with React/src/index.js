@@ -6,7 +6,9 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import store from './store'
 
-
+store.subscribe(() => {
+  console.log('somthing: ', store.getState());
+});
 
 ReactDOM.render(
   <Provider store={store}>

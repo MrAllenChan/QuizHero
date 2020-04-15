@@ -2,6 +2,7 @@ package api;
 import com.google.gson.Gson;
 import dao.*;
 import exception.*;
+import io.javalin.core.util.FileUtil;
 import model.*;
 import io.javalin.Javalin;
 import io.javalin.plugin.json.JavalinJson;
@@ -18,6 +19,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public final class ApiServer {
 
@@ -41,11 +43,12 @@ public final class ApiServer {
     public static void start() throws URISyntaxException{
         QuizDao quizDao = DaoFactory.getQuizDao();
         RecordDao recordDao = DaoFactory.getRecordDao();
-        InstructorDao userDao = DaoFactory.getInstructorDao();
+        InstructorDao instructorDao = DaoFactory.getInstructorDao();
         // add some sample data
         if (INITIALIZE_WITH_SAMPLE_DATA) {
+            DaoUtil.addSampleUsers(instructorDao);
             DaoUtil.addSampleQuizzes(quizDao);
-            DaoUtil.addSampleUsers(userDao);
+            DaoUtil.addSampleUserFiles(instructorDao);
         }
 
         // Routing
@@ -53,11 +56,15 @@ public final class ApiServer {
         getAllQuizStat(quizDao);
         getQuizStatByFileId(quizDao);
         getSingleQuizStat(quizDao);
+
         postQuiz(quizDao);
         postRecords(recordDao);
-        login(userDao);
-        register(userDao);
-        uploadFile(userDao);
+
+        login(instructorDao);
+        register(instructorDao);
+
+        uploadFile(instructorDao);
+//        downloadFile(instructorDao);
 
         startJavalin();
 
@@ -199,32 +206,30 @@ public final class ApiServer {
         });
     }
 
-//    private static void upload(UserDao userDao) {
-//        // instructor login action, return user including his/her id
-//        app.post("/upload", ctx -> {
-//            User user = ctx.bodyAsClass(User.class);
-//            try {
-//                userDao.uploadFile(user.getUserId(), );
-//                ctx.status(201); // created successfully
-//                ctx.json(user);
-//                ctx.contentType("application/json");
-//            } catch (DaoException ex) {
-//                throw new ApiError(ex.getMessage(), 500); // server internal error
-//            }
-//        });
-//    }
-
     // Upload a file and save it to the local file system
     private static void uploadFile(InstructorDao instructorDao) {
         app.post("/upload", context -> {
-//            context.
+            // fetch user id from form-data, if no key then return -1 as default
+            int userId = Integer.parseInt(context.formParam("userId", "-1"));
+            System.out.println("user id: " + userId);
+
             UploadedFile uploadedFile = context.uploadedFile("file");
             try (InputStream inputStream = uploadedFile.getContent()) {
-                File localFile = new File(uploadedFile.getFilename());
+                File localFile = new File("upload/" + uploadedFile.getFilename());
                 FileUtils.copyInputStreamToFile(inputStream, localFile);
                 String url = localFile.getAbsolutePath();
+                System.out.println("url: " + url);
+
+                // todo: generate file id
+                int fileId = new Random().nextInt(100000);
+                // todo: store user-file info in database
+                instructorDao.storeUserFileInfo(userId, fileId, url);
+                // todo: return fileId to front-end
                 context.status(201);
-//                userDao.storeUserFileInfo();
+                Map<String, Integer> fileMap = new HashMap<>();
+                fileMap.put("fileId", fileId);
+                context.json(fileMap);
+                context.contentType("application/json");
             }
         });
     }

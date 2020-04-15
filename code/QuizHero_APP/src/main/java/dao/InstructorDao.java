@@ -8,5 +8,5 @@ import java.util.UUID;
 public interface InstructorDao {
     Instructor checkUserIdentity(String email, String pswd);
     void registerUser(Instructor instructor);
-    void storeUserFileInfo(int userId, UUID uuid, String url);
+    void storeUserFileInfo(int userId, int fileId, String url);
 }
