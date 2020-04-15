@@ -246,6 +246,7 @@ class MyUpload extends React.Component{
         //     quizLists[i]=new Array();
         // }
         console.log(length);
+        var count = 1;
         for (var index = 0; index < length; index ++) {
             var data = quizStringList[index];
             console.log(index);
@@ -287,15 +288,19 @@ class MyUpload extends React.Component{
 
                             // send correct answer to backend
                             const BASE_URL = document.location.origin;
+
+                            console.log(count);
                             const formData = {
                                 fileId : 1,
-                                questionId : quizBlock.length + 1,
+                                // questionId : quizBlock.length + 1,
+                                questionId : count,
                                 answer : String.fromCharCode(charCode),
                                 countA : 0,
                                 countB : 0,
                                 countC : 0,
                                 countD : 0,
                             }
+                            count ++;
                             console.log(formData)
                             axios
                                 .post(BASE_URL + "/quiz", formData, {
