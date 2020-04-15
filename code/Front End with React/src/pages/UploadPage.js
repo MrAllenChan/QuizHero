@@ -16,32 +16,6 @@ const props = {
     },
 };
 
-// Marpit
-const marpit = new Marpit();
-// Add Marpit theme CSS
-const theme = `
-            /* @theme example */
-
-            section {
-              background-color: #369;
-              color: #fff;
-              font-size: 30px;
-              padding: 40px;
-            }
-
-        h1,
-        h2 {
-          text-align: center;
-          margin: 0;
-        }
-
-        h1 {
-          color: #8cf;
-        }
-        `
-marpit.themeSet.default = marpit.themeSet.add(theme)
-
-
 class MyUpload extends React.Component{
     constructor(props) {
         super(props);
@@ -50,12 +24,12 @@ class MyUpload extends React.Component{
     state = {
         file:"",
         fileId:"",
-        result:"",
         rawString:"",
         slideString:"",
         quizString:"",
-        display_name:'none',
-        data:""
+        data:"",
+        marpitResult:"",
+        display_name:'none'
     }
 
 
@@ -77,9 +51,12 @@ class MyUpload extends React.Component{
             message.success(`${info.file.name} file uploaded successfully`);
             this.sendFile()
                 .then(this.readFile)
-                .then(this.convertText);
-            // this.separateQuestion(this.state.rawString);
-            // this.trans();
+                .then(this.separateQuestion);
+            // this.sendFile()
+            //     .then(this.trans);
+            // this.readFile()
+            //     .then(this.convertText);
+
             this.state.display_name = this.display_name();
 
             // send markdown file to backend
@@ -126,11 +103,12 @@ class MyUpload extends React.Component{
             save_link.download = name;
             fakeClick(save_link);
         }
-        exportRaw('filename.html', this.state.result);
+        exportRaw('filename.html', this.state.marpitResult);
         console.log(this.state.rawString);
 
     }
 
+    // send markdown file to backend and pass the database fileId to readFile
     sendFile =() => {
         var file = this.state.file;
         var p = new Promise(function (resolve, reject){
@@ -174,34 +152,16 @@ class MyUpload extends React.Component{
         return p;
     }
 
-    convertText=(result)=> {
-        // console.log(result);
+    separateQuestion = (result) => {
+
         this.setState({
             rawString : result
-        }, () => {this.separateQuestion();});
-        // console.log(this.state.rawString);
-        // 3. Render markdown
-        const {html, css} = marpit.render(result);
-        // 4. Use output in your HTML
-        let filestring = `
-            <!DOCTYPE html>
-            <html><body>
-              <style>${css}</style>
-              ${html}
-            </body></html>
-            `
-        // console.log(filestring)
-        ;
-        this.setState({
-            result: filestring
-        },);
-    }
+        });
 
-    separateQuestion = () => {
         var slides = new Array();
         var questions = new Array();
-        var data = this.state.rawString;
-        var sections = data.split("---\n\n")
+        // var data = this.state.rawString;
+        var sections = result.split("---\n\n")
         for (var i = 0; i < sections.length; i++) {
             console.log(sections[i].split(" ", 2)[0] === ">");
             const section = sections[i].split(" ");
@@ -219,7 +179,72 @@ class MyUpload extends React.Component{
         }, this.trans)
     }
 
-    parseString = () => {
+    trans=()=>{
+        // var obj = JSON.parse(this.state.rawString);
+        // var questions = obj;
+        // this.separateQuestion(this.state.rawString);
+        console.log(this.state.quizString)
+        console.log(this.state.slideString)
+        var questions = this.parseQuiz();
+        var data = {
+            quiz: questions,
+            slidesString: this.state.slideString,
+            fileId: this.state.fileId
+        }
+        // data = JSON.stringify(data);
+        // var path = `/presenter/${data}`;
+        this.setState({
+            data: data
+        }, this.marpitConvert)
+    };
+
+    // Marpit for download
+    marpitConvert=()=> {
+        // this.setState({
+        //     rawString : result
+        // }, () => {this.separateQuestion();});
+        // 1. Marpit
+        const marpit = new Marpit();
+        // 2. Add Marpit theme CSS
+        const theme = `
+            /* @theme example */
+
+            section {
+              background-color: #369;
+              color: #fff;
+              font-size: 30px;
+              padding: 40px;
+            }
+
+        h1,
+        h2 {
+          text-align: center;
+          margin: 0;
+        }
+
+        h1 {
+          color: #8cf;
+        }
+        `
+        marpit.themeSet.default = marpit.themeSet.add(theme)
+        // 3. Render markdown
+        const {html, css} = marpit.render(this.state.rawString);
+        // 4. Use output in your HTML
+        let filestring = `
+            <!DOCTYPE html>
+            <html><body>
+              <style>${css}</style>
+              ${html}
+            </body></html>
+            `
+            // console.log(filestring)
+        ;
+        this.setState({
+            marpitResult: filestring
+        });
+    }
+
+    parseQuiz = () => {
         // this.separateQuestion(this.state.rawString);
         var quizList = new Array();
         var data = this.state.quizString;
@@ -292,25 +317,6 @@ class MyUpload extends React.Component{
             quizList.push(quiz);
         }
         return quizList;
-    };
-
-    trans=()=>{
-        // var obj = JSON.parse(this.state.rawString);
-        // var questions = obj;
-        // this.separateQuestion(this.state.rawString);
-        console.log(this.state.quizString)
-        console.log(this.state.slideString)
-        var questions = this.parseString();
-        var data = {
-            quiz: questions,
-            slidesString: this.state.slideString,
-            fileId: this.state.fileId
-        }
-        // data = JSON.stringify(data);
-        // var path = `/presenter/${data}`;
-        this.setState({
-            data: data
-        })
     };
 
     display_name () {
