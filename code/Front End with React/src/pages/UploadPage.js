@@ -83,12 +83,12 @@ class MyUpload extends React.Component{
             this.state.display_name = this.display_name(this.state.display_name);
 
             // send markdown file to backend
-            const BASE_URL = document.location.origin;
+            const BASE_URL = "https://quiz-hero.herokuapp.com";
             const formData = {
                 userId : 1,
-                fileName : this.state.file
+                MarkdownFile : this.state.file
             }
-            console.log(formData)
+            console.log("Send data to backend", formData)
             axios
                 .post(BASE_URL+"/upload", formData, {
                     headers: {

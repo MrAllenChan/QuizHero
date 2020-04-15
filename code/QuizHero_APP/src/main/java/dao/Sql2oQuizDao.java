@@ -30,11 +30,11 @@ public class Sql2oQuizDao implements QuizDao {
     }
 
     @Override
-    public List<Quiz> getSingleQuizStat(int fileId, int questionId) {
+    public Quiz getSingleQuizStat(int fileId, int questionId) {
         try (Connection conn = sql2o.open()) {
             String sql = "SELECT * FROM Quiz Where fileId = " +
                     fileId + " AND questionId = " + questionId + ";";
-            return conn.createQuery(sql).executeAndFetch(Quiz.class);
+            return conn.createQuery(sql).executeAndFetchFirst(Quiz.class);
         }
         catch (Sql2oException ex) {
             throw new DaoException("Cannot find this single Quiz with file ID: " +
@@ -63,14 +63,18 @@ public class Sql2oQuizDao implements QuizDao {
         try (Connection conn = sql2o.open()) {
             listFromTable = conn.createQuery(sql).executeAndFetchTable().asList();
         } catch (Sql2oException ex) {
+            System.out.println("quiz already exists");
             throw new DaoException("Unable to find this single quiz!", ex);
         }
 
+//        List<Quiz> listFromTable  = getSingleQuizStat(fileId, questionId);
+
+        // quiz not exist then insert, otherwise do nothing
         if (listFromTable.isEmpty()) {
             try (Connection conn = sql2o.open()) {
                 sql = "INSERT INTO Quiz(fileId, questionId, answer, countA, countB, countC, countD) " +
                         "VALUES (:fileId, :questionId, :answer, :A, :B, :C, :D);";
-                int id = (int) conn.createQuery(sql)
+                int id = (int) conn.createQuery(sql, true)
                         .addParameter("fileId", quiz.getFileId())
                         .addParameter("questionId", quiz.getQuestionId())
                         .addParameter("answer", quiz.getAnswer())
@@ -84,11 +88,12 @@ public class Sql2oQuizDao implements QuizDao {
                 quiz.setId(id);
 
             } catch (Sql2oException ex) {
-                throw new DaoException("Unable to add the course", ex);
+                throw new DaoException("Unable to add the Quiz", ex);
             }
         }
-        // for now, uploading a markdown containing the same questionIds is not handled
-        // update answer? reset counts? not decided yet
+
+//         for now, uploading a markdown containing the same questionIds is not handled
+//         update answer? reset counts? not decided yet
 //        } else {
 //            sql = "UPDATE Quiz Set " + answer + " = " + answer +
 //                    "WHERE fileId = " + fileId + " AND questionId = " + questionId;

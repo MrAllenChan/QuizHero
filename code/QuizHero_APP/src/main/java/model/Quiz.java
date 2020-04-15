@@ -79,9 +79,9 @@ public class Quiz {
         count.put('B', df.format(countB / total * 100) + "%");
         count.put('C', df.format(countC / total * 100) + "%");
         count.put('D', df.format(countD / total * 100) + "%");
-        for (String val : count.values()) {
-            System.out.println(val);
-        }
+//        for (String val : count.values()) {
+//            System.out.println(val);
+//        }
     }
 
 //    public HashMap<Character, String> calPercentage(){

@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.0.6",
+    "@ant-design/icons-svg": "^4.0.0",
     "@marp-team/marpit": "^1.5.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.1",
@@ -16,9 +18,13 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-file-reader": "^1.1.4",
+    "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
+    "react-router-guards": "^1.0.1",
     "react-scripts": "3.4.0",
     "react-transition-group": "^1.2.1",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "spectacle": "^6.0.1"
   },
   "scripts": {
