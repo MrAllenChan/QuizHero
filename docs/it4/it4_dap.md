@@ -10,9 +10,13 @@
 > This could be a sketch of your user interface. 
 > You can draw it with hand and insert it here as an image.
 
+## Homepage
+
 - Users can choose user mode first by clicking "I am a presenter" or "I am a student".
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/userChoicePage.png)
+
+## Instructor Page
 
 - Instructors can sign up to create an account.
 
@@ -33,7 +37,7 @@
 - Both the student mode and presentation mode can show the slides, and users can join the quiz by clicking "start quiz" button in slides.
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/pre1.png)
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/pre2.png)
+<!-- ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/pre2.png) -->
 
 - Instructors can answer or skip(clicking "skip" button) the questions and view the statistical data of each question.
 
@@ -42,7 +46,9 @@
 
 ---
 
-- Students can be access to the file by inputing the url instructor shared to them in the search box.
+## Student page
+
+- Students can view the sildes by entering the file code instructor shared with them in the search box.
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/urlPage.png)
 
