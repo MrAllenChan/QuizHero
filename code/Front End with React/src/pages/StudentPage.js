@@ -3,6 +3,7 @@ import Quiz from '../components/Quiz';
 import ResultStudent from '../components/ResultStudent';
 import axios from 'axios'
 import Slides from "../components/Spectacle";
+import {BASE_URL} from "../config/config"
 
 class StudentPage extends Component {
     constructor(props) {
@@ -88,9 +89,9 @@ class StudentPage extends Component {
         // }));
 
         //send choice to back-end
-        const BASE_URL = document.location.origin;
+        // const BASE_URL = document.location.origin;
         const formData = {
-            fileId : this.fileId,
+            fileId : this.state.fileId,
             questionId : parseInt(questionCounter),
             choice : type
         }

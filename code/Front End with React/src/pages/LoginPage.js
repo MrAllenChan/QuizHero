@@ -66,11 +66,14 @@ class LoginPage extends Component {
           console.log(res.status)
           if(res.status === 201){
             console.log("Login success")
-            console.log(res)
-            this.props.login(res.data.name, res.data.instructorId);
+            message.loading("Login success, directing you to HomePage",3,onclose=()=>{
+              this.props.login(res.data.name, res.data.instructorId);
             localStorage.setItem("instructorId", res.data.instructorId)
             localStorage.setItem("username", res.data.name)
             window.location = "/HomePage"
+            })
+
+            
           }
       }).catch(err=>{
           console.log(err)

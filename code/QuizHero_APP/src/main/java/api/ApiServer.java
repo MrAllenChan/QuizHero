@@ -2,17 +2,13 @@ package api;
 import com.google.gson.Gson;
 import dao.*;
 import exception.*;
-import io.javalin.core.util.FileUtil;
 import model.*;
 import io.javalin.Javalin;
 import io.javalin.plugin.json.JavalinJson;
 import io.javalin.http.UploadedFile;
 import org.apache.commons.io.FileUtils;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
 
 import java.net.URISyntaxException;
 import java.sql.SQLException;
@@ -44,6 +40,8 @@ public final class ApiServer {
         QuizDao quizDao = DaoFactory.getQuizDao();
         RecordDao recordDao = DaoFactory.getRecordDao();
         InstructorDao instructorDao = DaoFactory.getInstructorDao();
+        Sql2oFileDao fileDao = DaoFactory.getFileDao();
+
         // add some sample data
         if (INITIALIZE_WITH_SAMPLE_DATA) {
             DaoUtil.addSampleUsers(instructorDao);
@@ -63,8 +61,8 @@ public final class ApiServer {
         login(instructorDao);
         register(instructorDao);
 
-        uploadFile(instructorDao);
-//        downloadFile(instructorDao);
+        uploadFile(instructorDao, fileDao);
+        fetchFile(fileDao);
 
         startJavalin();
 
@@ -104,11 +102,16 @@ public final class ApiServer {
     private static void getAllQuizStat(QuizDao quizDao) {
         // handle HTTP Get request to retrieve all Quiz statistics
         app.get("/quizstat", ctx -> {
-            List<Quiz> quizzes = quizDao.getAllQuizStat();
-            int fileId = Integer.parseInt(ctx.queryParam("fileId"));
-            System.out.println("File id: " + fileId);
-            List<Quiz> quizzesByFileId = quizDao.getQuizStatByFileId(fileId);
-            ctx.json(quizzesByFileId);
+            if (ctx.queryParam("fileId") != null) {
+                int fileId = Integer.parseInt(ctx.queryParam("fileId"));
+                System.out.println("File id: " + fileId);
+                List<Quiz> quizzesByFileId = quizDao.getQuizStatByFileId(fileId);
+                ctx.json(quizzesByFileId);
+            }
+            else {
+                List<Quiz> quizzes = quizDao.getAllQuizStat();
+                ctx.json(quizzes);
+            }
             ctx.contentType("application/json");
             ctx.status(200); // everything ok!
         });
@@ -117,9 +120,11 @@ public final class ApiServer {
     private static void getQuizStatByFileId(QuizDao quizDao) {
         // handle HTTP Get request to retrieve all Quiz statistics of a single file
         app.get("/quizstat/:fileid", ctx -> {
-            // TODO: implement me
             int fileId = Integer.parseInt(ctx.pathParam("fileid"));
             List<Quiz> quizzes = quizDao.getQuizStatByFileId(fileId);
+            if (quizzes.isEmpty()) {
+                throw new ApiError("Unable to find quizzes", 500);
+            }
             ctx.json(quizzes);
             ctx.status(200);
         });
@@ -128,10 +133,12 @@ public final class ApiServer {
     private static void getSingleQuizStat(QuizDao quizDao) {
         // handle HTTP Get request to retrieve statistics of a single question in a file
         app.get("/quizstat/:fileid/:questionid", ctx -> {
-            // TODO: implement me
             int fileId = Integer.parseInt(ctx.pathParam("fileid"));
             int questionId = Integer.parseInt(ctx.pathParam("questionid"));
             Quiz quiz = quizDao.getSingleQuizStat(fileId, questionId);
+            if (quiz == null) {
+                throw new ApiError("Unable to find quiz", 500);
+            }
             ctx.json(quiz);
             ctx.status(200);
         });
@@ -144,9 +151,9 @@ public final class ApiServer {
             Quiz quiz = ctx.bodyAsClass(Quiz.class);
             try {
                 quizDao.add(quiz);
-                ctx.status(201); // created successfully
                 ctx.json(quiz);
                 ctx.contentType("application/json");
+                ctx.status(201); // created successfully
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500);
             }
@@ -159,9 +166,9 @@ public final class ApiServer {
             Record record = ctx.bodyAsClass(Record.class);
             try {
                 recordDao.add(record);
-                ctx.status(201); // created successfully
                 ctx.json(record);
                 ctx.contentType("application/json");
+                ctx.status(201); // created successfully
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 404); // quiz not found
             }
@@ -177,10 +184,9 @@ public final class ApiServer {
 //            Instructor user = ctx.bodyAsClass(Instructor.class);
             try {
                 Instructor instructor = instructorDao.checkUserIdentity(email, pswd);
-//                instructor.setInstructorId(userId);
-                ctx.status(201); // created successfully
                 ctx.json(instructor);
                 ctx.contentType("application/json");
+                ctx.status(201); // created successfully
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
             } catch (LoginException ex) {
@@ -195,9 +201,9 @@ public final class ApiServer {
             Instructor instructor = ctx.bodyAsClass(Instructor.class);
             try {
                 instructorDao.registerUser(instructor);
-                ctx.status(201); // created successfully
                 ctx.json(instructor);
                 ctx.contentType("application/json");
+                ctx.status(201); // created successfully
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
             } catch (RegisterException ex) {
@@ -207,41 +213,70 @@ public final class ApiServer {
     }
 
     // Upload a file and save it to the local file system
-    private static void uploadFile(InstructorDao instructorDao) {
+    private static void uploadFile(InstructorDao instructorDao, Sql2oFileDao fileDao) {
         app.post("/upload", context -> {
             // fetch user id from form-data, if no key then return -1 as default
             int userId = Integer.parseInt(context.formParam("userId", "-1"));
             System.out.println("user id: " + userId);
 
+            // get file part
             UploadedFile uploadedFile = context.uploadedFile("file");
             try (InputStream inputStream = uploadedFile.getContent()) {
-                File localFile = new File("upload/" + uploadedFile.getFilename());
-                FileUtils.copyInputStreamToFile(inputStream, localFile);
-                String url = localFile.getAbsolutePath();
-                System.out.println("url: " + url);
+                String fileName = uploadedFile.getFilename();
+                System.out.println("file content received. File name: " + fileName);
+//                File localFile = new File("upload/" + uploadedFile.getFilename());
+//                FileUtils.copyInputStreamToFile(inputStream, localFile);
+//                String url = localFile.getAbsolutePath();
+//                System.out.println("url: " + url);
 
-                // todo: generate file id
+                // generate file id
                 int fileId = new Random().nextInt(100000);
-                // todo: store user-file info in database
-                instructorDao.storeUserFileInfo(userId, fileId, url);
-                // todo: return fileId to front-end
-                context.status(201);
-                Map<String, Integer> fileMap = new HashMap<>();
+                System.out.println("file id: " + fileId);
+                // store user-file info into database
+                fileDao.storeFile(fileId, fileName, inputStream);
+                instructorDao.storeUserFileInfo(userId, fileId, "test");
+                // return fileId to front-end
+                Map<String, Object> fileMap = new HashMap<>();
                 fileMap.put("fileId", fileId);
+//                fileMap.put("url", url);
                 context.json(fileMap);
                 context.contentType("application/json");
+                context.status(201);
+
+            } catch (NullPointerException npEx) {
+                throw new ApiError("file upload error: " + npEx.getMessage(), 400); // client bad request
+            } catch (DaoException daoEx) {
+                throw new ApiError("database error: " + daoEx.getMessage(), 500);
             }
         });
     }
 
-    // Download the specified file
-    private static void downloadFile(InstructorDao instructorDao) {
-        app.get("/download/:name", context -> {
-            File localFile = new File(context.pathParam("name"));
-            InputStream inputStream = new BufferedInputStream(new FileInputStream(localFile));
-            context.header("Content-Disposition", "attachment; filename=\"" + localFile.getName() + "\"");
-            context.header("Content-Length", String.valueOf(localFile.length()));
-            context.result(inputStream);
+    // front-end fetches the specified file
+    private static void fetchFile(Sql2oFileDao fileDao) {
+        app.get("/fetch", context -> {
+            /* BufferedInputStream是套在某个其他的InputStream外，起着缓存的功能，用来改善里面那个InputStream的性能
+            它自己不能脱离里面那个单独存在。FileInputStream是读取一个文件来作InputStream。
+            所以可以把BufferedInputStream套在FileInputStream外，来改善FileInputStream的性能。
+            */
+//            String fileUrl = context.queryParam("fileUrl"); // get url of the file from form-data
+            int fileId = Integer.parseInt(context.queryParam("fileId")); // get file id from form-data
+            System.out.println(fileId);
+            try {
+//                File localFile = new File("upload/tempory.md");
+//                FileUtils.copyInputStreamToFile(in, localFile);
+//                File localFile = new File(fileUrl); // create file object, passed into FileInputStream(File)
+//                InputStream inputStream = new BufferedInputStream(new FileInputStream(localFile));
+//                System.out.println("find local file.");
+//                context.header("Content-Disposition", "attachment; filename=\"" + localFile.getName() + "\"");
+//                context.header("Content-Length", String.valueOf(localFile.length()));
+                InputStream in = fileDao.getFile(fileId);
+                InputStream inputStream = new BufferedInputStream(in);
+                context.result(inputStream);
+                System.out.println("Send file successfully.");
+                context.status(200);
+            } catch (DaoException ex) {
+                throw new ApiError("file not found! " + ex.getMessage(), 400); // bad request
+            }
         });
     }
 

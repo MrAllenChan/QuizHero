@@ -1,41 +1,52 @@
-#  QuizHero Demo Example 
+# QuizHero Demo Example
 
-## QuizHero: a lightweight web app for creating presentations with quizzes from Markdown.
-
-See our Github homepage [here](https://github.com/jhu-oose/2020-spring-group-QuizHero
-).
+https://github.com/jhu-oose/2020-spring-group-QuizHero
 
 ---
 
-# What is it for?  
-
-- QuizHero is a lightweight web app for creating presentations with quizzes from Markdown. 
-- Through this platform, instructors can create different versions of presentations, and students are able to view the slides and answer the quizzes online. 
-- Our application will collect students' answers of quizzes, store the answers, and display the statistical results to instructors, who will then have a good overview of students' performance.
+![datboi](https://media.giphy.com/media/xohHbwcnOhqbS/giphy.gif)
 
 ---
 
-# How is it built?  
+# Contents of the course
 
-This project uses Marpit framework to convert Markdown and CSS themes to slide decks, and an original framework to convert Markdown content to quizzes. The front-end is based on React framework, the application server is developed using Javalin, and the database is based on SQLite.
+* Backend design
 
----
+* Frontend design
 
-# Our Backend design (UML)
-
-![](https://tva1.sinaimg.cn/large/00831rSTgy1gdfbcv29cxj30ju084jrs.jpg)
+#### OOSE is interesting!
 
 ---
 
-# Now let's do some funny quizzes!
+# Backend design
+
+![](https://tva1.sinaimg.cn/large/00831rSTgy1gdfcbvjz8cj30hl0cb0u7.jpg)
 
 ---
 
-> Question: 1What is your favorite course?
+## Design principles
+
+Guidelines derived from experience of programmers about software design. Usually take the form of do's and don'ts.
+
+---
+
+> Question: What is your favorite course?
 * [x] OOSE
 * [ ] AI
 * [ ] Algorithm
 * [ ] Computer Network
+
+> Question: Which design pattern do you apply?
+* [ ] Singleton
+* [ ] Decorater
+* [x] Dependency Injection
+* [ ] Abstract Factory
+
+---
+
+## part two
+
+---
 
 > Question: 2Which design pattern do you apply?
 * [ ] Singleton
@@ -43,41 +54,12 @@ This project uses Marpit framework to convert Markdown and CSS themes to slide d
 * [x] Dependency Injection
 * [ ] Abstract Factory
 
-> Question: 3Which framework do you use to develop your backend server?
-* [ ] SpringBoot
-* [x] Javalin
-* [ ] SparkJava
-* [ ] Tomcat
+> Question: 2What is your favorite course?
+* [x] OOSE
+* [ ] AI
+* [ ] Algorithm
+* [ ] Computer Network
 
 ---
 
-# the end of first part
-
----
-
-# Next is the second part!
-
-let's do some funny quizzes!
-
----
-
-> Question: 4Which design pattern do you apply?
-* [ ] Singleton
-* [ ] Decorater
-* [x] Dependency Injection
-* [ ] Abstract Factory
-
-> Question: 5Which framework do you use to develop your backend server?
-* [ ] SpringBoot
-* [x] Javalin
-* [ ] SparkJava
-* [ ] Tomcat
-
----
-
-# the end of second part
-
----
-
-# class over!! have fun!!
-
+## Thank you!

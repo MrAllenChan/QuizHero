@@ -5,8 +5,6 @@ import model.Quiz;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -57,19 +55,23 @@ public class Sql2oQuizDao implements QuizDao {
 
         int fileId = quiz.getFileId();
         int questionId = quiz.getQuestionId();
+        //handel the case that quiz is initialized with null fileId and questionId values
+        if (fileId == 0 || questionId == 0) {
+            throw new DaoException("FileId and questionId can not be 0!");
+        }
         String answer = quiz.getAnswer();
         List<Map<String, Object>> listFromTable;
         String sql = "SELECT * FROM Quiz WHERE fileId = " + fileId + " AND questionId = " + questionId + ";";
         try (Connection conn = sql2o.open()) {
             listFromTable = conn.createQuery(sql).executeAndFetchTable().asList();
         } catch (Sql2oException ex) {
-            System.out.println("quiz already exists");
+//            System.out.println("quiz already exists");
             throw new DaoException("Unable to find this single quiz!", ex);
         }
 
 //        List<Quiz> listFromTable  = getSingleQuizStat(fileId, questionId);
 
-        // quiz not exist then insert, otherwise do nothing
+        // quiz not exist then insert, otherwise throw DaoException
         if (listFromTable.isEmpty()) {
             try (Connection conn = sql2o.open()) {
                 sql = "INSERT INTO Quiz(fileId, questionId, answer, countA, countB, countC, countD) " +
@@ -90,6 +92,8 @@ public class Sql2oQuizDao implements QuizDao {
             } catch (Sql2oException ex) {
                 throw new DaoException("Unable to add the Quiz", ex);
             }
+        } else {
+            throw new DaoException("Quiz already exists");
         }
 
 //         for now, uploading a markdown containing the same questionIds is not handled

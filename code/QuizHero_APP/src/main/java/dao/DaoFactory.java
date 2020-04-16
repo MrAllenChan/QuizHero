@@ -1,15 +1,12 @@
 package dao;
 
 import exception.DaoException;
-import model.Instructor;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
-
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+
 
 public class DaoFactory {
     public static boolean DROP_TABLES_IF_EXIST = true;
@@ -54,8 +51,8 @@ public class DaoFactory {
         String sql = "CREATE TABLE IF NOT EXISTS Instructor(" +
                 "instructorId SERIAL," +
                 "name VARCHAR(30)," +
-                "email VARCHAR(30)," +
-                "pswd VARCHAR(30)," +
+                "email VARCHAR(30) NOT NULL," +
+                "pswd VARCHAR(30) NOT NULL," +
                 "PRIMARY KEY (instructorId)," +
                 "UNIQUE (email)" +
                 ");";
@@ -90,8 +87,8 @@ public class DaoFactory {
         }
         String sql = "CREATE TABLE IF NOT EXISTS Quiz(" +
                 "id SERIAL PRIMARY KEY," +
-                "fileId INTEGER," +
-                "questionId INTEGER," +
+                "fileId INTEGER NOT NULL," +
+                "questionId INTEGER NOT NULL," +
                 "answer VARCHAR(30)," +
                 "countA INTEGER," +
                 "countB INTEGER," +
@@ -102,6 +99,21 @@ public class DaoFactory {
             conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
             throw new DaoException("Unable to create Quiz table", ex);
+        }
+    }
+
+    private static void createFileTable(Sql2o sql2o) {
+        if (DROP_TABLES_IF_EXIST) {
+            dropFileTableIfExists(sql2o);
+        }
+        String sql = "create table if not exists file(" +
+                "fileId Integer PRIMARY KEY, " +
+                "fileName varchar(30)," +
+                "mdFile bytea);";
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery(sql).executeUpdate();
+        } catch (Sql2oException ex) {
+            throw new DaoException("Unable to create file table", ex);
         }
     }
 
@@ -138,6 +150,17 @@ public class DaoFactory {
         }
     }
 
+    private static void dropFileTableIfExists(Sql2o sql2o) {
+        String sql = "DROP TABLE IF EXISTS file;";
+
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery(sql).executeUpdate();
+            System.out.println("drop file table successfully.");
+        } catch (Sql2oException ex) {
+            throw new DaoException("Fail dropping file table.", ex);
+        }
+    }
+
     public static QuizDao getQuizDao() throws URISyntaxException {
         instantiateSql2o();
         createQuizTable(sql2o);
@@ -155,5 +178,11 @@ public class DaoFactory {
         createInstructorTable(sql2o);
         createInsFileTable(sql2o);
         return new Sql2oInstructorDao(sql2o);
+    }
+
+    public static Sql2oFileDao getFileDao() throws URISyntaxException {
+//        instantiateSql2o();
+        createFileTable(sql2o);
+        return new Sql2oFileDao(sql2o);
     }
 }

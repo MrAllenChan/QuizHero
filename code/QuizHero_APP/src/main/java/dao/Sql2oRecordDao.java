@@ -6,10 +6,7 @@ import model.Record;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Sql2oRecordDao implements RecordDao {
     private Sql2o sql2o;
