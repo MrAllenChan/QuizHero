@@ -2,7 +2,6 @@ package api;
 import com.google.gson.Gson;
 import dao.*;
 import exception.*;
-import io.javalin.core.util.FileUtil;
 import model.*;
 import io.javalin.Javalin;
 import io.javalin.plugin.json.JavalinJson;
@@ -41,6 +40,8 @@ public final class ApiServer {
         QuizDao quizDao = DaoFactory.getQuizDao();
         RecordDao recordDao = DaoFactory.getRecordDao();
         InstructorDao instructorDao = DaoFactory.getInstructorDao();
+        Sql2oFileDao fileDao = DaoFactory.getFileDao();
+
         // add some sample data
         if (INITIALIZE_WITH_SAMPLE_DATA) {
             DaoUtil.addSampleUsers(instructorDao);
@@ -60,8 +61,8 @@ public final class ApiServer {
         login(instructorDao);
         register(instructorDao);
 
-        uploadFile(instructorDao);
-        fetchFile(instructorDao);
+        uploadFile(instructorDao, fileDao);
+        fetchFile(fileDao);
 
         startJavalin();
 
@@ -212,56 +213,68 @@ public final class ApiServer {
     }
 
     // Upload a file and save it to the local file system
-    private static void uploadFile(InstructorDao instructorDao) {
+    private static void uploadFile(InstructorDao instructorDao, Sql2oFileDao fileDao) {
         app.post("/upload", context -> {
             // fetch user id from form-data, if no key then return -1 as default
             int userId = Integer.parseInt(context.formParam("userId", "-1"));
             System.out.println("user id: " + userId);
 
+            // get file part
             UploadedFile uploadedFile = context.uploadedFile("file");
             try (InputStream inputStream = uploadedFile.getContent()) {
-                File localFile = new File("upload/" + uploadedFile.getFilename());
-                FileUtils.copyInputStreamToFile(inputStream, localFile);
-                String url = localFile.getAbsolutePath();
-                System.out.println("url: " + url);
+                String fileName = uploadedFile.getFilename();
+                System.out.println("file content received. File name: " + fileName);
+//                File localFile = new File("upload/" + uploadedFile.getFilename());
+//                FileUtils.copyInputStreamToFile(inputStream, localFile);
+//                String url = localFile.getAbsolutePath();
+//                System.out.println("url: " + url);
 
                 // generate file id
                 int fileId = new Random().nextInt(100000);
-                // store user-file info in database
-                instructorDao.storeUserFileInfo(userId, fileId, url);
+                System.out.println("file id: " + fileId);
+                // store user-file info into database
+                fileDao.storeFile(fileId, fileName, inputStream);
+                instructorDao.storeUserFileInfo(userId, fileId, "test");
                 // return fileId to front-end
                 Map<String, Object> fileMap = new HashMap<>();
                 fileMap.put("fileId", fileId);
-                fileMap.put("url", url);
+//                fileMap.put("url", url);
                 context.json(fileMap);
                 context.contentType("application/json");
                 context.status(201);
+
             } catch (NullPointerException npEx) {
                 throw new ApiError("file upload error: " + npEx.getMessage(), 400); // client bad request
-            } catch (IOException ioEx) {
-                throw new ApiError("internal server error: " + ioEx.getMessage(),500); // io exception
+            } catch (DaoException daoEx) {
+                throw new ApiError("database error: " + daoEx.getMessage(), 500);
             }
         });
     }
 
     // front-end fetches the specified file
-    private static void fetchFile(InstructorDao instructorDao) {
+    private static void fetchFile(Sql2oFileDao fileDao) {
         app.get("/fetch", context -> {
             /* BufferedInputStream是套在某个其他的InputStream外，起着缓存的功能，用来改善里面那个InputStream的性能
             它自己不能脱离里面那个单独存在。FileInputStream是读取一个文件来作InputStream。
             所以可以把BufferedInputStream套在FileInputStream外，来改善FileInputStream的性能。
             */
-            String fileUrl = context.queryParam("fileUrl"); // get url of the file from form-data
-            System.out.println(fileUrl);
-            File localFile = new File(fileUrl); // create file object, passed into FileInputStream(File)
+//            String fileUrl = context.queryParam("fileUrl"); // get url of the file from form-data
+            int fileId = Integer.parseInt(context.queryParam("fileId")); // get file id from form-data
+            System.out.println(fileId);
             try {
-                InputStream inputStream = new BufferedInputStream(new FileInputStream(localFile));
-                System.out.println("find local file.");
-                context.header("Content-Disposition", "attachment; filename=\"" + localFile.getName() + "\"");
-                context.header("Content-Length", String.valueOf(localFile.length()));
+//                File localFile = new File("upload/tempory.md");
+//                FileUtils.copyInputStreamToFile(in, localFile);
+//                File localFile = new File(fileUrl); // create file object, passed into FileInputStream(File)
+//                InputStream inputStream = new BufferedInputStream(new FileInputStream(localFile));
+//                System.out.println("find local file.");
+//                context.header("Content-Disposition", "attachment; filename=\"" + localFile.getName() + "\"");
+//                context.header("Content-Length", String.valueOf(localFile.length()));
+                InputStream in = fileDao.getFile(fileId);
+                InputStream inputStream = new BufferedInputStream(in);
                 context.result(inputStream);
+                System.out.println("Send file successfully.");
                 context.status(200);
-            } catch (FileNotFoundException ex) {
+            } catch (DaoException ex) {
                 throw new ApiError("file not found! " + ex.getMessage(), 400); // bad request
             }
         });
