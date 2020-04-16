@@ -317,10 +317,28 @@ class MyUpload extends React.Component{
             })
         }
     };
+    
+    handleLogOut(){
+        localStorage.setItem("username",null)
+        localStorage.setItem("instructorId",0)
+        localStorage.setItem("isLogin",false)
+        window.location = "/login"
+    }
+
+
 
 
     render(){
         const username = localStorage.getItem("username")?localStorage.getItem("username"):"";
+
+        const logOutBtnStyle = {
+                background: "none",
+                border: "none",
+                paddingLeft: "5px",
+                color: "#1890FF",
+                textDecoration: "underline",
+                cursor: "pointer"
+        };
 
         return(
             <div className="App">
@@ -331,14 +349,17 @@ class MyUpload extends React.Component{
                         {/*<Menu.Item key="1">Upload </Menu.Item>*/}
 
                         {/*<Menu.Item key="2">History </Menu.Item>*/}
-                        <Menu.Item key="1">
+                        <Menu.Item key="1" style={{marginLeft:"160px"}}>
                             <Link to={'/HomePage'}>Upload</Link>
                         </Menu.Item>
                         <Menu.Item key="2">
                             <Link to={'/history'}>History</Link>
                         </Menu.Item>
                         
-                        <div style={{float:"right",paddingRight:"30px"}}> Welcome, {username}</div>
+                        <div style={{display:"inline-block",float:"right",paddingRight:"30px"}}>
+                             Welcome, {username}
+                             <button onClick={this.handleLogOut} style={logOutBtnStyle}>Log Out</button>
+                        </div>
                         
 
                     </Menu>
