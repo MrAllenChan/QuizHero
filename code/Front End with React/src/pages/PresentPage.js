@@ -4,6 +4,7 @@ import ResultPresenter from '../components/ResultPresenter';
 import axios from 'axios'
 import {Button, Icon} from "antd";
 import Slides from "../components/Spectacle";
+import {BASE_URL} from "../config/config"
 
 class PresentPage extends Component {
     constructor(props) {
@@ -88,7 +89,7 @@ class PresentPage extends Component {
         // }));
 
         //send choice to back-end
-        const BASE_URL = document.location.origin;
+        // const BASE_URL = document.location.origin;
         const formData = {
             fileId : this.state.fileId,
             questionId : parseInt(questionCounter),
