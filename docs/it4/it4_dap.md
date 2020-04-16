@@ -10,34 +10,43 @@
 > This could be a sketch of your user interface. 
 > You can draw it with hand and insert it here as an image.
 
+- Users can choose user mode first by clicking "I am a presenter" or "I am a student".
+
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/userChoicePage.png)
+
+- Students can be access to the file by inputing the url instructor shared to them in the search box.
+
+-[](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/urlPage.png)
+
 - Instructor can sign up to create an account.
+
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/signup.png)
 
 - Instructor can log in by entering username and password.
+
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/login.png)
 
 - Instructor can upload a markdown file after login. Then, instructor can see the transferred slides and quiz page by clicking different modes.
+
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/upload.png)
 
 - Instructor can view and download former markdown file in the file history.
+
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/historypage.png)
 
 - Both the student mode and presentation mode can show the slides, and users can join the quiz by clicking "start quiz" button in slides.
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/pre1.png)
-
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/pre2.png)
 
 - Students can choose answer for the quiz questions, but they cannot see the result data.
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/quiz-stu.png)
-
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/stu-result.png)
 
 - Instructors can answer or skip(clicking "skip" button) the questions and view the statistical data of each question.
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/quiz-presentation.png)
-
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/presentation-statistic.png)
 
 # Iteration Backlog
