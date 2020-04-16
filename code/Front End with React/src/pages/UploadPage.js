@@ -355,6 +355,8 @@ class MyUpload extends React.Component{
 
 
     render(){
+        const username = localStorage.getItem("username")?localStorage.getItem("username"):"";
+
         return(
             <div className="App">
                 <Header style={{height: 0, padding: 0, position: 'fixed', zIndex: 1, width: '100%' }}>
@@ -370,12 +372,15 @@ class MyUpload extends React.Component{
                         <Menu.Item key="2">
                             <Link to={'/history'}>History</Link>
                         </Menu.Item>
+                        
+                        <div style={{float:"right",paddingRight:"30px"}}> Welcome, {username}</div>
+                        
 
                     </Menu>
                 </Header>
-
+                
                 <header className="App-header">
-
+                    
                     <img src={logo} className="App-logo" alt="logo"/>
                     <div>
                         {/* Upload button*/}
