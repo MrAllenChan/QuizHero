@@ -26,7 +26,7 @@ public class Sql2oInstructorDao implements InstructorDao{
                     .addParameter("email", email)
                     .addParameter("pswd", pswd)
                     .executeAndFetchFirst(Instructor.class);
-            System.out.println(instructor.getPswd());
+//            System.out.println(instructor.getPswd());
         } catch (Sql2oException ex) {
             throw new DaoException("Database error", ex);
         }
