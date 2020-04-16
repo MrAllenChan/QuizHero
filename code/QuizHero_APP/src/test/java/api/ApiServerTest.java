@@ -1,147 +1,223 @@
-//package api;
-//
-//import com.google.gson.Gson;
-//import com.mashape.unirest.http.HttpResponse;
-//import com.mashape.unirest.http.JsonNode;
-//import com.mashape.unirest.http.Unirest;
-//import com.mashape.unirest.http.exceptions.UnirestException;
-//import org.junit.AfterClass;
-//import org.junit.BeforeClass;
-//import org.junit.Test;
-//
-//import java.nio.file.Paths;
-//import java.util.HashMap;
-//import java.util.Map;
-//
-//import static org.junit.Assert.assertEquals;
-//import static org.junit.Assert.assertNotEquals;
-//
-//public class ApiServerTest {
-//
-//  private static Gson gson = new Gson();
-//
-//  @BeforeClass
-//  public static void beforeClass() throws Exception {
-//    DaoFactory.DROP_TABLES_IF_EXIST = true;
-//    DaoFactory.PATH_TO_DATABASE_FILE = Paths.get("src", "test", "resources").toFile().getAbsolutePath()
-//        + "/db/Test.db";
-//    ApiServer.INITIALIZE_WITH_SAMPLE_DATA = true;
-//    ApiServer.start();
-//  }
-//
-//  @AfterClass
-//  public static void afterClass() throws Exception {
-//    ApiServer.stop();
-//  }
-//
-//  @Test
-//  public void getCoursesRequestReturns200() throws UnirestException {
-//    final String URL = "http://127.0.0.1:7000/courses";
-//    HttpResponse<JsonNode> jsonResponse = Unirest.get(URL).asJson();
-//    assertEquals(200, jsonResponse.getStatus());
-//  }
-//
-//  @Test
-//  public void getCoursesRequestReturnsMultipleCourses() throws UnirestException {
-//    final String URL = "http://127.0.0.1:7000/courses";
-//    HttpResponse<JsonNode> jsonResponse = Unirest.get(URL).asJson();
-//    assertNotEquals(0, jsonResponse.getBody().getArray().length());
-//  }
-//
-//  @Test
-//  public void postCoursesRequestReturns201() throws UnirestException {
-//    Map<String, Object> course = new HashMap<>();
-//    course.put("name", "test course");
-//    course.put("url", "test-course.com");
-//
-//    final String URL = "http://127.0.0.1:7000/courses";
-//    HttpResponse<JsonNode> jsonResponse = Unirest.post(URL)
-//        .body(gson.toJson(course)).asJson();
-//    assertEquals(201, jsonResponse.getStatus());
-//  }
-//
-//  @Test
-//  public void postCoursesWithNullNameReturns500() throws UnirestException {
-//    Map<String, Object> course = new HashMap<>();
-//    course.put("name", null);
-//    course.put("url", "test-course.com");
-//
-//    final String URL = "http://127.0.0.1:7000/courses";
-//    HttpResponse<JsonNode> jsonResponse = Unirest.post(URL)
-//        .body(gson.toJson(course)).asJson();
-//    assertEquals(500, jsonResponse.getStatus());
-//  }
-//
-//  @Test
-//  public void getReviewsRequestReturns200() throws UnirestException {
-//    // TODO: Implement me!
-//    final String URL = "http://127.0.0.1:7000/courses/1/reviews";
-//    HttpResponse<JsonNode> jsonResponse = Unirest.get(URL).asJson();
-//    assertEquals(200, jsonResponse.getStatus());
-//  }
-//
-//  @Test
-//  public void getReviewsRequestReturnsMultipleReviews() throws UnirestException {
-//    // TODO: Implement me!
-//    final String URL = "http://127.0.0.1:7000/courses/1/reviews";
-//    HttpResponse<JsonNode> jsonResponse = Unirest.get(URL).asJson();
-//    assertNotEquals(0, jsonResponse.getBody().getArray().length());
-//  }
-//
-//  @Test
-//  public void getReviewsForNonExistingCourseReturnsEmptyList() throws UnirestException {
-//    // TODO: Implement me!
-//    final String URL = "http://127.0.0.1:7000/courses/10/reviews";
-//    HttpResponse<JsonNode> jsonResponse = Unirest.get(URL).asJson();
-//    assertEquals(0,jsonResponse.getBody().getArray().length());
-//  }
-//
-//  @Test
-//  public void postReviewRequestReturns201() throws UnirestException {
-//    // TODO: Implement me!
-//    Map<String, Object> review = new HashMap<>();
-//    review.put("rating", 5);
-//    review.put("courseId", 1);
-//    review.put("comment","Awful");
-//
-//
-//    final String URL = "http://127.0.0.1:7000/courses/1/reviews";
-//    HttpResponse<JsonNode> jsonResponse = Unirest.post(URL)
-//            .body(gson.toJson(review)).asJson();
-//    assertEquals(201, jsonResponse.getStatus());
-//
-//  }
-//
-//  @Test
-//  public void postReviewMisMatchIDReturns400() throws UnirestException {
-//    // E.g. try to post a review for course with id=1 but in the body of request
-//    //  the courseId is some number other than 1
-//    // TODO: Implement me!
-//    Map<String, Object> review = new HashMap<>();
-//    review.put("rating", 5);
-//    review.put("courseId", 2);
-//    review.put("comment","Awful");
-//
-//
-//    final String URL = "http://127.0.0.1:7000/courses/1/reviews";
-//    HttpResponse<JsonNode> jsonResponse = Unirest.post(URL)
-//            .body(gson.toJson(review)).asJson();
-//    assertEquals(400, jsonResponse.getStatus());
-//  }
-//
-//  @Test
-//  public void postReviewForNonExistingCourseReturns500() throws UnirestException {
-//    // E.g. try to post a review for course that is not in the database
-//    // TODO: Implement me!
-//    Map<String, Object> review = new HashMap<>();
-//    review.put("rating", 5);
-//    review.put("courseId", 67);
-//    review.put("comment","Awful");
-//
-//
-//    final String URL = "http://127.0.0.1:7000/courses/67/reviews";
-//    HttpResponse<JsonNode> jsonResponse = Unirest.post(URL)
-//            .body(gson.toJson(review)).asJson();
-//    assertEquals(500, jsonResponse.getStatus());
-//  }
-//}
+package api;
+
+import com.google.gson.Gson;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import dao.DaoFactory;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
+public class ApiServerTest {
+
+    private static Gson gson = new Gson();
+
+    public ApiServerTest() throws URISyntaxException {
+    }
+
+    // start server
+    @BeforeClass
+    public static void beforeClass() throws Exception {
+        DaoFactory.DROP_TABLES_IF_EXIST = true;
+        ApiServer.INITIALIZE_WITH_SAMPLE_DATA = true;
+        ApiServer.start();
+    }
+
+    // stop server
+    @AfterClass
+    public static void afterClass() {
+        ApiServer.stop();
+    }
+
+
+    @Test
+    public void getQuizStat() throws UnirestException {
+        Map<String, Object> quiz = new HashMap<>();
+        quiz.put("fileId", 1);
+        quiz.put("questionId", 1);
+        final String URL = "http://127.0.0.1:7000/quizstat/";
+        HttpResponse<JsonNode> jsonResponse = Unirest.get(URL).queryString(quiz).asJson();
+        assertEquals(200, jsonResponse.getStatus());
+        assertNotEquals(0, jsonResponse.getBody().getArray().length());
+    }
+
+    @Test
+    public void getQuizStatByFile() throws UnirestException {
+        final String URL = "http://127.0.0.1:7000/quizstat/1";
+        HttpResponse<JsonNode> jsonResponse = Unirest.get(URL).asJson();
+        assertEquals(200, jsonResponse.getStatus());
+        assertNotEquals(0, jsonResponse.getBody().getArray().length());
+    }
+
+
+    @Test
+    public void getNotExistedQuizStatByFile() throws UnirestException {
+        final String URL = "http://127.0.0.1:7000/quizstat/111";
+        HttpResponse<JsonNode> jsonResponse = Unirest.get(URL).asJson();
+        assertEquals(500, jsonResponse.getStatus());
+    }
+
+    @Test
+    public void getQuizStatByFileAndQuestion() throws UnirestException {
+        final String URL = "http://127.0.0.1:7000/quizstat/1/1";
+        HttpResponse<JsonNode> jsonResponse = Unirest.get(URL).asJson();
+        assertEquals(200, jsonResponse.getStatus());
+        assertNotEquals(0, jsonResponse.getBody().getArray().length());
+    }
+
+
+    @Test
+    public void getNotExistedQuizStatByFileAndQuestion() throws UnirestException {
+        final String URL = "http://127.0.0.1:7000/quizstat/1/3";
+        HttpResponse<JsonNode> jsonResponse = Unirest.get(URL).asJson();
+        assertEquals(500, jsonResponse.getStatus());
+    }
+
+    @Test
+    public void postQuizReturn201() throws UnirestException {
+        Map<String, Object> quiz = new HashMap<>();
+        quiz.put("fileId", 8080);
+        quiz.put("questionId", 1);
+        quiz.put("answer", "A");
+        quiz.put("countA", 1);
+        quiz.put("countB", 2);
+        quiz.put("countC", 3);
+        quiz.put("countD", 4);
+        final String URL = "http://127.0.0.1:7000/quiz";
+        HttpResponse<JsonNode> jsonResponse = Unirest.post(URL)
+                .body(gson.toJson(quiz)).asJson();
+        assertEquals(201, jsonResponse.getStatus());
+    }
+
+    @Test
+    public void postQuizWithNoCountsReturn201() throws UnirestException {
+        Map<String, Object> quiz = new HashMap<>();
+        quiz.put("fileId", 8080);
+        quiz.put("questionId", 2);
+        quiz.put("answer", "A");
+        final String URL = "http://127.0.0.1:7000/quiz";
+        HttpResponse<JsonNode> jsonResponse = Unirest.post(URL)
+                .body(gson.toJson(quiz)).asJson();
+        assertEquals(201, jsonResponse.getStatus());
+    }
+
+
+    @Test
+    public void postNullIdQuizReturn500() throws UnirestException {
+        Map<String, Object> quiz = new HashMap<>();
+        quiz.put("fileID", null);
+        quiz.put("questionId", null);
+        quiz.put("answer", "A");
+        final String URL = "http://127.0.0.1:7000/quiz";
+        HttpResponse<JsonNode> jsonResponse = Unirest.post(URL)
+                .body(gson.toJson(quiz)).asJson();
+        System.out.println(jsonResponse.getStatus());
+        assertEquals(500, jsonResponse.getStatus());
+    }
+
+    @Test
+    public void postRecordReturn201() throws UnirestException {
+        Map<String, Object> record = new HashMap<>();
+        record.put("fileId", 1);
+        record.put("questionId", 1);
+        record.put("choice", "A");
+        final String URL = "http://127.0.0.1:7000/record";
+        HttpResponse<JsonNode> jsonResponse = Unirest.post(URL)
+                .body(gson.toJson(record)).asJson();
+        assertEquals(201, jsonResponse.getStatus());
+    }
+
+    // quiz not found
+    @Test
+    public void postRecordReturn404() throws UnirestException {
+        Map<String, Object> record = new HashMap<>();
+        record.put("fileID", 8080);
+        record.put("questionId", 88);
+        record.put("answer", "A");
+        final String URL = "http://127.0.0.1:7000/record";
+        HttpResponse<JsonNode> jsonResponse = Unirest.post(URL)
+                .body(gson.toJson(record)).asJson();
+        assertEquals(404, jsonResponse.getStatus());
+    }
+
+    @Test
+    public void loginReturn201() throws UnirestException {
+        Map<String, Object> instructor = new HashMap<>();
+        instructor.put("email", "zchen85@jhu.edu");
+        instructor.put("pswd", "9999");
+        final String URL = "http://127.0.0.1:7000/login";
+        HttpResponse<JsonNode> jsonResponse = Unirest.post(URL).queryString(instructor).asJson();
+        assertEquals(201, jsonResponse.getStatus());
+    }
+
+    @Test
+    public void loginReturn500() throws UnirestException {
+        Map<String, Object> instructor = new HashMap<>();
+        instructor.put("email", "zchen85@jhu.edu");
+        instructor.put("pswd", "0000");
+        final String URL = "http://127.0.0.1:7000/login";
+        HttpResponse<JsonNode> jsonResponse = Unirest.post(URL).queryString(instructor).asJson();
+        assertEquals(500, jsonResponse.getStatus());
+    }
+
+    @Test
+    public void registerReturn201() throws UnirestException {
+        Map<String, Object> instructor = new HashMap<>();
+        instructor.put("name", "John Smith");
+        instructor.put("email", "example@gmail.com");
+        instructor.put("pswd", "qwer");
+        final String URL = "http://127.0.0.1:7000/register";
+        HttpResponse<JsonNode> jsonResponse = Unirest.post(URL)
+                .body(gson.toJson(instructor)).asJson();
+        assertEquals(201, jsonResponse.getStatus());
+    }
+
+    @Test
+    public void registerReturn403() throws UnirestException {
+        Map<String, Object> instructor = new HashMap<>();
+        instructor.put("name", "John Smith");
+        instructor.put("email", "bob@jhu.edu");
+        instructor.put("pswd", "qwer");
+        final String URL = "http://127.0.0.1:7000/register";
+        HttpResponse<JsonNode> jsonResponse = Unirest.post(URL)
+                .body(gson.toJson(instructor)).asJson();
+        assertEquals(403, jsonResponse.getStatus());
+    }
+
+
+    @Test
+    public void registerNullEmailReturn500() throws UnirestException {
+        Map<String, Object> instructor = new HashMap<>();
+        instructor.put("name", "John Smith");
+        instructor.put("email", null);
+        instructor.put("pswd", "qwer");
+        final String URL = "http://127.0.0.1:7000/register";
+        HttpResponse<JsonNode> jsonResponse = Unirest.post(URL)
+                .body(gson.toJson(instructor)).asJson();
+        assertEquals(500, jsonResponse.getStatus());
+    }
+
+    @Test
+    public void registerNullPswdReturn500() throws UnirestException {
+        Map<String, Object> instructor = new HashMap<>();
+        instructor.put("name", "John Smith");
+        instructor.put("email", "js@gmail.com");
+        instructor.put("pswd", null);
+        final String URL = "http://127.0.0.1:7000/register";
+        HttpResponse<JsonNode> jsonResponse = Unirest.post(URL)
+                .body(gson.toJson(instructor)).asJson();
+        assertEquals(500, jsonResponse.getStatus());
+    }
+
+    //test upload file and download file?
+
+}
