@@ -1,6 +1,7 @@
 import { Upload, message, Button, Icon, Layout, Menu} from 'antd';
 import React from "react";
-import Marpit from '@marp-team/marpit'
+import marpitConvert from '../components/Marpit'
+import separateQuestion from "../components/Parse";
 import axios from 'axios';
 import {BASE_URL} from "../config/config"
 import {Link} from "react-router-dom"
@@ -27,8 +28,6 @@ class MyUpload extends React.Component{
         file:"",
         fileId:"",
         rawString:"",
-        slideStringList:[],
-        quizStringList:[],
         data:"",
         marpitResult:"",
         display_name:'none'
@@ -51,7 +50,7 @@ class MyUpload extends React.Component{
             message.success(`${info.file.name} file uploaded successfully`);
             this.sendFile()
                 .then(this.readFile)
-                .then(this.separateQuestion);
+                .then(this.callSeparateQuestion);
             // this.sendFile()
             //     .then(this.trans);
             // this.readFile()
@@ -86,10 +85,10 @@ class MyUpload extends React.Component{
         exportRaw('filename.html', this.state.marpitResult);
     }
 
-    // send markdown file to backend and pass the database fileId to readFile
+    // send markdown file to backend and set the database returned fileId to state
     sendFile =() => {
         var file = this.state.file;
-        var p = new Promise(function (resolve, reject){
+        var p = new Promise((resolve, reject) => {
             const formData = new FormData();
             formData.append('file', file);
             formData.append('userId', localStorage.getItem("instructorId"));
@@ -97,7 +96,7 @@ class MyUpload extends React.Component{
             axios.post(BASE_URL + "/upload", formData)
                 .then(res => {
                     console.log("CCC",res.data);
-                    // this.setState({fileId : res.data.fileId})
+                    this.setState({fileId : res.data.fileId})
                     resolve(res.data.fileId);
                     // alert("File uploaded successfully.");
                 })
@@ -108,14 +107,14 @@ class MyUpload extends React.Component{
         return p;
     }
 
-    readFile=(fileId)=>{
-        this.setState({fileId : fileId});
+    readFile=()=>{
         var file = this.state.file;
-        var p = new Promise(function (resolve, reject) {
+        var p = new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsText(file);
             reader.onload = (e) => {
                 // let content = e.target.result;
+                this.setState({rawString : reader.result});
                 resolve(reader.result);
             };
             reader.onerror = function (e) {
@@ -125,221 +124,20 @@ class MyUpload extends React.Component{
         return p;
     }
 
-    separateQuestion = (result) => {
-
-        this.setState({
-            rawString : result
-        });
-
-        // rawstring分成slide array 和 question array,
-        // 赋值给slideStringList, quizStringList
-
-        var slides = new Array(100);
-        var questions = new Array(100);
-        for (var i = 0; i < 100; i ++) {
-            slides[i] = new Array();
-            questions[i] = new Array();
-        }
-
-        var sections = result.split("---\n\n")  // => section[]
-
-        var index = 0;
-        for (var i = 0; i < sections.length; i++) {
-
-            const section = sections[i].split(" ");
-            if (section[0] === ">") {
-                questions[index].push(sections[i]);
-                slides[index].push("$$$quiz$$$\n\n");
-
-                console.log(index);
-                console.log(questions[index]);
-                index ++;
-            } else {
-                slides[index].push(sections[i])
-            }
-        }
-        var i = 0;
-        var slideString = new Array();
-        var quizString = new Array();
-        while (slides[i] != "") {
-            slideString[i] = slides[i].join("---\n\n");
-            if (questions[i] != "") {
-                quizString[i] = questions[i].join("---\n\n");
-            }
-            i ++;
-        }
-
-        this.setState({
-            slideStringList: slideString,
-            quizStringList: quizString
-
-        }, this.trans)
+    callSeparateQuestion =()=>{
+        const data = separateQuestion(this.state.rawString, this.state.fileId);
+        console.log(data)
+        this.setState({data : data});
+        this.getMarpit();
     }
-
-    trans=()=>{
-        // var obj = JSON.parse(this.state.rawString);
-        // var questions = obj;
-        // this.separateQuestion(this.state.rawString);
-        var questions = this.parseQuiz();
-        var data = {
-            quiz: questions,
-            slidesString: this.state.slideStringList,
-            fileId: this.state.fileId
-        }
-        // data = JSON.stringify(data);
-        // var path = `/presenter/${data}`;
-        this.setState({
-            data: data
-        }, this.marpitConvert)
-    };
 
     // Marpit for download
-    marpitConvert=()=> {
-        // this.setState({
-        //     rawString : result
-        // }, () => {this.separateQuestion();});
-        // 1. Marpit
-        const marpit = new Marpit();
-        // 2. Add Marpit theme CSS
-        const theme = `
-            /* @theme example */
-
-            section {
-              background-color: #369;
-              color: #fff;
-              font-size: 30px;
-              padding: 40px;
-            }
-
-        h1,
-        h2 {
-          text-align: center;
-          margin: 0;
-        }
-
-        h1 {
-          color: #8cf;
-        }
-        `
-        marpit.themeSet.default = marpit.themeSet.add(theme)
-        // 3. Render markdown
-        const {html, css} = marpit.render(this.state.rawString);
-        // 4. Use output in your HTML
-        let filestring = `
-            <!DOCTYPE html>
-            <html><body>
-              <style>${css}</style>
-              ${html}
-            </body></html>
-            `
-        ;
+    getMarpit=()=>{
+        const marpitResult = marpitConvert(this.state.rawString)
         this.setState({
-            marpitResult: filestring
-        });
+            marpitResult : marpitResult
+        })
     }
-
-    //question变成quizLists(quiz, quizBlock, quizLists)
-    parseQuiz = () => {
-        // this.separateQuestion(this.state.rawString);
-        // var quizList = new Array();
-        // var data = this.state.quizString;
-        // var quizzes = data.split("\n\n");
-        // var parsedChoice;
-        console.log(this.state.quizStringList);
-        console.log(this.state.quizStringList.length);
-        var length = this.state.quizStringList.length;
-        var quizLists = new Array();
-        // for(var i = 0; i < length; i ++) {
-        //     quizLists[i]=new Array();
-        // }
-        console.log(length);
-        var count = 1;
-        for (var index = 0; index < length; index ++) {
-            var data = this.state.quizStringList[index];
-            console.log(index);
-            console.log(this.state.quizStringList[index]);
-            var quizzes = data.split("\n\n");
-            if (quizzes[quizzes.length - 1] == "") {
-                quizzes.splice(quizzes.length - 1, 1);
-            }
-            console.log(quizzes);
-            var parsedChoice;
-            var quizBlock = new Array();
-            console.log(quizBlock);
-
-            for (var i = 0; i < quizzes.length; i++) {
-                var choice = "A";
-                var quiz = {
-                    question: "",
-                    answers: []
-                };
-                var quizArray = quizzes[i].split("\n");
-                for (var j = 0; j < quizArray.length; j++) {
-                    var line = quizArray[j];
-                    if (line.length > 1) {
-                        console.log(line)
-                        if (line.slice(0, 11) === "> Question:") {
-                            // parse question
-                            quiz.question = line.slice(12, line.length);
-                            // quiz.question = parsedQuestion.join(" ");
-                        } else if (line[0] === '*' && line.slice(2, 5) === "[x]") {
-                            // parse correct choice
-                            parsedChoice = line.slice(6, line.length);
-                            // parsedChoice = parsedChoice.join(" ");
-                            quiz.answers.push({
-                                type: choice,
-                                content: parsedChoice
-                            });
-                            var charCode = choice.charCodeAt(0);
-                            choice = String.fromCharCode(charCode + 1);
-
-                            // send correct answer to backend
-
-                            const formData = {
-                                fileId: this.state.fileId,
-                                // questionId : quizBlock.length + 1,
-                                questionId: count,
-                                answer: String.fromCharCode(charCode),
-                                countA: 0,
-                                countB: 0,
-                                countC: 0,
-                                countD: 0,
-                            }
-                            count++;
-                            console.log(formData)
-                            axios
-                                .post(BASE_URL + "/quiz", formData, {
-                                    headers: {
-                                        "Content-Type": "multipart/form-data"
-                                    }
-                                })
-                                .then(res => {
-                                    console.log("quiz initialize success");
-                                })
-                                .catch((error) => {
-                                    console.log("error")
-                                });
-                        } else if (line[0] === '*' && line.slice(2, 5) === "[ ]") {
-                            // parse wrong choice
-                            parsedChoice = line.slice(6, line.length);
-                            // parsedChoice = parsedChoice.join(" ");
-                            quiz.answers.push({
-                                type: choice,
-                                content: parsedChoice
-                            });
-                            var charCode = choice.charCodeAt(0);
-                            choice = String.fromCharCode(charCode + 1);
-                        }
-                    }
-                }
-                quizBlock.push(quiz);
-            }
-            quizLists.push(quizBlock);
-            console.log(quizLists)
-        }
-        console.log(quizLists);
-        return quizLists;
-    };
 
     display_name () {
         if (this.state.display_name === 'none') {
@@ -352,7 +150,6 @@ class MyUpload extends React.Component{
             })
         }
     };
-
 
     render(){
         return(
