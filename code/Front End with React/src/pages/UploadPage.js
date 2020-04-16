@@ -28,8 +28,6 @@ class MyUpload extends React.Component{
         file:"",
         fileId:"",
         rawString:"",
-        slideStringList:[],
-        quizStringList:[],
         data:"",
         marpitResult:"",
         display_name:'none'
@@ -109,8 +107,7 @@ class MyUpload extends React.Component{
         return p;
     }
 
-    readFile=(fileId)=>{
-        // this.setState({fileId : fileId});
+    readFile=()=>{
         var file = this.state.file;
         var p = new Promise((resolve, reject) => {
             const reader = new FileReader();
