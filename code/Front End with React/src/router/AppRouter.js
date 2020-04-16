@@ -12,6 +12,7 @@ import MyUpload from "../pages/UploadPage";
 import PresentPage from '../pages/PresentPage'
 import StudentPage from "../pages/StudentPage";
 import uploadHistory from "../pages/uploadHistory"
+import StudentRequestPage from "../pages/StudentRequestPage";
 
 const history = createBrowserHistory();
 
@@ -63,6 +64,7 @@ class AppRouter extends Component {
             {/* <GuardProvider guards={[requireLogin]}> */}
             <GuardProvider>
               <GuardedRoute path="/" exact render={() => <Redirect to="/login" />} />
+              <GuardedRoute path="/StudentRequestPage" exact component={StudentRequestPage} />
               <GuardedRoute path="/HomePage" exact component={MyUpload} />
               <GuardedRoute path="/presenter" component={PresentPage}/>
               <GuardedRoute path="/student" component={StudentPage}/>
