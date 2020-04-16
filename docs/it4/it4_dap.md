@@ -16,7 +16,7 @@
 
 - Students can be access to the file by inputing the url instructor shared to them in the search box.
 
--[](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/urlPage.png)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/urlPage.png)
 
 - Instructor can sign up to create an account.
 
