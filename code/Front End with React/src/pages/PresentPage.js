@@ -66,9 +66,6 @@ class PresentPage extends Component {
         console.log(event.currentTarget.value);
         if (this.state.questionId < this.state.quizQuestions.length) {
             setTimeout(() => this.setNextQuestion(), 300);
-        } else if (this.state.questionId === this.state.quizQuestions.length && this.state.quizCounter < this.state.quizList.length - 1) {
-            setTimeout(() => {this.setNextPart();
-            this.setResults()}, 300);
         } else {
             setTimeout(() => this.setResults(), 300);
         }
@@ -125,28 +122,28 @@ class PresentPage extends Component {
         });
     }
 
-    setNextPart() {
-        const questionId = 1;
-        const counter = 0;
-        const quizCounter = this.state.quizCounter + 1;
-        const questionCounter = this.state.questionCounter + 1;
-        const quizQuestions = this.state.quizList[quizCounter];
-        const shuffledAnswerOptions = quizQuestions.map(question =>
-            this.shuffleArray(question.answers)
-        );
-
-        this.setState({
-            questionId : questionId,
-            counter : counter,
-            quizCounter : quizCounter,
-            quizQuestions : quizQuestions,
-            question: quizQuestions[0].question,
-            answerOptions: shuffledAnswerOptions[0],
-            questionCounter: questionCounter
-
-        })
-
-    }
+    // setNextPart() {
+    //     const questionId = 1;
+    //     const counter = 0;
+    //     const quizCounter = this.state.quizCounter + 1;
+    //     const questionCounter = this.state.questionCounter + 1;
+    //     const quizQuestions = this.state.quizList[quizCounter];
+    //     const shuffledAnswerOptions = quizQuestions.map(question =>
+    //         this.shuffleArray(question.answers)
+    //     );
+    //
+    //     this.setState({
+    //         questionId : questionId,
+    //         counter : counter,
+    //         quizCounter : quizCounter,
+    //         quizQuestions : quizQuestions,
+    //         question: quizQuestions[0].question,
+    //         answerOptions: shuffledAnswerOptions[0],
+    //         questionCounter: questionCounter
+    //
+    //     })
+    //
+    // }
 
     skipQuestion() {
         if (this.state.questionId < this.state.quizQuestions.length) {
@@ -196,10 +193,32 @@ class PresentPage extends Component {
         );
     }
 
-    toQuizCallback = () => {
-        this.setState(
-            {quizFlag : 1}
-        )
+    toQuizCallback = (quizBlockNumber) => {
+        console.log(quizBlockNumber)
+
+        const quizQuestions = this.state.quizList[quizBlockNumber];
+
+        const shuffledAnswerOptions = quizQuestions.map(question =>
+            this.shuffleArray(question.answers)
+        );
+        const questionId = 1;
+        const counter = 0;
+
+        var questionCounter = 0;
+        for (var i = 0; i < quizBlockNumber; i++) {
+            questionCounter += this.state.quizList[i].length;
+        }
+        questionCounter ++;
+
+        this.setState({
+            questionId : questionId,
+            counter : counter,
+            quizQuestions : quizQuestions,
+            question: quizQuestions[0].question,
+            answerOptions: shuffledAnswerOptions[0],
+            quizFlag : 1,
+            questionCounter : questionCounter
+        })
     };
 
     toSlidesCallback=()=>(

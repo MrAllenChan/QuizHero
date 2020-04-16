@@ -81,11 +81,13 @@ class Slides extends React.Component{
         };
 
         const content = [];
+        var quizBlockCount = 0;
         for (var i = 0; i < this.slides.length; i ++) {
             var data = this.slides[i];
             var slideBlock = data.split("---\n\n");
             console.log(slideBlock);
             if (slideBlock[slideBlock.length - 1] === "$$$quiz$$$\n\n") {
+                const count = quizBlockCount
                 slideBlock.splice(slideBlock.length - 1, 1);
                 data = slideBlock.join("---\n\n");
                 content.push(
@@ -97,13 +99,14 @@ class Slides extends React.Component{
                         <Heading>Now lets do some funny quizzes!</Heading>
                         <Heading>
                             <Button
-                                onClick={this.onClick} style={buttonStyle}>
+                                onClick={() => {this.toQuizCallback(count)}} style={buttonStyle}>
                                 <Icon /> Click to start quiz
                             </Button>
                         </Heading>
 
                     </Slide>
                 )
+                quizBlockCount ++;
             } else {
                 content.push(
 

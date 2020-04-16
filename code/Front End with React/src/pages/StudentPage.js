@@ -64,11 +64,6 @@ class StudentPage extends Component {
         console.log(event.currentTarget.value);
         if (this.state.questionId < this.state.quizQuestions.length) {
             setTimeout(() => this.setNextQuestion(), 300);
-        } else if (this.state.questionId === this.state.quizQuestions.length && this.state.quizBlockCounter < this.state.quizList.length - 1) {
-            console.log("111")
-            setTimeout(() => {this.setNextPart();
-            this.setResults()}, 300);
-
         } else {
             setTimeout(() => this.setResults(), 300);
         }
@@ -125,27 +120,27 @@ class StudentPage extends Component {
         });
     }
 
-    setNextPart() {
-        const questionId = 1;
-        const questionCounter = this.state.questionCounter + 1;
-        const counter = 0;
-        const quizBlockCounter = this.state.quizBlockCounter + 1;
-        const quizQuestions = this.state.quizList[quizBlockCounter];
-        const shuffledAnswerOptions = quizQuestions.map(question =>
-            this.shuffleArray(question.answers)
-        );
-
-        this.setState({
-            questionId : questionId,
-            counter : counter,
-            quizBlockCounter : quizBlockCounter,
-            quizQuestions : quizQuestions,
-            question: quizQuestions[0].question,
-            answerOptions: shuffledAnswerOptions[0],
-            questionCounter: questionCounter
-        })
-
-    }
+    // setNextPart() {
+    //     const questionId = 1;
+    //     const questionCounter = this.state.questionCounter + 1;
+    //     const counter = 0;
+    //     const quizBlockCounter = this.state.quizBlockCounter + 1;
+    //     const quizQuestions = this.state.quizList[quizBlockCounter];
+    //     const shuffledAnswerOptions = quizQuestions.map(question =>
+    //         this.shuffleArray(question.answers)
+    //     );
+    //
+    //     this.setState({
+    //         questionId : questionId,
+    //         counter : counter,
+    //         quizBlockCounter : quizBlockCounter,
+    //         quizQuestions : quizQuestions,
+    //         question: quizQuestions[0].question,
+    //         answerOptions: shuffledAnswerOptions[0],
+    //         questionCounter: questionCounter
+    //     })
+    //
+    // }
 
     // getResults() {
     //     const answersCount = this.state.answersCount;
@@ -188,11 +183,34 @@ class StudentPage extends Component {
         return <ResultStudent quizResult={this.state.result} toSlidesCallback={this.toSlidesCallback} />;
     }
 
-    toQuizCallback = () => {
-        this.setState(
-            {quizFlag : 1}
-        )
+    toQuizCallback = (quizBlockNumber) => {
+        console.log(quizBlockNumber)
+
+        const quizQuestions = this.state.quizList[quizBlockNumber];
+
+        const shuffledAnswerOptions = quizQuestions.map(question =>
+            this.shuffleArray(question.answers)
+        );
+        const questionId = 1;
+        const counter = 0;
+
+        var questionCounter = 0;
+        for (var i = 0; i < quizBlockNumber; i++) {
+            questionCounter += this.state.quizList[i].length;
+        }
+        questionCounter ++;
+
+        this.setState({
+            questionId : questionId,
+            counter : counter,
+            quizQuestions : quizQuestions,
+            question: quizQuestions[0].question,
+            answerOptions: shuffledAnswerOptions[0],
+            quizFlag : 1,
+            questionCounter : questionCounter
+        })
     };
+
     toSlidesCallback=()=>(
         this.setState({
             quizFlag : 0,
