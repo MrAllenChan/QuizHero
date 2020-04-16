@@ -129,7 +129,7 @@ const parseQuiz = (quizString, fileId) => {
                                 console.log("quiz initialize success");
                             })
                             .catch((error) => {
-                                console.log("error")
+                                console.log(error)
                             });
                     } else if (line[0] === '*' && line.slice(2, 5) === "[ ]") {
                         // parse wrong choice
