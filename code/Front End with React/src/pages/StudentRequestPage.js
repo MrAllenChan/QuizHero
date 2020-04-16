@@ -11,44 +11,45 @@ class StudentRequestPage extends Component{
         super(props);
 
         this.state = {
-            url : "",
+            fileId : "",
             MarkDownFile : ""
         }
     }
 
     onSearch = (value, event) => {
-        const formData = new formData();
-        formData.append('url', value);
-        console.log("Send data to backend", formData);
-        axios.post(BASE_URL + "/upload", formData)
+        let params = {
+            fileId: value
+        }
+
+        axios.get(BASE_URL + "/fetch",  {params})
             .then(res => {
-                console.log("CCC", res.data);
+                console.log("AAA", res.data);
                 this.setState({
                     MarkDownFile: res.data
                 })
             })
     }
 
-    sendURL =() => {
-        var file = this.state.file;
-        var p = new Promise(function (resolve, reject){
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('userId', localStorage.getItem("instructorId"));
-            console.log("Send data to backend", formData);
-            axios.post(BASE_URL + "/upload", formData)
-                .then(res => {
-                    console.log("CCC",res.data);
-                    // this.setState({fileId : res.data.fileId})
-                    resolve(res.data.fileId);
-                    // alert("File uploaded successfully.");
-                })
-                .catch((error) => {
-                    reject(error);
-                });
-        });
-        return p;
-    }
+    // sendURL =() => {
+    //     var file = this.state.file;
+    //     var p = new Promise(function (resolve, reject){
+    //         const formData = new FormData();
+    //         formData.append('file', file);
+    //         formData.append('userId', localStorage.getItem("instructorId"));
+    //         console.log("Send data to backend", formData);
+    //         axios.post(BASE_URL + "/upload", formData)
+    //             .then(res => {
+    //                 console.log("CCC",res.data);
+    //                 // this.setState({fileId : res.data.fileId})
+    //                 resolve(res.data.fileId);
+    //                 // alert("File uploaded successfully.");
+    //             })
+    //             .catch((error) => {
+    //                 reject(error);
+    //             });
+    //     });
+    //     return p;
+    // }
 
 
 
