@@ -11,7 +11,8 @@ import { connect } from "react-redux";
 import MyUpload from "../pages/UploadPage";
 import PresentPage from '../pages/PresentPage'
 import StudentPage from "../pages/StudentPage";
-import uploadHistory from "../pages/uploadHistory"
+import StudentRequestPage from "../pages/StudentRequestPage";
+import UploadHistory from "../pages/UploadHistory"
 
 const history = createBrowserHistory();
 
@@ -63,10 +64,11 @@ class AppRouter extends Component {
             {/* <GuardProvider guards={[requireLogin]}> */}
             <GuardProvider>
               <GuardedRoute path="/" exact render={() => <Redirect to="/login" />} />
+              <GuardedRoute path="/StudentRequestPage" exact component={StudentRequestPage} />
               <GuardedRoute path="/HomePage" exact component={MyUpload} />
               <GuardedRoute path="/presenter" component={PresentPage}/>
               <GuardedRoute path="/student" component={StudentPage}/>
-              <GuardedRoute path="/history" component={uploadHistory}/>
+              <GuardedRoute path="/history" component={UploadHistory}/>
             </GuardProvider>
             {/* <Route path="/" exact render={() => <Redirect to="/HomePage" />} /> */}
             {/* <Route path="/RecordPersonTable" component={RecordPersonTable} />
