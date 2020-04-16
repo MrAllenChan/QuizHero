@@ -54,8 +54,8 @@ public class DaoFactory {
         String sql = "CREATE TABLE IF NOT EXISTS Instructor(" +
                 "instructorId SERIAL," +
                 "name VARCHAR(30)," +
-                "email VARCHAR(30)," +
-                "pswd VARCHAR(30)," +
+                "email VARCHAR(30) NOT NULL," +
+                "pswd VARCHAR(30) NOT NULL," +
                 "PRIMARY KEY (instructorId)," +
                 "UNIQUE (email)" +
                 ");";
@@ -90,8 +90,8 @@ public class DaoFactory {
         }
         String sql = "CREATE TABLE IF NOT EXISTS Quiz(" +
                 "id SERIAL PRIMARY KEY," +
-                "fileId INTEGER," +
-                "questionId INTEGER," +
+                "fileId INTEGER NOT NULL," +
+                "questionId INTEGER NOT NULL," +
                 "answer VARCHAR(30)," +
                 "countA INTEGER," +
                 "countB INTEGER," +

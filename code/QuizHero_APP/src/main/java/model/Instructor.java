@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Instructor {
     private Integer instructorId;
     private String name;
@@ -30,5 +32,31 @@ public class Instructor {
 
     public String getPswd() {
         return pswd;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Instructor that = (Instructor) o;
+        return Objects.equals(instructorId, that.instructorId) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(pswd, that.pswd);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(instructorId, name, email, pswd);
+    }
+
+    @Override
+    public String toString() {
+        return "Instructor{" +
+                "instructorId=" + instructorId +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", pswd='" + pswd + '\'' +
+                '}';
     }
 }
