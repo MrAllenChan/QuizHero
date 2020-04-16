@@ -1,6 +1,7 @@
 import { Upload, message, Button, Icon, Layout, Menu} from 'antd';
 import React from "react";
 import Marpit from '@marp-team/marpit'
+import marpitConvert from '../components/Marpit'
 import axios from 'axios';
 import {BASE_URL} from "../config/config"
 import {Link} from "react-router-dom"
@@ -86,7 +87,7 @@ class MyUpload extends React.Component{
         exportRaw('filename.html', this.state.marpitResult);
     }
 
-    // send markdown file to backend and pass the database fileId to readFile
+    // send markdown file to backend and set the database returned fileId to state
     sendFile =() => {
         var file = this.state.file;
         var p = new Promise(function (resolve, reject){
@@ -97,7 +98,7 @@ class MyUpload extends React.Component{
             axios.post(BASE_URL + "/upload", formData)
                 .then(res => {
                     console.log("CCC",res.data);
-                    // this.setState({fileId : res.data.fileId})
+                    this.setState({fileId : res.data.fileId})
                     resolve(res.data.fileId);
                     // alert("File uploaded successfully.");
                 })
@@ -109,11 +110,12 @@ class MyUpload extends React.Component{
     }
 
     readFile=(fileId)=>{
-        this.setState({fileId : fileId});
+        // this.setState({fileId : fileId});
         var file = this.state.file;
         var p = new Promise(function (resolve, reject) {
             const reader = new FileReader();
             reader.readAsText(file);
+            // this.setstate({rawString : reader.result});
             reader.onload = (e) => {
                 // let content = e.target.result;
                 resolve(reader.result);
@@ -189,53 +191,16 @@ class MyUpload extends React.Component{
         // data = JSON.stringify(data);
         // var path = `/presenter/${data}`;
         this.setState({
-            data: data
-        }, this.marpitConvert)
+            data: data,
+        }, this.getMarpit)
     };
 
     // Marpit for download
-    marpitConvert=()=> {
-        // this.setState({
-        //     rawString : result
-        // }, () => {this.separateQuestion();});
-        // 1. Marpit
-        const marpit = new Marpit();
-        // 2. Add Marpit theme CSS
-        const theme = `
-            /* @theme example */
-
-            section {
-              background-color: #369;
-              color: #fff;
-              font-size: 30px;
-              padding: 40px;
-            }
-
-        h1,
-        h2 {
-          text-align: center;
-          margin: 0;
-        }
-
-        h1 {
-          color: #8cf;
-        }
-        `
-        marpit.themeSet.default = marpit.themeSet.add(theme)
-        // 3. Render markdown
-        const {html, css} = marpit.render(this.state.rawString);
-        // 4. Use output in your HTML
-        let filestring = `
-            <!DOCTYPE html>
-            <html><body>
-              <style>${css}</style>
-              ${html}
-            </body></html>
-            `
-        ;
+    getMarpit=()=>{
+        const marpitResult = marpitConvert(this.state.rawString)
         this.setState({
-            marpitResult: filestring
-        });
+            marpitResult : marpitResult
+        })
     }
 
     //question变成quizLists(quiz, quizBlock, quizLists)
