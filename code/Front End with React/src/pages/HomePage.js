@@ -25,18 +25,25 @@ class FirstPage extends Component {
         window.location = "/login";
     };
 
+    toEnterCode = ()=>{
+        window.location = "/StudentRequestPage";
+    }
+
     render() {
         return (
             <div className="App">
                 <header className="App-header">
 
                     <img src={logo} className="App-logo" alt="logo"/>
-                    <Button onClick={this.toLogin()} size={"large"} style={{marginRight: 10}}>
-                        <Icon/>I'm a Presenter
-                    </Button>
-                    <Button onClick={this.toEnterCode()} size={"large"} style={{marginRight: 10}}>
-                        <Icon/>I'm a Student
-                    </Button>
+                    <div>
+                        <Button onClick={this.toLogin} size={"large"} style={{marginRight: 10}}>
+                            <Icon/>I'm a Presenter
+                        </Button>
+                        <Button onClick={this.toEnterCode} size={"large"} style={{marginRight: 10}}>
+                            <Icon/>I'm a Student
+                        </Button>
+                    </div>
+
                 </header>
             </div>
         );
