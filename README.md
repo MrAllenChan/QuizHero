@@ -12,11 +12,11 @@ There are even **more features** waiting for you to explore! For example, the qu
 
 The front-end is based on React framework, with the help of Spectacle to present dynamic slide decks converted from raw Markdown file. The development of back-end server involves a lot of tools and frameworks. The application server is developed using Javalin, and we use PostgreSQL as our database management system. Gradle is used as the automation build system, and we use Postman and JUnit framework to test the server.
 
-## How to use QuizHero?
+## Run QuizHero on Heroku.
 
 The alpha version of our QuizHero app is now deployed on Heroku. Want to have fun with QuizHero? Jump to https://quiz-hero.herokuapp.com/. You can also run our app at localhost. Detailed instructions will be given below.
 
-## Run our project locally.
+## Run QuizHero locally.
 
 1. To run our QuizHero project, first simply download the project onto a local repository of your computer.
 2. Use any popular IDE (IntelliJ IDEA recommended) to open the project **code/QuizHero_APP** and import as a **Gradle** project.
@@ -25,29 +25,29 @@ The alpha version of our QuizHero app is now deployed on Heroku. Want to have fu
 5. Try to build the project, if build successfully, run "**RunServer.main**" under src/main/java/api. 
 6. If there is something wrong when building the project, in Gradle settings under Preferences, use Gradle from 'wrapper task' in Gradle build script (see below). Then build the project and run "RunServer.main" again, you should see the Javalin framework has begun to work now.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/configuration.jpg)
+<img src="https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/configuration.jpg" width="750" height="380" />
 
-## After you run the project
+## How to use QuizHero?
 
-Once you start running the project, you can go to http://localhost:7000/ (or the url displayed after "[main] INFO io.javalin.Javalin - Listening on") on your browser. You will see a start index page displayed on your browser with our logo "QuizHero" as well as two buttons you can choose.
+To begin with, you will see a welcome index page displayed on your browser with our logo "QuizHero" as well as two buttons you can choose: **`I'm a Presenter`** and **`I'm a Student`**.
 
 If you choose "I'm a presenter", you will be guided to the Login interface, or you can register as a new instructor. After logging into the application successfully, You can upload any Markdown file as long as the markdown format observes the rules we make. 
 
 > We provide a sample markdown file called **"demo.md"** that contains some demo slides with 4 sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page that you can interact with! 
 
-After successfully uploading the file, you can click either of the two buttons **`Presenter mode`** or **`Stundent mode`** to view slides already prepared for instructors or students, or you can click the **download button** to download the static html file. 
+After successfully uploading the file, you can click either of the two buttons **`Presenter mode`** or **`Student mode`** to view slides already prepared for instructors or students, or you can click the **download button** to download the static html file. 
 
 In **Presenter mode** or **Stundent mode**, every response to a quiz question will be transmitted to the back-end and recorded into the database. We visualize the detailed statistics on the **result page** of the **Presenter mode**. 
 
 You can click the **Refersh** button on the statistics page from time to time to see the up-to-date statistics.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/index.png)
+<!--![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/index.png)-->
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/quiz.jpg)
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/statistics.jpg)
 
-## How to test our project
+## Test QuizHero
 
 1. You can test our project as a whole by opening two tabs on your browser. On the first tab, enter Presenter mode and stay on the result page that displays statistics. On the second one, enter Student mode and answer the quiz questions several times to simulate the situation that a group of students are doing the same quizzes simultaneously (or you can open several tabs or even browsers to do the quiz if you like). 
 
