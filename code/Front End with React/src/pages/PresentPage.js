@@ -209,7 +209,7 @@ class PresentPage extends Component {
 
 
     renderResult() {
-        return <ResultPresenter quizResult={this.state.result} toSlidesCallback={this.toSlidesCallback} />;
+        return <ResultPresenter fileId={this.state.fileId} toSlidesCallback={this.toSlidesCallback} />;
     }
 
     renderQuizPages () {

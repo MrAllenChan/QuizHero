@@ -4,8 +4,9 @@ export default {
 
     },
     colors: {
-        primary: 'black',
-        secondary: 'white',
+
+        primary: 'white',
+        secondary: 'blue',
         quaternary: 'yellow'
     },
     fonts: {
