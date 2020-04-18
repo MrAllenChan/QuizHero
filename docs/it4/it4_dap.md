@@ -96,9 +96,12 @@
 
 ### Challenges we met & Our solutions.
 - We met some difficulties in the process of changing to postgreSQL and deploying on Heroku. We found solutions online and now it works well.
-- Because the Heroku file system is ephemeral, we can not upload .md files and save in on the server; instead, we add methods in back end and front end to store the content of .md files as input stream in database. In this way we avoid the hassle of connecting to AWS service from Heroku. If future features of the app require the function of file management system, we can always switch to using AWS.
+- Because the Heroku file system is ephemeral, we cannot upload markdown files and save them in the file systemn of the server. Hence, we have to completely abandon the previous methods we wrote to store files locally, and finally decided to store the content of .md files as bytearray (bytea) in PostgreSQL database. In this way we are able to store files in a persistent way and fetch them as byte stream, and also avoid the hassle of connecting to AWS service from Heroku. If future features of the app require the function of file management system, we can always switch to using AWS.
 
 ### What we plan to improve during iteration 5.
-- Since we have already deployed our application on Heroku, we are ready for a beta release after we add some final features, finalize our code and web page styling.
-- We plan to add the following feature: instructors can easily share a link or a code for their students to access the student version of the slides; students cannot start the quiz until instructors indicate start on the instructor version of the slides.
+- Since we have already deployed our application on Heroku, we are ready for a beta release after we add some final features, continue refactoring our code as well as perfecting web page styling.
+- We plan to add the following feature: 
+  1. instructors can easily share a link or a code for their students to access the student version of the slides; 
+  2. students cannot start the quiz until instructors release permission on the instructor version of the slides.
+- Write more comments on methods and classes.
 - Prepare for presentation and code review.
