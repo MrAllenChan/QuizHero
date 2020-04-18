@@ -25,7 +25,8 @@
     "react-transition-group": "^1.2.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "spectacle": "^6.0.1"
+    "spectacle": "^6.0.1",
+    "spectacle-theme-nova": "^1.4.1"
   },
   "scripts": {
     "start": "react-scripts start",

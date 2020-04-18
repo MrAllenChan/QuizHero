@@ -5,7 +5,7 @@ export default {
     },
     colors: {
         primary: 'black',
-        secondary: 'blue',
+        secondary: 'white',
         quaternary: 'yellow'
     },
     fonts: {

@@ -34,11 +34,12 @@ class RegisterPage extends Component {
   axios.post(BASE_URL+"/register",params).then(res=>{
       console.log(res.status)
       if(res.status === 201){
-        message.loading("Register success, directing you to HomePage",[3],onclose=()=>{
+        message.loading("Register success, directing you to HomePage",[2],onclose=()=>{
           console.log(res)
           // this.props.login(res.data.name, res.data.instructorId);
           localStorage.setItem("instructorId", res.data.instructorId)
           localStorage.setItem("username", res.data.name)
+          localStorage.setItem("isLogin", 1)
           window.location = "/HomePage"
         });
        
