@@ -31,17 +31,25 @@ The alpha version of our QuizHero app is now deployed on Heroku. Want to have fu
 
 To begin with, you will see a welcome index page displayed on your browser with our logo "QuizHero" as well as two buttons you can choose: **`I'm a Presenter`** and **`I'm a Student`**.
 
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/index.png)
+
 If you choose "I'm a presenter", you will be guided to the Login interface, or you can register as a new instructor. After logging into the application successfully, You can upload any Markdown file as long as the markdown format observes the rules we make. 
 
-> We provide a sample markdown file called **"demo.md"** that contains some demo slides with 4 sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page that you can interact with! 
+> We provide a sample markdown file called **"demo.md"** that contains some demo slides with 4 sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page that you can interact with! If you still want to upload your own markdown file, you are also encouraged to take a look at **"demo.md"** to have an idea of the rules. The rules simply follow the standard markdown syntax. It is very easy to understand.
 
-After successfully uploading the file, you can click either of the two buttons **`Presenter mode`** or **`Student mode`** to view slides already prepared for instructors or students, or you can click the **download button** to download the static html file. 
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/upload.png)
+
+After successfully uploading the file, as a presenter you have two options, either go to the **`Presenter mode`** or **`Student mode`** to view slides prepared for instructors or students. You can also click the **download button** to download the static html file. You can click the **Share** button to copy the secret shared code to your clipboard. This code will be used to share the student version slides and quizzes. 
+
+With the secret shared code copied, now you can share this code with others (or you can also open a new tap in your browser to test it yourself). You should choose **`I'm a Student`** from the index page, then you will be directed to the student page with a search bar, where you can input the share code. (We do not require students to login in order to use our service, which would be a troublesome thing for students. So the presenter should always be careful about who the secret code is shared with. Also, as mentioned above, we are currently xploring the feature of allowing the the presenter to **protect** their slides and quizzes by enabling or disabling the shared code.)
+
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/studentpage.png)
 
 In **Presenter mode** or **Stundent mode**, every response to a quiz question will be transmitted to the back-end and recorded into the database. We visualize the detailed statistics on the **result page** of the **Presenter mode**. 
 
 You can click the **Refersh** button on the statistics page from time to time to see the up-to-date statistics.
 
-<!--![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/index.png)-->
+<!--![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/upload.png)-->
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/quiz.jpg)
 
