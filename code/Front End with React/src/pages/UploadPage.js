@@ -5,6 +5,7 @@ import separateQuestion from "../components/Parse";
 import axios from 'axios';
 import {BASE_URL} from "../config/config"
 import {Link} from "react-router-dom"
+import {CopyToClipboard} from 'react-copy-to-clipboard'
 import logo from "../fig/logo.png";
 import {func} from "prop-types";
 import {enableTopologicalTravel} from "echarts/src/util/component";
@@ -139,6 +140,7 @@ class MyUpload extends React.Component{
         })
     }
 
+
     display_name () {
         if (this.state.display_name === 'none') {
             this.setState({
@@ -229,6 +231,11 @@ class MyUpload extends React.Component{
                                     <Icon/>Student mode
                                 </Button>
                             </Link>
+                            <CopyToClipboard
+                                onCopy={()=>message.success(`Share code ${this.state.fileId} is copied on your clipboard`)}
+                                text={this.state.fileId}>
+                                <Button size={"large"} style={{marginLeft: 10}}>Share</Button>
+                            </CopyToClipboard>
                         </div>
                     </div>
 
