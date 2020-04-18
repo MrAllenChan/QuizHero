@@ -89,7 +89,8 @@
 - We change the overl style of the app to a cleaner/modern design.
 - Successfully deliver the feature of insturctor login. Components on frontend-side and DAOs on backend-side are added to enable the user registration and login system.
 - Successfully deliver the feature of uploading file on the deployed version.
-- The portal for instructor and student are separate: insturctors need to login to upload and see their history files; students need a code/url (for now we use fileId) to access the slides.
+- We generalize the format of Markdown file that QuizHero can work on: instructor now can insert the quizzes in any part of the Markdown file.
+- The portal for instructor and student are separated: insturctors need to login to upload and see their history files; students need a code/url (for now we use fileId) to access the slides.
 - Frontend code are refractored now to make it clean, organized and object oriented.
 - Postman and unit tests are added on the backend to validate implemented functions.
 
@@ -99,5 +100,5 @@
 
 ### What we plan to improve during iteration 5.
 - Since we have already deployed our application on Heroku, we are ready for a beta release after we add some final features, finalize our code and web page styling.
-- We plan to add the following feature: instructors can easily share a link or a code for their students to access the student version of the slides; students can start the quiz before instructors indicate start on the instructor version of the slides.
+- We plan to add the following feature: instructors can easily share a link or a code for their students to access the student version of the slides; students cannot start the quiz until instructors indicate start on the instructor version of the slides.
 - Prepare for presentation and code review.
