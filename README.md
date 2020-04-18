@@ -1,18 +1,22 @@
-# QuizHero: a lightweight web app for creating presentations with quizzes from Markdown.
+# QuizHero: a Lightweight Web Application for Creating Interactive Slides with Quizzes from Markdown.
 
-## What is it for?
+## What is QuizHero for?
 
-QuizHero is a lightweight web app for creating presentations with quizzes from Markdown. Through this platform, instructors can create different versions of presentations, and students are able to view the slides and answer the quizzes online. Our application will collect students' answers of quizzes, store the answers, and display the statistical results to instructors, who will then have a good overview of students' performance.
+QuizHero is a lightweight web application that allows you to create your presentation slides from Markdown. You simply need to write your own markdown file, with slides you want to talk and quizzes you want to interact with your students, and let QuizHero handle everything else. 
 
-## How is it built?
+Through this platform, instructors can create different presentations by uploading different markdown files, and students are able to view the slides and answer the quizzes online. QuizHero will collect students' answers of quizzes, store the answers, analyze and display the **statistical results** to instructors, who will then have a good overview of students' performance. QuizHero has a user-friendly login interface, and allows **every registered instructor** to view their history, including every presentations they created and all the statistical data.
 
-The front-end is based on React framework, with the help of Spectacle to present a dynamic slide decks converted from raw Markdown file, the application server is developed using Javalin, and the database is based on Postgres.
+There are even **more features** waiting for you to explore! For example, the quiz contents in a converted presentation can be **protected** by the instrutor, who will have the right to make the quizzes inaccessible until he/she releases them. Also, the statistical data can be refreshed in real time, and instructors will be able to keep track of the lastest statistics as well of students' performance. Just enjoy and have fun with QuizHero!
 
-## How to use our app?
+## How is QuizHero built?
 
-The alpha version of our QuizHero app is now deployed to Heroku. If you want to easily try our app, please go to https://quiz-hero.herokuapp.com/. Note that Heroku is not stable, so sometimes the server would be down, which may only be fixed by re-deployed it. But you can always run our app at localhost, detailed instructions will be given in the next section **How to run our project**.
+The front-end is based on React framework, with the help of Spectacle to present dynamic slide decks converted from raw Markdown file. The development of back-end server involves a lot of tools and frameworks. The application server is developed using Javalin, and we use PostgreSQL as our database management system. Gradle is used as the automation build system, and we use Postman and JUnit framework to test the server.
 
-## How to run our project
+## How to use QuizHero?
+
+The alpha version of our QuizHero app is now deployed on Heroku. Want to have fun with QuizHero? Jump to https://quiz-hero.herokuapp.com/. You can also run our app at localhost. Detailed instructions will be given below.
+
+## Run our project locally.
 
 1. To run our QuizHero project, first simply download the project onto a local repository of your computer.
 2. Use any popular IDE (IntelliJ IDEA recommended) to open the project **code/QuizHero_APP** and import as a **Gradle** project.
@@ -25,11 +29,11 @@ The alpha version of our QuizHero app is now deployed to Heroku. If you want to 
 
 ## After you run the project
 
-Once you start running the project, you can go to http://localhost:7000/ (or the url displayed after "[main] INFO io.javalin.Javalin - Listening on") on your browser. You will see a start index page displayed on your browser with our logo "Quiz Hero" and an upload button.
+Once you start running the project, you can go to http://localhost:7000/ (or the url displayed after "[main] INFO io.javalin.Javalin - Listening on") on your browser. You will see a start index page displayed on your browser with our logo "QuizHero" as well as two buttons you can choose.
 
-Now, You can upload any Markdown file as long as the markdown format observes the rules we make. 
+If you choose "I'm a presenter", you will be guided to the Login interface, or you can register as a new instructor. After logging into the application successfully, You can upload any Markdown file as long as the markdown format observes the rules we make. 
 
-> We provide a sample markdown file called **"demo.md"** that contains some demo slides with 3 sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page that you can interact with! 
+> We provide a sample markdown file called **"demo.md"** that contains some demo slides with 4 sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page that you can interact with! 
 
 After successfully uploading the file, you can click either of the two buttons **`Presenter mode`** or **`Stundent mode`** to view slides already prepared for instructors or students, or you can click the **download button** to download the static html file. 
 
@@ -47,6 +51,8 @@ You can click the **Refersh** button on the statistics page from time to time to
 
 1. You can test our project as a whole by opening two tabs on your browser. On the first tab, enter Presenter mode and stay on the result page that displays statistics. On the second one, enter Student mode and answer the quiz questions several times to simulate the situation that a group of students are doing the same quizzes simultaneously (or you can open several tabs or even browsers to do the quiz if you like). 
 
-2. We recommend using Postman to test our back-end server. We have uploaded a Postman collection under directory **code/QuizHero_APP/src/main/resources/postman/QuizHero.postman_collection.json**, and you can import this json file into your Postman application to test if the back-end server functions well as expected.
+2. We recommend using Postman to test our back-end API server. We have uploaded two Postman collections (for localhost and for Heroku) under directory **code/QuizHero_APP/src/main/resources/postman**, and you can import both json files into your Postman application to test if the back-end server functions well as expected.
+
+3. We have also written unit tests for dao and api. You can run those tests under directory **code/QuizHero_APP/src/test**.
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/PostmanTest.jpg)
