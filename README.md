@@ -33,23 +33,23 @@ To begin with, you will see a welcome index page displayed on your browser with 
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/index.png)
 
-If you choose "I'm a presenter", you will be guided to the Login interface, or you can register as a new instructor. After logging into the application successfully, You can upload any Markdown file as long as the markdown format observes the rules we make. 
+If you choose "I'm a presenter", you will be guided to the Login interface, or you can register as a new instructor. After logging into the application successfully, You can upload any Markdown file as long as the markdown format obeys the rules we make. 
 
 > We provide a sample markdown file called **"demo.md"** that contains some demo slides with 4 sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page that you can interact with! If you still want to upload your own markdown file, you are also encouraged to take a look at **"demo.md"** to have an idea of the rules. The rules simply follow the standard markdown syntax. It is very easy to understand.
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/upload.png)
 
-After successfully uploading the file, as a presenter, you have several options, either go to the **`Presenter mode`** or **`Student mode`** to view slides prepared for instructors or students. The presenter can also click the **download button** to download the static html file or click the **Share** button to copy the secret shared code to the clipboard. This code will be used to share the student version slides and quizzes. 
+After successfully uploading the file, as a presenter, you have several options, either go to the **`Presenter mode`** or **`Student mode`** to view slides prepared for instructors or students. The presenter can also click the **download button** to download the static html file or click the **`Share`** button to copy the secret shared code to the clipboard. This code will be used to share the student version slides and quizzes. 
 
-With the secret shared code copied, now you can share this code with others (or you can also open a new tap in your browser to test it yourself). You should choose **`I'm a Student`** from the index page, then you will be directed to the student page with a search bar, where you can input the share code. 
+With the secret shared code copied, now you can share this code with others (or you can open a new tap in your browser to test it yourself). You should choose **`I'm a Student`** from the index page, then you will be directed to the student page with a search bar, where you can input the share code. 
 
 > We do not require students to login in order to use our service, which would be a troublesome thing for students. So the presenter should always be careful about who the secret code is shared with. Also, as mentioned above, we are currently exploring the feature of allowing the the presenter to **protect** their slides and quizzes by enabling or disabling the shared code.
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/studentpage.png)
 
-If the code matches with the presenter's secret shared code, the student will be given two options **Go to Presentation** or **Download file**. They will provide the student with a interactive **`Student mode`** slides and quizzes and a downloadable static html file.
+If the code matches with the presenter's secret shared code, the student will be given two options **`Go to Presentation`** or **`Download file`**. They will provide the student with a interactive **Student mode** slides and quizzes and a downloadable static html file.
 
-Now you may test the quiz feature by going the quiz page in **Presenter mode** and **Stundent mode** in two tabs or two computers. Every response to a quiz question will be transmitted to the back-end and recorded into the database. The detailed statistics is visualized on the **result page** of the **Presenter mode**. 
+Now you may test the quiz feature by going the quiz page in **Presenter mode** and **Stundent mode** from two tabs or two computers. Every response to a quiz question will be transmitted to the back-end and recorded into the database. The detailed statistics is visualized on the **result page** of the **Presenter mode**. 
 
 > Note that, the presenter can also do the quizzes, the result will also be counted and recorded into the database. If you do not want to mess up with the statistics, you can always choose to **Skip** the quiz in **Presenter mode**.
 
