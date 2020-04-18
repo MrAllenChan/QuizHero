@@ -6,7 +6,11 @@ QuizHero is a lightweight web app for creating presentations with quizzes from M
 
 ## How is it built?
 
-This project uses Marpit framework to convert Markdown and CSS themes to slide decks, and an original framework to convert Markdown content to quizzes. The front-end is based on React framework, the application server is developed using Javalin, and the database is based on SQLite.
+The front-end is based on React framework, with the help of Spectacle to present a dynamic slide decks converted from raw Markdown file, the application server is developed using Javalin, and the database is based on Postgres.
+
+## How to use our app?
+
+The alpha version of our QuizHero app is now deployed to Heroku. If you want to easily try our app, please go to https://quiz-hero.herokuapp.com/. Note that Heroku is not stable, so sometimes the server would be down, which may only be fixed by re-deployed it. But you can always run our app at localhost, detailed instructions will be given in the next section **How to run our project**.
 
 ## How to run our project
 
