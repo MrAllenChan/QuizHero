@@ -1,5 +1,6 @@
 package api;
 import com.google.gson.Gson;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import dao.*;
 import exception.*;
 import model.*;
@@ -37,10 +38,11 @@ public final class ApiServer {
     }
 
     public static void start() throws URISyntaxException{
+        DaoFactory.clearDatabase();
+        Sql2oFileDao fileDao = DaoFactory.getFileDao();
+        InstructorDao instructorDao = DaoFactory.getInstructorDao();
         QuizDao quizDao = DaoFactory.getQuizDao();
         RecordDao recordDao = DaoFactory.getRecordDao();
-        InstructorDao instructorDao = DaoFactory.getInstructorDao();
-        Sql2oFileDao fileDao = DaoFactory.getFileDao();
 
         // add some sample data
         if (INITIALIZE_WITH_SAMPLE_DATA) {
@@ -63,6 +65,7 @@ public final class ApiServer {
 
         uploadFile(instructorDao, fileDao);
         fetchFile(fileDao);
+        changeQuizStatus(fileDao);
 
         startJavalin();
 
@@ -178,10 +181,11 @@ public final class ApiServer {
     private static void login(InstructorDao instructorDao) {
         // instructor login action, return user including his/her id
         app.post("/login", ctx -> {
-            String email = ctx.queryParam("email");
-            String pswd = ctx.queryParam("pswd");
-            System.out.println("email: " + email + " pswd: " + pswd);
-//            Instructor user = ctx.bodyAsClass(Instructor.class);
+//            String email = ctx.queryParam("email");
+//            String pswd = ctx.queryParam("pswd");
+            String email = ctx.formParam("email");
+            String pswd = ctx.formParam("pswd");
+//            System.out.println("email: " + email + " pswd: " + pswd);
             try {
                 Instructor instructor = instructorDao.checkUserIdentity(email, pswd);
                 ctx.json(instructor);
@@ -234,7 +238,7 @@ public final class ApiServer {
                 System.out.println("file id: " + fileId);
                 // store user-file info into database
                 fileDao.storeFile(fileId, fileName, inputStream);
-                instructorDao.storeUserFileInfo(userId, fileId, "test");
+                instructorDao.storeUserFileInfo(userId, fileId);
                 // return fileId to front-end
                 Map<String, Object> fileMap = new HashMap<>();
                 fileMap.put("fileId", fileId);
@@ -276,6 +280,21 @@ public final class ApiServer {
                 context.status(200);
             } catch (DaoException ex) {
                 throw new ApiError("file not found! " + ex.getMessage(), 400); // bad request
+            }
+        });
+    }
+
+    private static void changeQuizStatus(Sql2oFileDao fileDao) {
+        // instructor login action, return user including his/her id
+        app.post("/quizstatus", ctx -> {
+            Integer fileId = Integer.parseInt(ctx.formParam("fileId"));
+            Boolean permission = Boolean.parseBoolean(ctx.formParam("permission"));
+            System.out.println("fileId: " + fileId + " permission: " + permission);
+            try {
+                fileDao.changeQuizPermission(fileId, permission);
+                ctx.status(201); // created successfully
+            } catch (DaoException ex) {
+                throw new ApiError(ex.getMessage(), 500); // server internal error
             }
         });
     }

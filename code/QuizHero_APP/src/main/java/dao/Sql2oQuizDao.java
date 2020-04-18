@@ -18,7 +18,7 @@ public class Sql2oQuizDao implements QuizDao {
     @Override
     public List<Quiz> getQuizStatByFileId(int fileId) {
         try (Connection conn = sql2o.open()) {
-            String sql = "SELECT * FROM Quiz Where fileId = " +
+            String sql = "SELECT * FROM quiz Where fileId = " +
                     fileId + " ORDER By questionId;";
             return conn.createQuery(sql).executeAndFetch(Quiz.class);
         }
@@ -30,12 +30,12 @@ public class Sql2oQuizDao implements QuizDao {
     @Override
     public Quiz getSingleQuizStat(int fileId, int questionId) {
         try (Connection conn = sql2o.open()) {
-            String sql = "SELECT * FROM Quiz Where fileId = " +
+            String sql = "SELECT * FROM quiz Where fileId = " +
                     fileId + " AND questionId = " + questionId + ";";
             return conn.createQuery(sql).executeAndFetchFirst(Quiz.class);
         }
         catch (Sql2oException ex) {
-            throw new DaoException("Cannot find this single Quiz with file ID: " +
+            throw new DaoException("Cannot find this single quiz with file ID: " +
                     fileId + " and question ID: " + questionId, ex);
         }
     }
@@ -43,7 +43,7 @@ public class Sql2oQuizDao implements QuizDao {
     @Override
     public List<Quiz> getAllQuizStat() {
         try (Connection conn = sql2o.open()) {
-            String sql = "SELECT * FROM Quiz;";
+            String sql = "SELECT * FROM quiz;";
             return conn.createQuery(sql).executeAndFetch(Quiz.class);
         }
     }
@@ -61,7 +61,7 @@ public class Sql2oQuizDao implements QuizDao {
         }
         String answer = quiz.getAnswer();
         List<Map<String, Object>> listFromTable;
-        String sql = "SELECT * FROM Quiz WHERE fileId = " + fileId + " AND questionId = " + questionId + ";";
+        String sql = "SELECT * FROM quiz WHERE fileId = " + fileId + " AND questionId = " + questionId + ";";
         try (Connection conn = sql2o.open()) {
             listFromTable = conn.createQuery(sql).executeAndFetchTable().asList();
         } catch (Sql2oException ex) {
@@ -74,7 +74,7 @@ public class Sql2oQuizDao implements QuizDao {
         // quiz not exist then insert, otherwise throw DaoException
         if (listFromTable.isEmpty()) {
             try (Connection conn = sql2o.open()) {
-                sql = "INSERT INTO Quiz(fileId, questionId, answer, countA, countB, countC, countD) " +
+                sql = "INSERT INTO quiz(fileId, questionId, answer, countA, countB, countC, countD) " +
                         "VALUES (:fileId, :questionId, :answer, :A, :B, :C, :D);";
                 int id = (int) conn.createQuery(sql, true)
                         .addParameter("fileId", quiz.getFileId())
@@ -90,10 +90,10 @@ public class Sql2oQuizDao implements QuizDao {
                 quiz.setId(id);
 
             } catch (Sql2oException ex) {
-                throw new DaoException("Unable to add the Quiz", ex);
+                throw new DaoException("Unable to add the quiz", ex);
             }
         } else {
-            throw new DaoException("Quiz already exists");
+            throw new DaoException("quiz already exists");
         }
 
 //         for now, uploading a markdown containing the same questionIds is not handled

@@ -75,13 +75,12 @@ public class Sql2oInstructorDao implements InstructorDao{
     }
 
     @Override
-    public void storeUserFileInfo(int userId, int fileId, String url) {
+    public void storeUserFileInfo(int userId, int fileId) {
         try (Connection conn = sql2o.open()) {
-            String sql = "INSERT INTO ins_file(instructorId, fileId, url) VALUES (:userId, :fileId, :url);";
+            String sql = "INSERT INTO ins_file(instructorId, fileId) VALUES (:userId, :fileId);";
             conn.createQuery(sql, true)
                     .addParameter("userId", userId)
                     .addParameter("fileId", fileId)
-                    .addParameter("url", url)
                     .executeUpdate();
 
             System.out.println("user-file information stored.");
