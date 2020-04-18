@@ -4,6 +4,7 @@ export default {
 
     },
     colors: {
+
         primary: 'white',
         secondary: 'blue',
         quaternary: 'yellow'

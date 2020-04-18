@@ -31,14 +31,27 @@ public class Sql2oFileDao {
     public void storeFile(int fileId, String fileName, InputStream inputStream) {
         try (Connection conn = sql2o.open()) {
 //            String sql = "insert into test values (1, pg_read_file('/Users/apple/jhu-oose/2020-spring-group-QuizHero/code/QuizHero_APP/upload/demo.md')::bytea)";
-            String sql = "insert into file values (:fileId, :fileName, :bytea)";
+            String sql = "insert into file values (:fileId, :fileName, :quizAccess, :bytea)";
             conn.createQuery(sql)
                     .addParameter("fileId", fileId)
                     .addParameter("fileName", fileName)
+                    .addParameter("quizAccess", false)
                     .addParameter("bytea", inputStream)
                     .executeUpdate();
         } catch (Sql2oException ex) {
             throw new DaoException("Unable to store file content", ex);
+        }
+    }
+
+    public void changeQuizPermission(int fileId, boolean permission) {
+        try (Connection conn = sql2o.open()) {
+            String sql = "Update file set quizPermission = " + permission +
+                    " WHERE fileId = :fileId";
+            System.out.println(sql);
+            conn.createQuery(sql).addParameter("fileId", fileId)
+                    .executeUpdate();
+        } catch (Sql2oException ex) {
+            throw new DaoException("Unable to change quiz permission status", ex);
         }
     }
 }

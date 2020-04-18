@@ -24,7 +24,7 @@ public class Sql2oRecordDao implements RecordDao {
         List<Quiz> listFromTable;
 
         try (Connection conn = sql2o.open()) {
-            String sql = "SELECT * FROM Quiz Where fileId = " +
+            String sql = "SELECT * FROM quiz Where fileId = " +
                     fileId + " AND questionId = " + questionId + ";";
             listFromTable = conn.createQuery(sql).executeAndFetch(Quiz.class);
         } catch (Sql2oException ex) {
@@ -32,11 +32,11 @@ public class Sql2oRecordDao implements RecordDao {
         }
         // quiz not exists, update failure
         if (listFromTable.isEmpty()) {
-            throw new DaoException("Quiz not exists, unable to update using this record.", new Sql2oException());
+            throw new DaoException("quiz not exists, unable to update using this record.", new Sql2oException());
         }
 
         // update Quiz table using the incoming record
-        String sql = "UPDATE Quiz Set " + choice + " = " + choice + " + 1 WHERE " +
+        String sql = "UPDATE quiz Set " + choice + " = " + choice + " + 1 WHERE " +
                 "fileId = :fileId AND questionId = :questionId";
         System.out.println(sql);
         try (Connection conn = sql2o.open()) {
@@ -44,9 +44,9 @@ public class Sql2oRecordDao implements RecordDao {
                     .addParameter("fileId", fileId)
                     .addParameter("questionId", questionId)
                     .executeUpdate();
-            System.out.println("New record updated in Quiz table.");
+            System.out.println("New record updated in quiz table.");
         } catch (Sql2oException ex) {
-            throw new DaoException("Unable to update record to Quiz table", ex);
+            throw new DaoException("Unable to update record to quiz table", ex);
         }
     }
 

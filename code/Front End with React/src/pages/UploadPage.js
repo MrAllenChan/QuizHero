@@ -156,7 +156,7 @@ class MyUpload extends React.Component{
     handleLogOut(){
         localStorage.setItem("username",null)
         localStorage.setItem("instructorId",0)
-        localStorage.setItem("isLogin",false)
+        localStorage.setItem("isLogin",0)
         window.location = "/login"
     }
 

@@ -17,6 +17,15 @@ public class DaoFactory {
         // This class is not meant to be instantiated!
     }
 
+    public static void clearDatabase() throws URISyntaxException{
+        instantiateSql2o();
+        if (DROP_TABLES_IF_EXIST) {
+            dropInsFileTableIfExists(sql2o);
+            dropQuizTableIfExists(sql2o);
+            dropInstructorTableIfExists(sql2o);
+            dropFileTableIfExists(sql2o);
+        }
+    }
 
     private static void instantiateSql2o() throws URISyntaxException {
         if (sql2o == null) {
@@ -44,11 +53,8 @@ public class DaoFactory {
     }
 
     private static void createInstructorTable(Sql2o sql2o) {
-        if (DROP_TABLES_IF_EXIST) {
-            dropInsFileTableIfExists(sql2o);
-            dropInstructorTableIfExists(sql2o);
-        }
-        String sql = "CREATE TABLE IF NOT EXISTS Instructor(" +
+
+        String sql = "CREATE TABLE IF NOT EXISTS instructor(" +
                 "instructorId SERIAL," +
                 "name VARCHAR(30)," +
                 "email VARCHAR(30) NOT NULL," +
@@ -63,29 +69,8 @@ public class DaoFactory {
         }
     }
 
-    private static void createInsFileTable(Sql2o sql2o) {
-        if (DROP_TABLES_IF_EXIST) {
-            dropInsFileTableIfExists(sql2o);
-        }
-        String sql = "CREATE TABLE IF NOT EXISTS ins_file(" +
-                "instructorId Integer," +
-                "fileId Integer," +
-                "url VARCHAR(120)," +
-                "PRIMARY KEY (instructorId, fileId)," +
-                "FOREIGN KEY (instructorId) REFERENCES instructor(instructorId)" +
-                ");";
-        try (Connection conn = sql2o.open()) {
-            conn.createQuery(sql).executeUpdate();
-        } catch (Sql2oException ex) {
-            throw new DaoException("Unable to create ins_file table", ex);
-        }
-    }
-
     private static void createQuizTable(Sql2o sql2o) {
-        if (DROP_TABLES_IF_EXIST) {
-            dropQuizTableIfExists(sql2o);
-        }
-        String sql = "CREATE TABLE IF NOT EXISTS Quiz(" +
+        String sql = "CREATE TABLE IF NOT EXISTS quiz(" +
                 "id SERIAL PRIMARY KEY," +
                 "fileId INTEGER NOT NULL," +
                 "questionId INTEGER NOT NULL," +
@@ -93,27 +78,41 @@ public class DaoFactory {
                 "countA INTEGER," +
                 "countB INTEGER," +
                 "countC INTEGER," +
-                "countD INTEGER" +
+                "countD INTEGER," +
+                "FOREIGN KEY (fileId) REFERENCES file(fileId)" +
                 ");";
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
-            throw new DaoException("Unable to create Quiz table", ex);
+            throw new DaoException("Unable to create quiz table", ex);
         }
     }
 
     private static void createFileTable(Sql2o sql2o) {
-        if (DROP_TABLES_IF_EXIST) {
-            dropFileTableIfExists(sql2o);
-        }
         String sql = "create table if not exists file(" +
                 "fileId Integer PRIMARY KEY, " +
-                "fileName varchar(30)," +
-                "mdFile bytea);";
+                "fileName VARCHAR(30), " +
+                "quizPermission BOOLEAN DEFAULT false," +
+                "mdFile bytea)";
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
             throw new DaoException("Unable to create file table", ex);
+        }
+    }
+
+    private static void createInsFileTable(Sql2o sql2o) {
+        String sql = "CREATE TABLE IF NOT EXISTS ins_file(" +
+                "instructorId Integer," +
+                "fileId Integer," +
+                "PRIMARY KEY (instructorId, fileId)," +
+                "FOREIGN KEY (instructorId) REFERENCES instructor(instructorId)," +
+                "FOREIGN KEY (fileId) REFERENCES file(fileId)" +
+                ");";
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery(sql).executeUpdate();
+        } catch (Sql2oException ex) {
+            throw new DaoException("Unable to create ins_file table", ex);
         }
     }
 

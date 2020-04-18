@@ -3,6 +3,17 @@ import { render } from 'react-dom';
 import { Upload, message, Button, Icon } from 'antd';
 import defaultTheme from '../theme/deault-theme';
 import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Notes} from 'spectacle';
+// import createTheme from 'spectacle/lib/themes/default';
+
+// import createTheme from 'spectacle-theme-nova';
+ 
+
+// const customStyles = {
+//     global: {
+//       body: { background: 'white' }
+//     }
+//   };
+// const myTheme = createTheme(null, customStyles);
 
 // SPECTACLE_CLI_MD_START
 // import mdContent from './questions.md';
@@ -93,7 +104,7 @@ class Slides extends React.Component{
 
                 )
                 content.push(
-                    <Slide backgroundColor={"#fff"}>
+                    <Slide style={{backgroundColor:"#fff"}}>
                         <Heading>Now lets do some funny quizzes!</Heading>
                         <Heading>
                             <Button
@@ -133,7 +144,7 @@ class Slides extends React.Component{
             //     </Slide>
             //     <Markdown containsSlides>{this.slides}</Markdown>
             // </Deck>
-            <Deck loop theme={defaultTheme} template={template}>
+            <Deck loop theme={defaultTheme} template={template} style={{backgroundColor:"#fff"}}>
                 {content}
             </Deck>
         );
