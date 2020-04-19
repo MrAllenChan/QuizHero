@@ -30,9 +30,9 @@
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/upload.png)
 
-<!-- - Instructors can view and download former markdown file in the file history. -->
+- Instructors can view and download former markdown file in the file history.
 
-<!-- ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/historypage.png) -->
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/historypage.png)
 
 - Both the student mode and presentation mode can show the slides, and users can join the quiz by clicking "start quiz" button in slides.
 
@@ -48,9 +48,9 @@
 
 ## Student page
 
-- Students can view the sildes by entering the file code instructor shared with them in the search box.
+- Students can view the sildes by entering the file code instructor shared with them in the search box, then students can view the presentation slides and download the file.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/urlPage.png)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it5/studentShare.png)
 
 - Students can choose answer for the quiz questions, but they cannot see the result data.
 
