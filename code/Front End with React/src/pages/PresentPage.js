@@ -19,13 +19,13 @@ class PresentPage extends Component {
             // answer: '',
             // answersCount: {},
             result: '',
-            fileId: props.location.query.fileId,
+            fileId: JSON.parse(localStorage.getItem("data")).fileId,
             quizCounter : 0,
-            quizList: props.location.query.quiz,
-            quizQuestions:props.location.query.quiz[0],
-            slides: props.location.query.slidesString
+            quizList: JSON.parse(localStorage.getItem("data")).quiz,
+            quizQuestions:JSON.parse(localStorage.getItem("data")).quiz[0],
+            slides: JSON.parse(localStorage.getItem("data")).slidesString
         };
-
+        console.log(this.state.quizList)
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
         this.skipQuestion = this.skipQuestion.bind(this);
     }

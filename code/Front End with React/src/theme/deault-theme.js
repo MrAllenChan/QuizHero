@@ -5,9 +5,10 @@ export default {
     },
     colors: {
 
-        primary: 'white',
-        secondary: 'blue',
-        quaternary: 'yellow'
+        primary: 'black', //header
+        secondary: 'black', //paragraph
+        tertiary: 'white', //background
+        quaternary: 'yellow' //hyperlink
     },
     fonts: {
         header: '"Helvetica Neue", Helvetica, Arial, sans-serif'
