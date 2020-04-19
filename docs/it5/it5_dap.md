@@ -69,7 +69,7 @@
 > A tentative list of the "to do" in order to successfully complete this iteration. 
 > This list will change and it is good to keep it updated. 
 > It does not need to be exhastive.
-- Create a dynamic history page to render all the files belong to the logged in instructor.
+- Create a dynamic history page to render all the files belong to the logged-in instructor.
 - Implement the view and download functionalities of each file to allow these actions.
 - Design and refine Model, API and DAOs for managing files in database on back-end.
 - Create control button on presentor side to toggle the permission of opening the quiz.
