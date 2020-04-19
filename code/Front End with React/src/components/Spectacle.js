@@ -21,12 +21,12 @@ import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Not
 const mdContent = `> Question: What is your favorite course?`
 // SPECTACLE_CLI_THEME_START
 console.log(mdContent)
-const theme = {
-    // colors: {
-    //     primary: '#f00',
-    //     secondary: '#00f'
-    // }
-};
+// const theme = {
+//     // colors: {
+//     //     primary: '#f00',
+//     //     secondary: '#00f'
+//     // }
+// };
 // SPECTACLE_CLI_THEME_END
 
 // SPECTACLE_CLI_TEMPLATE_START
@@ -37,14 +37,27 @@ const template = () => (
         bottom={0}
         width={1}
     >
-        <Box padding="0 1em">
-            <FullScreen />
+        <Box padding="0 1em" >
+            <FullScreen color="#000"/>
         </Box>
         <Box padding="1em">
-            <Progress />
+            <Progress color="#000"/>
         </Box>
     </FlexBox>
 );
+
+const theme = {
+    colors: {
+        primary: '#f00', // header color
+        secondary: '#00f', // paragraph color
+        tertiary: '#fff', // background color
+        quaternary: '#000' // hyperlink color
+    },
+    fontSizes: {
+        header: '64px',
+        paragraph: '28px'
+    }
+};
 
 // SPECTACLE_CLI_TEMPLATE_END
 
@@ -147,7 +160,7 @@ class Slides extends React.Component{
             //     </Slide>
             //     <Markdown containsSlides>{this.slides}</Markdown>
             // </Deck>
-            <Deck loop theme={defaultTheme} template={template} style={{backgroundColor:"#fff"}}>
+            <Deck loop theme={theme} template={template} transition={["slide"]}>
                 {content}
             </Deck>
         );
