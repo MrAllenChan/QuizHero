@@ -15,6 +15,7 @@ class StudentRequestPage extends Component{
 
         this.state = {
             fileId : "",
+            permission : false,
             MarkDownFile : "",
             display_name:'none'
         }
@@ -25,18 +26,57 @@ class StudentRequestPage extends Component{
             fileId: value
         }
 
-        axios.get(BASE_URL + "/fetch",  {params})
+        axios.get(BASE_URL + "/quizpermission",  {params})
             .then(res => {
                 console.log("AAA", res.data);
                 this.setState({
-                    MarkDownFile: res.data,
-                    fileId : value
-                }, this.generateSlides)
-                alert("Successful.")
+                    permission : res.data
+                }, this.fetchFile);
+                alert(`File ${value} found.`)
             })
             .catch((error) => {
                 alert("File doesn't exist!")
             })
+
+        // if (this.state.permission === true){
+        //     axios.get(BASE_URL + "/fetch",  {params})
+        //         .then(res => {
+        //             console.log("AAA", res.data);
+        //             this.setState({
+        //                 MarkDownFile: res.data,
+        //                 fileId : value
+        //             }, this.generateSlides)
+        //             alert(`File ${value} fetched successfully.`)
+        //         })
+        //         .catch((error) => {
+        //             alert(`Fail to fetch File ${value}.`)
+        //         })
+        // }else{
+        //     alert(`Sorry, you don't have the permission to access file ${value}. Please contact the presenter.`)
+        // }
+    }
+
+    fetchFile =()=> {
+        let params = {
+            fileId: this.state.fileId
+        }
+
+        if (this.state.permission === true){
+            axios.get(BASE_URL + "/fetch",  {params})
+                .then(res => {
+                    console.log("AAA", res.data);
+                    this.setState({
+                        MarkDownFile: res.data,
+                        fileId : this.state.fileId
+                    }, this.generateSlides)
+                    alert(`File ${this.state.fileId} fetched successfully.`)
+                })
+                .catch((error) => {
+                    alert(`Fail to fetch File ${this.state.fileId}.`)
+                })
+        }else{
+            alert(`Sorry, you don't have the permission to access file ${this.state.fileId}. Please contact the presenter.`)
+        }
     }
 
     generateSlides = () => {
@@ -63,6 +103,7 @@ class StudentRequestPage extends Component{
     // onChange = (e) => {
     //     this.setState({fileId : e})
     // }
+
 
     download = () => {
         function fakeClick(obj) {

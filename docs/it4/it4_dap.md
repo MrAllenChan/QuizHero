@@ -81,10 +81,27 @@
 - Refactor code to make it more object-oriented.
 
 
-
-
-<!--# Retrospective
+# Retrospective
+> The retrospective is an opportunity for your team to inspect itself and create a plan for improvements to be enacted during the next iteration. Review what you had done in iteration 2; note things that you have and have not delivered, note the challenges you had, and reflect on how you shall proceed in the next iteration to do a better job.
 
 ### What went well?
+- Successfully switch to using postgreSQL and deploy on Heroku. The app is online now!
+- We change the overl style of the app to a cleaner/modern design.
+- Successfully deliver the feature of insturctor login. Components on frontend-side and DAOs on backend-side are added to enable the user registration and login system.
+- Successfully deliver the feature of uploading file on the deployed version.
+- We generalize the format of Markdown file that QuizHero can work on: instructor now can insert the quizzes in any part of the Markdown file.
+- The portal for instructor and student are separated: insturctors need to login to upload and see their history files; students need a code/url (for now we use fileId) to access the slides.
+- Frontend code are refractored now to make it clean, organized and object oriented.
+- Postman and unit tests are added on the backend to validate implemented functions.
 
-### Challenges we met & Our solutions.-->
+### Challenges we met & Our solutions.
+- We met some difficulties in the process of changing to postgreSQL and deploying on Heroku. We found solutions online and now it works well.
+- Because the Heroku file system is ephemeral, we cannot upload markdown files and save them in the file systemn of the server. Hence, we have to completely abandon the previous methods we wrote to store files locally, and finally decided to store the content of .md files as bytearray (bytea) in PostgreSQL database. In this way we are able to store files in a persistent way and fetch them as byte stream, and also avoid the hassle of connecting to AWS service from Heroku. If future features of the app require the function of file management system, we can always switch to using AWS.
+
+### What we plan to improve during iteration 5.
+- Since we have already deployed our application on Heroku, we are ready for a beta release after we add some final features, continue refactoring our code as well as perfecting web page styling.
+- We plan to add the following feature: 
+  1. instructors can easily share a link or a code for their students to access the student version of the slides; 
+  2. students cannot start the quiz until instructors release permission on the instructor version of the slides.
+- Write more comments on methods and classes.
+- Prepare for presentation and code review.
