@@ -6,6 +6,7 @@ import model.*;
 import io.javalin.Javalin;
 import io.javalin.plugin.json.JavalinJson;
 import io.javalin.http.UploadedFile;
+import model.File;
 
 import java.io.*;
 
@@ -241,7 +242,8 @@ public final class ApiServer {
                 int fileId = new Random().nextInt(100000);
                 System.out.println("file id: " + fileId);
                 // store user-file info into database
-                fileDao.storeFile(fileId, fileName, inputStream);
+                File file = new File (fileId, fileName, inputStream);
+                fileDao.storeFile(file);
                 instructorDao.storeUserFileInfo(userId, fileId);
                 // return fileId to front-end
                 Map<String, Object> fileMap = new HashMap<>();

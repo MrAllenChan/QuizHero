@@ -178,7 +178,7 @@ public class DaoFactory {
     }
 
     public static QuizDao getQuizDao() throws URISyntaxException {
-        instantiateSql2o();
+//        instantiateSql2o();
         createQuizTable(sql2o);
         return new Sql2oQuizDao(sql2o);
     }
