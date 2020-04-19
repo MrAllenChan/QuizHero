@@ -48,7 +48,7 @@ Guidelines derived from experience of programmers about software design. Usually
 
 ---
 
-> Question: 2Which design pattern do you apply?
+> Question: Which design pattern do you apply?
 * [ ] Singleton
 * [ ] Decorater
 * [x] Dependency Injection
