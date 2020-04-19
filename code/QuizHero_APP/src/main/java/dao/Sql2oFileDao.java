@@ -43,7 +43,7 @@ public class Sql2oFileDao {
         }
     }
 
-    public void changeFilePermission(int fileId, boolean permission) {
+    public void changeQuizPermission(int fileId, boolean permission) {
         try (Connection conn = sql2o.open()) {
             String sql = "Update file set quizPermission = " + permission +
                     " WHERE fileId = :fileId";
@@ -55,7 +55,7 @@ public class Sql2oFileDao {
         }
     }
 
-    public Boolean getFilePermission(int fileId) {
+    public Boolean checkQuizPermission(int fileId) {
         try (Connection conn = sql2o.open()) {
             String sql = "SELECT quizPermission from file " +
                     "WHERE fileId = :fileId";
@@ -64,7 +64,7 @@ public class Sql2oFileDao {
                     .executeAndFetchFirst(Boolean.class);
             return permission;
         } catch (Sql2oException ex) {
-            throw new DaoException("Unable to change quiz permission status", ex);
+            throw new DaoException("Unable to get quiz permission status", ex);
         }
     }
 }

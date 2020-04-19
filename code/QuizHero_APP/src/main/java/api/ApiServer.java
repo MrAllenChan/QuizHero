@@ -1,18 +1,15 @@
 package api;
 import com.google.gson.Gson;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import dao.*;
 import exception.*;
 import model.*;
 import io.javalin.Javalin;
 import io.javalin.plugin.json.JavalinJson;
 import io.javalin.http.UploadedFile;
-import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 
 import java.net.URISyntaxException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +35,7 @@ public final class ApiServer {
     }
 
     public static void start() throws URISyntaxException{
+        // choose to initialize database or not, get Daos
         DaoFactory.clearDatabase();
         Sql2oFileDao fileDao = DaoFactory.getFileDao();
         InstructorDao instructorDao = DaoFactory.getInstructorDao();
@@ -53,20 +51,9 @@ public final class ApiServer {
 
         // Routing
         getHomepage();
-        getAllQuizStat(quizDao);
-        getQuizStatByFileId(quizDao);
-        getSingleQuizStat(quizDao);
+        routing(fileDao, instructorDao, quizDao, recordDao);
 
-        postQuiz(quizDao);
-        postRecords(recordDao);
-
-        login(instructorDao);
-        register(instructorDao);
-
-        uploadFile(instructorDao, fileDao);
-        fetchFile(fileDao);
-        changeFilePermission(fileDao);
-        getFilePermission(fileDao);
+        // start application server
         startJavalin();
 
         // Handle exceptions
@@ -88,6 +75,23 @@ public final class ApiServer {
 
     public static void stop() {
         app.stop();
+    }
+
+    private static void routing(Sql2oFileDao fileDao, InstructorDao instructorDao, QuizDao quizDao, RecordDao recordDao) {
+        getAllQuizStat(quizDao);
+        getQuizStatByFileId(quizDao);
+        getSingleQuizStat(quizDao);
+
+        postQuiz(quizDao);
+        postRecords(recordDao);
+
+        login(instructorDao);
+        register(instructorDao);
+
+        uploadFile(instructorDao, fileDao);
+        fetchFile(fileDao);
+        changeQuizPermission(fileDao);
+        checkQuizPermission(fileDao);
     }
 
     private static void getHomepage() {
@@ -242,7 +246,6 @@ public final class ApiServer {
                 // return fileId to front-end
                 Map<String, Object> fileMap = new HashMap<>();
                 fileMap.put("fileId", fileId);
-//                fileMap.put("url", url);
                 context.json(fileMap);
                 context.contentType("application/json");
                 context.status(201);
@@ -258,11 +261,6 @@ public final class ApiServer {
     // front-end fetches the specified file
     private static void fetchFile(Sql2oFileDao fileDao) {
         app.get("/fetch", context -> {
-            /* BufferedInputStream是套在某个其他的InputStream外，起着缓存的功能，用来改善里面那个InputStream的性能
-            它自己不能脱离里面那个单独存在。FileInputStream是读取一个文件来作InputStream。
-            所以可以把BufferedInputStream套在FileInputStream外，来改善FileInputStream的性能。
-            */
-//            String fileUrl = context.queryParam("fileUrl"); // get url of the file from form-data
             int fileId = Integer.parseInt(context.queryParam("fileId")); // get file id from form-data
             System.out.println(fileId);
             try {
@@ -274,7 +272,7 @@ public final class ApiServer {
 //                context.header("Content-Disposition", "attachment; filename=\"" + localFile.getName() + "\"");
 //                context.header("Content-Length", String.valueOf(localFile.length()));
                 InputStream in = fileDao.getFile(fileId);
-                InputStream inputStream = new BufferedInputStream(in);
+                InputStream inputStream = new BufferedInputStream(in); /* BufferedInputStream is used to improve the performance of the inside InputStream */
                 context.result(inputStream);
                 System.out.println("Send file successfully.");
                 context.status(200);
@@ -284,14 +282,14 @@ public final class ApiServer {
         });
     }
 
-    private static void changeFilePermission(Sql2oFileDao fileDao) {
+    private static void changeQuizPermission(Sql2oFileDao fileDao) {
         // instructor login action, return user including his/her id
         app.post("/quizpermission", ctx -> {
             Integer fileId = Integer.parseInt(ctx.formParam("fileId"));
             Boolean permission = Boolean.parseBoolean(ctx.formParam("permission"));
             System.out.println("fileId: " + fileId + " permission: " + permission);
             try {
-                fileDao.changeFilePermission(fileId, permission);
+                fileDao.changeQuizPermission(fileId, permission);
                 ctx.status(201); // created successfully
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
@@ -299,14 +297,15 @@ public final class ApiServer {
         });
     }
 
-    private static void getFilePermission(Sql2oFileDao fileDao) {
+    private static void checkQuizPermission(Sql2oFileDao fileDao) {
         // instructor login action, return user including his/her id
         app.get("/quizpermission", ctx -> {
-            Integer fileId = Integer.parseInt(ctx.formParam("fileId"));
+            Integer fileId = Integer.parseInt(ctx.queryParam("fileId"));
             System.out.println("fileId: " + fileId);
             try {
-                Boolean permission = fileDao.getFilePermission(fileId);
-                ctx.json(permission);
+                Boolean permission = fileDao.checkQuizPermission(fileId);
+//                ctx.json(permission);
+                ctx.result(String.valueOf(permission));
                 ctx.status(200); // created successfully
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
