@@ -42,5 +42,7 @@ heroku {
     )
 }
 
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
 
 
