@@ -28,7 +28,7 @@
 
 - Instructors can upload a markdown file after login. Then, instructor can see the transferred slides and quiz page by clicking different modes.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/upload.png)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it5/upload_it5.png)
 
 - Instructors can view and download former markdown file in the file history.
 
