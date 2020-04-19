@@ -61,23 +61,19 @@
 
 # Iteration Backlog
 > List the User Stories that you will implement in this iteration.
-- As a student, I want to view the slides uploaded by the instructor so that I can keep pace with the lesson.
-- As an instructor, I want to have a presenter mode to see all my notes and quizzes, so that I can teach a course and have a better overview of my teaching content.
-- As an instructor, I want to log in to the website, so that I can prevent others from accessing my files.
+- As an instructor, I want to have a page to view all my history files so that I can view the files or download them.
+- As an instructor, I want to control the permission of opening the quiz inside the slides, so that I can prompt the students to answer the quiz at the certain time.
 
 
 # Tasks
 > A tentative list of the "to do" in order to successfully complete this iteration. 
 > This list will change and it is good to keep it updated. 
 > It does not need to be exhastive.
-- Convert current SQLite database to PostgreSQL, which is officially supported by heroku.
-- Develop separate student page for students to access the slides and quizzes from open Internet using secrect code provided by their instructors. 
-- Deploy our alpha release on heroku.
-- Add login interface on front-end side using react framework.
-- Implement communication between front-end and back-end regarding login information.
-- Refine API and DAOs on back-end for processing and storing login information.
-- Design and refine Model, API and DAOs for managing user-file information in database on back-end.
-- Implement the function of uploading files on front-end and receiving and storing files on back-end server.
+- Create a dynamic history page to render all the files belong to the logged in instructor.
+- Implement the view and download functionalities of each file to allow these actions.
+- Design and refine Model, API and DAOs for managing files in database on back-end.
+- Create control button on presentor side to toggle the permission of opening the quiz.
+- Refine API and DAOs on back-end for quiz accessing control.
 - Refactor code to make it more object-oriented.
 
 
