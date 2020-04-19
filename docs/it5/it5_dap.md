@@ -80,6 +80,7 @@
 # Retrospective
 > The retrospective is an opportunity for your team to inspect itself and create a plan for improvements to be enacted during the next iteration. Review what you had done in iteration 2; note things that you have and have not delivered, note the challenges you had, and reflect on how you shall proceed in the next iteration to do a better job.
 
+<!---
 ### What went well?
 - Successfully switch to using postgreSQL and deploy on Heroku. The app is online now!
 - We change the overl style of the app to a cleaner/modern design.
@@ -101,3 +102,4 @@
   2. students cannot start the quiz until instructors release permission on the instructor version of the slides.
 - Write more comments on methods and classes.
 - Prepare for presentation and code review.
+--->
