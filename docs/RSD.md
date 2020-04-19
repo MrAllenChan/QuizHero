@@ -32,7 +32,6 @@ Develop a web application, on which instructors can upload markdown files includ
 
 * As a student, I want to download the presentation in PDF format so that I can review it after class.
 * As an instructor, I want to set a timer module, so students need to complete the quiz or discussion within the time limit. 
-* As an instructor, I want to have a page to view all my history files so that I can view the files or download them.
 * As an instructor, I want to control the permission of opening the quiz inside the slides, so that I can prompt the students to answer the quiz at the certain time.
 
 
