@@ -1,6 +1,6 @@
 # QuizHero Demo Example
 
-https://github.com/jhu-oose/2020-spring-group-QuizHero
+<!--https://github.com/jhu-oose/2020-spring-group-QuizHero-->
 
 ---
 
