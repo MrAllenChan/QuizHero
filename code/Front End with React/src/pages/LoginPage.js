@@ -63,12 +63,12 @@ class LoginPage extends Component {
         return;
       }
 
-      let params = {
+      const formData = {
           email:email,
           pswd : password
       }
 
-      axios.post(BASE_URL+"/login",{},{params}).then(res=>{
+      axios.post(BASE_URL+"/login", formData).then(res=>{
           console.log(res.status)
           if(res.status === 201){
             console.log("Login success")

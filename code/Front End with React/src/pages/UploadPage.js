@@ -249,6 +249,7 @@ class MyUpload extends React.Component{
                                 </Button>
                             </Link>
                         </div>
+                        {/*Start/Stop sharing file button*/}
                         <div style={{display:this.state.display_name}}>
                             <CopyToClipboard
                                 onCopy={this.startSharing}

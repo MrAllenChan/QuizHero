@@ -166,11 +166,6 @@ class PresentPage extends Component {
         this.setState({
             result : 1
         });
-        // if (result.length === 1) {
-        //     this.setState({ result: result[0] });
-        // } else {
-        //     this.setState({ result: 'Undetermined' });
-        // }
     }
 
     renderQuiz() {
