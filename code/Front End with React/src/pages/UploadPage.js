@@ -140,6 +140,23 @@ class MyUpload extends React.Component{
         })
     }
 
+    startSharing=()=>{
+        const formData = new FormData();
+        formData.append('fileId', this.state.fileId);
+        formData.append('permission', true);
+        axios.post(BASE_URL + "/quizpermission", formData)
+            .then(()=> message.success(`Share code ${this.state.fileId} is copied on your clipboard`))
+            .catch(()=> message.error('error'));
+    }
+
+    stopSharing=()=>{
+        const formData = new FormData();
+        formData.append('fileId', this.state.fileId);
+        formData.append('permission', false);
+        axios.post(BASE_URL + "/quizpermission", formData)
+            .then(()=> message.success(`File ${this.state.fileId} stop sharing`))
+            .catch(()=> message.error('error'));
+    }
 
     display_name () {
         if (this.state.display_name === 'none') {
@@ -231,11 +248,19 @@ class MyUpload extends React.Component{
                                     <Icon/>Student mode
                                 </Button>
                             </Link>
+                        </div>
+                        <div style={{display:this.state.display_name}}>
                             <CopyToClipboard
-                                onCopy={()=>message.success(`Share code ${this.state.fileId} is copied on your clipboard`)}
+                                onCopy={this.startSharing}
                                 text={this.state.fileId}>
-                                <Button size={"large"} style={{marginLeft: 10}}>Share</Button>
+                                <Button size={"large"} style={{marginLeft: 10}}>
+                                    <Icon/>Start sharing
+                                </Button>
                             </CopyToClipboard>
+                            <Button size={"large"} style={{marginLeft: 10}}
+                                onClick={this.stopSharing}>
+                                <Icon/>Stop sharing
+                            </Button>
                         </div>
                     </div>
 
