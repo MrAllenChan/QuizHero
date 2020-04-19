@@ -9,7 +9,7 @@ import org.sql2o.Sql2oException;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-public class Sql2oFileDao {
+public class Sql2oFileDao implements FileDao{
     private Sql2o sql2o;
 
     public Sql2oFileDao(Sql2o sql2o) {
