@@ -178,13 +178,13 @@ public class DaoFactory {
         return new Sql2oInstructorDao(sql2o);
     }
 
-    public static QuizDao getQuizDao() throws {
+    public static QuizDao getQuizDao() {
 //        instantiateSql2o();
         createQuizTable(sql2o);
         return new Sql2oQuizDao(sql2o);
     }
 
-    public static RecordDao getRecordDao() throws {
+    public static RecordDao getRecordDao() {
 //        instantiateSql2o();
 //        createQuizTable(sql2o);
         return new Sql2oRecordDao(sql2o);

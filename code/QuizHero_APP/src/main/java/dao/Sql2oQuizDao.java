@@ -5,6 +5,8 @@ import model.Quiz;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
+import org.sql2o.data.Table;
+
 import java.util.List;
 import java.util.Map;
 
@@ -63,10 +65,11 @@ public class Sql2oQuizDao implements QuizDao {
         List<Map<String, Object>> listFromTable;
         String sql = "SELECT * FROM quiz WHERE fileId = " + fileId + " AND questionId = " + questionId + ";";
         try (Connection conn = sql2o.open()) {
-            listFromTable = conn.createQuery(sql).executeAndFetchTable().asList();
+            Table table = conn.createQuery(sql).executeAndFetchTable();
+            listFromTable = table.asList();
+
         } catch (Sql2oException ex) {
-//            System.out.println("quiz already exists");
-            throw new DaoException("Unable to find this single quiz!", ex);
+            throw new DaoException("Unable to add quiz!", ex);
         }
 
 //        List<Quiz> listFromTable  = getSingleQuizStat(fileId, questionId);

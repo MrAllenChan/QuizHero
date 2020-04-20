@@ -38,7 +38,7 @@ public final class ApiServer {
     public static void start() throws URISyntaxException{
         // choose to initialize database or not, get Daos
         DaoFactory.clearDatabase();
-        Sql2oFileDao fileDao = DaoFactory.getFileDao();
+        FileDao fileDao = DaoFactory.getFileDao();
         InstructorDao instructorDao = DaoFactory.getInstructorDao();
         QuizDao quizDao = DaoFactory.getQuizDao();
         RecordDao recordDao = DaoFactory.getRecordDao();
@@ -78,7 +78,7 @@ public final class ApiServer {
         app.stop();
     }
 
-    private static void routing(Sql2oFileDao fileDao, InstructorDao instructorDao, QuizDao quizDao, RecordDao recordDao) {
+    private static void routing(FileDao fileDao, InstructorDao instructorDao, QuizDao quizDao, RecordDao recordDao) {
         getAllQuizStat(quizDao);
         getQuizStatByFileId(quizDao);
         getSingleQuizStat(quizDao);
@@ -289,7 +289,7 @@ public final class ApiServer {
 
     private static void changeFilePermission(FileDao fileDao) {
         // instructor login action, return user including his/her id
-        app.post("/quizpermission", ctx -> {
+        app.post("/filepermission", ctx -> {
             Integer fileId = Integer.parseInt(ctx.formParam("fileId"));
             Boolean permission = Boolean.parseBoolean(ctx.formParam("permission"));
             System.out.println("fileId: " + fileId + " permission: " + permission);
@@ -304,7 +304,7 @@ public final class ApiServer {
 
     private static void checkFilePermission(FileDao fileDao) {
         // instructor login action, return user including his/her id
-        app.get("/quizpermission", ctx -> {
+        app.get("/filepermission", ctx -> {
             Integer fileId = Integer.parseInt(ctx.queryParam("fileId"));
             System.out.println("fileId: " + fileId);
             try {
