@@ -246,7 +246,7 @@ class MyUpload extends React.Component{
                                 </Button>
                             </Link>
                             <Link to={{pathname: '/student', query: this.state.data}}>
-                                <Button size={"large"} style={{marginLeft: 10}}>
+                                <Button size={"large"} style={{marginLeft: 10, marginRight:10}}>
                                     <Icon/>Student mode
                                 </Button>
                             </Link>
