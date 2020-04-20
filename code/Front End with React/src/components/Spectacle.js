@@ -15,18 +15,19 @@ import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Not
 //   };
 // const myTheme = createTheme(null, customStyles);
 
-// SPECTACLE_CLI_MD_START
-// import mdContent from './questions.md';
-// SPECTACLE_CLI_MD_END
-const mdContent = `> Question: What is your favorite course?`
 // SPECTACLE_CLI_THEME_START
-console.log(mdContent)
-// const theme = {
-//     // colors: {
-//     //     primary: '#f00',
-//     //     secondary: '#00f'
-//     // }
-// };
+const theme = {
+    colors: {
+        primary: '#f00', // header color
+        secondary: '#00f', // paragraph color
+        tertiary: '#fff', // background color
+        quaternary: '#000' // hyperlink color
+    },
+    fontSizes: {
+        header: '64px',
+        paragraph: '28px'
+    }
+};
 // SPECTACLE_CLI_THEME_END
 
 // SPECTACLE_CLI_TEMPLATE_START
@@ -45,19 +46,6 @@ const template = () => (
         </Box>
     </FlexBox>
 );
-
-const theme = {
-    colors: {
-        primary: '#f00', // header color
-        secondary: '#00f', // paragraph color
-        tertiary: '#fff', // background color
-        quaternary: '#000' // hyperlink color
-    },
-    fontSizes: {
-        header: '64px',
-        paragraph: '28px'
-    }
-};
 
 // SPECTACLE_CLI_TEMPLATE_END
 

@@ -14,15 +14,15 @@
   }
 .login-form-button {
   width: 400px;
-  background-color: #8150D4 !important;
-  border-color: #8150D4 !important;
+  background-color: #00A9F4 !important;
+  border-color: #00A9F4 !important;
   }
 
   .register-button{
     width: 400px;
-    color: #8150D4 !important;
+    color: #00A9F4 !important;
   background-color: #ffffff !important;
-  border-color: #8150D4 !important;
+  border-color: #00A9F4 !important;
 
   }
 
@@ -36,7 +36,7 @@
   }
 
   .login-input:hover{
-    border-color: #8150D4 !important;
+    border-color: #00A9F4 !important;
   }
 
   .login-form-forgot {

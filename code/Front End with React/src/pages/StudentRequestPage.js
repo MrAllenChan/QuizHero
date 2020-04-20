@@ -30,7 +30,9 @@ class StudentRequestPage extends Component{
             .then(res => {
                 console.log("AAA", res.data);
                 this.setState({
-                    permission : res.data
+                    fileId : value,
+                    permission : res.data,
+                    MarkDownFile : ""
                 }, this.fetchFile);
                 alert(`File ${value} found.`)
             })
@@ -38,22 +40,6 @@ class StudentRequestPage extends Component{
                 alert("File doesn't exist!")
             })
 
-        // if (this.state.permission === true){
-        //     axios.get(BASE_URL + "/fetch",  {params})
-        //         .then(res => {
-        //             console.log("AAA", res.data);
-        //             this.setState({
-        //                 MarkDownFile: res.data,
-        //                 fileId : value
-        //             }, this.generateSlides)
-        //             alert(`File ${value} fetched successfully.`)
-        //         })
-        //         .catch((error) => {
-        //             alert(`Fail to fetch File ${value}.`)
-        //         })
-        // }else{
-        //     alert(`Sorry, you don't have the permission to access file ${value}. Please contact the presenter.`)
-        // }
     }
 
     fetchFile =()=> {
@@ -67,7 +53,6 @@ class StudentRequestPage extends Component{
                     console.log("AAA", res.data);
                     this.setState({
                         MarkDownFile: res.data,
-                        fileId : this.state.fileId
                     }, this.generateSlides)
                     alert(`File ${this.state.fileId} fetched successfully.`)
                 })

@@ -126,8 +126,10 @@ class MyUpload extends React.Component{
     }
 
     callSeparateQuestion =()=>{
-        const data = separateQuestion(this.state.rawString, this.state.fileId);
+        var data = separateQuestion(this.state.rawString, this.state.fileId);
         console.log(data)
+        data = JSON.stringify(data)
+        localStorage.setItem("data",data)
         this.setState({data : data});
         this.getMarpit();
     }
@@ -249,6 +251,7 @@ class MyUpload extends React.Component{
                                 </Button>
                             </Link>
                         </div>
+                        {/*Start/Stop sharing file button*/}
                         <div style={{display:this.state.display_name}}>
                             <CopyToClipboard
                                 onCopy={this.startSharing}

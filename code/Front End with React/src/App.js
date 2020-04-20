@@ -12,7 +12,7 @@ class App extends Component {
     super(props);
   }
   componentDidMount(){
-    localStorage.setItem('isLogin', 0);
+    // localStorage.setItem('isLogin', 0);
   }
 
   render() {

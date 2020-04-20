@@ -53,7 +53,6 @@ public class DaoFactory {
     }
 
     private static void createInstructorTable(Sql2o sql2o) {
-
         String sql = "CREATE TABLE IF NOT EXISTS instructor(" +
                 "instructorId SERIAL," +
                 "name VARCHAR(30)," +
@@ -62,6 +61,7 @@ public class DaoFactory {
                 "PRIMARY KEY (instructorId)," +
                 "UNIQUE (email)" +
                 ");";
+
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
@@ -81,6 +81,7 @@ public class DaoFactory {
                 "countD INTEGER," +
                 "FOREIGN KEY (fileId) REFERENCES file(fileId)" +
                 ");";
+
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
@@ -93,7 +94,9 @@ public class DaoFactory {
                 "fileId Integer PRIMARY KEY, " +
                 "fileName VARCHAR(30), " +
                 "quizPermission BOOLEAN DEFAULT false," +
-                "mdFile bytea)";
+                "mdFile bytea" +
+                ")";
+
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
@@ -109,6 +112,7 @@ public class DaoFactory {
                 "FOREIGN KEY (instructorId) REFERENCES instructor(instructorId)," +
                 "FOREIGN KEY (fileId) REFERENCES file(fileId)" +
                 ");";
+
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
@@ -160,8 +164,21 @@ public class DaoFactory {
         }
     }
 
+    public static Sql2oFileDao getFileDao() throws URISyntaxException {
+//        instantiateSql2o();
+        createFileTable(sql2o);
+        return new Sql2oFileDao(sql2o);
+    }
+
+    public static InstructorDao getInstructorDao() throws URISyntaxException {
+//        instantiateSql2o();
+        createInstructorTable(sql2o);
+        createInsFileTable(sql2o);
+        return new Sql2oInstructorDao(sql2o);
+    }
+
     public static QuizDao getQuizDao() throws URISyntaxException {
-        instantiateSql2o();
+//        instantiateSql2o();
         createQuizTable(sql2o);
         return new Sql2oQuizDao(sql2o);
     }
@@ -172,16 +189,4 @@ public class DaoFactory {
         return new Sql2oRecordDao(sql2o);
     }
 
-    public static InstructorDao getInstructorDao() throws URISyntaxException {
-//        instantiateSql2o();
-        createInstructorTable(sql2o);
-        createInsFileTable(sql2o);
-        return new Sql2oInstructorDao(sql2o);
-    }
-
-    public static Sql2oFileDao getFileDao() throws URISyntaxException {
-//        instantiateSql2o();
-        createFileTable(sql2o);
-        return new Sql2oFileDao(sql2o);
-    }
 }

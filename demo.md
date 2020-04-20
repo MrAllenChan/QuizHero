@@ -1,6 +1,6 @@
 # QuizHero Demo Example
 
-https://github.com/jhu-oose/2020-spring-group-QuizHero
+<!--https://github.com/jhu-oose/2020-spring-group-QuizHero-->
 
 ---
 
@@ -48,7 +48,7 @@ Guidelines derived from experience of programmers about software design. Usually
 
 ---
 
-> Question: 2Which design pattern do you apply?
+> Question: Which design pattern do you apply?
 * [ ] Singleton
 * [ ] Decorater
 * [x] Dependency Injection
