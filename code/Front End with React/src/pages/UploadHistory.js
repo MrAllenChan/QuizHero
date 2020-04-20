@@ -4,6 +4,8 @@ import 'antd/dist/antd.css';
 // import '../utils/index.css';
 import {Link} from "react-router-dom";
 import {List, Button, Skeleton, Menu, Layout} from 'antd';
+import axios from "axios";
+import {BASE_URL} from "../config/config";
 const { Header, Content, Footer } = Layout;
 
 
@@ -18,20 +20,39 @@ class UploadHistory extends React.Component {
     state = {
         // initLoading: true,
         // loading: false,
-        data: [],
-        list: [],
+        fileId: [],
+        fileName: [],
     };
 
     componentDidMount() {
-        this.getData(res => {
-            this.setState({
-                // initLoading: false,
-                // data: res.results,
-                data: demoData,
-                list: demoData,
-                // list: res.results,
+        // this.getData(res => {
+        //     this.setState({
+        //         // initLoading: false,
+        //         // data: res.results,
+        //         data: demoData,
+        //         list: demoData,
+        //         // list: res.results,
+        //     });
+        // });
+        let params = {
+            instructorId : localStorage.getItem("instructorId")
+        }
+        console.log(params)
+        axios
+            .get(BASE_URL + "/getInstructorFile", {params})
+            .then((res) => {
+                if(res.status === 200){
+                    this.setState({
+                        fileId : res.data.fileId,
+                        fileName : res.data.fileName
+                    });
+                    console.log("res",res);
+                }
+                // console.log(res.data);
+            })
+            .catch((error) => {
+                console.log("error")
             });
-        });
     }
 
     getData = callback => {
@@ -44,13 +65,6 @@ class UploadHistory extends React.Component {
         //         callback(res);
         //     },
         // });
-        this.setState({
-            // initLoading: false,
-            // data: res.results,
-            data: demoData,
-            list: demoData,
-            // list: res.results,
-        });
     };
 
     // onLoadMore = () => {
