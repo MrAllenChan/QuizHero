@@ -91,8 +91,11 @@ public final class ApiServer {
 
         uploadFile(instructorDao, fileDao);
         fetchFile(fileDao);
-        changeQuizPermission(fileDao);
-        checkQuizPermission(fileDao);
+        changeFilePermission(fileDao);
+        checkFilePermission(fileDao);
+        //changeQuizPermission(fileDao);
+        //checkQuizPermission(fileDao);
+        getFileListFromInstructor(instructorDao);
     }
 
     private static void getHomepage() {
@@ -222,7 +225,7 @@ public final class ApiServer {
     }
 
     // Upload a file and save it to the local file system
-    private static void uploadFile(InstructorDao instructorDao, Sql2oFileDao fileDao) {
+    private static void uploadFile(InstructorDao instructorDao, FileDao fileDao) {
         app.post("/upload", context -> {
             // fetch user id from form-data, if no key then return -1 as default
             int userId = Integer.parseInt(context.formParam("userId", "-1"));
@@ -261,7 +264,7 @@ public final class ApiServer {
     }
 
     // front-end fetches the specified file
-    private static void fetchFile(Sql2oFileDao fileDao) {
+    private static void fetchFile(FileDao fileDao) {
         app.get("/fetch", context -> {
             int fileId = Integer.parseInt(context.queryParam("fileId")); // get file id from form-data
             System.out.println(fileId);
@@ -284,14 +287,14 @@ public final class ApiServer {
         });
     }
 
-    private static void changeQuizPermission(Sql2oFileDao fileDao) {
+    private static void changeFilePermission(FileDao fileDao) {
         // instructor login action, return user including his/her id
         app.post("/quizpermission", ctx -> {
             Integer fileId = Integer.parseInt(ctx.formParam("fileId"));
             Boolean permission = Boolean.parseBoolean(ctx.formParam("permission"));
             System.out.println("fileId: " + fileId + " permission: " + permission);
             try {
-                fileDao.changeQuizPermission(fileId, permission);
+                fileDao.changeFilePermission(fileId, permission);
                 ctx.status(201); // created successfully
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
@@ -299,18 +302,33 @@ public final class ApiServer {
         });
     }
 
-    private static void checkQuizPermission(Sql2oFileDao fileDao) {
+    private static void checkFilePermission(FileDao fileDao) {
         // instructor login action, return user including his/her id
         app.get("/quizpermission", ctx -> {
             Integer fileId = Integer.parseInt(ctx.queryParam("fileId"));
             System.out.println("fileId: " + fileId);
             try {
-                Boolean permission = fileDao.checkQuizPermission(fileId);
+                Boolean permission = fileDao.checkFilePermission(fileId);
 //                ctx.json(permission);
                 ctx.result(String.valueOf(permission));
                 ctx.status(200); // created successfully
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
+            }
+        });
+    }
+
+    private static void getFileListFromInstructor(InstructorDao instructorDao) {
+        app.get("/userhistory", ctx -> {
+            int userId = Integer.parseInt(ctx.queryParam("instructorId"));
+            System.out.println("instructorId: " + userId);
+            try {
+                List<Integer> historyFile = instructorDao.getUserFileList(userId);
+                System.out.println("get history");
+                ctx.json(historyFile);
+                ctx.status(200);
+            } catch (DaoException ex) {
+                throw new ApiError(ex.getMessage(), 500);
             }
         });
     }

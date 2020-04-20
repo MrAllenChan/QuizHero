@@ -32,14 +32,16 @@ public class Sql2oFileDao implements FileDao{
     public void storeFile(File file) {
         int fileId = file.getFileId();
         String fileName = file.getFileName();
+        Boolean fileAccess = file.getFileAccess();
         Boolean quizAccess = file.getQuizAccess();
         InputStream inputStream = file.getBytea();
         try (Connection conn = sql2o.open()) {
 //            String sql = "insert into test values (1, pg_read_file('/Users/apple/jhu-oose/2020-spring-group-QuizHero/code/QuizHero_APP/upload/demo.md')::bytea)";
-            String sql = "insert into file values (:fileId, :fileName, :quizAccess, :bytea)";
+            String sql = "insert into file values (:fileId, :fileName, :fileAccess, :quizAccess, :bytea)";
             conn.createQuery(sql)
                     .addParameter("fileId", fileId)
                     .addParameter("fileName", fileName)
+                    .addParameter("fileAccess", fileAccess)
                     .addParameter("quizAccess", quizAccess)
                     .addParameter("bytea", inputStream)
                     .executeUpdate();
@@ -48,28 +50,28 @@ public class Sql2oFileDao implements FileDao{
         }
     }
 
-    public void changeQuizPermission(int fileId, boolean permission) {
+    public void changeFilePermission(int fileId, boolean permission) {
         try (Connection conn = sql2o.open()) {
-            String sql = "Update file set quizPermission = " + permission +
+            String sql = "Update file set filePermission = " + permission +
                     " WHERE fileId = :fileId";
             System.out.println(sql);
             conn.createQuery(sql).addParameter("fileId", fileId)
                     .executeUpdate();
         } catch (Sql2oException ex) {
-            throw new DaoException("Unable to change quiz permission status", ex);
+            throw new DaoException("Unable to change file permission status", ex);
         }
     }
 
-    public Boolean checkQuizPermission(int fileId) {
+    public Boolean checkFilePermission(int fileId) {
         try (Connection conn = sql2o.open()) {
-            String sql = "SELECT quizPermission from file " +
+            String sql = "SELECT filePermission from file " +
                     "WHERE fileId = :fileId";
             System.out.println(sql);
             Boolean permission = conn.createQuery(sql).addParameter("fileId", fileId)
                     .executeAndFetchFirst(Boolean.class);
             return permission;
         } catch (Sql2oException ex) {
-            throw new DaoException("Unable to get quiz permission status", ex);
+            throw new DaoException("Unable to get file permission status", ex);
         }
     }
 }

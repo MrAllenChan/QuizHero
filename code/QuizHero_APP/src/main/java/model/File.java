@@ -6,8 +6,8 @@ import java.util.Objects;
 public class File {
     public int fileId;
     public String fileName;
-    public Boolean quizAccess;
-    //public Boolean fileAccess
+    public Boolean fileAccess; //permission control of access to entire file
+    public Boolean quizAccess; //permission control of access to all quizzes in a file
     public InputStream bytea;
 
 
@@ -15,7 +15,16 @@ public class File {
         this.fileId = fileId;
         this.fileName = fileName;
         this.bytea = bytea;
+        this.fileAccess = false; //default false;
         this.quizAccess = false; //default false;
+    }
+
+    public File(int fileId, String fileName, Boolean fileAccess, Boolean quizAccess, InputStream bytea) {
+        this.fileId = fileId;
+        this.fileName = fileName;
+        this.fileAccess = fileAccess;
+        this.quizAccess = quizAccess;
+        this.bytea = bytea;
     }
 
     public int getFileId() {
@@ -24,6 +33,10 @@ public class File {
 
     public String getFileName() {
         return fileName;
+    }
+
+    public Boolean getFileAccess() {
+        return fileAccess;
     }
 
     public Boolean getQuizAccess() {
@@ -41,6 +54,8 @@ public class File {
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
+
+    public void setFileAccess(Boolean fileAccess) { fileAccess = fileAccess;}
 
     public void setQuizAccess(Boolean quizAccess) {
         quizAccess = quizAccess;
@@ -71,6 +86,7 @@ public class File {
         return "File{" +
                 "fileId=" + fileId +
                 ", fileName='" + fileName + '\'' +
+                ", FileAccess=" + fileAccess +
                 ", QuizAccess=" + quizAccess +
                 ", bytea=" + bytea +
                 '}';

@@ -3,11 +3,17 @@ package dao;
 import exception.DaoException;
 import exception.LoginException;
 import exception.RegisterException;
+import model.File;
 import model.Instructor;
+import model.Quiz;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class Sql2oInstructorDao implements InstructorDao{
@@ -86,6 +92,25 @@ public class Sql2oInstructorDao implements InstructorDao{
             System.out.println("user-file information stored.");
         } catch (Sql2oException ex1) {
             throw new DaoException("Unable to store user-file information.", ex1);
+        }
+    }
+
+    @Override
+    public List<Integer> getUserFileList(int userId) {
+        List<Map<String, Object>> listFromTable;
+        List<Integer> fileIdList = new ArrayList<>();
+        String sql = "SELECT file.fileId, fileName, filePermission, quizPermission, mdFile FROM file " +
+                "JOIN ins_file ON file.fileId = ins_file.fileId " +
+                "WHERE instructorId = " + userId;
+        try (Connection conn = sql2o.open()) {
+            listFromTable = conn.createQuery(sql).executeAndFetchTable().asList();
+            for (Map<String, Object> map : listFromTable) {
+                int fileId = (int)map.get("fileid");
+                fileIdList.add(fileId);
+            }
+            return fileIdList;
+        } catch (Sql2oException ex) {
+            throw new DaoException("Unable to find file history", ex);
         }
     }
 }

@@ -93,6 +93,7 @@ public class DaoFactory {
         String sql = "create table if not exists file(" +
                 "fileId Integer PRIMARY KEY, " +
                 "fileName VARCHAR(30), " +
+                "filePermission BOOLEAN DEFAULT false," +
                 "quizPermission BOOLEAN DEFAULT false," +
                 "mdFile bytea" +
                 ")";
