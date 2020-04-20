@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Upload, message, Button, Icon } from 'antd';
 import defaultTheme from '../theme/deault-theme';
-import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Notes} from 'spectacle';
+import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Notes} from '../lib';
 // import createTheme from 'spectacle/lib/themes/default';
 
 // import createTheme from 'spectacle-theme-nova';
@@ -82,7 +82,6 @@ class Slides extends React.Component{
     }
 
     render(){
-        console.log(mdContent)
         const buttonStyle = {
             backgroundColor:"#ecc",
             width:"200px",
