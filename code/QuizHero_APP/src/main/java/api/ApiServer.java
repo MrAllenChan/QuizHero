@@ -319,13 +319,13 @@ public final class ApiServer {
     }
 
     private static void getFileListFromInstructor(InstructorDao instructorDao) {
-        app.get("/userhistory", ctx -> {
+        app.get("/history", ctx -> {
+            List<Map<String, Object>> fileHistory;
             int userId = Integer.parseInt(ctx.queryParam("instructorId"));
-            System.out.println("instructorId: " + userId);
             try {
-                List<Integer> historyFile = instructorDao.getUserFileList(userId);
-                System.out.println("get history");
-                ctx.json(historyFile);
+                fileHistory = instructorDao.getUserFileList(userId);
+                System.out.println(fileHistory.size());
+                ctx.json(fileHistory);
                 ctx.status(200);
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500);

@@ -92,7 +92,7 @@ public class DaoFactory {
     private static void createFileTable(Sql2o sql2o) {
         String sql = "create table if not exists file(" +
                 "fileId Integer PRIMARY KEY, " +
-                "fileName VARCHAR(30), " +
+                "fileName VARCHAR(30) NOT NULL, " +
                 "filePermission BOOLEAN DEFAULT false," +
                 "quizPermission BOOLEAN DEFAULT false," +
                 "mdFile bytea" +

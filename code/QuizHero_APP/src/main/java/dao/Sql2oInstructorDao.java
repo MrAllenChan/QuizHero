@@ -11,10 +11,7 @@ import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class Sql2oInstructorDao implements InstructorDao{
     private Sql2o sql2o;
@@ -96,19 +93,24 @@ public class Sql2oInstructorDao implements InstructorDao{
     }
 
     @Override
-    public List<Integer> getUserFileList(int userId) {
+    public List<Map<String, Object>> getUserFileList(int instructorId) {
         List<Map<String, Object>> listFromTable;
-        List<Integer> fileIdList = new ArrayList<>();
-        String sql = "SELECT file.fileId, fileName, filePermission, quizPermission, mdFile FROM file " +
+        Map<String, Object> newMap = new HashMap<>();
+        List<Map<String, Object>> resultFile = new ArrayList<>();
+        String sql = "SELECT file.fileId, fileName FROM file " +
                 "JOIN ins_file ON file.fileId = ins_file.fileId " +
-                "WHERE instructorId = " + userId;
+                "WHERE instructorId = :instructorId";
         try (Connection conn = sql2o.open()) {
-            listFromTable = conn.createQuery(sql).executeAndFetchTable().asList();
-            for (Map<String, Object> map : listFromTable) {
-                int fileId = (int)map.get("fileid");
-                fileIdList.add(fileId);
+            listFromTable = conn.createQuery(sql)
+                            .addParameter("instructorId", instructorId)
+                            .executeAndFetchTable().asList();
+            for(Map<String, Object> map : listFromTable) {
+                newMap.put("fileName", map.get("filename"));
+                newMap.put("fileId", map.get("fileid"));
+                resultFile.add(newMap);
             }
-            return fileIdList;
+
+            return resultFile;
         } catch (Sql2oException ex) {
             throw new DaoException("Unable to find file history", ex);
         }
