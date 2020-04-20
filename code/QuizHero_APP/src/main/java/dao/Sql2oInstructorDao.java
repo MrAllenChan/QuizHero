@@ -93,24 +93,14 @@ public class Sql2oInstructorDao implements InstructorDao{
     }
 
     @Override
-    public List<Map<String, Object>> getUserFileList(int instructorId) {
-        List<Map<String, Object>> listFromTable;
-        Map<String, Object> newMap = new HashMap<>();
-        List<Map<String, Object>> resultFile = new ArrayList<>();
+    public List<File> getUserFileList(int instructorId) {
         String sql = "SELECT file.fileId, fileName FROM file " +
                 "JOIN ins_file ON file.fileId = ins_file.fileId " +
                 "WHERE instructorId = :instructorId";
         try (Connection conn = sql2o.open()) {
-            listFromTable = conn.createQuery(sql)
+            return conn.createQuery(sql)
                             .addParameter("instructorId", instructorId)
-                            .executeAndFetchTable().asList();
-            for(Map<String, Object> map : listFromTable) {
-                newMap.put("fileName", map.get("filename"));
-                newMap.put("fileId", map.get("fileid"));
-                resultFile.add(newMap);
-            }
-
-            return resultFile;
+                            .executeAndFetch(File.class);
         } catch (Sql2oException ex) {
             throw new DaoException("Unable to find file history", ex);
         }

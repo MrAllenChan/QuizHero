@@ -165,26 +165,26 @@ public class DaoFactory {
         }
     }
 
-    public static Sql2oFileDao getFileDao() throws URISyntaxException {
+    public static FileDao getFileDao() {
 //        instantiateSql2o();
         createFileTable(sql2o);
         return new Sql2oFileDao(sql2o);
     }
 
-    public static InstructorDao getInstructorDao() throws URISyntaxException {
+    public static InstructorDao getInstructorDao() {
 //        instantiateSql2o();
         createInstructorTable(sql2o);
         createInsFileTable(sql2o);
         return new Sql2oInstructorDao(sql2o);
     }
 
-    public static QuizDao getQuizDao() throws URISyntaxException {
+    public static QuizDao getQuizDao() throws {
 //        instantiateSql2o();
         createQuizTable(sql2o);
         return new Sql2oQuizDao(sql2o);
     }
 
-    public static RecordDao getRecordDao() throws URISyntaxException {
+    public static RecordDao getRecordDao() throws {
 //        instantiateSql2o();
 //        createQuizTable(sql2o);
         return new Sql2oRecordDao(sql2o);

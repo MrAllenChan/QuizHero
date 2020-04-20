@@ -320,7 +320,7 @@ public final class ApiServer {
 
     private static void getFileListFromInstructor(InstructorDao instructorDao) {
         app.get("/history", ctx -> {
-            List<Map<String, Object>> fileHistory;
+            List<File> fileHistory;
             int userId = Integer.parseInt(ctx.queryParam("instructorId"));
             try {
                 fileHistory = instructorDao.getUserFileList(userId);
