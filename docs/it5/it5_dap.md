@@ -36,26 +36,26 @@
 
 - Both the student mode and presentation mode can show the slides, and users can join the quiz by clicking "start quiz" button in slides.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/pre1.png)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/pre1.png)
 <!-- ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/pre2.png) -->
 
 - Instructors can answer or skip(clicking "skip" button) the questions and view the statistical data of each question.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/quiz-presentation.png)
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/presentation-statistic.png)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/quiz-presentation.png)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/presentation-statistic.png)
 
 ---
 
 ## Student page
 
-- Students can view the sildes by entering the file code instructor shared with them in the search box, then students can view the presentation slides and download the file.
+- Students can view the slides by entering the file code instructor shared with them in the search box, then students can view the presentation slides and download the file.
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it5/studentShare.png)
 
 - Students can choose answer for the quiz questions, but they cannot see the result data.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/quiz-stu.png)
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it3/stu-result.png)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/quiz-stu.png)
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/it4/stu-result.png)
 
 
 
@@ -72,7 +72,7 @@
 - Create a dynamic history page to render all the files belong to the logged-in instructor.
 - Implement the view and download functionalities of each file to allow these actions.
 - Design and refine Model, API and DAOs for managing files in database on back-end.
-- Create control button on presentor side to toggle the permission of opening the quiz.
+- Create control button on presenter side to toggle the permission of opening the quiz.
 - Refine API and DAOs on back-end for quiz accessing control.
 - Refactor code to make it more object-oriented.
 
