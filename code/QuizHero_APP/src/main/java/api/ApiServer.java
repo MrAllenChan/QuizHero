@@ -11,10 +11,7 @@ import model.File;
 import java.io.*;
 
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public final class ApiServer {
 
@@ -93,8 +90,8 @@ public final class ApiServer {
         fetchFile(fileDao);
         changeFilePermission(fileDao);
         checkFilePermission(fileDao);
-        //changeQuizPermission(fileDao);
-        //checkQuizPermission(fileDao);
+        changeQuizPermission(fileDao);
+        checkQuizPermission(fileDao);
         getFileListFromInstructor(instructorDao);
     }
 
@@ -106,12 +103,10 @@ public final class ApiServer {
             config.enableCorsForAllOrigins();
             config.addSinglePageRoot("/", "/public/index.html");
         });
-
-        // app.get("/", ctx -> ctx.result("Welcome to QuizHero!"));
     }
 
     private static void getAllQuizStat(QuizDao quizDao) {
-        // handle HTTP Get request to retrieve all Quiz statistics
+        // handle HTTP Get request to retrieve Quiz statistics
         app.get("/quizstat", ctx -> {
             if (ctx.queryParam("fileId") != null) {
                 int fileId = Integer.parseInt(ctx.queryParam("fileId"));
@@ -199,11 +194,10 @@ public final class ApiServer {
                 ctx.json(instructor);
                 ctx.contentType("application/json");
                 ctx.status(201); // created successfully
-            } catch (DaoException ex) {
+            } catch (DaoException | LoginException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
-            } catch (LoginException ex) {
-                throw new ApiError(ex.getMessage(), 500); // user not found
-            }
+            } // user not found
+
         });
     }
 
@@ -251,10 +245,10 @@ public final class ApiServer {
                 // return fileId to front-end
                 Map<String, Object> fileMap = new HashMap<>();
                 fileMap.put("fileId", fileId);
+                fileMap.put("fileName", fileName);
                 context.json(fileMap);
                 context.contentType("application/json");
                 context.status(201);
-
             } catch (NullPointerException npEx) {
                 throw new ApiError("file upload error: " + npEx.getMessage(), 400); // client bad request
             } catch (DaoException daoEx) {
@@ -266,16 +260,9 @@ public final class ApiServer {
     // front-end fetches the specified file
     private static void fetchFile(FileDao fileDao) {
         app.get("/fetch", context -> {
-            int fileId = Integer.parseInt(context.queryParam("fileId")); // get file id from form-data
-            System.out.println(fileId);
             try {
-//                File localFile = new File("upload/tempory.md");
-//                FileUtils.copyInputStreamToFile(in, localFile);
-//                File localFile = new File(fileUrl); // create file object, passed into FileInputStream(File)
-//                InputStream inputStream = new BufferedInputStream(new FileInputStream(localFile));
-//                System.out.println("find local file.");
-//                context.header("Content-Disposition", "attachment; filename=\"" + localFile.getName() + "\"");
-//                context.header("Content-Length", String.valueOf(localFile.length()));
+                int fileId = Integer.parseInt(Objects.requireNonNull(context.queryParam("fileId"))); // get file id from form-data
+                System.out.println("file id: " + fileId);
                 InputStream in = fileDao.getFile(fileId);
                 InputStream inputStream = new BufferedInputStream(in); /* BufferedInputStream is used to improve the performance of the inside InputStream */
                 context.result(inputStream);
@@ -283,6 +270,8 @@ public final class ApiServer {
                 context.status(200);
             } catch (DaoException ex) {
                 throw new ApiError("file not found! " + ex.getMessage(), 400); // bad request
+            } catch (NullPointerException ex) {
+                throw new ApiError("null argument!" + ex.getMessage(), 500);
             }
         });
     }
@@ -290,13 +279,13 @@ public final class ApiServer {
     private static void changeFilePermission(FileDao fileDao) {
         // instructor login action, return user including his/her id
         app.post("/filepermission", ctx -> {
-            Integer fileId = Integer.parseInt(ctx.formParam("fileId"));
-            Boolean permission = Boolean.parseBoolean(ctx.formParam("permission"));
-            System.out.println("fileId: " + fileId + " permission: " + permission);
             try {
+                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.formParam("fileId")));
+                boolean permission = Boolean.parseBoolean(Objects.requireNonNull(ctx.formParam("permission")));
+                System.out.println("fileId: " + fileId + " file permission: " + permission);
                 fileDao.changeFilePermission(fileId, permission);
                 ctx.status(201); // created successfully
-            } catch (DaoException ex) {
+            } catch (DaoException | NullPointerException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
             }
         });
@@ -305,14 +294,13 @@ public final class ApiServer {
     private static void checkFilePermission(FileDao fileDao) {
         // instructor login action, return user including his/her id
         app.get("/filepermission", ctx -> {
-            Integer fileId = Integer.parseInt(ctx.queryParam("fileId"));
-            System.out.println("fileId: " + fileId);
             try {
-                Boolean permission = fileDao.checkFilePermission(fileId);
-//                ctx.json(permission);
-                ctx.result(String.valueOf(permission));
-                ctx.status(200); // created successfully
-            } catch (DaoException ex) {
+                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.queryParam("fileId")));
+                System.out.println("fileId: " + fileId);
+                Boolean filePermission = fileDao.checkFilePermission(fileId);
+                ctx.result(String.valueOf(filePermission));
+                ctx.status(200);
+            } catch (DaoException | NullPointerException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
             }
         });
@@ -320,15 +308,44 @@ public final class ApiServer {
 
     private static void getFileListFromInstructor(InstructorDao instructorDao) {
         app.get("/history", ctx -> {
-            List<File> fileHistory;
-            int userId = Integer.parseInt(ctx.queryParam("instructorId"));
             try {
-                fileHistory = instructorDao.getUserFileList(userId);
+                int userId = Integer.parseInt(Objects.requireNonNull(ctx.queryParam("instructorId")));
+                List<File> fileHistory = instructorDao.getUserFileList(userId);
                 System.out.println(fileHistory.size());
                 ctx.json(fileHistory);
                 ctx.status(200);
-            } catch (DaoException ex) {
+            } catch (DaoException | NullPointerException ex) {
                 throw new ApiError(ex.getMessage(), 500);
+            }
+        });
+    }
+
+    private static void changeQuizPermission(FileDao fileDao) {
+        // instructor login action, return user including his/her id
+        app.post("/quizpermission", ctx -> {
+            try {
+                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.formParam("fileId")));
+                boolean permission = Boolean.parseBoolean(Objects.requireNonNull(ctx.formParam("permission")));
+                System.out.println("fileId: " + fileId + " quiz permission: " + permission);
+                fileDao.changeQuizPermission(fileId, permission);
+                ctx.status(201); // created successfully
+            } catch (DaoException | NullPointerException ex) {
+                throw new ApiError(ex.getMessage(), 500); // server internal error
+            }
+        });
+    }
+
+    private static void checkQuizPermission(FileDao fileDao) {
+        // instructor login action, return user including his/her id
+        app.get("/quizpermission", ctx -> {
+            try {
+                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.queryParam("fileId")));
+                System.out.println("fileId: " + fileId);
+                Boolean quizPermission = fileDao.checkQuizPermission(fileId);
+                ctx.result(String.valueOf(quizPermission));
+                ctx.status(200);
+            } catch (DaoException | NullPointerException ex) {
+                throw new ApiError(ex.getMessage(), 500); // server internal error
             }
         });
     }

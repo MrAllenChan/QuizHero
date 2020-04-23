@@ -98,20 +98,5 @@ public class Sql2oQuizDao implements QuizDao {
         } else {
             throw new DaoException("quiz already exists");
         }
-
-//         for now, uploading a markdown containing the same questionIds is not handled
-//         update answer? reset counts? not decided yet
-//        } else {
-//            sql = "UPDATE Quiz Set " + answer + " = " + answer +
-//                    "WHERE fileId = " + fileId + " AND questionId = " + questionId;
-//            System.out.println(sql);
-//            try (Connection conn = sql2o.open()) {
-//                conn.createQuery(sql).executeUpdate();
-//                System.out.println("New quiz updated in Quiz table.");
-//            } catch (Sql2oException ex) {
-//                throw new DaoException("Unable to update quiz to Quiz table", ex);
-//            }
-//        }
-
     }
 }

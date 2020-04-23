@@ -95,7 +95,7 @@ public class DaoFactory {
                 "fileName VARCHAR(30) NOT NULL, " +
                 "filePermission BOOLEAN DEFAULT false," +
                 "quizPermission BOOLEAN DEFAULT false," +
-                "mdFile bytea" +
+                "fileContent bytea" +
                 ")";
 
         try (Connection conn = sql2o.open()) {

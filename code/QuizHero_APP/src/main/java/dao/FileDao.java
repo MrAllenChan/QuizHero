@@ -9,6 +9,6 @@ public interface FileDao {
     public void storeFile(File file);
     public void changeFilePermission(int fileId, boolean permission);
     public Boolean checkFilePermission(int fileId);
-//    public void changeQuizPermission(int fileId, boolean permission);
-//    public Boolean checkQuizPermission(int fileId);
+    public void changeQuizPermission(int fileId, boolean permission);
+    public Boolean checkQuizPermission(int fileId);
 }
