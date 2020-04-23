@@ -76,6 +76,18 @@
 - Refine API and DAOs on back-end for quiz accessing control.
 - Refactor code to make it more object-oriented.
 
+# Tasks
+> List of tasks revisited after Thurseday meeting
+- Fix user login and log out, error msg, test on heroku
+- File/quiz permission
+- User history page
+- File download function
+- "return from presentation" button: new tab or navitation bar
+- md template on frontpage, an instruction on markdown syntax
+- fix unit test
+- update README
+- draft presentation (first to present on Tuesday, pick 4 user stories)
+
 
 # Retrospective
 > The retrospective is an opportunity for your team to inspect itself and create a plan for improvements to be enacted during the next iteration. Review what you had done in iteration 2; note things that you have and have not delivered, note the challenges you had, and reflect on how you shall proceed in the next iteration to do a better job.
