@@ -39,7 +39,7 @@ class UploadHistory extends React.Component {
         }
         console.log(params)
         axios
-            .get(BASE_URL + "/getInstructorFile", {params})
+            .get(BASE_URL + "/history", {params})
             .then((res) => {
                 if(res.status === 200){
                     this.setState({
