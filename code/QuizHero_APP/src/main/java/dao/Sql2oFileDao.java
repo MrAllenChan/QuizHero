@@ -30,11 +30,6 @@ public class Sql2oFileDao implements FileDao{
     }
 
     public void storeFile(File file) {
-//        int fileId = file.getFileId();
-//        String fileName = file.getFileName();
-//        Boolean fileAccess = file.getFileAccess();
-//        Boolean quizAccess = file.getQuizAccess();
-//        InputStream inputStream = file.getBytea();
         try (Connection conn = sql2o.open()) {
             String sql = "insert into file values (:fileId, :fileName, :filePermission, :quizPermission, :fileContent)";
             conn.createQuery(sql)

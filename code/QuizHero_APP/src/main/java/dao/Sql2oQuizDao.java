@@ -25,16 +25,18 @@ public class Sql2oQuizDao implements QuizDao {
             return conn.createQuery(sql).executeAndFetch(Quiz.class);
         }
         catch (Sql2oException ex) {
-            throw new DaoException("Cannot find any quiz with file ID: " + fileId, ex);
+            throw new DaoException("database error." + ex.getMessage(), ex);
         }
     }
 
     @Override
     public Quiz getSingleQuizStat(int fileId, int questionId) {
         try (Connection conn = sql2o.open()) {
-            String sql = "SELECT * FROM quiz Where fileId = " +
-                    fileId + " AND questionId = " + questionId + ";";
-            return conn.createQuery(sql).executeAndFetchFirst(Quiz.class);
+            String sql = "SELECT * FROM quiz Where fileId = :fileId AND questionId = :questionId;";
+            return conn.createQuery(sql)
+                    .addParameter("fileId", fileId)
+                    .addParameter("questionId", questionId)
+                    .executeAndFetchFirst(Quiz.class);
         }
         catch (Sql2oException ex) {
             throw new DaoException("Cannot find this single quiz with file ID: " +
@@ -52,32 +54,30 @@ public class Sql2oQuizDao implements QuizDao {
 
     @Override
     public void add(Quiz quiz) throws DaoException {
-
-//        System.out.println(quiz.toString());
-
+        // handel the case that quiz is initialized with null fileId and questionId values
         int fileId = quiz.getFileId();
         int questionId = quiz.getQuestionId();
-        //handel the case that quiz is initialized with null fileId and questionId values
         if (fileId == 0 || questionId == 0) {
             throw new DaoException("FileId and questionId can not be 0!");
         }
-        String answer = quiz.getAnswer();
-        List<Map<String, Object>> listFromTable;
-        String sql = "SELECT * FROM quiz WHERE fileId = " + fileId + " AND questionId = " + questionId + ";";
-        try (Connection conn = sql2o.open()) {
-            Table table = conn.createQuery(sql).executeAndFetchTable();
-            listFromTable = table.asList();
 
-        } catch (Sql2oException ex) {
-            throw new DaoException("Unable to add quiz!", ex);
-        }
+//        String answer = quiz.getAnswer();
+//        List<Map<String, Object>> listFromTable;
+//        String sql = "SELECT * FROM quiz WHERE fileId = " + fileId + " AND questionId = " + questionId + ";";
+//        try (Connection conn = sql2o.open()) {
+//            Table table = conn.createQuery(sql).executeAndFetchTable();
+//            listFromTable = table.asList();
+//
+//        } catch (Sql2oException ex) {
+//            throw new DaoException("Unable to add quiz!", ex);
+//        }
 
-//        List<Quiz> listFromTable  = getSingleQuizStat(fileId, questionId);
+        Quiz singleQuiz = getSingleQuizStat(fileId, questionId);
 
         // quiz not exist then insert, otherwise throw DaoException
-        if (listFromTable.isEmpty()) {
+        if (singleQuiz == null) {
             try (Connection conn = sql2o.open()) {
-                sql = "INSERT INTO quiz(fileId, questionId, answer, countA, countB, countC, countD) " +
+                String sql = "INSERT INTO quiz(fileId, questionId, answer, countA, countB, countC, countD) " +
                         "VALUES (:fileId, :questionId, :answer, :A, :B, :C, :D);";
                 int id = (int) conn.createQuery(sql, true)
                         .addParameter("fileId", quiz.getFileId())
@@ -91,12 +91,12 @@ public class Sql2oQuizDao implements QuizDao {
                         .getKey();
 
                 quiz.setId(id);
-
             } catch (Sql2oException ex) {
                 throw new DaoException("Unable to add the quiz", ex);
             }
         } else {
-            throw new DaoException("quiz already exists");
+//            System.out.println("quiz exists");
+            throw new DaoException("quiz already exists, unable to add this quiz", new Sql2oException());
         }
     }
 }

@@ -17,24 +17,21 @@ public class DaoFactory {
         // This class is not meant to be instantiated!
     }
 
-    public static void clearDatabase() throws URISyntaxException{
-        instantiateSql2o();
-        if (DROP_TABLES_IF_EXIST) {
-            dropInsFileTableIfExists(sql2o);
-            dropQuizTableIfExists(sql2o);
-            dropInstructorTableIfExists(sql2o);
-            dropFileTableIfExists(sql2o);
-        }
+    private static void clearDatabase() throws URISyntaxException{
+        dropInsFileTableIfExists(sql2o);
+        dropQuizTableIfExists(sql2o);
+        dropInstructorTableIfExists(sql2o);
+        dropFileTableIfExists(sql2o);
     }
 
-    private static void instantiateSql2o() throws URISyntaxException {
+    public static void instantiateSql2o() throws URISyntaxException {
         if (sql2o == null) {
             final String URI;
             final String USERNAME;
             final String PASSWORD;
             String databaseUrl = System.getenv("DATABASE_URL");
             if (databaseUrl == null) {
-                // Not on heroku, use SQLite
+                // Not on heroku, use local PostgreSQL
                 URI = "jdbc:postgresql://localhost:5432/postgres";
                 USERNAME = "postgres";
                 PASSWORD = "1009";
@@ -49,6 +46,9 @@ public class DaoFactory {
 
             sql2o = new Sql2o(URI, USERNAME, PASSWORD);
             System.out.println("database instantiated successfully.");
+        }
+        if (DROP_TABLES_IF_EXIST) {
+            clearDatabase();
         }
     }
 
@@ -186,7 +186,6 @@ public class DaoFactory {
 
     public static RecordDao getRecordDao() {
 //        instantiateSql2o();
-//        createQuizTable(sql2o);
         return new Sql2oRecordDao(sql2o);
     }
 
