@@ -60,7 +60,7 @@ class UploadHistory extends React.Component {
                     MarkDownFile: res.data,
                 })
                 this.callSeparateQuestion(fileId)
-                alert(`File ${fileId} fetched successfully.`)
+                // alert(`File ${fileId} fetched successfully.`)
             })
             .catch((error) => {
                 alert(`Fail to fetch File ${fileId}.`)
@@ -76,14 +76,13 @@ class UploadHistory extends React.Component {
         var data = separateQuestion(this.state.MarkDownFile, fileId);
         data = JSON.stringify(data)
         localStorage.setItem("data", data)
-        // this.jump();
+        this.jump();
         // this.getMarpit();
     }
 
     jump =()=> {
         console.log('jump')
-        const w=window.open('about:blank');
-        w.location.href= 'localhost:3000/presenter'
+        window.open('/presenter');
     }
 
     startSharing=(fileId)=>{
@@ -139,8 +138,27 @@ class UploadHistory extends React.Component {
     //     });
     // };
 
+    handleLogOut(){
+        localStorage.setItem("username",null)
+        localStorage.setItem("instructorId",0)
+        localStorage.setItem("isLogin",0)
+        localStorage.setItem("data", null)
+        window.location = "/login"
+    }
+
     render() {
         const { fileList } = this.state;
+
+        const username = localStorage.getItem("username")?localStorage.getItem("username"):"";
+
+        const logOutBtnStyle = {
+            background: "none",
+            border: "none",
+            paddingLeft: "5px",
+            color: "#1890FF",
+            textDecoration: "underline",
+            cursor: "pointer"
+        };
 
         return (
             <div className="App">
@@ -155,6 +173,11 @@ class UploadHistory extends React.Component {
                             <Link to={'/history'}>History</Link>
                         </Menu.Item>
 
+                        <div style={{display:"inline-block",float:"right",paddingRight:"30px"}}>
+                            Welcome, {username}
+                            <button onClick={this.handleLogOut} style={logOutBtnStyle}>Log Out</button>
+                        </div>
+
                     </Menu>
                 </Header>
 
@@ -166,13 +189,14 @@ class UploadHistory extends React.Component {
                           renderItem={item => (
                               <List.Item
                                   actions={[
-                                      <Button size={"small"} onClick={() => this.fetchFile(item.fileId)}>Fetch</Button>,
-                                      <Link to={{pathname: '/presenter'}}>
-                                          <Button size={"small"} style={{marginLeft: 10}}
-                                                  onClick={() => this.fetchFile(item.fileId)}>
-                                              <Icon/>Presenter Mode
-                                          </Button>
-                                      </Link>,
+                                      <Button size={"small"} onClick={() => this.fetchFile(item.fileId)}>View</Button>,
+                                      // <Link to={{pathname: '/presenter'}}>
+                                      //     <Button size={"small"} style={{marginLeft: 10}}
+                                      //             onClick={() => this.fetchFile(item.fileId)}>
+                                      //         <Icon/>Presenter Mode
+                                      //     </Button>
+                                      // </Link>
+                                      ,
                                       // Start/Stop sharing file button
                                       <CopyToClipboard
                                           onCopy={() => this.startSharing(item.fileId)}
