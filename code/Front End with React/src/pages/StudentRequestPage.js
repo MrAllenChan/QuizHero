@@ -135,7 +135,7 @@ class StudentRequestPage extends Component{
                     {/*<Link to={{pathname: '/student', query: this.state.data}}>*/}
                         <Search
                             style={{width: 400}}
-                            placeholder="input shared url"
+                            placeholder="input shared code"
                             enterButton="Search"
                             size="large"
                             onSearch={this.onSearch}

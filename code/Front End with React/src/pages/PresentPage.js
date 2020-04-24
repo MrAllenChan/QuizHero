@@ -180,6 +180,7 @@ class PresentPage extends Component {
                     onAnswerSelected={this.handleAnswerSelected}
                     questionCounter={this.state.questionCounter}
                 />
+                <h3>Presenter's response will not be recorded.</h3>
                 <Button
                     onClick={this.skipQuestion}>
                     <Icon /> Skip

@@ -189,7 +189,7 @@ class UploadHistory extends React.Component {
                           renderItem={item => (
                               <List.Item
                                   actions={[
-                                      <Button size={"small"} onClick={() => this.fetchFile(item.fileId)}>View</Button>,
+                                      <Button size={"small"} onClick={() => this.fetchFile(item.fileId)}>Presenter Mode</Button>,
                                       // <Link to={{pathname: '/presenter'}} target = '_blank'>
                                       //     <Button size={"small"} style={{marginLeft: 10}}
                                       //             onClick={() => this.fetchFile(item.fileId)}>
