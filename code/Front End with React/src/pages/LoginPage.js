@@ -179,4 +179,4 @@ class LoginPage extends Component {
   }
 }
 
- export default Form.create({ name: "LoginPage" })(connect(mapStateToProps, mapDispatchToProps)(LoginPage))
+export default Form.create({ name: "LoginPage" })(connect(mapStateToProps, mapDispatchToProps)(LoginPage))

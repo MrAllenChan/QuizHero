@@ -166,7 +166,7 @@ class UploadHistory extends React.Component {
                     <div className="logo" />
                     <Menu theme="white" mode="horizontal" defaultSelectedKeys={['2']}>
 
-                        <Menu.Item key="1">
+                        <Menu.Item key="1" style={{marginLeft:"160px"}}>
                             <Link to={'/HomePage'}>Upload</Link>
                         </Menu.Item>
                         <Menu.Item key="2">
