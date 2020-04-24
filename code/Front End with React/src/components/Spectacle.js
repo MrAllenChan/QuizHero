@@ -16,21 +16,21 @@ import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Not
 // const myTheme = createTheme(null, customStyles);
 
 // SPECTACLE_CLI_THEME_START
-const theme = {
-    colors: {
-        primary: '#f00', // header color
-        secondary: '#00f', // paragraph color
-        tertiary: '#fff', // background color
-        quaternary: '#000' // hyperlink color
-    },
-    fontSizes: {
-        h1: '70px',
-        h2: '40px',
-        text:'30px',
-        header: '64px',
-        paragraph: '28px'
-    }
-};
+// const theme = {
+//     colors: {
+//         primary: '#f00', // header color
+//         secondary: '#00f', // paragraph color
+//         tertiary: '#fff', // background color
+//         quaternary: '#000' // hyperlink color
+//     },
+//     fontSizes: {
+//         h1: '70px',
+//         h2: '40px',
+//         text:'30px',
+//         header: '64px',
+//         paragraph: '28px'
+//     }
+// };
 // SPECTACLE_CLI_THEME_END
 
 // SPECTACLE_CLI_TEMPLATE_START
@@ -150,7 +150,7 @@ class Slides extends React.Component{
             //     </Slide>
             //     <Markdown containsSlides>{this.slides}</Markdown>
             // </Deck>
-            <Deck loop theme={theme} template={template} transition={["slide"]}>
+            <Deck loop theme={defaultTheme} template={template} transition={["slide"]}>
                 {content}
             </Deck>
         );
