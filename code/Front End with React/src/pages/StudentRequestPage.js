@@ -22,11 +22,15 @@ class StudentRequestPage extends Component{
     }
 
     onSearch = (value, event) => {
+        this.setState({
+            display_name : 'none'
+        })
+
         let params = {
             fileId: value
         }
 
-        axios.get(BASE_URL + "/quizpermission",  {params})
+        axios.get(BASE_URL + "/filepermission",  {params})
             .then(res => {
                 console.log("AAA", res.data);
                 this.setState({
@@ -34,7 +38,7 @@ class StudentRequestPage extends Component{
                     permission : res.data,
                     MarkDownFile : ""
                 }, this.fetchFile);
-                alert(`File ${value} found.`)
+                // alert(`File ${value} found.`)
             })
             .catch((error) => {
                 alert("File doesn't exist!")
@@ -54,7 +58,7 @@ class StudentRequestPage extends Component{
                     this.setState({
                         MarkDownFile: res.data,
                     }, this.generateSlides)
-                    alert(`File ${this.state.fileId} fetched successfully.`)
+                    message.success(`File ${this.state.fileId} fetched successfully.`)
                 })
                 .catch((error) => {
                     alert(`Fail to fetch File ${this.state.fileId}.`)

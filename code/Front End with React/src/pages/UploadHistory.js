@@ -76,7 +76,7 @@ class UploadHistory extends React.Component {
         var data = separateQuestion(this.state.MarkDownFile, fileId);
         data = JSON.stringify(data)
         localStorage.setItem("data", data)
-        this.jump();
+        // this.jump();
         // this.getMarpit();
     }
 
@@ -90,7 +90,7 @@ class UploadHistory extends React.Component {
         const formData = new FormData();
         formData.append('fileId', fileId);
         formData.append('permission', true);
-        axios.post(BASE_URL + "/quizpermission", formData)
+        axios.post(BASE_URL + "/filepermission", formData)
             .then(()=> message.success(`Share code ${fileId} is copied on your clipboard`))
             .catch(()=> message.error('error'));
     }
@@ -99,7 +99,7 @@ class UploadHistory extends React.Component {
         const formData = new FormData();
         formData.append('fileId', fileId);
         formData.append('permission', false);
-        axios.post(BASE_URL + "/quizpermission", formData)
+        axios.post(BASE_URL + "/filepermission", formData)
             .then(()=> message.success(`File ${fileId} stop sharing`))
             .catch(()=> message.error('error'));
     }

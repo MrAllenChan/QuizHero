@@ -146,7 +146,7 @@ class MyUpload extends React.Component{
         const formData = new FormData();
         formData.append('fileId', this.state.fileId);
         formData.append('permission', true);
-        axios.post(BASE_URL + "/quizpermission", formData)
+        axios.post(BASE_URL + "/filepermission", formData)
             .then(()=> message.success(`Share code ${this.state.fileId} is copied on your clipboard`))
             .catch(()=> message.error('error'));
     }
@@ -155,7 +155,7 @@ class MyUpload extends React.Component{
         const formData = new FormData();
         formData.append('fileId', this.state.fileId);
         formData.append('permission', false);
-        axios.post(BASE_URL + "/quizpermission", formData)
+        axios.post(BASE_URL + "/filepermission", formData)
             .then(()=> message.success(`File ${this.state.fileId} stop sharing`))
             .catch(()=> message.error('error'));
     }

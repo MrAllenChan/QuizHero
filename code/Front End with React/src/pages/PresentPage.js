@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Quiz from '../components/Quiz';
 import ResultPresenter from '../components/ResultPresenter';
 import axios from 'axios'
-import {Button, Icon} from "antd";
+import {Button, Icon, message} from "antd";
 import Slides from "../components/Spectacle";
 import {BASE_URL} from "../config/config"
 
@@ -188,7 +188,26 @@ class PresentPage extends Component {
         );
     }
 
+    startQuiz=()=>{
+        const formData = new FormData();
+        formData.append('fileId', this.state.fileId);
+        formData.append('permission', true);
+        axios.post(BASE_URL + "/quizpermission", formData)
+            .then(()=> message.success(`Students can now start quiz for presentation ${this.state.fileId}`))
+            .catch(()=> message.error('error'));
+    }
+
+    stopQuiz=()=>{
+        const formData = new FormData();
+        formData.append('fileId', this.state.fileId);
+        formData.append('permission', false);
+        axios.post(BASE_URL + "/quizpermission", formData)
+            .then(()=> message.success(`Students stop answering quiz for presentation ${this.state.fileId}`))
+            .catch(()=> message.error('error'));
+    }
+
     toQuizCallback = (quizBlockNumber) => {
+        this.startQuiz();
         console.log(quizBlockNumber)
 
         const quizQuestions = this.state.quizList[quizBlockNumber];
@@ -216,10 +235,13 @@ class PresentPage extends Component {
         })
     };
 
-    toSlidesCallback=()=>(
-        this.setState({quizFlag : 0,
-        result : 0})
-    )
+    toSlidesCallback=()=>{
+        this.stopQuiz();
+        this.setState({
+            quizFlag : 0,
+            result : 0
+        });
+    }
 
 
     renderResult() {
