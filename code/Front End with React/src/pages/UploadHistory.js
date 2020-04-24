@@ -8,6 +8,7 @@ import axios from "axios";
 import {BASE_URL} from "../config/config";
 import separateQuestion from "../components/Parse";
 import {CopyToClipboard} from "react-copy-to-clipboard";
+import template from "../components/template";
 // import marpitConvert from "../components/Marpit";
 const { Header, Content, Footer } = Layout;
 
@@ -67,11 +68,6 @@ class UploadHistory extends React.Component {
             })
     }
 
-    generateSlides = (fileId) => {
-        this.callSeparateQuestion(fileId);
-        // this.state.display_name = this.display_name();
-    }
-
     callSeparateQuestion =(fileId)=>{
         var data = separateQuestion(this.state.MarkDownFile, fileId);
         data = JSON.stringify(data)
@@ -101,6 +97,38 @@ class UploadHistory extends React.Component {
         axios.post(BASE_URL + "/filepermission", formData)
             .then(()=> message.success(`File ${fileId} stop sharing`))
             .catch(()=> message.error('error'));
+    }
+
+    onDownload = (fileId, fileName) => {
+        function fakeClick(obj) {
+            var ev = document.createEvent("MouseEvents");
+            ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            obj.dispatchEvent(ev);
+        }
+        function exportRaw(name, data) {
+            var urlObject = window.URL || window.webkitURL || window;
+            var export_blob = new Blob([data]);
+            var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
+            save_link.href = urlObject.createObjectURL(export_blob);
+            save_link.download = name;
+            fakeClick(save_link);
+        }
+
+        let params = {
+            fileId: fileId
+        }
+
+        console.log(fileId)
+        axios.get(BASE_URL + "/fetch", {params})
+            .then(res => {
+                console.log("AAA", res.data);
+                exportRaw(fileName, res.data);
+                message.success(`File ${fileName} ${fileId} downloaded successfully.`)
+            })
+            .catch((error) => {
+                console.log(error);
+                alert(`Fail to fetch File ${fileId}.`)
+            })
     }
 
     // getData = callback => {
@@ -212,7 +240,7 @@ class UploadHistory extends React.Component {
                               >
                                   {/*<Skeleton avatar title={false} loading={item.loading} active>*/}
                                   <List.Item.Meta
-                                      title={<a href="https://ant.design">{item.fileName}</a>}
+                                      title={<a onClick={() => this.onDownload(item.fileId, item.fileName)}>{item.fileName}</a>}
                                   />
                                       {/*<div>content</div>*/}
                                   {/*</Skeleton>*/}

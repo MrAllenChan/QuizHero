@@ -28,6 +28,7 @@ class MyUpload extends React.Component{
     state = {
         file:"",
         fileId:"",
+        fileName:"",
         rawString:"",
         data:"",
         marpitResult:"",
@@ -48,6 +49,9 @@ class MyUpload extends React.Component{
         }
         if (info.file.status === 'done') {
             console.log(info.file.name);
+            this.setState({
+                fileName :info.file.name
+            })
             message.success(`${info.file.name} file uploaded successfully`);
             this.sendFile()
                 .then(this.readFile)
@@ -83,7 +87,24 @@ class MyUpload extends React.Component{
             save_link.download = name;
             fakeClick(save_link);
         }
-        exportRaw('filename.html', this.state.marpitResult);
+        exportRaw(this.state.fileName, this.state.rawString);
+    }
+
+    downloadHTML = () => {
+        function fakeClick(obj) {
+            var ev = document.createEvent("MouseEvents");
+            ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            obj.dispatchEvent(ev);
+        }
+        function exportRaw(name, data) {
+            var urlObject = window.URL || window.webkitURL || window;
+            var export_blob = new Blob([data]);
+            var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
+            save_link.href = urlObject.createObjectURL(export_blob);
+            save_link.download = name;
+            fakeClick(save_link);
+        }
+        exportRaw(`${this.state.fileName}.html`, this.state.marpitResult);
     }
 
     // send markdown file to backend and set the database returned fileId to state
@@ -264,6 +285,9 @@ class MyUpload extends React.Component{
                             <Button size={"large"} style={{marginLeft: 10}}
                                 onClick={this.stopSharing}>
                                 <Icon/>Stop sharing
+                            </Button>
+                            <Button onClick={this.downloadHTML} size={"large"} style={{marginLeft: 10}}>
+                                <Icon/>Download HTML
                             </Button>
                         </div>
                     </div>

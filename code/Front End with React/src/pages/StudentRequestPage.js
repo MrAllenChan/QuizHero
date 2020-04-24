@@ -94,7 +94,7 @@ class StudentRequestPage extends Component{
     // }
 
 
-    download = () => {
+    downloadHTML = () => {
         function fakeClick(obj) {
             var ev = document.createEvent("MouseEvents");
             ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
@@ -108,7 +108,7 @@ class StudentRequestPage extends Component{
             save_link.download = name;
             fakeClick(save_link);
         }
-        exportRaw('filename.html', this.state.marpitResult);
+        exportRaw('presentation.html', this.state.marpitResult);
     }
 
     display_name () {
@@ -146,8 +146,8 @@ class StudentRequestPage extends Component{
                             <Icon/>Go to Presentation
                         </Button>
                     </Link>
-                    <Button onClick={this.download} size={"large"} style={{marginLeft: 10}}>
-                        <Icon/>Download file
+                    <Button onClick={this.downloadHTML} size={"large"} style={{marginLeft: 10}}>
+                        <Icon/>Download HTML
                     </Button>
                     </div>
                     {/*</Link>*/}
