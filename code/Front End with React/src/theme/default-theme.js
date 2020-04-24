@@ -15,7 +15,7 @@ export default {
     },
     fontSizes: {
         h1: '70px',
-        h2: '60px',
-        text:'25px'
+        h2: '3px',
+        text:'5px'
     }
 };

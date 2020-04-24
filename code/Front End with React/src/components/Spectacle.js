@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Upload, message, Button, Icon } from 'antd';
-import defaultTheme from '../theme/deault-theme';
+import defaultTheme from '../theme/default-theme';
 import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Notes} from '../lib';
 // import createTheme from 'spectacle/lib/themes/default';
 
@@ -24,6 +24,9 @@ const theme = {
         quaternary: '#000' // hyperlink color
     },
     fontSizes: {
+        h1: '70px',
+        h2: '40px',
+        text:'30px',
         header: '64px',
         paragraph: '28px'
     }
