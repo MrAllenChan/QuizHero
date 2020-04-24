@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 // import '../utils/index.css';
 import {Link} from "react-router-dom";
-import {List, Button, Skeleton, Menu, Layout} from 'antd';
+import {List, Button, Skeleton, Menu, Layout, Icon} from 'antd';
 import axios from "axios";
 import {BASE_URL} from "../config/config";
+import separateQuestion from "../components/Parse";
+// import marpitConvert from "../components/Marpit";
 const { Header, Content, Footer } = Layout;
 
 
@@ -20,8 +22,10 @@ class UploadHistory extends React.Component {
     state = {
         // initLoading: true,
         // loading: false,
-        fileId: [],
-        fileName: [],
+        fileList: [],
+        MarkDownFile : "",
+        data : "",
+        fileId : ""
     };
 
     componentDidMount() {
@@ -43,10 +47,10 @@ class UploadHistory extends React.Component {
             .then((res) => {
                 if(res.status === 200){
                     this.setState({
-                        fileId : res.data.fileId,
-                        fileName : res.data.fileName
+                        fileList : res.data
                     });
                     console.log("res",res);
+                    console.log(this.state.fileList);
                 }
                 // console.log(res.data);
             })
@@ -55,7 +59,47 @@ class UploadHistory extends React.Component {
             });
     }
 
-    getData = callback => {
+    fetchFile =(fileId)=> {
+        let params = {
+            fileId: fileId
+        }
+
+        axios.get(BASE_URL + "/fetch",  {params})
+            .then(res => {
+                console.log("AAA", res.data);
+                this.setState({
+                    MarkDownFile: res.data,
+                }, this.callSeparateQuestion)
+                console.log(this.state.MarkDownFile)
+                alert(`File ${fileId} fetched successfully.`)
+            })
+            .catch((error) => {
+                alert(`Fail to fetch File ${fileId}.`)
+            })
+    }
+
+    generateSlides = (fileId) => {
+        this.callSeparateQuestion(fileId);
+        // this.state.display_name = this.display_name();
+    }
+
+    callSeparateQuestion =(fileId)=>{
+        console.log(this.state.MarkDownFile)
+        console.log(fileId)
+        const data = separateQuestion(this.state.MarkDownFile, fileId);
+        console.log(data)
+        localStorage.setItem("data",data)
+        // this.jump();
+        // this.getMarpit();
+    }
+
+    jump(){
+        console.log('jump')
+        const w=window.open('localhost:3000/presenter');
+        w.location.href= 'localhost:3000/presenter'
+    }
+
+    // getData = callback => {
         // reqwest({
         //     url: fakeDataUrl,
         //     type: 'json',
@@ -65,7 +109,7 @@ class UploadHistory extends React.Component {
         //         callback(res);
         //     },
         // });
-    };
+    // };
 
     // onLoadMore = () => {
     //     this.setState({
@@ -91,7 +135,7 @@ class UploadHistory extends React.Component {
     // };
 
     render() {
-        const { initLoading, loading, list } = this.state;
+        const { fileList } = this.state;
 
         return (
             <div className="App">
@@ -113,25 +157,32 @@ class UploadHistory extends React.Component {
                 </Header>
 
                 <div style={{padding: 45, paddingTop: 60}}>
-                    <List margin-top={"50px"}
-                          className="demo-loadmore-list"
-                          loading={initLoading}
-                          itemLayout="horizontal"
-                        // loadMore={loadMore}
-                          dataSource={list}
-                          renderItem={item => (
-                              <List.Item
-                                  actions={[<a key="list-loadmore-edit">View</a>, <a key="list-loadmore-more">Download</a>]}
-                              >
-                                  <Skeleton avatar title={false} loading={item.loading} active>
-                                      <List.Item.Meta
-                                          title={<a href="https://ant.design">{item.title}</a>}
-                                      />
-                                      {/*<div>content</div>*/}
-                                  </Skeleton>
-                              </List.Item>
-                          )}
-                    />
+                    {/*<List margin-top={"50px"}*/}
+                    {/*      className="demo-loadmore-list"*/}
+                    {/*      // loading={initLoading}*/}
+                    {/*      itemLayout="horizontal"*/}
+                    {/*    // loadMore={loadMore}*/}
+                    {/*      dataSource={fileList}*/}
+                    {/*      renderItem={item => (*/}
+                    {/*          <List.Item*/}
+                    {/*              actions={[*/}
+                    {/*                  <Button key="list-loadmore-more">Student Mode</Button>,*/}
+                    {/*                  <Button>Start sharing</Button>,*/}
+                    {/*                  <Button>Stop sharing</Button>]}*/}
+                    {/*          >*/}
+                    {/*              /!*<Skeleton avatar title={false} loading={item.loading} active>*!/*/}
+                    {/*                  <List.Item.Meta*/}
+                    {/*                      title={[<a href="https://ant.design">{item.fileName}</a>, <Button > PM </Button>]}*/}
+                    {/*                  />*/}
+                    {/*                  /!*<div>content</div>*!/*/}
+                    {/*              /!*</Skeleton>*!/*/}
+                    {/*          </List.Item>*/}
+                    {/*      )}*/}
+                    {/*/>*/}
+                    {fileList.map(item => <li key={item.fileId}>{item.fileName}
+                        <button onClick={() => this.fetchFile(item.fileId)}>Presenter Mode</button>
+                        {/*<button onClick={() => this.fetchFile(item.fileId)}>Presenter Mode</button>*/}
+                    </li>)}
                 </div>
 
             </div>

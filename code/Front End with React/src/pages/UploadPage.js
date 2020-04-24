@@ -176,6 +176,7 @@ class MyUpload extends React.Component{
         localStorage.setItem("username",null)
         localStorage.setItem("instructorId",0)
         localStorage.setItem("isLogin",0)
+        localStorage.setItem("data", null)
         window.location = "/login"
     }
 
