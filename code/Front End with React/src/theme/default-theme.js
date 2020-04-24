@@ -10,8 +10,8 @@ export default {
         header: '"Helvetica Neue", Helvetica, Arial, sans-serif'
     },
     fontSizes: {
-        h1: '70px',
-        h2: '40px',
+        h1: '40px',
+        h2: '70px',
         text:'30px',
         header: '64px',
         paragraph: '28px'
