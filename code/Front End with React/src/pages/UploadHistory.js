@@ -60,7 +60,7 @@ class UploadHistory extends React.Component {
                     MarkDownFile: res.data,
                 })
                 this.callSeparateQuestion(fileId)
-                alert(`File ${fileId} fetched successfully.`)
+                message.success(`File ${fileId} fetched successfully.`)
             })
             .catch((error) => {
                 alert(`Fail to fetch File ${fileId}.`)
@@ -76,14 +76,13 @@ class UploadHistory extends React.Component {
         var data = separateQuestion(this.state.MarkDownFile, fileId);
         data = JSON.stringify(data)
         localStorage.setItem("data", data)
-        // this.jump();
+        this.jump();
         // this.getMarpit();
     }
 
     jump =()=> {
         console.log('jump')
-        const w=window.open('about:blank');
-        w.location.href= 'localhost:3000/presenter'
+        window.open('/presenter');
     }
 
     startSharing=(fileId)=>{
@@ -166,13 +165,13 @@ class UploadHistory extends React.Component {
                           renderItem={item => (
                               <List.Item
                                   actions={[
-                                      <Button size={"small"} onClick={() => this.fetchFile(item.fileId)}>Fetch</Button>,
-                                      <Link to={{pathname: '/presenter'}}>
-                                          <Button size={"small"} style={{marginLeft: 10}}
-                                                  onClick={() => this.fetchFile(item.fileId)}>
-                                              <Icon/>Presenter Mode
-                                          </Button>
-                                      </Link>,
+                                      <Button size={"small"} onClick={() => this.fetchFile(item.fileId)}>View</Button>,
+                                      // <Link to={{pathname: '/presenter'}} target = '_blank'>
+                                      //     <Button size={"small"} style={{marginLeft: 10}}
+                                      //             onClick={() => this.fetchFile(item.fileId)}>
+                                      //         <Icon/>Presenter Mode
+                                      //     </Button>
+                                      // </Link>,
                                       // Start/Stop sharing file button
                                       <CopyToClipboard
                                           onCopy={() => this.startSharing(item.fileId)}

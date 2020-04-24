@@ -241,12 +241,12 @@ class MyUpload extends React.Component{
                         </div>
                         {/*Presenter/Student mode button*/}
                         <div style={{display:this.state.display_name}}>
-                            <Link to={{pathname: '/presenter', query: this.state.data}}>
+                            <Link to={{pathname: '/presenter', query: this.state.data}} target = '_blank'>
                                 <Button size={"large"} style={{marginRight: 10}}>
                                     <Icon/>Presenter mode
                                 </Button>
                             </Link>
-                            <Link to={{pathname: '/student', query: this.state.data}}>
+                            <Link to={{pathname: '/student', query: this.state.data}} target = '_blank'>
                                 <Button size={"large"} style={{marginLeft: 10, marginRight:10}}>
                                     <Icon/>Student mode
                                 </Button>
