@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 // import '../utils/index.css';
 import {Link} from "react-router-dom";
-import {List, Button, Skeleton, Menu, Layout} from 'antd';
+import {List, Button, Skeleton, Menu, Layout, Icon, message} from 'antd';
 import axios from "axios";
 import {BASE_URL} from "../config/config";
+import separateQuestion from "../components/Parse";
+import {CopyToClipboard} from "react-copy-to-clipboard";
+// import marpitConvert from "../components/Marpit";
 const { Header, Content, Footer } = Layout;
 
 
@@ -18,44 +21,90 @@ const demoData = [
 
 class UploadHistory extends React.Component {
     state = {
-        // initLoading: true,
-        // loading: false,
-        fileId: [],
-        fileName: [],
+        fileList: [],
+        MarkDownFile : "",
+        data : "",
+        fileId : ""
     };
 
     componentDidMount() {
-        // this.getData(res => {
-        //     this.setState({
-        //         // initLoading: false,
-        //         // data: res.results,
-        //         data: demoData,
-        //         list: demoData,
-        //         // list: res.results,
-        //     });
-        // });
         let params = {
             instructorId : localStorage.getItem("instructorId")
         }
         console.log(params)
         axios
-            .get(BASE_URL + "/getInstructorFile", {params})
+            .get(BASE_URL + "/history", {params})
             .then((res) => {
                 if(res.status === 200){
                     this.setState({
-                        fileId : res.data.fileId,
-                        fileName : res.data.fileName
+                        fileList : res.data
                     });
                     console.log("res",res);
+                    console.log(this.state.fileList);
                 }
-                // console.log(res.data);
             })
             .catch((error) => {
-                console.log("error")
+                console.log(error)
             });
     }
 
-    getData = callback => {
+    fetchFile =(fileId)=> {
+        let params = {
+            fileId: fileId
+        }
+        console.log(fileId)
+        axios.get(BASE_URL + "/fetch",  {params})
+            .then(res => {
+                console.log("AAA", res.data);
+                this.setState({
+                    MarkDownFile: res.data,
+                })
+                this.callSeparateQuestion(fileId)
+                alert(`File ${fileId} fetched successfully.`)
+            })
+            .catch((error) => {
+                alert(`Fail to fetch File ${fileId}.`)
+            })
+    }
+
+    generateSlides = (fileId) => {
+        this.callSeparateQuestion(fileId);
+        // this.state.display_name = this.display_name();
+    }
+
+    callSeparateQuestion =(fileId)=>{
+        var data = separateQuestion(this.state.MarkDownFile, fileId);
+        data = JSON.stringify(data)
+        localStorage.setItem("data", data)
+        this.jump();
+        // this.getMarpit();
+    }
+
+    jump =()=> {
+        console.log('jump')
+        const w=window.open('about:blank');
+        w.location.href= 'localhost:3000/presenter'
+    }
+
+    startSharing=(fileId)=>{
+        const formData = new FormData();
+        formData.append('fileId', fileId);
+        formData.append('permission', true);
+        axios.post(BASE_URL + "/quizpermission", formData)
+            .then(()=> message.success(`Share code ${fileId} is copied on your clipboard`))
+            .catch(()=> message.error('error'));
+    }
+
+    stopSharing=(fileId)=>{
+        const formData = new FormData();
+        formData.append('fileId', fileId);
+        formData.append('permission', false);
+        axios.post(BASE_URL + "/quizpermission", formData)
+            .then(()=> message.success(`File ${fileId} stop sharing`))
+            .catch(()=> message.error('error'));
+    }
+
+    // getData = callback => {
         // reqwest({
         //     url: fakeDataUrl,
         //     type: 'json',
@@ -65,7 +114,7 @@ class UploadHistory extends React.Component {
         //         callback(res);
         //     },
         // });
-    };
+    // };
 
     // onLoadMore = () => {
     //     this.setState({
@@ -91,7 +140,7 @@ class UploadHistory extends React.Component {
     // };
 
     render() {
-        const { initLoading, loading, list } = this.state;
+        const { fileList } = this.state;
 
         return (
             <div className="App">
@@ -99,9 +148,6 @@ class UploadHistory extends React.Component {
                     <div className="logo" />
                     <Menu theme="white" mode="horizontal" defaultSelectedKeys={['2']}>
 
-                        {/*<Menu.Item key="1">Upload </Menu.Item>*/}
-
-                        {/*<Menu.Item key="2">History </Menu.Item>*/}
                         <Menu.Item key="1">
                             <Link to={'/HomePage'}>Upload</Link>
                         </Menu.Item>
@@ -115,20 +161,38 @@ class UploadHistory extends React.Component {
                 <div style={{padding: 45, paddingTop: 60}}>
                     <List margin-top={"50px"}
                           className="demo-loadmore-list"
-                          loading={initLoading}
                           itemLayout="horizontal"
-                        // loadMore={loadMore}
-                          dataSource={list}
+                          dataSource={fileList}
                           renderItem={item => (
                               <List.Item
-                                  actions={[<a key="list-loadmore-edit">View</a>, <a key="list-loadmore-more">Download</a>]}
+                                  actions={[
+                                      <Button size={"small"} onClick={() => this.fetchFile(item.fileId)}>Fetch</Button>,
+                                      <Link to={{pathname: '/presenter'}}>
+                                          <Button size={"small"} style={{marginLeft: 10}}
+                                                  onClick={() => this.fetchFile(item.fileId)}>
+                                              <Icon/>Presenter Mode
+                                          </Button>
+                                      </Link>,
+                                      // Start/Stop sharing file button
+                                      <CopyToClipboard
+                                          onCopy={() => this.startSharing(item.fileId)}
+                                          text={item.fileId}>
+                                          <Button size={"small"} style={{marginLeft: 10}}>
+                                              <Icon/>Start sharing
+                                          </Button>
+                                      </CopyToClipboard>,
+                                      <Button size={"small"} style={{marginLeft: 10}}
+                                              onClick={() => this.stopSharing(item.fileId)}>
+                                          <Icon/>Stop sharing
+                                      </Button>
+                                  ]}
                               >
-                                  <Skeleton avatar title={false} loading={item.loading} active>
-                                      <List.Item.Meta
-                                          title={<a href="https://ant.design">{item.title}</a>}
-                                      />
+                                  {/*<Skeleton avatar title={false} loading={item.loading} active>*/}
+                                  <List.Item.Meta
+                                      title={<a href="https://ant.design">{item.fileName}</a>}
+                                  />
                                       {/*<div>content</div>*/}
-                                  </Skeleton>
+                                  {/*</Skeleton>*/}
                               </List.Item>
                           )}
                     />
@@ -139,8 +203,5 @@ class UploadHistory extends React.Component {
         );
     }
 }
-
-// render(<UploadHistory />, document.getElementById('container'));
-
 
 export default UploadHistory;
