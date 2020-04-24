@@ -24,15 +24,16 @@ Develop a web application, on which instructors can upload markdown files includ
 * As a student, I want to answer the quiz so that I can interact with the instructor during class.
 * As a student, I want to view the slides uploaded by the instructer so that I can keep pace with the lesson.
 * As an instructor, I want to collect students' answers and see relevant statistical data on my computer, so that I can know how students perform.
-* As an instructor, I want to have a presenter mode to see my slides and quiz content, so that I can teach a course and have a better overview of my teaching content.
+* As an instructor, I want to have a presenter mode to see all my slides, quizzes and notes, so that I can teach a course and have a better overview of my teaching content.
 * As an instructor, I want to log in to the website, so that I can have my personal record.
 * As an instructor, I want to review my presentation history, so that I can go through what I have taught.
 
 ### Nice to have
 
-* As a student, I want to download the presentation in PDF format so that I can review it after class.
+* As an instructor, I want to control the permission of starting quiz inside the slides, so that I can prompt my students to answer the quiz at the right time.
+* As an instructor, I want to control the permission of opening the files I upload, so that I can prompt my students to view the slides at the right time.
+* As a student, I want to download the presentation onto my own computer, so that I can review it after class.
 * As an instructor, I want to set a timer module, so students need to complete the quiz or discussion within the time limit. 
-* As an instructor, I want to control the permission of opening the quiz inside the slides, so that I can prompt the students to answer the quiz at the certain time.
 
 
 ## Software Architecture 
