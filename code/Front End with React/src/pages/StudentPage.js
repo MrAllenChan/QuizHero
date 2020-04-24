@@ -174,7 +174,7 @@ class StudentPage extends Component {
 
 
     renderResult() {
-        return <ResultStudent quizResult={this.state.result} toSlidesCallback={this.toSlidesCallback} />;
+        return <ResultStudent toSlidesCallback={this.toSlidesCallback} />;
     }
 
     checkQuizPermission = (quizBlockNumber) => {

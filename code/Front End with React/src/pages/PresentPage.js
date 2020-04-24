@@ -87,24 +87,24 @@ class PresentPage extends Component {
 
         //send choice to back-end
         // const BASE_URL = document.location.origin;
-        const formData = {
-            fileId : this.state.fileId,
-            questionId : parseInt(questionCounter),
-            choice : type
-        }
-        console.log(formData)
-        axios
-            .post(BASE_URL+"/record", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            })
-            .then(() => {
-                console.log("upload success");
-            })
-            .catch((error) => {
-                console.log("error")
-            });
+        // const formData = {
+        //     fileId : this.state.fileId,
+        //     questionId : parseInt(questionCounter),
+        //     choice : type
+        // }
+        // console.log(formData)
+        // axios
+        //     .post(BASE_URL+"/record", formData, {
+        //         headers: {
+        //             "Content-Type": "multipart/form-data"
+        //         }
+        //     })
+        //     .then(() => {
+        //         console.log("upload success");
+        //     })
+        //     .catch((error) => {
+        //         console.log("error")
+        //     });
     }
 
     setNextQuestion() {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Input, Button, Checkbox,message } from "antd";
+import { Form, Input, Button, Checkbox,message, Alert } from "antd";
 import { useHistory } from "react-router-dom";
 import { UserOutlined, LockOutlined, WindowsOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
@@ -86,6 +86,7 @@ class LoginPage extends Component {
           }
       }).catch(err=>{
           console.log(err)
+          message.error("Log in failed. Please check your account and password and try again!")
       })
     
   };
