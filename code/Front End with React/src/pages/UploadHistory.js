@@ -60,7 +60,7 @@ class UploadHistory extends React.Component {
                     MarkDownFile: res.data,
                 })
                 this.callSeparateQuestion(fileId)
-                // alert(`File ${fileId} fetched successfully.`)
+                message.success(`File ${fileId} fetched successfully.`)
             })
             .catch((error) => {
                 alert(`Fail to fetch File ${fileId}.`)
@@ -190,13 +190,12 @@ class UploadHistory extends React.Component {
                               <List.Item
                                   actions={[
                                       <Button size={"small"} onClick={() => this.fetchFile(item.fileId)}>View</Button>,
-                                      // <Link to={{pathname: '/presenter'}}>
+                                      // <Link to={{pathname: '/presenter'}} target = '_blank'>
                                       //     <Button size={"small"} style={{marginLeft: 10}}
                                       //             onClick={() => this.fetchFile(item.fileId)}>
                                       //         <Icon/>Presenter Mode
                                       //     </Button>
-                                      // </Link>
-                                      ,
+                                      // </Link>,
                                       // Start/Stop sharing file button
                                       <CopyToClipboard
                                           onCopy={() => this.startSharing(item.fileId)}

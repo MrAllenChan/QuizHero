@@ -141,7 +141,7 @@ class StudentRequestPage extends Component{
                             onSearch={this.onSearch}
                         />
                     <div style={{display:this.state.display_name}}>
-                    <Link to={{pathname: '/student', query: this.state.data}}>
+                    <Link to={{pathname: '/student', query: this.state.data}} target = '_blank'>
                         <Button onClick={this.onClick} size={"large"} style={{marginLeft: 10}}>
                             <Icon/>Go to Presentation
                         </Button>
