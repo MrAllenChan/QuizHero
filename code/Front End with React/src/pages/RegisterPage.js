@@ -25,26 +25,37 @@ class RegisterPage extends Component {
       return;
     }
 
+    if(email !== '*@*.*'){
+      message.error("Please enter email in correct format!")
+      return;
+    }
+
     let params = {
       name: username,
       email:email,
       pswd : password
+    }
+
+    axios.post(BASE_URL+"/register",params).then(res=>{
+        console.log(res.status)
+        if(res.status === 201){
+          message.loading("Register success, directing you to HomePage",[2],onclose=()=>{
+            console.log(res)
+            // this.props.login(res.data.name, res.data.instructorId);
+            localStorage.setItem("instructorId", res.data.instructorId)
+            localStorage.setItem("username", res.data.name)
+            localStorage.setItem("isLogin", 1)
+            window.location = "/HomePage"
+          });
+
+        }
+    }).catch(err=>{
+        console.log(err)
+        message.error("Account already exists. Please use another email address!")
+    })
   }
 
-  axios.post(BASE_URL+"/register",params).then(res=>{
-      console.log(res.status)
-      if(res.status === 201){
-        message.success("register success")
-        console.log(res)
-        // this.props.login(res.data.name, res.data.instructorId);
-        localStorage.setItem("instructorId", res.data.instructorId)
-        localStorage.setItem("username", res.data.name)
-        window.location = "/HomePage"
-      }
-  }).catch(err=>{
-      console.log(err)
-  })
-}
+
 
   backButtonHandler = () => {
     window.location.replace(BASE_URL + "/login");
@@ -52,6 +63,13 @@ class RegisterPage extends Component {
 
   render() {
     const { getFieldProps } = this.props.form;
+
+    const validateMessages = {
+      required: ` is required!`,
+      types: {
+        email: ` is not validate email!`
+      }
+    };
 
     return (
       <div className="login-page-container">
@@ -63,7 +81,7 @@ class RegisterPage extends Component {
             remember: true,
           }}
           onFinish={this.onFinish}
-        
+          validateMessages={validateMessages}
         >
           <Form.Item
             name="username"
@@ -87,6 +105,10 @@ class RegisterPage extends Component {
               {
                 required: true,
                 message: "Please input your email!",
+              },
+              {
+                type: 'email',
+                message: "Please use a valid email!"
               },
             ]}
           >

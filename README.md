@@ -1,14 +1,22 @@
-# QuizHero: a lightweight web app for creating presentations with quizzes from Markdown.
+# QuizHero: a Lightweight Web Application for Creating Interactive Slides with Quizzes from Markdown.
 
-## What is it for?
+## What is QuizHero for?
 
-QuizHero is a lightweight web app for creating presentations with quizzes from Markdown. Through this platform, instructors can create different versions of presentations, and students are able to view the slides and answer the quizzes online. Our application will collect students' answers of quizzes, store the answers, and display the statistical results to instructors, who will then have a good overview of students' performance.
+QuizHero is a lightweight web application that allows you to create your presentation slides from Markdown. You simply need to write your own markdown file, with slides you want to talk and quizzes you want to interact with your students, and let QuizHero handle everything else. 
 
-## How is it built?
+Through this platform, instructors can create different presentations by uploading different markdown files, and students are able to view the slides and answer the quizzes online. QuizHero will collect students' answers of quizzes, store the answers, analyze and display the **statistical results** to instructors, who will then have a good overview of students' performance. QuizHero has a user-friendly login interface, and allows **every registered instructor** to view their history, including every presentations they created and all the statistical data.
 
-This project uses Marpit framework to convert Markdown and CSS themes to slide decks, and an original framework to convert Markdown content to quizzes. The front-end is based on React framework, the application server is developed using Javalin, and the database is based on SQLite.
+There are even **more features** waiting for you to explore! For example, the quiz contents in a converted presentation can be **protected** by the instrutor, who will have the right to make the quizzes inaccessible until he/she releases them. Also, the statistical data can be refreshed in real time, and instructors will be able to keep track of the lastest statistics as well of students' performance. Just enjoy and have fun with QuizHero!
 
-## How to run our project
+## How is QuizHero built?
+
+The front-end is based on React framework, with the help of Spectacle to present dynamic slide decks converted from raw Markdown file. The development of back-end server involves a lot of tools and frameworks. The application server is developed using Javalin, and we use PostgreSQL as our database management system. Gradle is used as the automation build system, and we use Postman and JUnit framework to test the server.
+
+## Run QuizHero on Heroku.
+
+The alpha version of our QuizHero app is now deployed on Heroku. Want to have fun with QuizHero? Jump to https://quiz-hero.herokuapp.com/. You can also run our app at localhost. Detailed instructions will be given below.
+
+## Run QuizHero locally.
 
 1. To run our QuizHero project, first simply download the project onto a local repository of your computer.
 2. Use any popular IDE (IntelliJ IDEA recommended) to open the project **code/QuizHero_APP** and import as a **Gradle** project.
@@ -17,32 +25,48 @@ This project uses Marpit framework to convert Markdown and CSS themes to slide d
 5. Try to build the project, if build successfully, run "**RunServer.main**" under src/main/java/api. 
 6. If there is something wrong when building the project, in Gradle settings under Preferences, use Gradle from 'wrapper task' in Gradle build script (see below). Then build the project and run "RunServer.main" again, you should see the Javalin framework has begun to work now.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/configuration.jpg)
+<img src="https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/configuration.jpg" width="750" height="380" />
 
-## After you run the project
+## How to use QuizHero?
 
-Once you start running the project, you can go to http://localhost:7000/ (or the url displayed after "[main] INFO io.javalin.Javalin - Listening on") on your browser. You will see a start index page displayed on your browser with our logo "Quiz Hero" and an upload button.
+To begin with, you will see a welcome index page displayed on your browser with our logo "QuizHero" as well as two buttons you can choose: **`I'm a Presenter`** and **`I'm a Student`**.
 
-Now, You can upload any Markdown file as long as the markdown format observes the rules we make. 
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/index.png)
 
-> We provide a sample markdown file called **"demo.md"** that contains some demo slides with 3 sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page that you can interact with! 
+If you choose "I'm a presenter", you will be guided to the Login interface, or you can register as a new instructor. After logging into the application successfully, You can upload any Markdown file as long as the markdown format obeys the rules we make. 
 
-After successfully uploading the file, you can click either of the two buttons **`Presenter mode`** or **`Stundent mode`** to view slides already prepared for instructors or students, or you can click the **download button** to download the static html file. 
+> We provide a sample markdown file called **"demo.md"** that contains some demo slides with 4 sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page that you can interact with! If you still want to upload your own markdown file, you are also encouraged to take a look at **"demo.md"** to have an idea of the rules. The rules simply follow the standard markdown syntax. It is very easy to understand.
 
-In **Presenter mode** or **Stundent mode**, every response to a quiz question will be transmitted to the back-end and recorded into the database. We visualize the detailed statistics on the **result page** of the **Presenter mode**. 
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/upload.png)
+
+After successfully uploading the file, as a presenter, you have several options, either go to the **`Presenter mode`** or **`Student mode`** to view slides prepared for instructors or students. The presenter can also click the **download button** to download the static html file or click the **`Share`** button to copy the secret shared code to the clipboard. This code will be used to share the student version slides and quizzes. 
+
+With the secret shared code copied, now you can share this code with others (or you can open a new tap in your browser to test it yourself). You should choose **`I'm a Student`** from the index page, then you will be directed to the student page with a search bar, where you can input the share code. 
+
+> We do not require students to login in order to use our service, which would be a troublesome thing for students. So the presenter should always be careful about who the secret code is shared with. Also, as mentioned above, we are currently exploring the feature of allowing the the presenter to **protect** their slides and quizzes by enabling or disabling the shared code.
+
+![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/studentpage.png)
+
+If the code matches with the presenter's secret shared code, the student will be given two options **`Go to Presentation`** or **`Download file`**. They will provide the student with a interactive **Student mode** slides and quizzes and a downloadable static html file.
+
+Now you may test the quiz feature by going the quiz page in **Presenter mode** and **Stundent mode** from two tabs or two computers. Every response to a quiz question will be transmitted to the back-end and recorded into the database. The detailed statistics is visualized on the **result page** of the **Presenter mode**. 
+
+> Note that, the presenter can also do the quizzes, the result will also be counted and recorded into the database. If you do not want to mess up with the statistics, you can always choose to **Skip** the quiz in **Presenter mode**.
 
 You can click the **Refersh** button on the statistics page from time to time to see the up-to-date statistics.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/index.png)
+<!--![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/upload.png)-->
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/quiz.jpg)
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/statistics.jpg)
 
-## How to test our project
+## Test QuizHero
 
 1. You can test our project as a whole by opening two tabs on your browser. On the first tab, enter Presenter mode and stay on the result page that displays statistics. On the second one, enter Student mode and answer the quiz questions several times to simulate the situation that a group of students are doing the same quizzes simultaneously (or you can open several tabs or even browsers to do the quiz if you like). 
 
-2. We recommend using Postman to test our back-end server. We have uploaded a Postman collection under directory **code/QuizHero_APP/src/main/resources/postman/QuizHero.postman_collection.json**, and you can import this json file into your Postman application to test if the back-end server functions well as expected.
+2. We recommend using Postman to test our back-end API server. We have uploaded two Postman collections (for localhost and for Heroku) under directory **code/QuizHero_APP/src/main/resources/postman**, and you can import both json files into your Postman application to test if the back-end server functions well as expected.
+
+3. We have also written unit tests for dao and api. You can run those tests under directory **code/QuizHero_APP/src/test**.
 
 ![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/PostmanTest.jpg)

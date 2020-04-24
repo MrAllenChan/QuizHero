@@ -1,6 +1,7 @@
 import React , { Component } from  'react';
-import logo from '../fig/logo.png';
 import {Button, Icon} from 'antd';
+import logo from '../fig/logo.png';
+import template from "../components/template";
 import MyUpload from './UploadPage'
 import PresentPage from "./PresentPage";
 import StudentPage from "./StudentPage";
@@ -29,6 +30,23 @@ class FirstPage extends Component {
         window.location = "/StudentRequestPage";
     }
 
+    onDownload = () => {
+        function fakeClick(obj) {
+            var ev = document.createEvent("MouseEvents");
+            ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            obj.dispatchEvent(ev);
+        }
+        function exportRaw(name, data) {
+            var urlObject = window.URL || window.webkitURL || window;
+            var export_blob = new Blob([data]);
+            var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
+            save_link.href = urlObject.createObjectURL(export_blob);
+            save_link.download = name;
+            fakeClick(save_link);
+        }
+        exportRaw('template.md', template);
+    }
+
     render() {
         return (
             <div className="App">
@@ -43,6 +61,7 @@ class FirstPage extends Component {
                             <Icon/>I'm a Student
                         </Button>
                     </div>
+                    <a onClick={this.onDownload} style={{fontSize : 15, marginTop: 10}}>Download template</a>
 
                 </header>
             </div>

@@ -3,12 +3,15 @@ package dao;
 import exception.DaoException;
 import exception.LoginException;
 import exception.RegisterException;
+import model.File;
 import model.Instructor;
+import model.Quiz;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
-import java.util.UUID;
+import java.io.InputStream;
+import java.util.*;
 
 public class Sql2oInstructorDao implements InstructorDao{
     private Sql2o sql2o;
@@ -26,7 +29,7 @@ public class Sql2oInstructorDao implements InstructorDao{
                     .addParameter("email", email)
                     .addParameter("pswd", pswd)
                     .executeAndFetchFirst(Instructor.class);
-            System.out.println(instructor.getPswd());
+//            System.out.println(instructor.getPswd());
         } catch (Sql2oException ex) {
             throw new DaoException("Database error", ex);
         }
@@ -75,18 +78,31 @@ public class Sql2oInstructorDao implements InstructorDao{
     }
 
     @Override
-    public void storeUserFileInfo(int userId, int fileId, String url) {
+    public void storeUserFileInfo(int userId, int fileId) {
         try (Connection conn = sql2o.open()) {
-            String sql = "INSERT INTO ins_file(instructorId, fileId, url) VALUES (:userId, :fileId, :url);";
+            String sql = "INSERT INTO ins_file(instructorId, fileId) VALUES (:userId, :fileId);";
             conn.createQuery(sql, true)
                     .addParameter("userId", userId)
                     .addParameter("fileId", fileId)
-                    .addParameter("url", url)
                     .executeUpdate();
 
             System.out.println("user-file information stored.");
         } catch (Sql2oException ex1) {
             throw new DaoException("Unable to store user-file information.", ex1);
+        }
+    }
+
+    @Override
+    public List<File> getUserFileList(int instructorId) {
+        String sql = "SELECT file.fileId, fileName FROM file " +
+                "JOIN ins_file ON file.fileId = ins_file.fileId " +
+                "WHERE instructorId = :instructorId";
+        try (Connection conn = sql2o.open()) {
+            return conn.createQuery(sql)
+                            .addParameter("instructorId", instructorId)
+                            .executeAndFetch(File.class);
+        } catch (Sql2oException ex) {
+            throw new DaoException("Unable to find file history", ex);
         }
     }
 }

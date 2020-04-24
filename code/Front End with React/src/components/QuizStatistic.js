@@ -2,15 +2,17 @@ import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import axios from 'axios'
 import {Button} from 'antd'
-
+import {BASE_URL} from "../config/config"
 
 class QuizStatistic extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
-            quizData : []
+            quizData : [],
+            fileId : props.fileId
         }
+        console.log(this.state.fileId)
     }
     
     componentDidMount(){
@@ -23,11 +25,11 @@ class QuizStatistic extends React.Component {
     } 
 
     getStatistic = ()=>{
-        const BASE_URL = document.location.origin;
         let params = {
-            fileId : 1,
+            fileId : this.state.fileId,
             questionId: 1,
         }
+        console.log(params)
         axios
         .get(BASE_URL + "/quizstat", {params})
         .then((res) => {

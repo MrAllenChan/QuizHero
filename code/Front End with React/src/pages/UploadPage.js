@@ -5,6 +5,7 @@ import separateQuestion from "../components/Parse";
 import axios from 'axios';
 import {BASE_URL} from "../config/config"
 import {Link} from "react-router-dom"
+import {CopyToClipboard} from 'react-copy-to-clipboard'
 import logo from "../fig/logo.png";
 import {func} from "prop-types";
 import {enableTopologicalTravel} from "echarts/src/util/component";
@@ -125,8 +126,10 @@ class MyUpload extends React.Component{
     }
 
     callSeparateQuestion =()=>{
-        const data = separateQuestion(this.state.rawString, this.state.fileId);
+        var data = separateQuestion(this.state.rawString, this.state.fileId);
         console.log(data)
+        data = JSON.stringify(data)
+        localStorage.setItem("data",data)
         this.setState({data : data});
         this.getMarpit();
     }
@@ -137,6 +140,24 @@ class MyUpload extends React.Component{
         this.setState({
             marpitResult : marpitResult
         })
+    }
+
+    startSharing=()=>{
+        const formData = new FormData();
+        formData.append('fileId', this.state.fileId);
+        formData.append('permission', true);
+        axios.post(BASE_URL + "/filepermission", formData)
+            .then(()=> message.success(`Share code ${this.state.fileId} is copied on your clipboard`))
+            .catch(()=> message.error('error'));
+    }
+
+    stopSharing=()=>{
+        const formData = new FormData();
+        formData.append('fileId', this.state.fileId);
+        formData.append('permission', false);
+        axios.post(BASE_URL + "/filepermission", formData)
+            .then(()=> message.success(`File ${this.state.fileId} stop sharing`))
+            .catch(()=> message.error('error'));
     }
 
     display_name () {
@@ -150,8 +171,29 @@ class MyUpload extends React.Component{
             })
         }
     };
+    
+    handleLogOut(){
+        localStorage.setItem("username",null)
+        localStorage.setItem("instructorId",0)
+        localStorage.setItem("isLogin",0)
+        localStorage.setItem("data", null)
+        window.location = "/login"
+    }
+
+
 
     render(){
+        const username = localStorage.getItem("username")?localStorage.getItem("username"):"";
+
+        const logOutBtnStyle = {
+                background: "none",
+                border: "none",
+                paddingLeft: "5px",
+                color: "#1890FF",
+                textDecoration: "underline",
+                cursor: "pointer"
+        };
+
         return(
             <div className="App">
                 <Header style={{height: 0, padding: 0, position: 'fixed', zIndex: 1, width: '100%' }}>
@@ -161,18 +203,24 @@ class MyUpload extends React.Component{
                         {/*<Menu.Item key="1">Upload </Menu.Item>*/}
 
                         {/*<Menu.Item key="2">History </Menu.Item>*/}
-                        <Menu.Item key="1">
+                        <Menu.Item key="1" style={{marginLeft:"160px"}}>
                             <Link to={'/HomePage'}>Upload</Link>
                         </Menu.Item>
                         <Menu.Item key="2">
                             <Link to={'/history'}>History</Link>
                         </Menu.Item>
+                        
+                        <div style={{display:"inline-block",float:"right",paddingRight:"30px"}}>
+                             Welcome, {username}
+                             <button onClick={this.handleLogOut} style={logOutBtnStyle}>Log Out</button>
+                        </div>
+                        
 
                     </Menu>
                 </Header>
-
+                
                 <header className="App-header">
-
+                    
                     <img src={logo} className="App-logo" alt="logo"/>
                     <div>
                         {/* Upload button*/}
@@ -193,16 +241,30 @@ class MyUpload extends React.Component{
                         </div>
                         {/*Presenter/Student mode button*/}
                         <div style={{display:this.state.display_name}}>
-                            <Link to={{pathname: '/presenter', query: this.state.data}}>
+                            <Link to={{pathname: '/presenter', query: this.state.data}} target = '_blank'>
                                 <Button size={"large"} style={{marginRight: 10}}>
                                     <Icon/>Presenter mode
                                 </Button>
                             </Link>
-                            <Link to={{pathname: '/student', query: this.state.data}}>
-                                <Button size={"large"} style={{marginLeft: 10}}>
+                            <Link to={{pathname: '/student', query: this.state.data}} target = '_blank'>
+                                <Button size={"large"} style={{marginLeft: 10, marginRight:10}}>
                                     <Icon/>Student mode
                                 </Button>
                             </Link>
+                        </div>
+                        {/*Start/Stop sharing file button*/}
+                        <div style={{display:this.state.display_name}}>
+                            <CopyToClipboard
+                                onCopy={this.startSharing}
+                                text={this.state.fileId}>
+                                <Button size={"large"} style={{marginLeft: 10}}>
+                                    <Icon/>Start sharing
+                                </Button>
+                            </CopyToClipboard>
+                            <Button size={"large"} style={{marginLeft: 10}}
+                                onClick={this.stopSharing}>
+                                <Icon/>Stop sharing
+                            </Button>
                         </div>
                     </div>
 

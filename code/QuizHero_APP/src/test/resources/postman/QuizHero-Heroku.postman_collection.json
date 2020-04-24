@@ -1,0 +1,434 @@
+{
+	"info": {
+		"_postman_id": "edd52140-513f-4b95-9892-7f7e5d752222",
+		"name": "QuizHero-Heroku",
+		"description": "Postman tests for QuizHero application deploed on Heroku platform.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://quiz-hero.herokuapp.com/login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "zchen85@jhu.edu",
+							"type": "text"
+						},
+						{
+							"key": "pswd",
+							"value": "9999",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://quiz-hero.herokuapp.com/login",
+					"protocol": "https",
+					"host": [
+						"quiz-hero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://quiz-hero.herokuapp.com/register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"nanxi\",\n\t\"email\": \"nanxi@jhu.edu\",\n\t\"pswd\": \"8888\"\n}"
+				},
+				"url": {
+					"raw": "https://quiz-hero.herokuapp.com/register",
+					"protocol": "https",
+					"host": [
+						"quiz-hero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://quiz-hero.herokuapp.com/register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"allen1\",\n\t\"email\": \"zchen85@jhu.edu\",\n\t\"pswd\": \"9998\"\n}"
+				},
+				"url": {
+					"raw": "https://quiz-hero.herokuapp.com/register",
+					"protocol": "https",
+					"host": [
+						"quiz-hero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://quiz-hero.herokuapp.com/upload",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/apple/Downloads/demo.md"
+						},
+						{
+							"key": "userId",
+							"value": "2",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://quiz-hero.herokuapp.com/upload",
+					"protocol": "https",
+					"host": [
+						"quiz-hero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://quiz-hero.herokuapp.com/quiz",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fileId\": 44567,\n\t\"questionId\": 1,\n\t\"answer\": \"C\",\n\t\"countA\": 0,\n\t\"countB\": 0,\n\t\"countC\": 0,\n\t\"countD\": 0\n}"
+				},
+				"url": {
+					"raw": "https://quiz-hero.herokuapp.com/quiz",
+					"protocol": "https",
+					"host": [
+						"quiz-hero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"quiz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://quiz-hero.herokuapp.com/record",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fileId\": 44567,\n\t\"questionId\": 1,\n\t\"choice\": \"B\"\n}"
+				},
+				"url": {
+					"raw": "https://quiz-hero.herokuapp.com/record",
+					"protocol": "https",
+					"host": [
+						"quiz-hero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"record"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://quiz-hero.herokuapp.com/quizstat",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://quiz-hero.herokuapp.com/quizstat?fileId=44567",
+					"protocol": "https",
+					"host": [
+						"quiz-hero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"quizstat"
+					],
+					"query": [
+						{
+							"key": "fileId",
+							"value": "44567"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://quiz-hero.herokuapp.com/fetch",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://quiz-hero.herokuapp.com/fetch?fileId=44567",
+					"protocol": "https",
+					"host": [
+						"quiz-hero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"fetch"
+					],
+					"query": [
+						{
+							"key": "fileId",
+							"value": "44567"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://quiz-hero.herokuapp.com/filepermission",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://quiz-hero.herokuapp.com/filepermission?fileId=44567",
+					"protocol": "https",
+					"host": [
+						"quiz-hero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"filepermission"
+					],
+					"query": [
+						{
+							"key": "fileId",
+							"value": "44567"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://quiz-hero.herokuapp.com/filepermission",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fileId",
+							"value": "44567",
+							"type": "text"
+						},
+						{
+							"key": "permission",
+							"value": "true",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://quiz-hero.herokuapp.com/filepermission",
+					"protocol": "https",
+					"host": [
+						"quiz-hero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"filepermission"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://quiz-hero.herokuapp.com/quizpermission",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://quiz-hero.herokuapp.com/quizpermission?fileId=44567",
+					"protocol": "https",
+					"host": [
+						"quiz-hero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"quizpermission"
+					],
+					"query": [
+						{
+							"key": "fileId",
+							"value": "44567"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://quiz-hero.herokuapp.com/quizpermission",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fileId",
+							"value": "44567",
+							"type": "text"
+						},
+						{
+							"key": "permission",
+							"value": "true",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://quiz-hero.herokuapp.com/quizpermission",
+					"protocol": "https",
+					"host": [
+						"quiz-hero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"quizpermission"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

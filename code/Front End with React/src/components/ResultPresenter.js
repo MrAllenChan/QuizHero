@@ -21,14 +21,14 @@ function ResultPresenter(props) {
                 Thank you for finishing the quiz, here are the statistics:
             </div>
             </CSSTransitionGroup>
-            <QuizStatictic/>
+            <QuizStatictic fileId = {props.fileId}/>
             <BackButton toSlidesCallback={props.toSlidesCallback}/>
         </div>
     );
 }
 
 ResultPresenter.propTypes = {
-    quizResult: PropTypes.string.isRequired
+    // quizResult: PropTypes.string.isRequired
 };
 
 export default ResultPresenter;

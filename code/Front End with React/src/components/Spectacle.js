@@ -1,21 +1,36 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Upload, message, Button, Icon } from 'antd';
-import defaultTheme from '../theme/deault-theme';
-import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Notes} from 'spectacle';
+import defaultTheme from '../theme/default-theme';
+import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Notes} from '../lib';
+// import createTheme from 'spectacle/lib/themes/default';
 
-// SPECTACLE_CLI_MD_START
-// import mdContent from './questions.md';
-// SPECTACLE_CLI_MD_END
-const mdContent = `> Question: What is your favorite course?`
+// import createTheme from 'spectacle-theme-nova';
+ 
+
+// const customStyles = {
+//     global: {
+//       body: { background: 'white' }
+//     }
+//   };
+// const myTheme = createTheme(null, customStyles);
+
 // SPECTACLE_CLI_THEME_START
-console.log(mdContent)
-const theme = {
-    // colors: {
-    //     primary: '#f00',
-    //     secondary: '#00f'
-    // }
-};
+// const theme = {
+//     colors: {
+//         primary: '#f00', // header color
+//         secondary: '#00f', // paragraph color
+//         tertiary: '#fff', // background color
+//         quaternary: '#000' // hyperlink color
+//     },
+//     fontSizes: {
+//         h1: '70px',
+//         h2: '40px',
+//         text:'30px',
+//         header: '64px',
+//         paragraph: '28px'
+//     }
+// };
 // SPECTACLE_CLI_THEME_END
 
 // SPECTACLE_CLI_TEMPLATE_START
@@ -26,11 +41,11 @@ const template = () => (
         bottom={0}
         width={1}
     >
-        <Box padding="0 1em">
-            <FullScreen />
+        <Box padding="0 1em" >
+            <FullScreen color="#000"/>
         </Box>
         <Box padding="1em">
-            <Progress />
+            <Progress color="#000"/>
         </Box>
     </FlexBox>
 );
@@ -70,7 +85,6 @@ class Slides extends React.Component{
     }
 
     render(){
-        console.log(mdContent)
         const buttonStyle = {
             backgroundColor:"#ecc",
             width:"200px",
@@ -81,11 +95,13 @@ class Slides extends React.Component{
         };
 
         const content = [];
+        var quizBlockCount = 0;
         for (var i = 0; i < this.slides.length; i ++) {
             var data = this.slides[i];
             var slideBlock = data.split("---\n\n");
             console.log(slideBlock);
             if (slideBlock[slideBlock.length - 1] === "$$$quiz$$$\n\n") {
+                const count = quizBlockCount
                 slideBlock.splice(slideBlock.length - 1, 1);
                 data = slideBlock.join("---\n\n");
                 content.push(
@@ -93,17 +109,18 @@ class Slides extends React.Component{
 
                 )
                 content.push(
-                    <Slide backgroundColor={"#fff"}>
+                    <Slide style={{backgroundColor:"#fff"}}>
                         <Heading>Now lets do some funny quizzes!</Heading>
                         <Heading>
                             <Button
-                                onClick={this.onClick} style={buttonStyle}>
+                                onClick={() => {this.toQuizCallback(count)}} style={buttonStyle}>
                                 <Icon /> Click to start quiz
                             </Button>
                         </Heading>
 
                     </Slide>
                 )
+                quizBlockCount ++;
             } else {
                 content.push(
 
@@ -133,7 +150,7 @@ class Slides extends React.Component{
             //     </Slide>
             //     <Markdown containsSlides>{this.slides}</Markdown>
             // </Deck>
-            <Deck loop theme={defaultTheme} template={template}>
+            <Deck loop theme={defaultTheme} template={template} transition={["slide"]}>
                 {content}
             </Deck>
         );

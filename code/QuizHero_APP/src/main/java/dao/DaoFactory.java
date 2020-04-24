@@ -1,15 +1,12 @@
 package dao;
 
 import exception.DaoException;
-import model.Instructor;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
-
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+
 
 public class DaoFactory {
     public static boolean DROP_TABLES_IF_EXIST = true;
@@ -20,15 +17,21 @@ public class DaoFactory {
         // This class is not meant to be instantiated!
     }
 
+    private static void clearDatabase() throws URISyntaxException{
+        dropInsFileTableIfExists(sql2o);
+        dropQuizTableIfExists(sql2o);
+        dropInstructorTableIfExists(sql2o);
+        dropFileTableIfExists(sql2o);
+    }
 
-    private static void instantiateSql2o() throws URISyntaxException {
+    public static void instantiateSql2o() throws URISyntaxException {
         if (sql2o == null) {
             final String URI;
             final String USERNAME;
             final String PASSWORD;
             String databaseUrl = System.getenv("DATABASE_URL");
             if (databaseUrl == null) {
-                // Not on heroku, use SQLite
+                // Not on heroku, use local PostgreSQL
                 URI = "jdbc:postgresql://localhost:5432/postgres";
                 USERNAME = "postgres";
                 PASSWORD = "1009";
@@ -44,14 +47,13 @@ public class DaoFactory {
             sql2o = new Sql2o(URI, USERNAME, PASSWORD);
             System.out.println("database instantiated successfully.");
         }
+        if (DROP_TABLES_IF_EXIST) {
+            clearDatabase();
+        }
     }
 
     private static void createInstructorTable(Sql2o sql2o) {
-        if (DROP_TABLES_IF_EXIST) {
-            dropInsFileTableIfExists(sql2o);
-            dropInstructorTableIfExists(sql2o);
-        }
-        String sql = "CREATE TABLE IF NOT EXISTS Instructor(" +
+        String sql = "CREATE TABLE IF NOT EXISTS instructor(" +
                 "instructorId SERIAL," +
                 "name VARCHAR(30)," +
                 "email VARCHAR(30) NOT NULL," +
@@ -59,6 +61,7 @@ public class DaoFactory {
                 "PRIMARY KEY (instructorId)," +
                 "UNIQUE (email)" +
                 ");";
+
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
@@ -66,29 +69,8 @@ public class DaoFactory {
         }
     }
 
-    private static void createInsFileTable(Sql2o sql2o) {
-        if (DROP_TABLES_IF_EXIST) {
-            dropInsFileTableIfExists(sql2o);
-        }
-        String sql = "CREATE TABLE IF NOT EXISTS ins_file(" +
-                "instructorId Integer," +
-                "fileId Integer," +
-                "url VARCHAR(120)," +
-                "PRIMARY KEY (instructorId, fileId)," +
-                "FOREIGN KEY (instructorId) REFERENCES instructor(instructorId)" +
-                ");";
-        try (Connection conn = sql2o.open()) {
-            conn.createQuery(sql).executeUpdate();
-        } catch (Sql2oException ex) {
-            throw new DaoException("Unable to create ins_file table", ex);
-        }
-    }
-
     private static void createQuizTable(Sql2o sql2o) {
-        if (DROP_TABLES_IF_EXIST) {
-            dropQuizTableIfExists(sql2o);
-        }
-        String sql = "CREATE TABLE IF NOT EXISTS Quiz(" +
+        String sql = "CREATE TABLE IF NOT EXISTS quiz(" +
                 "id SERIAL PRIMARY KEY," +
                 "fileId INTEGER NOT NULL," +
                 "questionId INTEGER NOT NULL," +
@@ -96,12 +78,46 @@ public class DaoFactory {
                 "countA INTEGER," +
                 "countB INTEGER," +
                 "countC INTEGER," +
-                "countD INTEGER" +
+                "countD INTEGER," +
+                "FOREIGN KEY (fileId) REFERENCES file(fileId)" +
                 ");";
+
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
-            throw new DaoException("Unable to create Quiz table", ex);
+            throw new DaoException("Unable to create quiz table", ex);
+        }
+    }
+
+    private static void createFileTable(Sql2o sql2o) {
+        String sql = "create table if not exists file(" +
+                "fileId Integer PRIMARY KEY, " +
+                "fileName VARCHAR(30) NOT NULL, " +
+                "filePermission BOOLEAN DEFAULT false," +
+                "quizPermission BOOLEAN DEFAULT false," +
+                "fileContent bytea" +
+                ")";
+
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery(sql).executeUpdate();
+        } catch (Sql2oException ex) {
+            throw new DaoException("Unable to create file table", ex);
+        }
+    }
+
+    private static void createInsFileTable(Sql2o sql2o) {
+        String sql = "CREATE TABLE IF NOT EXISTS ins_file(" +
+                "instructorId Integer," +
+                "fileId Integer," +
+                "PRIMARY KEY (instructorId, fileId)," +
+                "FOREIGN KEY (instructorId) REFERENCES instructor(instructorId)," +
+                "FOREIGN KEY (fileId) REFERENCES file(fileId)" +
+                ");";
+
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery(sql).executeUpdate();
+        } catch (Sql2oException ex) {
+            throw new DaoException("Unable to create ins_file table", ex);
         }
     }
 
@@ -138,22 +154,39 @@ public class DaoFactory {
         }
     }
 
-    public static QuizDao getQuizDao() throws URISyntaxException {
-        instantiateSql2o();
-        createQuizTable(sql2o);
-        return new Sql2oQuizDao(sql2o);
+    private static void dropFileTableIfExists(Sql2o sql2o) {
+        String sql = "DROP TABLE IF EXISTS file;";
+
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery(sql).executeUpdate();
+            System.out.println("drop file table successfully.");
+        } catch (Sql2oException ex) {
+            throw new DaoException("Fail dropping file table.", ex);
+        }
     }
 
-    public static RecordDao getRecordDao() throws URISyntaxException {
+    public static FileDao getFileDao() {
 //        instantiateSql2o();
-//        createQuizTable(sql2o);
-        return new Sql2oRecordDao(sql2o);
+        createFileTable(sql2o);
+        return new Sql2oFileDao(sql2o);
     }
 
-    public static InstructorDao getInstructorDao() throws URISyntaxException {
+    public static InstructorDao getInstructorDao() {
 //        instantiateSql2o();
         createInstructorTable(sql2o);
         createInsFileTable(sql2o);
         return new Sql2oInstructorDao(sql2o);
     }
+
+    public static QuizDao getQuizDao() {
+//        instantiateSql2o();
+        createQuizTable(sql2o);
+        return new Sql2oQuizDao(sql2o);
+    }
+
+    public static RecordDao getRecordDao() {
+//        instantiateSql2o();
+        return new Sql2oRecordDao(sql2o);
+    }
+
 }

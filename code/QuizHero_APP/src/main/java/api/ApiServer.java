@@ -2,26 +2,20 @@ package api;
 import com.google.gson.Gson;
 import dao.*;
 import exception.*;
-import io.javalin.core.util.FileUtil;
 import model.*;
 import io.javalin.Javalin;
 import io.javalin.plugin.json.JavalinJson;
 import io.javalin.http.UploadedFile;
-import org.apache.commons.io.FileUtils;
+import model.File;
 
 import java.io.*;
 
 import java.net.URISyntaxException;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public final class ApiServer {
 
     public static boolean INITIALIZE_WITH_SAMPLE_DATA = true;
-//    public static int PORT = 7000;
     public static int PORT = getHerokuAssignedPort();
     private static Javalin app;
 
@@ -38,9 +32,13 @@ public final class ApiServer {
     }
 
     public static void start() throws URISyntaxException{
+        // instantiate Sql2o and get DAOs
+        DaoFactory.instantiateSql2o();
+        FileDao fileDao = DaoFactory.getFileDao();
+        InstructorDao instructorDao = DaoFactory.getInstructorDao();
         QuizDao quizDao = DaoFactory.getQuizDao();
         RecordDao recordDao = DaoFactory.getRecordDao();
-        InstructorDao instructorDao = DaoFactory.getInstructorDao();
+
         // add some sample data
         if (INITIALIZE_WITH_SAMPLE_DATA) {
             DaoUtil.addSampleUsers(instructorDao);
@@ -50,19 +48,9 @@ public final class ApiServer {
 
         // Routing
         getHomepage();
-        getAllQuizStat(quizDao);
-        getQuizStatByFileId(quizDao);
-        getSingleQuizStat(quizDao);
+        routing(fileDao, instructorDao, quizDao, recordDao);
 
-        postQuiz(quizDao);
-        postRecords(recordDao);
-
-        login(instructorDao);
-        register(instructorDao);
-
-        uploadFile(instructorDao);
-        fetchFile(instructorDao);
-
+        // start application server
         startJavalin();
 
         // Handle exceptions
@@ -74,16 +62,32 @@ public final class ApiServer {
             ctx.status(err.getStatus());
             ctx.json(jsonMap);
         });
-
-//        runs after every request (even if an exception occurred)
-//        app.after(ctx -> {
-//            // run after all requests
-//            ctx.contentType("application/json");
-//        });
     }
 
     public static void stop() {
         app.stop();
+    }
+
+    private static void routing(FileDao fileDao, InstructorDao instructorDao, QuizDao quizDao, RecordDao recordDao) {
+        // fetch quiz statistics
+        getQuizStatByFileId(quizDao);
+
+        // update quiz statistics
+        postQuiz(quizDao);
+        postRecords(recordDao);
+
+        // login and register
+        login(instructorDao);
+        register(instructorDao);
+
+        // upload, fetch file content and modify file status
+        uploadFile(instructorDao, fileDao);
+        fetchFile(fileDao);
+        changeFilePermission(fileDao);
+        checkFilePermission(fileDao);
+        changeQuizPermission(fileDao);
+        checkQuizPermission(fileDao);
+        getFileListFromInstructor(instructorDao);
     }
 
     private static void getHomepage() {
@@ -94,56 +98,43 @@ public final class ApiServer {
             config.enableCorsForAllOrigins();
             config.addSinglePageRoot("/", "/public/index.html");
         });
-
-        // app.get("/", ctx -> ctx.result("Welcome to QuizHero!"));
-    }
-
-    private static void getAllQuizStat(QuizDao quizDao) {
-        // handle HTTP Get request to retrieve all Quiz statistics
-        app.get("/quizstat", ctx -> {
-            if (ctx.queryParam("fileId") != null) {
-                int fileId = Integer.parseInt(ctx.queryParam("fileId"));
-                System.out.println("File id: " + fileId);
-                List<Quiz> quizzesByFileId = quizDao.getQuizStatByFileId(fileId);
-                ctx.json(quizzesByFileId);
-            }
-            else {
-                List<Quiz> quizzes = quizDao.getAllQuizStat();
-                ctx.json(quizzes);
-            }
-            ctx.contentType("application/json");
-            ctx.status(200); // everything ok!
-        });
     }
 
     private static void getQuizStatByFileId(QuizDao quizDao) {
-        // handle HTTP Get request to retrieve all Quiz statistics of a single file
-        app.get("/quizstat/:fileid", ctx -> {
-            int fileId = Integer.parseInt(ctx.pathParam("fileid"));
-            List<Quiz> quizzes = quizDao.getQuizStatByFileId(fileId);
-            if (quizzes.isEmpty()) {
-                throw new ApiError("Unable to find quizzes", 500);
+        // handle HTTP Get request to retrieve Quiz statistics
+        app.get("/quizstat", ctx -> {
+            try {
+                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.queryParam("fileId")));
+                System.out.println("File id: " + fileId);
+                List<Quiz> quizzesByFileId = quizDao.getQuizStatByFileId(fileId);
+                if (quizzesByFileId.isEmpty()) {
+                    throw new ApiError("Unable to find quizzes", 500);
+                }
+                ctx.json(quizzesByFileId);
+                ctx.status(200); // everything ok!
+            } catch (NullPointerException ex) {
+                throw new ApiError("bad request with missing argument: " + ex.getMessage(), 400);
+            } catch (DaoException ex) {
+                throw new ApiError(ex.getMessage(), 500);
             }
-            ctx.json(quizzes);
-            ctx.status(200);
+
         });
     }
 
-    private static void getSingleQuizStat(QuizDao quizDao) {
-        // handle HTTP Get request to retrieve statistics of a single question in a file
-        app.get("/quizstat/:fileid/:questionid", ctx -> {
-            int fileId = Integer.parseInt(ctx.pathParam("fileid"));
-            int questionId = Integer.parseInt(ctx.pathParam("questionid"));
-            Quiz quiz = quizDao.getSingleQuizStat(fileId, questionId);
-            if (quiz == null) {
-                throw new ApiError("Unable to find quiz", 500);
-            }
-            ctx.json(quiz);
-            ctx.status(200);
-        });
-    }
+//    private static void getSingleQuizStat(QuizDao quizDao) {
+//        // handle HTTP Get request to retrieve statistics of a single question in a file
+//        app.get("/quizstat/:fileid/:questionid", ctx -> {
+//            int fileId = Integer.parseInt(ctx.pathParam("fileid"));
+//            int questionId = Integer.parseInt(ctx.pathParam("questionid"));
+//            Quiz quiz = quizDao.getSingleQuizStat(fileId, questionId);
+//            if (quiz == null) {
+//                throw new ApiError("Unable to find quiz", 500);
+//            }
+//            ctx.json(quiz);
+//            ctx.status(200);
+//        });
+//    }
 
-    // add postQuiz method
     private static void postQuiz(QuizDao quizDao) {
         // quizzes are initialized once a markdown in quiz format is uploaded
         app.post("/quiz", ctx -> {
@@ -154,8 +145,8 @@ public final class ApiServer {
                 ctx.contentType("application/json");
                 ctx.status(201); // created successfully
             } catch (DaoException ex) {
-                throw new ApiError(ex.getMessage(), 500);
-            }
+                throw new ApiError("database error: " + ex.getMessage(), 500);
+            } // quiz already exists, request forbidden
         });
     }
 
@@ -169,28 +160,25 @@ public final class ApiServer {
                 ctx.contentType("application/json");
                 ctx.status(201); // created successfully
             } catch (DaoException ex) {
-                throw new ApiError(ex.getMessage(), 404); // quiz not found
-            }
+                throw new ApiError(ex.getMessage(), 500);
+            } // quiz not found
         });
     }
 
     private static void login(InstructorDao instructorDao) {
         // instructor login action, return user including his/her id
         app.post("/login", ctx -> {
-            String email = ctx.queryParam("email");
-            String pswd = ctx.queryParam("pswd");
-            System.out.println("email: " + email + " pswd: " + pswd);
-//            Instructor user = ctx.bodyAsClass(Instructor.class);
+            String email = ctx.formParam("email");
+            String pswd = ctx.formParam("pswd");
             try {
                 Instructor instructor = instructorDao.checkUserIdentity(email, pswd);
                 ctx.json(instructor);
                 ctx.contentType("application/json");
                 ctx.status(201); // created successfully
-            } catch (DaoException ex) {
+            } catch (DaoException | LoginException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
-            } catch (LoginException ex) {
-                throw new ApiError(ex.getMessage(), 500); // user not found
-            }
+            } // user not found
+
         });
     }
 
@@ -212,57 +200,142 @@ public final class ApiServer {
     }
 
     // Upload a file and save it to the local file system
-    private static void uploadFile(InstructorDao instructorDao) {
+    private static void uploadFile(InstructorDao instructorDao, FileDao fileDao) {
         app.post("/upload", context -> {
-            // fetch user id from form-data, if no key then return -1 as default
-            int userId = Integer.parseInt(context.formParam("userId", "-1"));
-            System.out.println("user id: " + userId);
-
+            // get file part
             UploadedFile uploadedFile = context.uploadedFile("file");
-            try (InputStream inputStream = uploadedFile.getContent()) {
-                File localFile = new File("upload/" + uploadedFile.getFilename());
-                FileUtils.copyInputStreamToFile(inputStream, localFile);
-                String url = localFile.getAbsolutePath();
-                System.out.println("url: " + url);
+            try (InputStream inputStream = Objects.requireNonNull(uploadedFile).getContent()) {
+                // fetch user id from form-data, if no key then return -1 as default
+                int userId = Integer.parseInt(Objects.requireNonNull(context.formParam("userId")));
+                System.out.println("user id: " + userId);
+                String fileName = uploadedFile.getFilename();
+                System.out.println("file content received. File name: " + fileName);
+//                File localFile = new File("upload/" + uploadedFile.getFilename());
+//                FileUtils.copyInputStreamToFile(inputStream, localFile);
+//                String url = localFile.getAbsolutePath();
+//                System.out.println("url: " + url);
 
                 // generate file id
                 int fileId = new Random().nextInt(100000);
-                // store user-file info in database
-                instructorDao.storeUserFileInfo(userId, fileId, url);
+                System.out.println("file id: " + fileId);
+                // store user-file info into database
+                File file = new File (fileId, fileName, inputStream);
+                fileDao.storeFile(file);
+                instructorDao.storeUserFileInfo(userId, fileId);
                 // return fileId to front-end
                 Map<String, Object> fileMap = new HashMap<>();
                 fileMap.put("fileId", fileId);
-                fileMap.put("url", url);
+                fileMap.put("fileName", fileName);
                 context.json(fileMap);
                 context.contentType("application/json");
                 context.status(201);
-            } catch (NullPointerException npEx) {
-                throw new ApiError("file upload error: " + npEx.getMessage(), 400); // client bad request
-            } catch (IOException ioEx) {
-                throw new ApiError("internal server error: " + ioEx.getMessage(),500); // io exception
+            } catch (NullPointerException ex) {
+                throw new ApiError("bad request with missing argument: " + ex.getMessage(), 400); // client bad request
+            } catch (DaoException ex) {
+                throw new ApiError("database error: " + ex.getMessage(), 500);
             }
         });
     }
 
     // front-end fetches the specified file
-    private static void fetchFile(InstructorDao instructorDao) {
+    private static void fetchFile(FileDao fileDao) {
         app.get("/fetch", context -> {
-            /* BufferedInputStream是套在某个其他的InputStream外，起着缓存的功能，用来改善里面那个InputStream的性能
-            它自己不能脱离里面那个单独存在。FileInputStream是读取一个文件来作InputStream。
-            所以可以把BufferedInputStream套在FileInputStream外，来改善FileInputStream的性能。
-            */
-            String fileUrl = context.queryParam("fileUrl"); // get url of the file from form-data
-            System.out.println(fileUrl);
-            File localFile = new File(fileUrl); // create file object, passed into FileInputStream(File)
             try {
-                InputStream inputStream = new BufferedInputStream(new FileInputStream(localFile));
-                System.out.println("find local file.");
-                context.header("Content-Disposition", "attachment; filename=\"" + localFile.getName() + "\"");
-                context.header("Content-Length", String.valueOf(localFile.length()));
+                int fileId = Integer.parseInt(Objects.requireNonNull(context.queryParam("fileId"))); // get file id from form-data
+                System.out.println("file id: " + fileId);
+                InputStream in = fileDao.getFile(fileId);
+                InputStream inputStream = new BufferedInputStream(in); /* BufferedInputStream is used to improve the performance of the inside InputStream */
                 context.result(inputStream);
+                System.out.println("Send file successfully.");
                 context.status(200);
-            } catch (FileNotFoundException ex) {
-                throw new ApiError("file not found! " + ex.getMessage(), 400); // bad request
+            } catch (DaoException ex) {
+                throw new ApiError("server error when fetching file: " + ex.getMessage(), 500); // bad request
+            } catch (NullPointerException ex) {
+                throw new ApiError("bad request with missing argument: " + ex.getMessage(), 400);
+            }
+        });
+    }
+
+    private static void changeFilePermission(FileDao fileDao) {
+        // instructor login action, return user including his/her id
+        app.post("/filepermission", ctx -> {
+            try {
+                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.formParam("fileId")));
+                boolean permission = Boolean.parseBoolean(Objects.requireNonNull(ctx.formParam("permission")));
+                System.out.println("fileId: " + fileId + " file permission: " + permission);
+                fileDao.changeFilePermission(fileId, permission);
+                ctx.status(201); // created successfully
+            } catch (DaoException ex) {
+                throw new ApiError(ex.getMessage(), 500); // server internal error
+            } catch (NullPointerException ex) {
+                throw new ApiError("bad request with missing argument: " + ex.getMessage(), 400);
+            }
+        });
+    }
+
+    private static void checkFilePermission(FileDao fileDao) {
+        // instructor login action, return user including his/her id
+        app.get("/filepermission", ctx -> {
+            try {
+                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.queryParam("fileId")));
+                System.out.println("fileId: " + fileId);
+                Boolean filePermission = fileDao.checkFilePermission(fileId);
+                ctx.result(String.valueOf(filePermission));
+                ctx.status(200);
+            } catch (DaoException ex) {
+                throw new ApiError(ex.getMessage(), 500); // server internal error
+            } catch (NullPointerException ex) {
+                throw new ApiError("bad request with missing argument: " + ex.getMessage(), 400);
+            }
+        });
+    }
+
+    private static void getFileListFromInstructor(InstructorDao instructorDao) {
+        app.get("/history", ctx -> {
+            try {
+                int userId = Integer.parseInt(Objects.requireNonNull(ctx.queryParam("instructorId")));
+                List<File> fileHistory = instructorDao.getUserFileList(userId);
+                System.out.println(fileHistory.size());
+                ctx.json(fileHistory);
+                ctx.status(200);
+            } catch (DaoException ex) {
+                throw new ApiError(ex.getMessage(), 500); // server internal error
+            } catch (NullPointerException ex) {
+                throw new ApiError("bad request with missing argument: " + ex.getMessage(), 400);
+            }
+        });
+    }
+
+    private static void changeQuizPermission(FileDao fileDao) {
+        // instructor login action, return user including his/her id
+        app.post("/quizpermission", ctx -> {
+            try {
+                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.formParam("fileId")));
+                boolean permission = Boolean.parseBoolean(Objects.requireNonNull(ctx.formParam("permission")));
+                System.out.println("fileId: " + fileId + " quiz permission: " + permission);
+                fileDao.changeQuizPermission(fileId, permission);
+                ctx.status(201); // created successfully
+            } catch (DaoException ex) {
+                throw new ApiError(ex.getMessage(), 500); // server internal error
+            } catch (NullPointerException ex) {
+                throw new ApiError("bad request with missing argument: " + ex.getMessage(), 400);
+            }
+        });
+    }
+
+    private static void checkQuizPermission(FileDao fileDao) {
+        // instructor login action, return user including his/her id
+        app.get("/quizpermission", ctx -> {
+            try {
+                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.queryParam("fileId")));
+                System.out.println("fileId: " + fileId);
+                Boolean quizPermission = fileDao.checkQuizPermission(fileId);
+                ctx.result(String.valueOf(quizPermission));
+                ctx.status(200);
+            } catch (DaoException ex) {
+                throw new ApiError(ex.getMessage(), 500); // server internal error
+            } catch (NullPointerException ex) {
+                throw new ApiError("bad request with missing argument: " + ex.getMessage(), 400);
             }
         });
     }

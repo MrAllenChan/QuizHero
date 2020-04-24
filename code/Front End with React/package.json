@@ -16,6 +16,7 @@
     "marked": "^0.8.0",
     "prop-types": "^15.6.2",
     "react": "^16.12.0",
+    "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.12.0",
     "react-file-reader": "^1.1.4",
     "react-redux": "^7.2.0",
@@ -25,7 +26,8 @@
     "react-transition-group": "^1.2.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "spectacle": "^6.0.1"
+    "spectacle": "^6.0.1",
+    "spectacle-theme-nova": "^1.4.1"
   },
   "scripts": {
     "start": "react-scripts start",

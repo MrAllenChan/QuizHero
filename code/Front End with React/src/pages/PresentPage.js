@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Quiz from '../components/Quiz';
 import ResultPresenter from '../components/ResultPresenter';
 import axios from 'axios'
-import {Button, Icon} from "antd";
+import {Button, Icon, message} from "antd";
 import Slides from "../components/Spectacle";
 import {BASE_URL} from "../config/config"
 
@@ -19,13 +19,13 @@ class PresentPage extends Component {
             // answer: '',
             // answersCount: {},
             result: '',
-            fileId: props.location.query.fileId,
+            fileId: JSON.parse(localStorage.getItem("data")).fileId,
             quizCounter : 0,
-            quizList: props.location.query.quiz,
-            quizQuestions:props.location.query.quiz[0],
-            slides: props.location.query.slidesString
+            quizList: JSON.parse(localStorage.getItem("data")).quiz,
+            quizQuestions:JSON.parse(localStorage.getItem("data")).quiz[0],
+            slides: JSON.parse(localStorage.getItem("data")).slidesString
         };
-
+        console.log(this.state.quizList)
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
         this.skipQuestion = this.skipQuestion.bind(this);
     }
@@ -66,9 +66,6 @@ class PresentPage extends Component {
         console.log(event.currentTarget.value);
         if (this.state.questionId < this.state.quizQuestions.length) {
             setTimeout(() => this.setNextQuestion(), 300);
-        } else if (this.state.questionId === this.state.quizQuestions.length && this.state.quizCounter < this.state.quizList.length - 1) {
-            setTimeout(() => {this.setNextPart();
-            this.setResults()}, 300);
         } else {
             setTimeout(() => this.setResults(), 300);
         }
@@ -90,24 +87,24 @@ class PresentPage extends Component {
 
         //send choice to back-end
         // const BASE_URL = document.location.origin;
-        const formData = {
-            fileId : this.state.fileId,
-            questionId : parseInt(questionCounter),
-            choice : type
-        }
-        console.log(formData)
-        axios
-            .post(BASE_URL+"/record", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            })
-            .then(() => {
-                console.log("upload success");
-            })
-            .catch((error) => {
-                console.log("error")
-            });
+        // const formData = {
+        //     fileId : this.state.fileId,
+        //     questionId : parseInt(questionCounter),
+        //     choice : type
+        // }
+        // console.log(formData)
+        // axios
+        //     .post(BASE_URL+"/record", formData, {
+        //         headers: {
+        //             "Content-Type": "multipart/form-data"
+        //         }
+        //     })
+        //     .then(() => {
+        //         console.log("upload success");
+        //     })
+        //     .catch((error) => {
+        //         console.log("error")
+        //     });
     }
 
     setNextQuestion() {
@@ -125,28 +122,28 @@ class PresentPage extends Component {
         });
     }
 
-    setNextPart() {
-        const questionId = 1;
-        const counter = 0;
-        const quizCounter = this.state.quizCounter + 1;
-        const questionCounter = this.state.questionCounter + 1;
-        const quizQuestions = this.state.quizList[quizCounter];
-        const shuffledAnswerOptions = quizQuestions.map(question =>
-            this.shuffleArray(question.answers)
-        );
-
-        this.setState({
-            questionId : questionId,
-            counter : counter,
-            quizCounter : quizCounter,
-            quizQuestions : quizQuestions,
-            question: quizQuestions[0].question,
-            answerOptions: shuffledAnswerOptions[0],
-            questionCounter: questionCounter
-
-        })
-
-    }
+    // setNextPart() {
+    //     const questionId = 1;
+    //     const counter = 0;
+    //     const quizCounter = this.state.quizCounter + 1;
+    //     const questionCounter = this.state.questionCounter + 1;
+    //     const quizQuestions = this.state.quizList[quizCounter];
+    //     const shuffledAnswerOptions = quizQuestions.map(question =>
+    //         this.shuffleArray(question.answers)
+    //     );
+    //
+    //     this.setState({
+    //         questionId : questionId,
+    //         counter : counter,
+    //         quizCounter : quizCounter,
+    //         quizQuestions : quizQuestions,
+    //         question: quizQuestions[0].question,
+    //         answerOptions: shuffledAnswerOptions[0],
+    //         questionCounter: questionCounter
+    //
+    //     })
+    //
+    // }
 
     skipQuestion() {
         if (this.state.questionId < this.state.quizQuestions.length) {
@@ -169,11 +166,6 @@ class PresentPage extends Component {
         this.setState({
             result : 1
         });
-        // if (result.length === 1) {
-        //     this.setState({ result: result[0] });
-        // } else {
-        //     this.setState({ result: 'Undetermined' });
-        // }
     }
 
     renderQuiz() {
@@ -196,20 +188,64 @@ class PresentPage extends Component {
         );
     }
 
-    toQuizCallback = () => {
-        this.setState(
-            {quizFlag : 1}
-        )
+    startQuiz=()=>{
+        const formData = new FormData();
+        formData.append('fileId', this.state.fileId);
+        formData.append('permission', true);
+        axios.post(BASE_URL + "/quizpermission", formData)
+            .then(()=> message.success(`Students can now start quiz for presentation ${this.state.fileId}`))
+            .catch(()=> message.error('error'));
+    }
+
+    stopQuiz=()=>{
+        const formData = new FormData();
+        formData.append('fileId', this.state.fileId);
+        formData.append('permission', false);
+        axios.post(BASE_URL + "/quizpermission", formData)
+            .then(()=> message.success(`Students stop answering quiz for presentation ${this.state.fileId}`))
+            .catch(()=> message.error('error'));
+    }
+
+    toQuizCallback = (quizBlockNumber) => {
+        this.startQuiz();
+        console.log(quizBlockNumber)
+
+        const quizQuestions = this.state.quizList[quizBlockNumber];
+
+        const shuffledAnswerOptions = quizQuestions.map(question =>
+            this.shuffleArray(question.answers)
+        );
+        const questionId = 1;
+        const counter = 0;
+
+        var questionCounter = 0;
+        for (var i = 0; i < quizBlockNumber; i++) {
+            questionCounter += this.state.quizList[i].length;
+        }
+        questionCounter ++;
+
+        this.setState({
+            questionId : questionId,
+            counter : counter,
+            quizQuestions : quizQuestions,
+            question: quizQuestions[0].question,
+            answerOptions: shuffledAnswerOptions[0],
+            quizFlag : 1,
+            questionCounter : questionCounter
+        })
     };
 
-    toSlidesCallback=()=>(
-        this.setState({quizFlag : 0,
-        result : 0})
-    )
+    toSlidesCallback=()=>{
+        this.stopQuiz();
+        this.setState({
+            quizFlag : 0,
+            result : 0
+        });
+    }
 
 
     renderResult() {
-        return <ResultPresenter quizResult={this.state.result} toSlidesCallback={this.toSlidesCallback} />;
+        return <ResultPresenter fileId={this.state.fileId} toSlidesCallback={this.toSlidesCallback} />;
     }
 
     renderQuizPages () {
