@@ -141,7 +141,7 @@ class RegisterPage extends Component {
             <Button
               type="primary"
               htmlType="submit"
-              className="login-form-button"
+              className="register-button-real"
               onClick={this.handleSubmit}
             >
               Register

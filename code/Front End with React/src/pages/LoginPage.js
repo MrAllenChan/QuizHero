@@ -147,17 +147,6 @@ class LoginPage extends Component {
             />
           </Form.Item>
           <Form.Item>
-            <Form.Item
-              className="remember-me-box"
-              name="remember"
-              valuePropName="checked"
-              noStyle
-            >
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
-          </Form.Item>
-
-          <Form.Item>
             <Button
               type="primary"
               className="login-form-button"
