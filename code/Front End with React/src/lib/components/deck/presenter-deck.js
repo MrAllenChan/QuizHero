@@ -157,25 +157,37 @@ var PresenterDeck = function PresenterDeck(props) {
   }, [currentSlide, currentSlideElement, immediate, startConnection]);
 
   var activeSlide = children.length > currentSlide ? children[currentSlide] : null;
-  var nextSlide = children.length > currentSlide + 1 ? children[currentSlide + 1] : null;
+  var nextSlide = children.length > currentSlide + 1 ? children[currentSlide + 1] : null; // const castButton = React.useMemo(() => {
+  //   if (isReceiver || typeof window.navigator.presentation === 'undefined') {
+  //     return null;
+  //   }
+  //   if (isController) {
+  //     return (
+  //       <InternalButton
+  //         data-testid="Close Connection"
+  //         onClick={terminateConnection}
+  //       >
+  //         Stop Casting
+  //       </InternalButton>
+  //     );
+  //   }
+  //   return (
+  //     <InternalButton
+  //       data-testid="Start Connection"
+  //       onClick={onStartConnection}
+  //     >
+  //       Cast to Secondary Display
+  //     </InternalButton>
+  //   );
+  // }, []);
 
   var castButton = _react.default.useMemo(function () {
-    if (isReceiver || typeof window.navigator.presentation === 'undefined') {
-      return null;
-    }
-
-    if (isController) {
-      return _react.default.createElement(_internalButton.default, {
-        "data-testid": "Close Connection",
-        onClick: terminateConnection
-      }, "Stop Casting");
-    }
-
     return _react.default.createElement(_internalButton.default, {
-      "data-testid": "Start Connection",
-      onClick: onStartConnection
-    }, "Cast to Secondary Display");
-  }, []);
+      onClick: function onClick() {
+        window.open("/presenter?immediate=".concat(immediate, "&slide=").concat(currentSlide, "&slideElement=").concat(currentSlideElement), 'newWindow', 'menubar=0,scrollbars=1, resizable=1,status=1,titlebar=0,toolbar=0,location=1');
+      }
+    }, "Open a audience window");
+  }, [currentSlide, currentSlideElement, immediate]);
 
   return _react.default.createElement(PresenterDeckContainer, null, _react.default.createElement(NotesColumn, null, _react.default.createElement(_layout.FlexBox, {
     justifyContent: "space-between",
@@ -195,7 +207,7 @@ var PresenterDeck = function PresenterDeck(props) {
     textAlign: "right",
     padding: "0px",
     margin: "0px 0px 10px"
-  }, "Open a second browser tab at ", window.location.host, " to use as the audience deck", !!castButton && ' or use Chrome’s display cast to present on a secondary display', "."), castButton)), _react.default.createElement(_layout.Box, {
+  }, "Open a second browser window at ", window.location.host, "/presenter to use as the audience deck", "."), castButton)), _react.default.createElement(_layout.Box, {
     paddingRight: 15
   }, _react.default.createElement(_timer.Timer, null)), _react.default.createElement(NotesContainer, null, _react.default.createElement(_typography.Text, {
     fontFamily: _constants.SYSTEM_FONT,
