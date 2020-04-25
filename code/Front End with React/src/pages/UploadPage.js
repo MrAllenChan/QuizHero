@@ -263,31 +263,32 @@ class MyUpload extends React.Component{
                         {/*Presenter/Student mode button*/}
                         <div style={{display:this.state.display_name}}>
                             <Link to={{pathname: '/presenter', query: this.state.data}} target = '_blank'>
-                                <Button size={"large"} style={{marginRight: 10}}>
-                                    <Icon/>Presenter mode
+                                <Button size={"median"} style={{marginRight: 10}}>
+                                    Presenter mode
                                 </Button>
                             </Link>
-                            <Link to={{pathname: '/student', query: this.state.data}} target = '_blank'>
-                                <Button size={"large"} style={{marginLeft: 10, marginRight:10}}>
-                                    <Icon/>Student mode
-                                </Button>
-                            </Link>
+                            {/*<Link to={{pathname: '/student', query: this.state.data}} target = '_blank'>*/}
+                            {/*    <Button size={"large"} style={{marginLeft: 10, marginRight:10}}>*/}
+                            {/*        <Icon/>Student mode*/}
+                            {/*    </Button>*/}
+                            {/*</Link>*/}
+                            <Button size={"median"} style={{marginLeft: 10}}
+                                    onClick={this.downloadHTML}>
+                                Download HTML
+                            </Button>
                         </div>
                         {/*Start/Stop sharing file button*/}
                         <div style={{display:this.state.display_name}}>
                             <CopyToClipboard
                                 onCopy={this.startSharing}
                                 text={this.state.fileId}>
-                                <Button size={"large"} style={{marginLeft: 10}}>
-                                    <Icon/>Start sharing
+                                <Button size={"median"} style={{marginRight: 10}}>
+                                    Start sharing
                                 </Button>
                             </CopyToClipboard>
-                            <Button size={"large"} style={{marginLeft: 10}}
-                                onClick={this.stopSharing}>
-                                <Icon/>Stop sharing
-                            </Button>
-                            <Button onClick={this.downloadHTML} size={"large"} style={{marginLeft: 10}}>
-                                <Icon/>Download HTML
+                            <Button size={"median"} style={{marginLeft: 10}}
+                                    onClick={this.stopSharing}>
+                                Stop sharing
                             </Button>
                         </div>
                     </div>
