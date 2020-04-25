@@ -11,4 +11,6 @@ public interface FileDao {
     public Boolean checkFilePermission(int fileId);
     public void changeQuizPermission(int fileId, boolean permission);
     public Boolean checkQuizPermission(int fileId);
+    public void deleteFile(int fileId);
+    public void checkFileExist(int fileId);
 }

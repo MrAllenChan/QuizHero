@@ -91,4 +91,39 @@ public class Sql2oFileDao implements FileDao{
             throw new DaoException("Unable to get quiz permission status", ex);
         }
     }
+
+
+    public void deleteFile(int fileId) {
+        checkFileExist(fileId);
+        System.out.println("EXxcute");
+        try (Connection conn = sql2o.open()) {
+            //Delete row from ins_file table
+            String sql = "DELETE FROM ins_file where fileId = :fileId";
+            System.out.println(sql);
+            conn.createQuery(sql).addParameter("fileId", fileId)
+                    .executeUpdate();
+
+            //Delete row from file table
+            sql = "DELETE FROM file where fileId = :fileId";
+            System.out.println(sql);
+            conn.createQuery(sql).addParameter("fileId", fileId)
+                    .executeUpdate();
+        } catch (Sql2oException ex) {
+            throw new DaoException("Unable to delete the file", ex);
+        }
+    }
+
+    public void checkFileExist(int fileId) {
+        try (Connection conn = sql2o.open()) {
+            String sql = "SELECT quizPermission from file WHERE fileId = :fileId";
+            System.out.println(sql);
+            Boolean quizPermission = conn.createQuery(sql).addParameter("fileId", fileId)
+                    .executeAndFetchFirst(Boolean.class);
+           if(quizPermission == null){
+               throw new DaoException("File not exist", new Sql2oException());
+           }
+        } catch (Sql2oException ex) {
+            throw new DaoException("file not exist", ex);
+        }
+    }
 }

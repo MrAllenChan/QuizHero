@@ -88,6 +88,7 @@ public final class ApiServer {
         changeQuizPermission(fileDao);
         checkQuizPermission(fileDao);
         getFileListFromInstructor(instructorDao);
+        deleteFile(fileDao);
     }
 
     private static void getHomepage() {
@@ -331,6 +332,24 @@ public final class ApiServer {
                 System.out.println("fileId: " + fileId);
                 Boolean quizPermission = fileDao.checkQuizPermission(fileId);
                 ctx.result(String.valueOf(quizPermission));
+                ctx.status(200);
+            } catch (DaoException ex) {
+                throw new ApiError(ex.getMessage(), 500); // server internal error
+            } catch (NullPointerException ex) {
+                throw new ApiError("bad request with missing argument: " + ex.getMessage(), 400);
+            }
+        });
+    }
+
+    private static void deleteFile(FileDao fileDao) {
+        // instructor login action, return user including his/her id
+        app.post("/deletefile", ctx -> {
+            try {
+                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.formParam("fileId")));
+                System.out.println("fileId: " + fileId);
+                fileDao.deleteFile(fileId);
+//                Boolean quizPermission = fileDao.checkQuizPermission(fileId);
+                ctx.result("File deleted successfully");
                 ctx.status(200);
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
