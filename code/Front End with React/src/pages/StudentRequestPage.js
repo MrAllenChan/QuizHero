@@ -57,7 +57,7 @@ class StudentRequestPage extends Component{
                     console.log("AAA", res.data);
                     this.setState({
                         MarkDownFile: res.data,
-                    }, this.generateSlides)
+                    }, this.callSeparateQuestion)
                     message.success(`File ${this.state.fileId} fetched successfully.`)
                 })
                 .catch((error) => {
@@ -68,16 +68,12 @@ class StudentRequestPage extends Component{
         }
     }
 
-    generateSlides = () => {
-        this.callSeparateQuestion();
-        this.state.display_name = this.display_name();
-    }
-
     callSeparateQuestion =()=>{
-        const data = separateQuestion(this.state.MarkDownFile, this.state.fileId);
-        console.log(data)
-        this.setState({data : data});
+        var data = separateQuestion(this.state.MarkDownFile, this.state.fileId);
+        data = JSON.stringify(data);
+        localStorage.setItem("data", data);
         this.getMarpit();
+        this.state.display_name = this.display_name();
     }
 
     // Marpit for download
@@ -94,7 +90,7 @@ class StudentRequestPage extends Component{
     // }
 
 
-    download = () => {
+    downloadHTML = () => {
         function fakeClick(obj) {
             var ev = document.createEvent("MouseEvents");
             ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
@@ -108,7 +104,7 @@ class StudentRequestPage extends Component{
             save_link.download = name;
             fakeClick(save_link);
         }
-        exportRaw('filename.html', this.state.marpitResult);
+        exportRaw('presentation.html', this.state.marpitResult);
     }
 
     display_name () {
@@ -135,19 +131,19 @@ class StudentRequestPage extends Component{
                     {/*<Link to={{pathname: '/student', query: this.state.data}}>*/}
                         <Search
                             style={{width: 400}}
-                            placeholder="input shared url"
+                            placeholder="input shared code"
                             enterButton="Search"
                             size="large"
                             onSearch={this.onSearch}
                         />
                     <div style={{display:this.state.display_name}}>
                     <Link to={{pathname: '/student', query: this.state.data}} target = '_blank'>
-                        <Button onClick={this.onClick} size={"large"} style={{marginLeft: 10}}>
+                        <Button size={"large"} style={{marginLeft: 10}}>
                             <Icon/>Go to Presentation
                         </Button>
                     </Link>
-                    <Button onClick={this.download} size={"large"} style={{marginLeft: 10}}>
-                        <Icon/>Download file
+                    <Button onClick={this.downloadHTML} size={"large"} style={{marginLeft: 10}}>
+                        <Icon/>Download HTML
                     </Button>
                     </div>
                     {/*</Link>*/}
