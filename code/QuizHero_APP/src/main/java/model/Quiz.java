@@ -8,8 +8,8 @@ import java.util.Objects;
 // A Quiz object corresponds to a single question in a file
 public class Quiz {
 
-    private int id;
-    private int fileId;
+//    private int id;
+    private String fileId;
     private int questionId;
     private String answer;
     private int countA;
@@ -19,12 +19,12 @@ public class Quiz {
 //    private HashMap<Character, String> count;
 //    private HashMap<Character, String> statistics;
 
-    public Quiz(int fileId, int questionId) {
+    public Quiz(String fileId, int questionId) {
         this.fileId = fileId;
         this.questionId = questionId;
     }
 
-    public Quiz(int fileId, int questionId, String answer, int countA, int countB, int countC, int countD) {
+    public Quiz(String fileId, int questionId, String answer, int countA, int countB, int countC, int countD) {
         this.fileId = fileId;
         this.questionId = questionId;
         this.answer = answer;
@@ -55,15 +55,7 @@ public class Quiz {
         return countD;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getFileId() {
+    public String getFileId() {
         return fileId;
     }
 
@@ -88,7 +80,6 @@ public class Quiz {
     @Override
     public String toString() {
         return "Quiz{" +
-                "id=" + id +
                 ", fileId=" + fileId +
                 ", questionId=" + questionId +
                 ", answer='" + answer + '\'' +
@@ -104,8 +95,7 @@ public class Quiz {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Quiz quiz = (Quiz) o;
-        return id == quiz.id &&
-                fileId == quiz.fileId &&
+        return fileId == quiz.fileId &&
                 questionId == quiz.questionId &&
                 countA == quiz.countA &&
                 countB == quiz.countB &&
@@ -116,7 +106,7 @@ public class Quiz {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fileId, questionId, answer, countA, countB, countC, countD);
+        return Objects.hash(fileId, questionId, answer, countA, countB, countC, countD);
     }
 
     //    public HashMap<Character, String> calPercentage(){

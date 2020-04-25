@@ -9,7 +9,6 @@ import io.javalin.http.UploadedFile;
 import model.File;
 
 import java.io.*;
-
 import java.net.URISyntaxException;
 import java.util.*;
 
@@ -105,7 +104,7 @@ public final class ApiServer {
         // handle HTTP Get request to retrieve Quiz statistics
         app.get("/quizstat", ctx -> {
             try {
-                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.queryParam("fileId")));
+                String fileId = Objects.requireNonNull(ctx.queryParam("fileId"));
                 System.out.println("File id: " + fileId);
                 List<Quiz> quizzesByFileId = quizDao.getQuizStatByFileId(fileId);
                 if (quizzesByFileId.isEmpty()) {
@@ -172,13 +171,15 @@ public final class ApiServer {
             String email = ctx.formParam("email");
             String pswd = ctx.formParam("pswd");
             try {
-                Instructor instructor = instructorDao.checkUserIdentity(email, pswd);
+                Instructor instructor = instructorDao.userLogin(email, pswd);
                 ctx.json(instructor);
                 ctx.contentType("application/json");
                 ctx.status(201); // created successfully
-            } catch (DaoException | LoginException ex) {
+            } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
-            } // user not found
+            } catch (LoginException ex) {
+                throw new ApiError(ex.getMessage(), 403); // request forbidden, user not found
+            }
 
         });
     }
@@ -206,7 +207,7 @@ public final class ApiServer {
             // get file part
             UploadedFile uploadedFile = context.uploadedFile("file");
             try (InputStream inputStream = Objects.requireNonNull(uploadedFile).getContent()) {
-                // fetch user id from form-data, if no key then return -1 as default
+                // fetch user id from form-data, require argument not null
                 int userId = Integer.parseInt(Objects.requireNonNull(context.formParam("userId")));
                 System.out.println("user id: " + userId);
                 String fileName = uploadedFile.getFilename();
@@ -214,19 +215,21 @@ public final class ApiServer {
 //                File localFile = new File("upload/" + uploadedFile.getFilename());
 //                FileUtils.copyInputStreamToFile(inputStream, localFile);
 //                String url = localFile.getAbsolutePath();
-//                System.out.println("url: " + url);
 
                 // generate file id
-                int fileId = new Random().nextInt(100000);
-                System.out.println("file id: " + fileId);
+//                int fileId = new Random().nextInt(100000);
+//                String uniFileId = UUID.randomUUID().toString();
+//                System.out.println("file id: " + fileId);
+//                System.out.println("Unique file id: " + uniFileId);
+
                 // store user-file info into database
-                File file = new File (fileId, fileName, inputStream);
+                File file = new File (fileName, inputStream);
                 fileDao.storeFile(file);
-                instructorDao.storeUserFileInfo(userId, fileId);
+                instructorDao.storeUserFileInfo(userId, file.getFileId());
                 // return fileId to front-end
                 Map<String, Object> fileMap = new HashMap<>();
-                fileMap.put("fileId", fileId);
-                fileMap.put("fileName", fileName);
+                fileMap.put("fileId", file.getFileId());
+                fileMap.put("fileName", file.getFileName());
                 context.json(fileMap);
                 context.contentType("application/json");
                 context.status(201);
@@ -242,7 +245,7 @@ public final class ApiServer {
     private static void fetchFile(FileDao fileDao) {
         app.get("/fetch", context -> {
             try {
-                int fileId = Integer.parseInt(Objects.requireNonNull(context.queryParam("fileId"))); // get file id from form-data
+                String fileId = Objects.requireNonNull(context.queryParam("fileId")); // get file id from form-data
                 System.out.println("file id: " + fileId);
                 InputStream in = fileDao.getFile(fileId);
                 InputStream inputStream = new BufferedInputStream(in); /* BufferedInputStream is used to improve the performance of the inside InputStream */
@@ -261,7 +264,7 @@ public final class ApiServer {
         // instructor login action, return user including his/her id
         app.post("/filepermission", ctx -> {
             try {
-                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.formParam("fileId")));
+                String fileId = Objects.requireNonNull(ctx.formParam("fileId"));
                 boolean permission = Boolean.parseBoolean(Objects.requireNonNull(ctx.formParam("permission")));
                 System.out.println("fileId: " + fileId + " file permission: " + permission);
                 fileDao.changeFilePermission(fileId, permission);
@@ -278,7 +281,7 @@ public final class ApiServer {
         // instructor login action, return user including his/her id
         app.get("/filepermission", ctx -> {
             try {
-                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.queryParam("fileId")));
+                String fileId = Objects.requireNonNull(ctx.queryParam("fileId"));
                 System.out.println("fileId: " + fileId);
                 Boolean filePermission = fileDao.checkFilePermission(fileId);
                 ctx.result(String.valueOf(filePermission));
@@ -311,7 +314,7 @@ public final class ApiServer {
         // instructor login action, return user including his/her id
         app.post("/quizpermission", ctx -> {
             try {
-                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.formParam("fileId")));
+                String fileId = Objects.requireNonNull(ctx.formParam("fileId"));
                 boolean permission = Boolean.parseBoolean(Objects.requireNonNull(ctx.formParam("permission")));
                 System.out.println("fileId: " + fileId + " quiz permission: " + permission);
                 fileDao.changeQuizPermission(fileId, permission);
@@ -328,7 +331,7 @@ public final class ApiServer {
         // instructor login action, return user including his/her id
         app.get("/quizpermission", ctx -> {
             try {
-                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.queryParam("fileId")));
+                String fileId = Objects.requireNonNull(ctx.queryParam("fileId"));
                 System.out.println("fileId: " + fileId);
                 Boolean quizPermission = fileDao.checkQuizPermission(fileId);
                 ctx.result(String.valueOf(quizPermission));
@@ -345,12 +348,12 @@ public final class ApiServer {
         // instructor login action, return user including his/her id
         app.post("/deletefile", ctx -> {
             try {
-                int fileId = Integer.parseInt(Objects.requireNonNull(ctx.formParam("fileId")));
+                String fileId = Objects.requireNonNull(ctx.formParam("fileId"));
                 System.out.println("fileId: " + fileId);
                 fileDao.deleteFile(fileId);
 //                Boolean quizPermission = fileDao.checkQuizPermission(fileId);
                 ctx.result("File deleted successfully");
-                ctx.status(200);
+                ctx.status(201);
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500); // server internal error
             } catch (NullPointerException ex) {

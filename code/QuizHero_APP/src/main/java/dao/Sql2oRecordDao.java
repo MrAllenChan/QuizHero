@@ -18,15 +18,17 @@ public class Sql2oRecordDao implements RecordDao {
     @Override
     public void add(Record record) throws DaoException {
         // get file id, question id and the answer of a student
-        int fileId = record.getFileId();
+        String fileId = record.getFileId();
         int questionId = record.getQuestionId();
         String choice = "count" + record.getChoice();
         List<Quiz> listFromTable;
 
         try (Connection conn = sql2o.open()) {
-            String sql = "SELECT * FROM quiz Where fileId = " +
-                    fileId + " AND questionId = " + questionId + ";";
-            listFromTable = conn.createQuery(sql).executeAndFetch(Quiz.class);
+            String sql = "SELECT * FROM quiz Where fileId = :fileId AND questionId = :questionId";
+            listFromTable = conn.createQuery(sql)
+                    .addParameter("fileId", fileId)
+                    .addParameter("questionId", questionId)
+                    .executeAndFetch(Quiz.class);
         } catch (Sql2oException ex) {
             throw new DaoException("database connection error", ex);
         }
@@ -48,9 +50,5 @@ public class Sql2oRecordDao implements RecordDao {
         } catch (Sql2oException ex) {
             throw new DaoException("Unable to update record to quiz table", ex);
         }
-    }
-
-    public void test(Sql2o sql2o) {
-        this.sql2o = sql2o;
     }
 }
