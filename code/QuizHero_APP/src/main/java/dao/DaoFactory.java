@@ -71,14 +71,15 @@ public class DaoFactory {
 
     private static void createQuizTable(Sql2o sql2o) {
         String sql = "CREATE TABLE IF NOT EXISTS quiz(" +
-                "id SERIAL PRIMARY KEY," +
-                "fileId INTEGER NOT NULL," +
+//                "id SERIAL PRIMARY KEY," +
+                "fileId VARCHAR(50) NOT NULL," +
                 "questionId INTEGER NOT NULL," +
                 "answer VARCHAR(30)," +
                 "countA INTEGER," +
                 "countB INTEGER," +
                 "countC INTEGER," +
                 "countD INTEGER," +
+                "PRIMARY KEY (fileId, questionId)," +
                 "FOREIGN KEY (fileId) REFERENCES file(fileId)" +
                 ");";
 
@@ -91,7 +92,7 @@ public class DaoFactory {
 
     private static void createFileTable(Sql2o sql2o) {
         String sql = "create table if not exists file(" +
-                "fileId Integer PRIMARY KEY, " +
+                "fileId VARCHAR(50) PRIMARY KEY, " +
                 "fileName VARCHAR(30) NOT NULL, " +
                 "filePermission BOOLEAN DEFAULT false," +
                 "quizPermission BOOLEAN DEFAULT false," +
@@ -108,7 +109,7 @@ public class DaoFactory {
     private static void createInsFileTable(Sql2o sql2o) {
         String sql = "CREATE TABLE IF NOT EXISTS ins_file(" +
                 "instructorId Integer," +
-                "fileId Integer," +
+                "fileId VARCHAR(50)," +
                 "PRIMARY KEY (instructorId, fileId)," +
                 "FOREIGN KEY (instructorId) REFERENCES instructor(instructorId)," +
                 "FOREIGN KEY (fileId) REFERENCES file(fileId)" +

@@ -9,8 +9,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public interface InstructorDao {
-    Instructor checkUserIdentity(String email, String pswd);
+    Instructor userLogin(String email, String pswd);
     void registerUser(Instructor instructor);
-    void storeUserFileInfo(int userId, int fileId);
+    void checkUserExist(String email);
+    void storeUserFileInfo(int userId, String fileId);
     List<File> getUserFileList(int userId);
 }
