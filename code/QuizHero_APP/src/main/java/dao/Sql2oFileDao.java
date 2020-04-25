@@ -95,16 +95,21 @@ public class Sql2oFileDao implements FileDao{
 
     public void deleteFile(int fileId) {
         checkFileExist(fileId);
-        System.out.println("EXxcute");
         try (Connection conn = sql2o.open()) {
             //Delete row from ins_file table
-            String sql = "DELETE FROM ins_file where fileId = :fileId";
+            String sql = "DELETE FROM ins_file WHERE fileId = :fileId";
+            System.out.println(sql);
+            conn.createQuery(sql).addParameter("fileId", fileId)
+                    .executeUpdate();
+
+            //Delete row from quiz table
+            sql = "DELETE FROM quiz WHERE fileId = :fileId";
             System.out.println(sql);
             conn.createQuery(sql).addParameter("fileId", fileId)
                     .executeUpdate();
 
             //Delete row from file table
-            sql = "DELETE FROM file where fileId = :fileId";
+            sql = "DELETE FROM file WHERE fileId = :fileId";
             System.out.println(sql);
             conn.createQuery(sql).addParameter("fileId", fileId)
                     .executeUpdate();
