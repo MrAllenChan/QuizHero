@@ -1,14 +1,8 @@
 package model;
-
-import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 // A Quiz object corresponds to a single question in a file
 public class Quiz {
-
-//    private int id;
     private String fileId;
     private int questionId;
     private String answer;
@@ -95,7 +89,7 @@ public class Quiz {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Quiz quiz = (Quiz) o;
-        return fileId == quiz.fileId &&
+        return fileId.equals(quiz.fileId) &&
                 questionId == quiz.questionId &&
                 countA == quiz.countA &&
                 countB == quiz.countB &&
@@ -108,30 +102,4 @@ public class Quiz {
     public int hashCode() {
         return Objects.hash(fileId, questionId, answer, countA, countB, countC, countD);
     }
-
-    //    public HashMap<Character, String> calPercentage(){
-//        int total = 0;
-//        HashMap<Character, String> result = new HashMap<>();
-//
-//        // get the total number of students who answered this Quiz question
-//        for (Integer num : count.values()) {
-//            total += num;
-//        }
-//
-//        if (total == 0) return result;
-//
-//        for (Map.Entry<Character, Integer> entry : count.entrySet()) {
-//            char key = entry.getKey();
-//            int value = entry.getValue();
-//
-//            String percentage = "";
-//
-//            percentage = String.valueOf((float)value/(float)total);
-//            percentage += "%";
-//
-//            result.put(key, percentage);
-//        }
-//
-//        return result;
-//    }
 }

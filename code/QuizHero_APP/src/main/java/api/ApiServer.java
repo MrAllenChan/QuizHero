@@ -216,18 +216,10 @@ public final class ApiServer {
 //                FileUtils.copyInputStreamToFile(inputStream, localFile);
 //                String url = localFile.getAbsolutePath();
 
-                // generate file id
-//                int fileId = new Random().nextInt(100000);
-//                String uniFileId = UUID.randomUUID().toString();
-//                System.out.println("file id: " + fileId);
-//                System.out.println("Unique file id: " + uniFileId);
+                File file = new File (userId, fileName, inputStream); // generate File object
+                fileDao.storeFile(file); // store file and update user-file info in database
 
-                // store user-file info into database
-                File file = new File (fileName, inputStream);
-                fileDao.storeFile(file);
-                instructorDao.storeUserFileInfo(userId, file.getFileId());
-                // return fileId to front-end
-                Map<String, Object> fileMap = new HashMap<>();
+                Map<String, Object> fileMap = new HashMap<>(); // return fileId and fileName to front-end
                 fileMap.put("fileId", file.getFileId());
                 fileMap.put("fileName", file.getFileName());
                 context.json(fileMap);

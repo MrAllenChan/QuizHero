@@ -5,21 +5,24 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class File {
+    private int instructorId;
     private String fileId;
     private String fileName;
     private Boolean filePermission; // permission control of access to entire file
     private Boolean quizPermission; // permission control of access to all quizzes in a file
     private InputStream fileContent;
 
-    public File(String fileName, InputStream fileContent) {
+    public File(int instructorId, String fileName, InputStream fileContent) {
+        this.instructorId = instructorId;
         this.fileId = generateUniqueFileId();
         this.fileName = fileName;
         this.fileContent = fileContent;
-        this.filePermission = false; //default false;
-        this.quizPermission = false; //default false;
+        this.filePermission = false; // default false;
+        this.quizPermission = false; // default false;
     }
 
-    public File(String fileId, String fileName, Boolean fileAccess, Boolean quizAccess, InputStream fileContent) {
+    public File(int instructorId, String fileId, String fileName, Boolean fileAccess, Boolean quizAccess, InputStream fileContent) {
+        this.instructorId = instructorId;
         this.fileId = fileId;
         this.fileName = fileName;
         this.filePermission = fileAccess;
@@ -29,6 +32,10 @@ public class File {
 
     private String generateUniqueFileId() {
         return UUID.randomUUID().toString();
+    }
+
+    public Integer getInstructorId() {
+        return instructorId;
     }
 
     public String getFileId() {

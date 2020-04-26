@@ -12,6 +12,6 @@ public interface InstructorDao {
     Instructor userLogin(String email, String pswd);
     void registerUser(Instructor instructor);
     void checkUserExist(String email);
-    void storeUserFileInfo(int userId, String fileId);
+//    void storeUserFileInfo(int userId, String fileId);
     List<File> getUserFileList(int userId);
 }

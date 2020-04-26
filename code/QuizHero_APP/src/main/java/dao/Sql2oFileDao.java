@@ -44,6 +44,22 @@ public class Sql2oFileDao implements FileDao{
         } catch (Sql2oException ex) {
             throw new DaoException("Unable to store file content", ex);
         }
+        storeInsFile(file);
+    }
+
+    @Override
+    public void storeInsFile(File file) {
+        try (Connection conn = sql2o.open()) {
+            String sql = "INSERT INTO ins_file(instructorId, fileId) VALUES (:userId, :fileId);";
+            conn.createQuery(sql, true)
+                    .addParameter("userId", file.getInstructorId())
+                    .addParameter("fileId", file.getFileId())
+                    .executeUpdate();
+
+            System.out.println("user-file information stored.");
+        } catch (Sql2oException ex1) {
+            throw new DaoException("Unable to store user-file information.", ex1);
+        }
     }
 
     public void changeFilePermission(String fileId, boolean filePermission) {
@@ -107,12 +123,6 @@ public class Sql2oFileDao implements FileDao{
 
             // Delete row from quiz table
             sql = "DELETE FROM quiz WHERE fileId = :fileId";
-            System.out.println(sql);
-            conn.createQuery(sql).addParameter("fileId", fileId)
-                    .executeUpdate();
-
-            // Delete row from quiz table
-            sql = "DELETE FROM quiz where fileId = :fileId";
             System.out.println(sql);
             conn.createQuery(sql).addParameter("fileId", fileId)
                     .executeUpdate();
