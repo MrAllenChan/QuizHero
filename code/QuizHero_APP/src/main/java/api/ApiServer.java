@@ -41,8 +41,8 @@ public final class ApiServer {
         // add some sample data
         if (INITIALIZE_WITH_SAMPLE_DATA) {
             DaoUtil.addSampleUsers(instructorDao);
-            DaoUtil.addSampleQuizzes(quizDao);
-            DaoUtil.addSampleUserFiles(instructorDao);
+//            DaoUtil.addSampleQuizzes(quizDao);
+//            DaoUtil.addSampleUserFiles(instructorDao);
         }
 
         // Routing
