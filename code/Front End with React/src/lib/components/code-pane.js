@@ -153,6 +153,7 @@ function CodePane(props) {
         style: lineNumberStyles
       }, i + 1), React.createElement("div", {
         style: {
+          textAlign: "left",
           marginLeft: measureIndentation(lineIndentation),
           flex: 1,
           paddingLeft: '0.25em'
