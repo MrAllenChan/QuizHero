@@ -30,6 +30,11 @@ class RegisterPage extends Component {
       return;
     }
 
+    if (password.length < 6){
+      message.error("Password must be at least 6 characters!")
+      return;
+    }
+
     let params = {
       name: username,
       email:email,
