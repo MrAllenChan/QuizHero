@@ -1,74 +1,128 @@
-const template = `# QuizHero Demo Example
+const template = `# QuizHero Demonstration
 
-https://github.com/jhu-oose/2020-spring-group-QuizHero
+See our GitHub repository:
+
+    - https://github.com/jhu-oose/2020-spring-group-QuizHero
+
+Rules to write your quiz --- simple as original Markdown syntax:
+
+\`\`\`
+> Question: Which framework do you use to develop your backend server?
+* [ ] SpringBoot
+* [x] Javalin
+* [ ] SparkJava
+* [ ] Tomcat
+\`\`\`
 
 Notes: this is my private notes. The student can not see that.
 
 ---
 
-![datboi](https://media.giphy.com/media/xohHbwcnOhqbS/giphy.gif)
+## Contents of the course
+
+* Design Principles: SOLID
+
+* Several Funny Quizzes!
 
 Notes: This feature is fantastic. Only I can see the notes in presenter mode.
 
 ---
 
-# Contents of the course
+## Now let's start!
 
-* Backend design
-
-* Frontend design
-
-#### OOSE is interesting!
+![datboi](https://media.giphy.com/media/xohHbwcnOhqbS/giphy.gif)
 
 Notes: I can put anything here. I love my small cheat sheet.
 
 ---
 
-# Backend design
+## What are design principles?
 
-![](https://tva1.sinaimg.cn/large/00831rSTgy1gdfcbvjz8cj30hl0cb0u7.jpg)
+> A good software design organizes the code in a way that it is "easy to understand, change, maintain and reuse."
+
+Design principles are (often opinionated) guidelines derived from experience of programmers about software design that usually take the form of do's and don'ts. They are the Commandments of OO Programming.
 
 ---
 
-## Design principles
+## The SOLID design principles
 
-Guidelines derived from experience of programmers about software design. Usually take the form of do's and don'ts.
+The SOLID design principles were promoted by *Robert C. Martin* and are some of the best-known design principles in object-oriented software development. SOLID is a mnemonic acronym for the following five principles:
+
+- Single Responsibility Principle
+- Open/Closed Principle
+- Liskov Substitution Principle
+- Interface Segregation Principle
+- Dependency Inversion Principle
+
+---
+
+## Open/Closed Principle
+
+**Classes should be open for extension but closed for modification.**
+
+Essentially means design your application in a way to keep existing code from breaking when you implement new features.
+
+- "Open to extension" means you can add new features.
+- "Closed to modification" means the existing code (before adding a new feature) does not have to be modified when you added the new features.
+ 
+---
+
+## A good design example of Open/Closed Principle
+
+---
+
+## Quiz: part 1
+
+Are you ready?
 
 ---
 
 > Question: What is your favorite course?
-* [x] OOSE
 * [ ] AI
+* [x] OOSE
 * [ ] Algorithm
 * [ ] Computer Network
+
+> Question: Which design principles do you apply?
+* [x] Single Responsibility Principle
+* [ ] Open/Closed Principle
+* [ ] Liskov Substitution Principle
+* [ ] Interface Segregation Principle
+
+---
+
+## Dependency Inversion Principle
+
+**High-level classes shouldn’t have to change because low-level classes change.**
+
+The dependency inversion principle **does not only change the direction** of the dependency; it **splits the dependency** between the high-level and low-level modules by **introducing an abstraction** between them. So in the end, you get two dependencies:
+
+- the high-level module depends on the abstraction, and
+- the low-level depends on the same abstraction.
+
+---
+
+## Quiz: part 2
+
+Go for it!
+
+---
+
+> Question: Which framework do you use to develop your backend server?
+* [ ] SpringBoot
+* [x] Javalin
+* [ ] SparkJava
+* [ ] Tomcat
 
 > Question: Which design pattern do you apply?
-* [ ] Singleton
-* [ ] Decorater
-* [x] Dependency Injection
-* [ ] Abstract Factory
+* [ ] Composite Pattern
+* [x] Dependency Injection Pattern
+* [ ] Factory Pattern
+* [ ] Singleton Pattern
 
 ---
 
-## part two
-
----
-
-> Question: 2Which design pattern do you apply?
-* [ ] Singleton
-* [ ] Decorater
-* [x] Dependency Injection
-* [ ] Abstract Factory
-
-> Question: 2What is your favorite course?
-* [x] OOSE
-* [ ] AI
-* [ ] Algorithm
-* [ ] Computer Network
-
----
-
-## Thank you!
+## Hope you enjoy QuizHero!
 
 Notes: this is my private notes. The student can not see that.`
 
