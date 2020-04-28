@@ -41,8 +41,8 @@ public final class ApiServer {
         // add some sample data
         if (INITIALIZE_WITH_SAMPLE_DATA) {
             DaoUtil.addSampleUsers(instructorDao);
-            DaoUtil.addSampleQuizzes(quizDao);
-            DaoUtil.addSampleUserFiles(instructorDao);
+//            DaoUtil.addSampleQuizzes(quizDao);
+//            DaoUtil.addSampleUserFiles(instructorDao);
         }
 
         // Routing
@@ -80,7 +80,7 @@ public final class ApiServer {
         register(instructorDao);
 
         // upload, fetch file content and modify file status
-        uploadFile(instructorDao, fileDao);
+        uploadFile(fileDao);
         fetchFile(fileDao);
         changeFilePermission(fileDao);
         checkFilePermission(fileDao);
@@ -201,7 +201,7 @@ public final class ApiServer {
     }
 
     // Upload a file and save it to the local file system
-    private static void uploadFile(InstructorDao instructorDao, FileDao fileDao) {
+    private static void uploadFile(FileDao fileDao) {
         app.post("/upload", context -> {
             // get file part
             UploadedFile uploadedFile = context.uploadedFile("file");
