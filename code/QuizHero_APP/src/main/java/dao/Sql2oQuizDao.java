@@ -43,14 +43,6 @@ public class Sql2oQuizDao implements QuizDao {
     }
 
     @Override
-    public List<Quiz> getAllQuizStat() {
-        try (Connection conn = sql2o.open()) {
-            String sql = "SELECT * FROM quiz;";
-            return conn.createQuery(sql).executeAndFetch(Quiz.class);
-        }
-    }
-
-    @Override
     public void add(Quiz quiz) throws DaoException {
         // handel the case that quiz is initialized with null fileId and questionId values
         String fileId = quiz.getFileId();

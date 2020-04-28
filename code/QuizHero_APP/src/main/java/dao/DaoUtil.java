@@ -10,9 +10,7 @@ public final class DaoUtil {
         // This class is not mean to be instantiated!
     }
 
-//    public static void addSampleFiles(Sql2oFileDao fileDao) {
-//        fileDao.storeFile(1, "file_1", new FileInputStream());
-//    }
+    public static void addSampleFiles(Sql2oFileDao fileDao) { }
 
     public static void addSampleQuizzes(QuizDao quizDao) {
 //        quizDao.add(new Quiz(1, 1, "A", 10, 12, 6, 7));

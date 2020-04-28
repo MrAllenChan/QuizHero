@@ -62,6 +62,7 @@ public class DaoFactory {
                 "UNIQUE (email)" +
                 ");";
 
+//        System.out.println(sql);
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
@@ -83,6 +84,7 @@ public class DaoFactory {
                 "FOREIGN KEY (fileId) REFERENCES file(fileId)" +
                 ");";
 
+//        System.out.println(sql);
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
@@ -99,6 +101,7 @@ public class DaoFactory {
                 "fileContent bytea" +
                 ")";
 
+//        System.out.println(sql);
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
@@ -115,6 +118,7 @@ public class DaoFactory {
                 "FOREIGN KEY (fileId) REFERENCES file(fileId)" +
                 ");";
 
+//        System.out.println(sql);
         try (Connection conn = sql2o.open()) {
             conn.createQuery(sql).executeUpdate();
         } catch (Sql2oException ex) {
@@ -173,20 +177,17 @@ public class DaoFactory {
     }
 
     public static InstructorDao getInstructorDao() {
-//        instantiateSql2o();
         createInstructorTable(sql2o);
         createInsFileTable(sql2o);
         return new Sql2oInstructorDao(sql2o);
     }
 
     public static QuizDao getQuizDao() {
-//        instantiateSql2o();
         createQuizTable(sql2o);
         return new Sql2oQuizDao(sql2o);
     }
 
     public static RecordDao getRecordDao() {
-//        instantiateSql2o();
         return new Sql2oRecordDao(sql2o);
     }
 

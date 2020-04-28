@@ -8,10 +8,10 @@ Rules to write your quiz --- simple as original Markdown syntax:
 
 ```
 > Question: Which framework do you use to develop your backend server?
-* [ ] SpringBoot
-* [x] Javalin
-* [ ] SparkJava
-* [ ] Tomcat
+* [ ] A. SpringBoot
+* [x] B. Javalin
+* [ ] C. SparkJava
+* [ ] D. Tomcat
 ```
 
 Notes: this is my private notes. The student can not see that.
@@ -78,16 +78,16 @@ Are you ready?
 ---
 
 > Question: What is your favorite course?
-* [ ] AI
-* [x] OOSE
-* [ ] Algorithm
-* [ ] Computer Network
+* [ ] A. AI
+* [x] B. OOSE
+* [ ] C. Algorithm
+* [ ] D. Computer Network
 
 > Question: Which design principles do you apply?
-* [x] Single Responsibility Principle
-* [ ] Open/Closed Principle
-* [ ] Liskov Substitution Principle
-* [ ] Interface Segregation Principle
+* [x] A. Single Responsibility Principle
+* [ ] B. Open/Closed Principle
+* [ ] C. Liskov Substitution Principle
+* [ ] D. Interface Segregation Principle
 
 ---
 
@@ -109,16 +109,16 @@ Go for it!
 ---
 
 > Question: Which framework do you use to develop your backend server?
-* [ ] SpringBoot
-* [x] Javalin
-* [ ] SparkJava
-* [ ] Tomcat
+* [ ] A. SpringBoot
+* [x] B. Javalin
+* [ ] C. SparkJava
+* [ ] D. Tomcat
 
 > Question: Which design pattern do you apply?
-* [ ] Composite Pattern
-* [x] Dependency Injection Pattern
-* [ ] Factory Pattern
-* [ ] Singleton Pattern
+* [ ] A. Composite Pattern
+* [x] B. Dependency Injection Pattern
+* [ ] C. Factory Pattern
+* [ ] D. Singleton Pattern
 
 ---
 

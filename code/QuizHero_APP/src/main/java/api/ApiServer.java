@@ -117,7 +117,6 @@ public final class ApiServer {
             } catch (DaoException ex) {
                 throw new ApiError(ex.getMessage(), 500);
             }
-
         });
     }
 
@@ -225,10 +224,10 @@ public final class ApiServer {
                 context.json(fileMap);
                 context.contentType("application/json");
                 context.status(201);
+            } catch (DaoException ex) {
+                throw new ApiError("server error when uploading file: " + ex.getMessage(), 500);
             } catch (NullPointerException ex) {
                 throw new ApiError("bad request with missing argument: " + ex.getMessage(), 400); // client bad request
-            } catch (DaoException ex) {
-                throw new ApiError("database error: " + ex.getMessage(), 500);
             }
         });
     }
@@ -245,7 +244,7 @@ public final class ApiServer {
                 System.out.println("Send file successfully.");
                 context.status(200);
             } catch (DaoException ex) {
-                throw new ApiError("server error when fetching file: " + ex.getMessage(), 500); // bad request
+                throw new ApiError("server error when fetching file: " + ex.getMessage(), 500);
             } catch (NullPointerException ex) {
                 throw new ApiError("bad request with missing argument: " + ex.getMessage(), 400);
             }
@@ -343,7 +342,6 @@ public final class ApiServer {
                 String fileId = Objects.requireNonNull(ctx.formParam("fileId"));
                 System.out.println("fileId: " + fileId);
                 fileDao.deleteFile(fileId);
-//                Boolean quizPermission = fileDao.checkQuizPermission(fileId);
                 ctx.result("File deleted successfully");
                 ctx.status(201);
             } catch (DaoException ex) {
