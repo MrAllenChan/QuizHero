@@ -14,6 +14,8 @@ Rules to write your quiz --- simple as original Markdown syntax:
 * [ ] Tomcat
 ```
 
+Notes: this is my private notes. The student can not see that.
+
 ---
 
 ## Contents of the course
@@ -22,11 +24,15 @@ Rules to write your quiz --- simple as original Markdown syntax:
 
 * Several Funny Quizzes!
 
+Notes: This feature is fantastic. Only I can see the notes in presenter mode.
+
 ---
 
 ## Now let's start!
 
 ![datboi](https://media.giphy.com/media/xohHbwcnOhqbS/giphy.gif)
+
+Notes: I can put anything here. I love my small cheat sheet.
 
 ---
 
@@ -117,3 +123,5 @@ Go for it!
 ---
 
 ## Hope you enjoy QuizHero!
+
+Notes: this is my private notes. The student can not see that.
