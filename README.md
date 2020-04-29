@@ -43,8 +43,10 @@ Presenters can view all the slides and quizzes that have been converted from the
 
 Now let's see what's inside the "presenter mode" slides! All the raw markdown content have been converted to neat and beautiful slides, as shown below:
 
-![2rlJE6j1GPuvoby](https://i.loli.net/2020/04/29/2rlJE6j1GPuvoby.gif)
-
+<!--![2rlJE6j1GPuvoby](https://i.loli.net/2020/04/29/2rlJE6j1GPuvoby.gif)-->
+<p align="center">
+  <img width="80%" src="https://i.loli.net/2020/04/29/2rlJE6j1GPuvoby.gif">
+</p>
 
 ##### Start Quiz and View Statistics
 Presenters can click **`start quiz`** button to **release the permission** of quiz. So, students won't be able to take quiz without permission. 
@@ -55,7 +57,10 @@ The last page shows the statistics of all the quizzes in this file. The green/re
 
 Presenters can click the **Refresh** button on the statistics page to see the up-to-date statistics.
 
-![iztVmjKvS3DcqZW](https://i.loli.net/2020/04/29/iztVmjKvS3DcqZW.gif)
+<!--![iztVmjKvS3DcqZW](https://i.loli.net/2020/04/29/iztVmjKvS3DcqZW.gif)-->
+<p align="center">
+  <img width="80%" src="https://i.loli.net/2020/04/29/iztVmjKvS3DcqZW.gif">
+</p>
 
 <!--![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/upload.png)-->
 
@@ -69,7 +74,10 @@ Presenters can click the **Refresh** button on the statistics page to see the up
 
 So you're a student now! You may choose **`I'm a Student`** from the welcome page, and will be directed to the student page with a search bar. Suppose you have received the shared file code from your instructor, now you can input the shared code to fetch the presentation slides. 
 
-![yFN8b3YRHw4hpoI](https://i.loli.net/2020/04/29/yFN8b3YRHw4hpoI.gif)
+<!--![yFN8b3YRHw4hpoI](https://i.loli.net/2020/04/29/yFN8b3YRHw4hpoI.gif)-->
+<p align="center">
+  <img width="80%" src="https://i.loli.net/2020/04/29/yFN8b3YRHw4hpoI.gif">
+</p>
 
 If the code matches and the corresponding file is accessible, students will be given two options **`Go to Presentation`** or **`Download file`**. They can choose to view interactive **Student mode** slides with quizzes inside or download the static html file.
 
