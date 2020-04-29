@@ -30,7 +30,10 @@ Notes: This feature is fantastic. Only I can see the notes in presenter mode.
 
 ## Now let's start!
 
-![datboi-w120](https://media.giphy.com/media/xohHbwcnOhqbS/giphy.gif)
+<!--![datboi-w120](https://media.giphy.com/media/xohHbwcnOhqbS/giphy.gif)-->
+<p align="center">
+  <img width="60%" src="https://media.giphy.com/media/xohHbwcnOhqbS/giphy.gif">
+</p>
 
 Notes: I can put anything here. I love my small cheat sheet.
 
