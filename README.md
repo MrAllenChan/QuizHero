@@ -1,20 +1,84 @@
 # QuizHero: a Lightweight Web Application for Creating Interactive Slides with Quizzes from Markdown.
 
+## Have fun with QuizHero.
+
+Our QuizHero app is now deployed on Heroku and can be run in Google Chrome. [Jump here to have fun with QuizHero!](https://quiz-hero.herokuapp.com/) You can also run our app at localhost. Detailed instructions will be given below.
+
+<p align = "center">
+  <img width="100%" src="https://i.loli.net/2020/04/29/jkoPVwNA1DH5Yix.jpg">
+</p>
+
+
 ## What is QuizHero for?
 
 QuizHero is a lightweight web application that allows you to create your presentation slides from Markdown. You simply need to write your own markdown file, with slides you want to talk and quizzes you want to interact with your students, and let QuizHero handle everything else. 
 
 Through this platform, instructors can create different presentations by uploading different markdown files, and students are able to view the slides and answer the quizzes online. QuizHero will collect students' answers of quizzes, store the answers, analyze and display the **statistical results** to instructors, who will then have a good overview of students' performance. QuizHero has a user-friendly login interface, and allows **every registered instructor** to view their history, including every presentations they created and all the statistical data.
 
-There are even **more features** waiting for you to explore! For example, the quiz contents in a converted presentation can be **protected** by the instrutor, who will have the right to make the quizzes inaccessible until he/she releases them. Also, the statistical data can be refreshed in real time, and instructors will be able to keep track of the lastest statistics as well of students' performance. Just enjoy and have fun with QuizHero!
+There are even **more features** waiting for you to explore! For example, the quiz contents in a converted presentation can be **protected** by the instructor, who will have the right to make the quizzes inaccessible until he/she releases them. Also, the statistical data can be refreshed in real time, and instructors will be able to keep track of the latest statistics as well of students' performance. Just enjoy and have fun with QuizHero!
 
-## How is QuizHero built?
+## How to use QuizHero?
 
-The front-end is based on React framework, with the help of Spectacle to present dynamic slide decks converted from raw Markdown file. The development of back-end server involves a lot of tools and frameworks. The application server is developed using Javalin, and we use PostgreSQL as our database management system. Gradle is used as the automation build system, and we use Postman and JUnit framework to test the server.
+To begin with, you will see a welcome page displayed on your browser with our logo "QuizHero" as well as two buttons you can choose: **`I'm a Presenter`** and **`I'm a Student`** as shown in the beginning of this page.
 
-## Run QuizHero on Heroku.
+---
 
-The alpha version of our QuizHero app is now deployed on Heroku. Want to have fun with QuizHero? Jump to https://quiz-hero.herokuapp.com/. You can also run our app at localhost. Detailed instructions will be given below.
+### Instructor mode
+If you choose "I'm a presenter", you will be guided to the **Login** interface, or you can **register** as a new instructor.
+
+> Your email must be unique and the format must obey standard format, and your password must be at least 6 character long. You will be alerted if your email is already registered.
+
+##### 1. Upload and Sharing
+See the GIF below! After logging into QuizHero successfully, You can upload any Markdown file as long as the markdown format obeys the rules we make! You can click **`Start sharing`** and the unique file ID will be copied into your clipboard. You can share this id with your audience before presentation. They will be able to view the **student version** slides and quizzes using this unique ID. 
+
+<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290252ins_upload_share.gif' alt='202004290252ins_upload_share'/>
+
+> We provide a sample markdown file called **"template.md"** that contains some demo slides with 4 sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page that you can interact with! 
+
+If you want to stop sharing the file, simply click **`Stop sharing`** and the previous ID will expire until your start sharing the file again.
+
+##### 2. View slides
+Presenters can view all the slides and quizzes that have been converted from the original Markdown file, and can also click  **`Download HTML`** to download the static HTML file. 
+
+Now let's see what's inside the "presenter mode" slides! All the raw markdown content have been converted to neat and beautiful slides, as shown below:
+
+<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290230ins_view_slides.gif' alt='202004290230ins_view_slides'/>
+
+
+##### 3. Start Quiz and View Statistics
+Presenters can click **`start quiz`** button to **release the permission** of quiz. So, students won't be able to take quiz without permission. 
+
+Presenters can choose to take or **`skip`** the quiz, and do NOT need to worry about messing up with the statistics as the result won't be recorded and sent into the database.
+
+The last page shows the statistics of all the quizzes in this file. The green/red bar represent the number of students that choose the correct/wrong answer, and the blue line shows the correct percentage of each quiz question.
+
+Presenters can click the **Refresh** button on the statistics page to see the up-to-date statistics.
+
+<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290301ins_quiz_stat.gif' alt='202004290301ins_quiz_stat'/>
+
+
+##### 4. View History and Delete Files
+
+##### 5. Presenter Mode with Notes & Second Audience Window
+
+---
+
+### Student mode
+
+So you're a student now! You may choose **`I'm a Student`** from the welcome page, and will be directed to the student page with a search bar. Suppose you have received the shared file code from your instructor, now you can input the shared code to fetch the presentation slides. 
+
+<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290306stu_view.gif' alt='202004290306stu_view'/>
+
+If the code matches and the corresponding file is accessible, students will be given two options **`Go to Presentation`** or **`Download file`**. They can choose to view interactive **Student mode** slides with quizzes inside or download the static html file.
+
+> We do not require students to login to use our service for simplicity, and the presenter should be careful about whom the secret code is shared with. However, as mentioned above, we have developed the feature that allows presenters to **protect their slides and quizzes** by enabling or disabling the shared code as well as the quizzes inside!
+
+<!--Now you may test the quiz feature by going the quiz page in **Presenter mode** and **Student mode** from two tabs or two computers. Every response to a quiz question will be transmitted to the back-end and recorded into the database. The detailed statistics is visualized on the **result page** of the **Presenter mode**-->
+
+## Markdown instructions
+Want to write your own presentation slides? No problem!
+
+First, you are encouraged to take a look at **"template.md"** to have an idea of the rules. The rules simply follow the standard Markdown syntax and is quite easy to understand!
 
 ## Run QuizHero locally.
 
@@ -25,41 +89,8 @@ The alpha version of our QuizHero app is now deployed on Heroku. Want to have fu
 5. Try to build the project, if build successfully, run "**RunServer.main**" under src/main/java/api. 
 6. If there is something wrong when building the project, in Gradle settings under Preferences, use Gradle from 'wrapper task' in Gradle build script (see below). Then build the project and run "RunServer.main" again, you should see the Javalin framework has begun to work now.
 
-<img src="https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/configuration.jpg" width="750" height="380" />
-
-## How to use QuizHero?
-
-To begin with, you will see a welcome index page displayed on your browser with our logo "QuizHero" as well as two buttons you can choose: **`I'm a Presenter`** and **`I'm a Student`**.
-
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/index.png)
-
-If you choose "I'm a presenter", you will be guided to the Login interface, or you can register as a new instructor. After logging into the application successfully, You can upload any Markdown file as long as the markdown format obeys the rules we make. 
-
-> We provide a sample markdown file called **"demo.md"** that contains some demo slides with 4 sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page that you can interact with! If you still want to upload your own markdown file, you are also encouraged to take a look at **"demo.md"** to have an idea of the rules. The rules simply follow the standard markdown syntax. It is very easy to understand.
-
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/upload.png)
-
-After successfully uploading the file, as a presenter, you have several options, either go to the **`Presenter mode`** or **`Student mode`** to view slides prepared for instructors or students. The presenter can also click the **download button** to download the static html file or click the **`Share`** button to copy the secret shared code to the clipboard. This code will be used to share the student version slides and quizzes. 
-
-With the secret shared code copied, now you can share this code with others (or you can open a new tap in your browser to test it yourself). You should choose **`I'm a Student`** from the index page, then you will be directed to the student page with a search bar, where you can input the share code. 
-
-> We do not require students to login in order to use our service, which would be a troublesome thing for students. So the presenter should always be careful about who the secret code is shared with. Also, as mentioned above, we are currently exploring the feature of allowing the the presenter to **protect** their slides and quizzes by enabling or disabling the shared code.
-
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/studentpage.png)
-
-If the code matches with the presenter's secret shared code, the student will be given two options **`Go to Presentation`** or **`Download file`**. They will provide the student with a interactive **Student mode** slides and quizzes and a downloadable static html file.
-
-Now you may test the quiz feature by going the quiz page in **Presenter mode** and **Stundent mode** from two tabs or two computers. Every response to a quiz question will be transmitted to the back-end and recorded into the database. The detailed statistics is visualized on the **result page** of the **Presenter mode**. 
-
-> Note that, the presenter can also do the quizzes, the result will also be counted and recorded into the database. If you do not want to mess up with the statistics, you can always choose to **Skip** the quiz in **Presenter mode**.
-
-You can click the **Refersh** button on the statistics page from time to time to see the up-to-date statistics.
-
-<!--![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/upload.png)-->
-
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/quiz.jpg)
-
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/statistics.jpg)
+<!--<img src="https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/configuration.jpg" width="750" height="380" />
+-->
 
 ## Test QuizHero
 
@@ -67,6 +98,14 @@ You can click the **Refersh** button on the statistics page from time to time to
 
 2. We recommend using Postman to test our back-end API server. We have uploaded two Postman collections (for localhost and for Heroku) under directory **code/QuizHero_APP/src/main/resources/postman**, and you can import both json files into your Postman application to test if the back-end server functions well as expected.
 
-3. We have also written unit tests for dao and api. You can run those tests under directory **code/QuizHero_APP/src/test**.
+3. We have also written unit tests for Model, Dao and ApiServer. You can run those tests under directory **code/QuizHero_APP/src/test**.
 
-![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/PostmanTest.jpg)
+<p align = "center">
+  <img width = "80%" src="https://i.loli.net/2020/04/29/yh2OQlnk8ITmAcZ.jpg">
+</p>
+
+## How is QuizHero built?
+
+The front-end is based on React framework, with the help of Spectacle to present dynamic slide decks converted from raw Markdown file. The development of back-end server involves a lot of tools and frameworks. The application server is developed using Javalin, and we use PostgreSQL as our database management system. Gradle is used as the automation build system, and we use Postman and JUnit framework to test the server.
+
+## Credit

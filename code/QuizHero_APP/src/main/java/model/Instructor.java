@@ -8,7 +8,6 @@ public class Instructor {
     private String name;
     private String email;
     private String pswd;
-    private List<Integer> fileIdList;
 
     public Instructor(String name, String email, String pswd) {
         this.name = name;
@@ -34,10 +33,6 @@ public class Instructor {
 
     public String getPswd() {
         return pswd;
-    }
-
-    public List<Integer> getFileIdList() {
-        return fileIdList;
     }
 
     @Override

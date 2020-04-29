@@ -4,17 +4,17 @@ import java.util.Objects;
 
 public class Record {
 
-    private int fileId;
+    private String fileId;
     private int questionId;
     private char choice;
 
-    public Record(int fileId, int questionId, char choice){
+    public Record(String fileId, int questionId, char choice){
         this.fileId = fileId;
         this.questionId = questionId;
         this.choice = choice;
     }
 
-    public int getFileId() {
+    public String getFileId() {
         return fileId;
     }
 

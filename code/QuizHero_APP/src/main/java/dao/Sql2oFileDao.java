@@ -16,11 +16,13 @@ public class Sql2oFileDao implements FileDao{
         this.sql2o = sql2o;
     }
 
-    public InputStream getFile(int fileId) {
+    public InputStream getFile(String fileId) {
+        checkFileExist(fileId);
         ByteArrayInputStream byteStream;
         try (Connection conn = sql2o.open()) {
-            String sql = "SELECT fileContent FROM file WHERE fileId = " + fileId;
-            byteStream = conn.createQuery(sql, true)
+            String sql = "SELECT fileContent FROM file WHERE fileId = :fileId";
+            byteStream = conn.createQuery(sql)
+                    .addParameter("fileId", fileId)
                     .executeAndFetchFirst(ByteArrayInputStream.class);
 
             return byteStream;
@@ -42,9 +44,26 @@ public class Sql2oFileDao implements FileDao{
         } catch (Sql2oException ex) {
             throw new DaoException("Unable to store file content", ex);
         }
+        storeInsFile(file);
     }
 
-    public void changeFilePermission(int fileId, boolean filePermission) {
+    @Override
+    public void storeInsFile(File file) {
+        try (Connection conn = sql2o.open()) {
+            String sql = "INSERT INTO ins_file(instructorId, fileId) VALUES (:userId, :fileId);";
+            conn.createQuery(sql, true)
+                    .addParameter("userId", file.getInstructorId())
+                    .addParameter("fileId", file.getFileId())
+                    .executeUpdate();
+
+            System.out.println("user-file information stored.");
+        } catch (Sql2oException ex1) {
+            throw new DaoException("Unable to store user-file information.", ex1);
+        }
+    }
+
+    public void changeFilePermission(String fileId, boolean filePermission) {
+        checkFileExist(fileId);
         try (Connection conn = sql2o.open()) {
             String sql = "Update file set filePermission = " + filePermission +
                     " WHERE fileId = :fileId";
@@ -56,7 +75,7 @@ public class Sql2oFileDao implements FileDao{
         }
     }
 
-    public Boolean checkFilePermission(int fileId) {
+    public Boolean checkFilePermission(String fileId) {
         try (Connection conn = sql2o.open()) {
             String sql = "SELECT filePermission from file WHERE fileId = :fileId";
             System.out.println(sql);
@@ -68,7 +87,8 @@ public class Sql2oFileDao implements FileDao{
         }
     }
 
-    public void changeQuizPermission(int fileId, boolean quizPermission) {
+    public void changeQuizPermission(String fileId, boolean quizPermission) {
+        checkFileExist(fileId);
         try (Connection conn = sql2o.open()) {
             String sql = "Update file set quizPermission = " + quizPermission +
                     " WHERE fileId = :fileId";
@@ -80,7 +100,7 @@ public class Sql2oFileDao implements FileDao{
         }
     }
 
-    public Boolean checkQuizPermission(int fileId) {
+    public Boolean checkQuizPermission(String fileId) {
         try (Connection conn = sql2o.open()) {
             String sql = "SELECT quizPermission from file WHERE fileId = :fileId";
             System.out.println(sql);
@@ -92,38 +112,42 @@ public class Sql2oFileDao implements FileDao{
         }
     }
 
-
-    public void deleteFile(int fileId) {
+    public void deleteFile(String fileId) {
         checkFileExist(fileId);
-        System.out.println("EXxcute");
         try (Connection conn = sql2o.open()) {
-            //Delete row from ins_file table
-            String sql = "DELETE FROM ins_file where fileId = :fileId";
+            // Delete row from ins_file table
+            String sql = "DELETE FROM ins_file WHERE fileId = :fileId";
             System.out.println(sql);
             conn.createQuery(sql).addParameter("fileId", fileId)
                     .executeUpdate();
 
-            //Delete row from file table
-            sql = "DELETE FROM file where fileId = :fileId";
+            // Delete row from quiz table
+            sql = "DELETE FROM quiz WHERE fileId = :fileId";
             System.out.println(sql);
             conn.createQuery(sql).addParameter("fileId", fileId)
                     .executeUpdate();
+
+            // Delete row from file table
+            sql = "DELETE FROM file WHERE fileId = :fileId";
+            System.out.println(sql);
+            conn.createQuery(sql).addParameter("fileId", fileId)
+                    .executeUpdate();
+
         } catch (Sql2oException ex) {
             throw new DaoException("Unable to delete the file", ex);
         }
     }
 
-    public void checkFileExist(int fileId) {
+    public void checkFileExist(String fileId) {
         try (Connection conn = sql2o.open()) {
             String sql = "SELECT quizPermission from file WHERE fileId = :fileId";
-            System.out.println(sql);
             Boolean quizPermission = conn.createQuery(sql).addParameter("fileId", fileId)
                     .executeAndFetchFirst(Boolean.class);
-           if(quizPermission == null){
-               throw new DaoException("File not exist", new Sql2oException());
+           if (quizPermission == null){
+               throw new DaoException("File not exist");
            }
         } catch (Sql2oException ex) {
-            throw new DaoException("file not exist", ex);
+            throw new DaoException("database connection error", ex);
         }
     }
 }
