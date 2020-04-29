@@ -7,8 +7,6 @@ import {BASE_URL} from "../config/config"
 import {Link} from "react-router-dom"
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import logo from "../fig/logo.png";
-import {func} from "prop-types";
-import {enableTopologicalTravel} from "echarts/src/util/component";
 const { Header, Content, Footer } = Layout;
 
 // const fs = require('fs');
@@ -37,14 +35,24 @@ class MyUpload extends React.Component{
 
 
     beforeUpload = (file) => {
-        console.log("FILEEE",file);
-        this.setState({
-            file:file
-        });
+        if (this.state.file === ""){
+            console.log("FILEEE",file);
+            this.setState({
+                file:file
+            });
+        }else{
+            alert("You can only upload one file at a time. Please delete the previous uploaded file.");
+            return false;
+        }
     }
 
     onChange = (info) => {
         if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+            // Delete redundant file in fileList when user tries to upload a second file without deleting the first one
+            if (info.fileList.length > 1){
+                info.fileList.pop();
+            }
             console.log(info.file, info.fileList);
         }
         if (info.file.status === 'done') {
@@ -61,7 +69,7 @@ class MyUpload extends React.Component{
             // this.readFile()
             //     .then(this.convertText);
 
-            this.state.display_name = this.display_name();
+            this.state.display_name = this.display_name('block');
 
         } else if (info.file.status === 'error') {
             console.log(info.file.name);
@@ -70,7 +78,10 @@ class MyUpload extends React.Component{
     }
 
     onRemove = () => {
-        this.state.display_name = this.display_name();
+        this.setState({
+            file: ""
+        })
+        this.state.display_name = this.display_name('none');
     }
 
     onDownload = () => {
@@ -181,16 +192,10 @@ class MyUpload extends React.Component{
             .catch(()=> message.error('error'));
     }
 
-    display_name () {
-        if (this.state.display_name === 'none') {
-            this.setState({
-                display_name:'block'
-            })
-        }else if (this.state.display_name === 'block'){
-            this.setState({
-                display_name:'none'
-            })
-        }
+    display_name (status) {
+        this.setState({
+            display_name:status
+        })
     };
     
     handleLogOut(){
@@ -250,7 +255,7 @@ class MyUpload extends React.Component{
                                 onChange={this.onChange}
                                 beforeUpload={this.beforeUpload}
                                 onDownload={this.onDownload}
-                                onPreview={this.onPreview}
+                                onPreview={this.onDownload}
                                 onRemove={this.onRemove}
                                 {...props}>
 
