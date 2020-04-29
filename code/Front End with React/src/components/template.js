@@ -2,7 +2,7 @@ const template = `# QuizHero Demonstration
 
 See our GitHub repository:
 
-    - https://github.com/jhu-oose/2020-spring-group-QuizHero
+- https://github.com/jhu-oose/2020-spring-group-QuizHero
 
 Rules to write your quiz --- simple as original Markdown syntax:
 
