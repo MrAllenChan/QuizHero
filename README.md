@@ -31,7 +31,7 @@ See the GIF below! After logging into QuizHero successfully, You can upload any 
 
 <!--![lCJu4svPLrxnXyp](https://i.loli.net/2020/04/29/lCJu4svPLrxnXyp.gif)-->
 <p align="center">
-  <img width="460" height="300" src="https://i.loli.net/2020/04/29/lCJu4svPLrxnXyp.gif">
+  <img width="80%" src="https://i.loli.net/2020/04/29/lCJu4svPLrxnXyp.gif">
 </p>
 
 > We provide a sample markdown file called **"template.md"** that contains some demo slides with 4 sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page that you can interact with! 
