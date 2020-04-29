@@ -166,3 +166,4 @@ The dependency inversion principle **does not only change the direction** of the
 </p>
 
 Notes: this is my private notes. The student can not see that.
+**
