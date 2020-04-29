@@ -4,7 +4,9 @@
 
 Our QuizHero app is now deployed on Heroku and can be run in Google Chrome. [Jump here to have fun with QuizHero!](https://quiz-hero.herokuapp.com/) You can also run our app at localhost. Detailed instructions will be given below.
 
-![jkoPVwNA1DH5Yix](https://i.loli.net/2020/04/29/jkoPVwNA1DH5Yix.jpg)
+<p align = "center">
+  <img width="80%" src="https://i.loli.net/2020/04/29/jkoPVwNA1DH5Yix.jpg">
+</p>
 
 
 ## What is QuizHero for?
@@ -29,10 +31,7 @@ If you choose "I'm a presenter", you will be guided to the **Login** interface, 
 ##### Upload and Sharing
 See the GIF below! After logging into QuizHero successfully, You can upload any Markdown file as long as the markdown format obeys the rules we make! You can click **`Start sharing`** and the unique file ID will be copied into your clipboard. You can share this id with your audience before presentation. They will be able to view the **student version** slides and quizzes using this unique ID. 
 
-<!--![lCJu4svPLrxnXyp](https://i.loli.net/2020/04/29/lCJu4svPLrxnXyp.gif)-->
-<p align="center">
-  <img width="80%" src="https://i.loli.net/2020/04/29/lCJu4svPLrxnXyp.gif">
-</p>
+<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290252ins_upload_share.gif' alt='202004290252ins_upload_share'/>
 
 > We provide a sample markdown file called **"template.md"** that contains some demo slides with 4 sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page that you can interact with! 
 
@@ -43,12 +42,8 @@ Presenters can view all the slides and quizzes that have been converted from the
 
 Now let's see what's inside the "presenter mode" slides! All the raw markdown content have been converted to neat and beautiful slides, as shown below:
 
-<!--![2rlJE6j1GPuvoby](https://i.loli.net/2020/04/29/2rlJE6j1GPuvoby.gif)-->
-<p align="center">
-  <img width="80%" src="https://i.loli.net/2020/04/29/2rlJE6j1GPuvoby.gif">
-</p>
+<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290230ins_view_slides.gif' alt='202004290230ins_view_slides'/>
 
-![oQ6YV7u](https://i.imgur.com/oQ6YV7u.gif)
 
 ##### Start Quiz and View Statistics
 Presenters can click **`start quiz`** button to **release the permission** of quiz. So, students won't be able to take quiz without permission. 
@@ -59,12 +54,10 @@ The last page shows the statistics of all the quizzes in this file. The green/re
 
 Presenters can click the **Refresh** button on the statistics page to see the up-to-date statistics.
 
-<!--![iztVmjKvS3DcqZW](https://i.loli.net/2020/04/29/iztVmjKvS3DcqZW.gif)-->
 <p align="center">
   <img width="80%" src="https://i.loli.net/2020/04/29/iztVmjKvS3DcqZW.gif">
 </p>
 
-<!--![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/upload.png)-->
 
 ##### View History and Delete Files
 
@@ -114,7 +107,9 @@ First, you are encouraged to take a look at **"template.md"** to have an idea of
 
 3. We have also written unit tests for Model, Dao and ApiServer. You can run those tests under directory **code/QuizHero_APP/src/test**.
 
-![yh2OQlnk8ITmAcZ-w480](https://i.loli.net/2020/04/29/yh2OQlnk8ITmAcZ.jpg)
+<p>
+  <img width = "80%" src="https://i.loli.net/2020/04/29/yh2OQlnk8ITmAcZ.jpg">
+</p>
 
 ## How is QuizHero built?
 
