@@ -29,7 +29,10 @@ If you choose "I'm a presenter", you will be guided to the **Login** interface, 
 ##### Upload and Sharing
 See the GIF below! After logging into QuizHero successfully, You can upload any Markdown file as long as the markdown format obeys the rules we make! You can click **`Start sharing`** and the unique file ID will be copied into your clipboard. You can share this id with your audience before presentation. They will be able to view the **student version** slides and quizzes using this unique ID. 
 
-![lCJu4svPLrxnXyp](https://i.loli.net/2020/04/29/lCJu4svPLrxnXyp.gif)
+<!--![lCJu4svPLrxnXyp](https://i.loli.net/2020/04/29/lCJu4svPLrxnXyp.gif)-->
+<p align="center">
+  <img width="460" height="300" src="https://i.loli.net/2020/04/29/lCJu4svPLrxnXyp.gif">
+</p>
 
 > We provide a sample markdown file called **"template.md"** that contains some demo slides with 4 sample quiz questions, and you can upload this file as a test. The markdown file will be converted to a slide-type html page that you can interact with! 
 
