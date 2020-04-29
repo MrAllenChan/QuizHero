@@ -48,6 +48,8 @@ Now let's see what's inside the "presenter mode" slides! All the raw markdown co
   <img width="80%" src="https://i.loli.net/2020/04/29/2rlJE6j1GPuvoby.gif">
 </p>
 
+![oQ6YV7u](https://i.imgur.com/oQ6YV7u.gif)
+
 ##### Start Quiz and View Statistics
 Presenters can click **`start quiz`** button to **release the permission** of quiz. So, students won't be able to take quiz without permission. 
 
