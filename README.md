@@ -5,7 +5,7 @@
 Our QuizHero app is now deployed on Heroku and can be run in Google Chrome. [Jump here to have fun with QuizHero!](https://quiz-hero.herokuapp.com/) You can also run our app at localhost. Detailed instructions will be given below.
 
 <p align = "center">
-  <img width="80%" src="https://i.loli.net/2020/04/29/jkoPVwNA1DH5Yix.jpg">
+  <img width="100%" src="https://i.loli.net/2020/04/29/jkoPVwNA1DH5Yix.jpg">
 </p>
 
 
@@ -28,7 +28,7 @@ If you choose "I'm a presenter", you will be guided to the **Login** interface, 
 
 > Your email must be unique and the format must obey standard format, and your password must be at least 6 character long. You will be alerted if your email is already registered.
 
-##### Upload and Sharing
+##### 1. Upload and Sharing
 See the GIF below! After logging into QuizHero successfully, You can upload any Markdown file as long as the markdown format obeys the rules we make! You can click **`Start sharing`** and the unique file ID will be copied into your clipboard. You can share this id with your audience before presentation. They will be able to view the **student version** slides and quizzes using this unique ID. 
 
 <img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290252ins_upload_share.gif' alt='202004290252ins_upload_share'/>
@@ -37,7 +37,7 @@ See the GIF below! After logging into QuizHero successfully, You can upload any 
 
 If you want to stop sharing the file, simply click **`Stop sharing`** and the previous ID will expire until your start sharing the file again.
 
-##### View slides
+##### 2. View slides
 Presenters can view all the slides and quizzes that have been converted from the original Markdown file, and can also click  **`Download HTML`** to download the static HTML file. 
 
 Now let's see what's inside the "presenter mode" slides! All the raw markdown content have been converted to neat and beautiful slides, as shown below:
@@ -45,7 +45,7 @@ Now let's see what's inside the "presenter mode" slides! All the raw markdown co
 <img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290230ins_view_slides.gif' alt='202004290230ins_view_slides'/>
 
 
-##### Start Quiz and View Statistics
+##### 3. Start Quiz and View Statistics
 Presenters can click **`start quiz`** button to **release the permission** of quiz. So, students won't be able to take quiz without permission. 
 
 Presenters can choose to take or **`skip`** the quiz, and do NOT need to worry about messing up with the statistics as the result won't be recorded and sent into the database.
@@ -54,14 +54,12 @@ The last page shows the statistics of all the quizzes in this file. The green/re
 
 Presenters can click the **Refresh** button on the statistics page to see the up-to-date statistics.
 
-<p align="center">
-  <img width="80%" src="https://i.loli.net/2020/04/29/iztVmjKvS3DcqZW.gif">
-</p>
+<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290301ins_quiz_stat.gif' alt='202004290301ins_quiz_stat'/>
 
 
-##### View History and Delete Files
+##### 4. View History and Delete Files
 
-##### Presenter Mode with Notes & Second Audience Window
+##### 5. Presenter Mode with Notes & Second Audience Window
 
 ---
 
@@ -69,16 +67,11 @@ Presenters can click the **Refresh** button on the statistics page to see the up
 
 So you're a student now! You may choose **`I'm a Student`** from the welcome page, and will be directed to the student page with a search bar. Suppose you have received the shared file code from your instructor, now you can input the shared code to fetch the presentation slides. 
 
-<!--![yFN8b3YRHw4hpoI](https://i.loli.net/2020/04/29/yFN8b3YRHw4hpoI.gif)-->
-<p align="center">
-  <img width="80%" src="https://i.loli.net/2020/04/29/yFN8b3YRHw4hpoI.gif">
-</p>
+<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290306stu_view.gif' alt='202004290306stu_view'/>
 
 If the code matches and the corresponding file is accessible, students will be given two options **`Go to Presentation`** or **`Download file`**. They can choose to view interactive **Student mode** slides with quizzes inside or download the static html file.
 
 > We do not require students to login to use our service for simplicity, and the presenter should be careful about whom the secret code is shared with. However, as mentioned above, we have developed the feature that allows presenters to **protect their slides and quizzes** by enabling or disabling the shared code as well as the quizzes inside!
-
-<!--![](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/studentpage.png)-->
 
 <!--Now you may test the quiz feature by going the quiz page in **Presenter mode** and **Student mode** from two tabs or two computers. Every response to a quiz question will be transmitted to the back-end and recorded into the database. The detailed statistics is visualized on the **result page** of the **Presenter mode**-->
 
@@ -107,7 +100,7 @@ First, you are encouraged to take a look at **"template.md"** to have an idea of
 
 3. We have also written unit tests for Model, Dao and ApiServer. You can run those tests under directory **code/QuizHero_APP/src/test**.
 
-<p>
+<p align = "center">
   <img width = "80%" src="https://i.loli.net/2020/04/29/yh2OQlnk8ITmAcZ.jpg">
 </p>
 
