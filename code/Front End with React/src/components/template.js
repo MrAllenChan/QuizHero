@@ -8,31 +8,63 @@ Rules to write your quiz --- simple as original Markdown syntax:
 
 \`\`\`
 > Question: Which framework do you use to develop your backend server?
-* [ ] SpringBoot
-* [x] Javalin
-* [ ] SparkJava
-* [ ] Tomcat
+* [ ] A. SpringBoot
+* [x] B. Javalin
+* [ ] C. SparkJava
+* [ ] D. Tomcat
 \`\`\`
 
-Notes: this is my private notes. The student can not see that.
+Notes: This is my private notes. The student can not see that.
 
 ---
 
-## Contents of the course
+## Start Presenter Mode!
 
-* Design Principles: SOLID
+- Press **\`Option + P\`** to open presenter mode. Open a second audience window & view your private notes to better support your presentation.
 
-* Several Funny Quizzes!
+<p align = "center">
+<img width = "50%" src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004291524presenter_mode.gif' alt='202004291524presenter_mode'/>
+</p>
+
+Notes: I should go to presenter mode to see my private notes.
+
+---
+
+## Share with your students!
+
+- **Share the file code** with your students so they can fetch the presentation slides!
+
+<p align="center">
+<img width = "50%" src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290306stu_view.gif' alt='202004290306stu_view'/>
+</p>
 
 Notes: This feature is fantastic. Only I can see the notes in presenter mode.
 
 ---
 
-## Now let's start!
+## Start quiz and view statistics
 
-![datboi](https://media.giphy.com/media/xohHbwcnOhqbS/giphy.gif)
+- click **\`start quiz\`** button to **release quiz permission** (Students won't be able to take quiz without permission.)
 
-Notes: I can put anything here. I love my small cheat sheet.
+<p align = "center">
+<img width = "50%" src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290301ins_quiz_stat.gif' alt='202004290301ins_quiz_stat'/>
+</p>
+
+Notes: Let the students start quiz now.
+
+---
+
+## Contents of the course: let's start!
+
+* Design Principles: SOLID
+
+* Several Funny Quizzes!
+
+<p align="left">
+  <img width="15%" src="https://media.giphy.com/media/xohHbwcnOhqbS/giphy.gif">
+</p>
+
+Notes: This feature is fantastic. Only I can see the notes in presenter mode.
 
 ---
 
@@ -46,7 +78,7 @@ Design principles are (often opinionated) guidelines derived from experience of 
 
 ## The SOLID design principles
 
-The SOLID design principles were promoted by *Robert C. Martin* and are some of the best-known design principles in object-oriented software development. SOLID is a mnemonic acronym for the following five principles:
+The SOLID design principles are some of the best-known design principles in object-oriented software development. SOLID is a mnemonic acronym for the following five principles:
 
 - Single Responsibility Principle
 - Open/Closed Principle
@@ -64,30 +96,35 @@ Essentially means design your application in a way to keep existing code from br
 
 - "Open to extension" means you can add new features.
 - "Closed to modification" means the existing code (before adding a new feature) does not have to be modified when you added the new features.
- 
+
 ---
 
 ## A good design example of Open/Closed Principle
 
+<p align = "center">
+<img width = "50%" src='https://i.imgur.com/bXGiP7R.jpg' alt='bXGiP7R'/>
+</p>
+
+- New functionality does not require a rewrite of existing code
+- Also applies **Dependency Inversion Principle** (DIP)
+
 ---
 
-## Quiz: part 1
-
-Are you ready?
+## Quiz Part 1: Are you ready?
 
 ---
 
 > Question: What is your favorite course?
-* [ ] AI
-* [x] OOSE
-* [ ] Algorithm
-* [ ] Computer Network
+* [ ] A. AI
+* [x] B. OOSE
+* [ ] C. Algorithm
+* [ ] D. Computer Network
 
 > Question: Which design principles do you apply?
-* [x] Single Responsibility Principle
-* [ ] Open/Closed Principle
-* [ ] Liskov Substitution Principle
-* [ ] Interface Segregation Principle
+* [x] A. Single Responsibility Principle
+* [ ] B. Open/Closed Principle
+* [ ] C. Liskov Substitution Principle
+* [ ] D. Interface Segregation Principle
 
 ---
 
@@ -102,27 +139,37 @@ The dependency inversion principle **does not only change the direction** of the
 
 ---
 
-## Quiz: part 2
-
-Go for it!
+## Quiz Part 2: Go for it!
 
 ---
 
-> Question: Which framework do you use to develop your backend server?
-* [ ] SpringBoot
-* [x] Javalin
-* [ ] SparkJava
-* [ ] Tomcat
+> Question: Which SOLID design principle is most closely described by the given statement: classes should depend on abstractions rather than implementations.
+* [ ] A. Interface Segregation Principle
+* [ ] B. Open/Closed Principle.
+* [ ] C. Liskov Substitution Principle.
+* [x] D. Dependency Inversion Principle
 
-> Question: Which design pattern do you apply?
-* [ ] Composite Pattern
-* [x] Dependency Injection Pattern
-* [ ] Factory Pattern
-* [ ] Singleton Pattern
+> Question: Which is one of the most widely used java design pattern?
+* [ ] A. Composite Pattern
+* [ ] B. Dependency Injection Pattern
+* [x] C. Factory Pattern
+* [ ] D. Singleton Pattern
+
+> Question: Which framework do you use to develop your backend server?
+* [ ] A. SpringBoot
+* [x] B. Javalin
+* [ ] C. SparkJava
+* [ ] D. Tomcat
 
 ---
 
 ## Hope you enjoy QuizHero!
+
+- Feel excited? Start writing your own presentation slides!!
+
+<p align = "center">
+<img width = "50%" src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290230ins_view_slides.gif' alt='202004290230ins_view_slides'/>
+</p>
 
 Notes: this is my private notes. The student can not see that.`
 
