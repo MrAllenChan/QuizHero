@@ -11,6 +11,8 @@
       * [4. View History and Delete Files](#4-view-history-and-delete-files)
       * [5. Presenter Mode with Notes & Second Audience Window](#5-presenter-mode-with-notes--second-audience-window)
   * [Student Mode](#student-mode)
+      * [1. Input Code and View Slides](#1-input-code-and-view-slides)
+      * [2. Take Quiz and Back to Slides](#2-take-quiz-and-back-to-slides)
 - [Markdown Instructions](#markdown-instructions)
 - [Run QuizHero Locally.](#run-quizhero-locally)
 - [Test QuizHero](#test-quizhero)
@@ -18,7 +20,6 @@
 - [Acknowledgements](#acknowledgements)
 
 ## Have Fun with QuizHero.
-
 Our QuizHero app is now deployed on Heroku and can be run in Google Chrome. [Jump here to have fun with QuizHero!](https://quiz-hero.herokuapp.com/) You can also run our app at localhost. Detailed instructions will be given below.
 
 <p align = "center">
@@ -26,7 +27,6 @@ Our QuizHero app is now deployed on Heroku and can be run in Google Chrome. [Jum
 </p>
 
 ## What is QuizHero for?
-
 QuizHero is a lightweight web application that allows you to **create your presentation slides from Markdown**. You simply need to write your own markdown file, with slides you want to present and quizzes you want to interact with your students(audience), and **let QuizHero handle everything else**. 
 
 Through this platform, instructors can create different presentations by uploading different markdown files, and students are able to view the slides and answer the quizzes online. QuizHero will collect students' answers of quizzes, store the answers, analyze and display the **statistical results** to instructors, who will then have a good overview of students' performance. 
@@ -38,7 +38,6 @@ There are even **more features** waiting for you to explore! For example, the qu
 Just enjoy and have fun with QuizHero!
 
 ## How to use QuizHero?
-
 To begin with, you will see a welcome page displayed on your browser with our logo "QuizHero" as well as two buttons you can choose: **`I'm a Presenter`** and **`I'm a Student`** as shown in the beginning of this page.
 
 ### Instructor Mode
@@ -74,26 +73,40 @@ Presenters can click the **Refresh** button on the statistics page to see the up
 
 <img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290301ins_quiz_stat.gif' alt='202004290301ins_quiz_stat'/>
 
-
 #### 4. View History and Delete Files
+
+You can view all of the files you uploaded before by clicking **`History`** button in the top left corner.
+
+Still, for each file, you have the options to enter **`Presenter Mode`**, **`Start Sharing`**, **`Stop Sharing`**. But now you can **`Delete`** them as well!
+
+**Bonus:** Click the filename to directly download the **original markdown file**. No need to worry about losing your files!
+
+<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004301539ins_history_delete.gif' alt='202004301539ins_history_delete'/>
 
 #### 5. Presenter Mode with Notes & Second Audience Window
 
-Press **`Option + P`** to open presenter mode. You will be able to open a second audience window as well as viewing your private notes to better support your presentation.
+Press **`Option + P`** to open presenter mode. You will be able to open a second audience window as well as viewing your private notes to better support your presentation. Credits to Spectacle!
 
 <img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004291524presenter_mode.gif' alt='202004291524presenter_mode'/>
 
 ---
 
 ### Student Mode
+So you're a student now! You may choose **`I'm a Student`** from the welcome page, and will be directed to the student page with a search bar.
 
-So you're a student now! You may choose **`I'm a Student`** from the welcome page, and will be directed to the student page with a search bar. Suppose you have received the **shared file code** from your instructor, now you can input the shared code to fetch the presentation slides. 
+#### 1. Input Code and View Slides
+Suppose you have received the **shared file code** from your instructor, now you can input the shared code to fetch the presentation slides. 
 
 If the code matches and the corresponding file is accessible, you will be given the option **`Go to Presentation`**. You can now start viewing interactive **Student mode** slides with quizzes inside.
 
-<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290306stu_view.gif' alt='202004290306stu_view'/>
+<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004301603stu_input_view.gif' alt='202004301603stu_input_view'/>
 
 > We do not require students to login to use our service for simplicity, and the presenter should be careful about whom the secret code is shared with. However, as mentioned above, we have developed the feature that allows presenters to **protect their slides and quizzes** by enabling or disabling the shared code as well as the quizzes inside!
+
+#### 2. Take Quiz and Back to Slides
+Click **`Start Quiz`** and interact with your instructor! After finishing the quiz, you can go back and continue viewing the remaining slides.
+
+<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004301605stu_quiz_back_slides.gif' alt='202004301605stu_quiz_back_slides'/>
 
 ## Markdown Instructions
 Want to write your own presentation slides? No problem!
@@ -177,3 +190,5 @@ Notes: Presenter mode is so cool.
 - [JUnit](): Unit testing framework
 
 ## Acknowledgements
+
+- [Spectacle](https://github.com/FormidableLabs/spectacle)
