@@ -1,19 +1,20 @@
 # QuizHero: a Lightweight Web Application for Creating Interactive Slides with Quizzes from Markdown.
 
+## Table of Contents
 - [Have Fun with QuizHero.](#have-fun-with-quizhero)
-- [What is QuizHero for?](#what-is-quizhero-for-)
-- [How to use QuizHero?](#how-to-use-quizhero-)
+- [What is QuizHero for?](#what-is-quizhero-for)
+- [How to use QuizHero?](#how-to-use-quizhero)
   * [Instructor Mode](#instructor-mode)
-        + [1. Upload and Sharing](#1-upload-and-sharing)
-        + [2. View Slides](#2-view-slides)
-        + [3. Start Quiz and View Statistics](#3-start-quiz-and-view-statistics)
-        + [4. View History and Delete Files](#4-view-history-and-delete-files)
-        + [5. Presenter Mode with Notes & Second Audience Window](#5-presenter-mode-with-notes---second-audience-window)
+      * [1. Upload and Sharing](#1-upload-and-sharing)
+      * [2. View Slides](#2-view-slides)
+      * [3. Start Quiz and View Statistics](#3-start-quiz-and-view-statistics)
+      * [4. View History and Delete Files](#4-view-history-and-delete-files)
+      * [5. Presenter Mode with Notes & Second Audience Window](#5-presenter-mode-with-notes--second-audience-window)
   * [Student Mode](#student-mode)
 - [Markdown Instructions](#markdown-instructions)
 - [Run QuizHero Locally.](#run-quizhero-locally)
 - [Test QuizHero](#test-quizhero)
-- [How is QuizHero Built?](#how-is-quizhero-built-)
+- [How is QuizHero Built?](#how-is-quizhero-built)
 - [Acknowledgements](#acknowledgements)
 
 ## Have Fun with QuizHero.
