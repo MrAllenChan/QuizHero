@@ -72,54 +72,42 @@ public class RecordDaoTest {
         List<Quiz> originList = new ArrayList<>();
         List<Quiz> updateList = new ArrayList<>();
         originList.add(quiz1);
-        originList.add(quiz2);
-        originList.add(quiz3);
-        originList.add(quiz4);
-        assertEquals(originList, quizDao.getAllQuizStat());
+        assertEquals(originList, quizDao.getQuizStatByFileId(fileId_1));
         Record record_1 = new Record(fileId_1, 1, 'A');
         recordDao.add(record_1);
         Quiz quiz1Update = new Quiz(fileId_1, 1, "A", 1, 0, 0, 0);
-        updateList.add(quiz1Update);
-        assertEquals(updateList, quizDao.getQuizStatByFileId(fileId_1));
+        assertEquals(quiz1Update.getCountA(), quizDao.getQuizStatByFileId(fileId_1).get(0).getCountA());
     }
 
     @Test
     public void addMultipleRecord() {
-        List<Quiz> originList = new ArrayList<>();
-        List<Quiz> updateList = new ArrayList<>();
-        originList.add(quiz1);
-        originList.add(quiz2);
-        originList.add(quiz3);
-        originList.add(quiz4);
-        assertEquals(originList, quizDao.getAllQuizStat());
-        //set quiz 1 stat count to: A:1, B:2, C:0, D:1
-        Record record_1 = new Record(fileId_1, 1, 'A');
-        Record record_2 = new Record(fileId_1, 1, 'B');
-        Record record_3 = new Record(fileId_1, 1, 'B');
-        Record record_4 = new Record(fileId_1, 1, 'D');
+
+        //set quiz 2 question 1 stat
+        Record record_1 = new Record(fileId_2, 1, 'A');
+        Record record_2 = new Record(fileId_2, 1, 'B');
+        Record record_3 = new Record(fileId_2, 1, 'B');
+        Record record_4 = new Record(fileId_2, 1, 'D');
         recordDao.add(record_1);
         recordDao.add(record_2);
         recordDao.add(record_3);
         recordDao.add(record_4);
-        //set quiz2 - 4
-        Record record_5 = new Record(fileId_2, 1, 'A');
-        Record record_6 = new Record(fileId_2, 1, 'A');
-        Record record_7 = new Record(fileId_2, 2, 'C');
-        Record record_8 = new Record(fileId_2, 3, 'D');
+        //set quiz2 question 2 to 3
+        Record record_5 = new Record(fileId_2, 2, 'C');
+        Record record_6 = new Record(fileId_2, 3, 'D');
         recordDao.add(record_5);
         recordDao.add(record_6);
-        recordDao.add(record_7);
-        recordDao.add(record_8);
 
-        Quiz quiz1Update = new Quiz(fileId_1, 1, "A", 1, 2, 0, 1);
-        Quiz quiz2Update = new Quiz(fileId_2, 1, "A", 2, 0, 0, 0);
-        Quiz quiz3Update = new Quiz(fileId_2, 2, "A", 0, 0, 1, 0);
-        Quiz quiz4Update = new Quiz(fileId_2, 3, "A", 0, 0, 0, 1);
-        updateList.add(quiz1Update);
-        updateList.add(quiz2Update);
-        updateList.add(quiz3Update);
-        updateList.add(quiz4Update);
-        assertEquals(updateList, quizDao.getAllQuizStat());
+        Quiz quiz2_1Update = new Quiz(fileId_2, 1, "A", 1, 2, 0, 1);
+        Quiz quiz2_2Update = new Quiz(fileId_2, 2, "A", 0, 0, 1, 0);
+        Quiz quiz2_3Update = new Quiz(fileId_2, 3, "A", 0, 0, 0, 1);
+
+        assertEquals(quiz2_1Update.getCountA(), quizDao.getSingleQuizStat(fileId_2, 1).getCountA());
+        assertEquals(quiz2_1Update.getCountB(), quizDao.getSingleQuizStat(fileId_2, 1).getCountB());
+        assertEquals(quiz2_1Update.getCountC(), quizDao.getSingleQuizStat(fileId_2, 1).getCountC());
+        assertEquals(quiz2_1Update.getCountD(), quizDao.getSingleQuizStat(fileId_2, 1).getCountD());
+        assertEquals(quiz2_2Update.getCountC(), quizDao.getSingleQuizStat(fileId_2, 2).getCountC());
+        assertEquals(quiz2_3Update.getCountD(), quizDao.getSingleQuizStat(fileId_2, 3).getCountD());
+
     }
 
 }
