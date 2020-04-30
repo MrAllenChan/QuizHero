@@ -229,10 +229,10 @@ class MyUpload extends React.Component{
                         {/*<Menu.Item key="1">Upload </Menu.Item>*/}
 
                         {/*<Menu.Item key="2">History </Menu.Item>*/}
-                        <Menu.Item key="1" style={{marginLeft:"160px"}}>
+                        <Menu.Item key="1" style={{display:"inline-block",float:"left", marginLeft:"30px", width: "150px"}}>
                             <Link to={'/HomePage'}>Upload</Link>
                         </Menu.Item>
-                        <Menu.Item key="2">
+                        <Menu.Item key="2" style={{display:"inline-block",float:"left", width: "150px"}}>
                             <Link to={'/history'}>History</Link>
                         </Menu.Item>
                         

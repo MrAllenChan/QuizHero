@@ -142,9 +142,9 @@ class StudentRequestPage extends Component{
                             <Icon/>Go to Presentation
                         </Button>
                     </Link>
-                    <Button onClick={this.downloadHTML} size={"large"} style={{marginLeft: 10}}>
-                        <Icon/>Download HTML
-                    </Button>
+                    {/*<Button onClick={this.downloadHTML} size={"large"} style={{marginLeft: 10}}>*/}
+                    {/*    <Icon/>Download HTML*/}
+                    {/*</Button>*/}
                     </div>
                     {/*</Link>*/}
                 </header>
