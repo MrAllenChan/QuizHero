@@ -11,7 +11,7 @@
       * [4. View History and Delete Files](#4-view-history-and-delete-files)
       * [5. Presenter Mode with Notes & Second Audience Window](#5-presenter-mode-with-notes--second-audience-window)
   * [Student Mode](#student-mode)
-      * [1. Input Code and View Slides](#1-input-code-and-view-slides)
+      * [1. Input Code and View Slides](#1-input-shared-code-and-view-slides)
       * [2. Take Quiz and Back to Slides](#2-take-quiz-and-back-to-slides)
 - [Markdown Instructions](#markdown-instructions)
 - [Run QuizHero Locally.](#run-quizhero-locally)
@@ -77,11 +77,11 @@ Presenters can click the **Refresh** button on the statistics page to see the up
 
 You can view all of the files you uploaded before by clicking **`History`** button in the top left corner.
 
-Still, for each file, you have the options to enter **`Presenter Mode`**, **`Start Sharing`**, **`Stop Sharing`**. But now you can **`Delete`** them as well!
+Still, for each file, you have the options to enter **`Presenter Mode`**, **`Start Sharing`**, or **`Stop Sharing`**. But now you can **`Delete`** them as well!
 
 **Bonus:** Click the filename to directly download the **original markdown file**. No need to worry about losing your files!
 
-<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004301539ins_history_delete.gif' alt='202004301539ins_history_delete'/>
+<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004301642ins_history_delete.gif' alt='202004301642ins_history_delete'/>
 
 #### 5. Presenter Mode with Notes & Second Audience Window
 
@@ -99,14 +99,15 @@ Suppose you have received the **shared file code** from your instructor, now you
 
 If the code matches and the corresponding file is accessible, you will be given the option **`Go to Presentation`**. You can now start viewing interactive **Student mode** slides with quizzes inside.
 
-<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004301603stu_input_view.gif' alt='202004301603stu_input_view'/>
+<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004301644stu_input_view.gif' alt='202004301644stu_input_view'/>
 
 > We do not require students to login to use our service for simplicity, and the presenter should be careful about whom the secret code is shared with. However, as mentioned above, we have developed the feature that allows presenters to **protect their slides and quizzes** by enabling or disabling the shared code as well as the quizzes inside!
 
 #### 2. Take Quiz and Back to Slides
+
 Click **`Start Quiz`** and interact with your instructor! After finishing the quiz, you can go back and continue viewing the remaining slides.
 
-<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004301605stu_quiz_back_slides.gif' alt='202004301605stu_quiz_back_slides'/>
+<img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004301645stu_quiz_back_slides.gif' alt='202004301645stu_quiz_back_slides'/>
 
 ## Markdown Instructions
 Want to write your own presentation slides? No problem!
