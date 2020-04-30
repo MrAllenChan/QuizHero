@@ -1,6 +1,22 @@
 # QuizHero: a Lightweight Web Application for Creating Interactive Slides with Quizzes from Markdown.
 
-## Have fun with QuizHero.
+- [Have Fun with QuizHero.](#have-fun-with-quizhero)
+- [What is QuizHero for?](#what-is-quizhero-for-)
+- [How to use QuizHero?](#how-to-use-quizhero-)
+  * [Instructor Mode](#instructor-mode)
+        + [1. Upload and Sharing](#1-upload-and-sharing)
+        + [2. View Slides](#2-view-slides)
+        + [3. Start Quiz and View Statistics](#3-start-quiz-and-view-statistics)
+        + [4. View History and Delete Files](#4-view-history-and-delete-files)
+        + [5. Presenter Mode with Notes & Second Audience Window](#5-presenter-mode-with-notes---second-audience-window)
+  * [Student Mode](#student-mode)
+- [Markdown Instructions](#markdown-instructions)
+- [Run QuizHero Locally.](#run-quizhero-locally)
+- [Test QuizHero](#test-quizhero)
+- [How is QuizHero Built?](#how-is-quizhero-built-)
+- [Acknowledgements](#acknowledgements)
+
+## Have Fun with QuizHero.
 
 Our QuizHero app is now deployed on Heroku and can be run in Google Chrome. [Jump here to have fun with QuizHero!](https://quiz-hero.herokuapp.com/) You can also run our app at localhost. Detailed instructions will be given below.
 
@@ -23,8 +39,6 @@ Just enjoy and have fun with QuizHero!
 ## How to use QuizHero?
 
 To begin with, you will see a welcome page displayed on your browser with our logo "QuizHero" as well as two buttons you can choose: **`I'm a Presenter`** and **`I'm a Student`** as shown in the beginning of this page.
-
----
 
 ### Instructor Mode
 If you choose "I'm a presenter", you will be guided to the **Login** interface, or you can **register** as a new instructor.
@@ -72,30 +86,72 @@ Press **`Option + P`** to open presenter mode. You will be able to open a second
 
 ### Student Mode
 
-So you're a student now! You may choose **`I'm a Student`** from the welcome page, and will be directed to the student page with a search bar. Suppose you have received the shared file code from your instructor, now you can input the shared code to fetch the presentation slides. 
+So you're a student now! You may choose **`I'm a Student`** from the welcome page, and will be directed to the student page with a search bar. Suppose you have received the **shared file code** from your instructor, now you can input the shared code to fetch the presentation slides. 
+
+If the code matches and the corresponding file is accessible, you will be given the option **`Go to Presentation`**. You can now start viewing interactive **Student mode** slides with quizzes inside.
 
 <img src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290306stu_view.gif' alt='202004290306stu_view'/>
 
-If the code matches and the corresponding file is accessible, students will be given the option **`Go to Presentation`**. They can now start viewing interactive **Student mode** slides with quizzes inside.
-
 > We do not require students to login to use our service for simplicity, and the presenter should be careful about whom the secret code is shared with. However, as mentioned above, we have developed the feature that allows presenters to **protect their slides and quizzes** by enabling or disabling the shared code as well as the quizzes inside!
 
-## Markdown instructions
+## Markdown Instructions
 Want to write your own presentation slides? No problem!
 
 First, you are encouraged to take a look at **"template.md"** to have an idea of the rules. The rules simply follow the standard Markdown syntax and is quite easy to understand!
 
-## Run QuizHero locally.
+Now, here are some core marks you can grasp in 10 seconds:
+- **`---`** is used as a slide delimiter.
+- **`Notes:`** Embed private notes in presenter mode. 
+- **`> Question:`** marks question topic
+- **`* [ ]`**  marks wrong option (with a space inside)
+- **`* [x]`**  marks correct option
+ 
+```markdown
+# QuizHero Demonstration
+
+- This is a **demo**
+
+Notes: this is my private notes. The student can not see that.
+
+---
+
+# Start Presenter Mode!
+
+- Press **`Option + P`** to open presenter mode. Open a second audience window & view your private notes to better support your presentation.
+
+Notes: Presenter mode is so cool.
+
+---
+```
+
+```markdown
+> Question: Which framework do you use to develop your backend server?
+* [ ] A. SpringBoot
+* [x] B. Javalin
+* [ ] C. SparkJava
+* [ ] D. Tomcat
+```
+
+- You can write HTML tag inside the markdown to insert images and adjust the position or size as you like.
+
+```html
+<p align = "center">
+<img width = "50%" src='www.example.com/image.jpg'/>
+</p>
+```
+
+## Run QuizHero Locally.
 
 1. To run our QuizHero project, first simply download the project onto a local repository of your computer.
 2. Use any popular IDE (IntelliJ IDEA recommended) to open the project **code/QuizHero_APP** and import as a **Gradle** project.
-3. Make sure you have installed JDK 11. Also, set Project SDK as Java 11 (In IntelliJ, open File -> Project Structure -> Project Settings/Project, set Project SDK as 11). 
-4. Under Run/Debug Configurations, set the classpath of module as "QuizHero.main". We also recommend that JRE 11 is used to run the project.
-5. Try to build the project, if build successfully, run "**RunServer.main**" under src/main/java/api. 
-6. If there is something wrong when building the project, in Gradle settings under Preferences, use Gradle from 'wrapper task' in Gradle build script (see below). Then build the project and run "RunServer.main" again, you should see the Javalin framework has begun to work now.
+3. Make sure you have installed JDK 11. Also, set Project SDK as Java 11 (In IntelliJ, open `File` -> `Project Structure` -> `Project Settings/Project`, set Project SDK as 11). 
+4. Under Run/Debug Configurations, set the classpath of module as "`QuizHero.main`". We also recommend that JRE 11 is used to run the project.
+5. Try to build the project, if build successfully, run "`RunServer.main`" under src/main/java/api. 
+6. If there is something wrong when building the project, in Gradle settings under `Preferences`, use Gradle from `'wrapper' task in Gradle build script` (see below). Then build the project and run "`RunServer.main`" again, you should see the Javalin framework has begun to work now.
 
-<!--<img src="https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/configuration.jpg" width="80%"/>
--->
+<p align = "center">
+    <img width = "60%" src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004301343configuration.jpg' alt='202004301343configuration'/>
+</p>
 
 ## Test QuizHero
 
@@ -105,12 +161,18 @@ First, you are encouraged to take a look at **"template.md"** to have an idea of
 
 3. We have also written unit tests for Model, Dao and ApiServer. You can run those tests under directory **code/QuizHero_APP/src/test**.
 
-<p align = "left">
-  <img width = "80%" src="https://i.loli.net/2020/04/29/yh2OQlnk8ITmAcZ.jpg">
+<p align = "center">
+  <img width = "70%" src="https://i.loli.net/2020/04/29/yh2OQlnk8ITmAcZ.jpg">
 </p>
 
-## How is QuizHero built?
+## How is QuizHero Built?
 
-The front-end is based on React framework, with the help of Spectacle to present dynamic slide decks converted from raw Markdown file. The development of back-end server involves a lot of tools and frameworks. The application server is developed using Javalin, and we use PostgreSQL as our database management system. Gradle is used as the automation build system, and we use Postman and JUnit framework to test the server.
+- [React](): The front-end is based on React framework
+- [Spectacle](): Convert raw markdown content to dynamic slide decks.
+- [Javalin](): Application server for creating REST API
+- [PostgreSQL](): Relational Database Management System (RDBMS). 
+- [Gradle](): Automation build system
+- [Postman](): Test API server
+- [JUnit](): Unit testing framework
 
-## Credit
+## Acknowledgements
