@@ -18,23 +18,38 @@ We have delivered all of the must-have features and the first two nice-to-have f
 #### 2. What we have not delivered
 There are 2 nice-to-have features we have not delivered or decided not to deliver at last.
 * As a student, I want to download the presentation onto my own computer, so that I can review it after class.
+    * We delivered this feature previously, but due to the reason that students will be able to download the file and see the quizzes and answers in advance, we finally decided to temporarily disable this feature. We will probably allow instructors to control the permission of downloading files in the future.
 * As an instructor, I want to set a timer module, so students need to complete the quiz or discussion within the time limit. 
+    * This feature is more complicated than we initially anticipated. Also, we have already delivered so many essential features within such a limited time, and we decide to focus on perfecting what we have achieved.
 
 #### 3. What have changed
 
 ### Recall the Whole Development Process 
 
+When we look back at the beginning of this project, we have to admit that we were quite confused at that time: we were not sure what frameworks we should finally choose; how the Model, DAOs and database should be designed; what plugins we could use to import to our code and convert the markdown file successfully; how could we parse and extract quiz contents from markdown file; we even ran into trouble for the combination of front-end and back-end code as well as the communications between the two systems in the beginning.
+
+However, "The beginning is always the hardest". As we conquered those problems one by one, we gradually had a feeling that the toughest time had past and we were moving on a right track of development. Also, we spent a lot of time discussing the design of the application and built a relatively robust foundation of the system. Even with more and more features introduced, sometimes we felt that "things become natural" and "yes it should be like this". We were bursting with passion, building the application with motivation.
+
 Here we list some major challenges we met, and how we finally overcame them.
+
+1. We met difficulties when we tried to connect our frontend with backend. We solved it by adding static build files built from React project to Javalin resources/public folder. Later when we deploy the application, we push the entire project including build files of front-end to Heroku.
+2. quiz tags/marks & parsing algorithm
+3. Develop separate student page for students to access the slides and quizzes from open Internet
+4. How to store the files. Previously, we wrote a series of methods to store files locally and the logic works all well when we tested the server at localhost. However, during deployment process we found that the Heroku file system is ephemeral, and we cannot upload markdown files and save them in the file system of the server. Hence, we have to completely abandon the previous logic. Finally, we decided to store the content of markdown files as byte stream in the PostgreSQL database, in which way we were able to store files in a persistent way and successfully fetch them.
+5. Login feature requires much more refactoring of code than we anticipated. We have to redesign and refine API, DAOs and Model on back-end a lot for processing and storing login information as well as managing user-file information in database.
 
 ### If We could Go Back?
 
 ### Looking Ahead
-Besides the nice-to-haves that we could implement, we think there are many other cool features that can be implemented to make this application a more powerful education tool:
+Besides the remaining 2 nice-to-haves that we could implement, we think there are many other cool features that can be implemented to make this application a more powerful education tool:
+
 * Currently the style of presentation slides is preset in our code. In future, we could open the styling design to users for customization. This could be achieved by allowing users to upload their own CSS files.
-* Another feature would be online editing/realtime rendering. If the user were able to edit Markdown online and to have a separate window showing how it looks like after converted to slides, it would provide a better user experience, especially for those who don't have much of experience in Markdown writing.
-* The design of quiz in our application is more for student participation than actual grading. If the instructor want his presentation and quizzess closer to the format of an actual exam, some encryption process and more strict access to file are needed.
+* Another feature would be online editing/realtime rendering. If the user were able to edit Markdown online and to have a separate window showing how it looks like in real time after converting markdown to slides, it would provide a better user experience, especially for those who don't have much experience in Markdown writing.
+* For the quiz design, currently we limit the format of quiz to be MCQ with 4 questions at most. In the future, we plan to extend the format of quiz such as allowing instructors to write essay questions or MCQ with multiple answers.
+* The design of quiz in our application is more for interactions between students and instructors than actual grading. If instructors want their quizzes closer to the format of an actual exam, some encryption processes and more strict access to files will be needed.
 
 ### To Our Advisor
-Julia helps us a lot through the 5 iterations. She always provides her best insights and suggestions on our project, and we
-find them very helpful in developing a blue print for our design and improving user experience of our application. She has also been very responsive to our questions and emails. We really appreciate your time and effort for this semester, especially under the circumstance of remote teaching. Thank you Julia!
+Julia really helps us a lot through the entire 5 iterations. She always provides her best insights and suggestions on our project, from drawing up a blue print to developing the application as well as improving the user experience. Sometimes we felt that she was a bit strict, but it turns out she pushes the best of us and we wouldn't have accomplished all of these without her support and high expectation for us.
+
+She has always been very responsive to our questions and emails. We really appreciate her time and effort for this semester, especially under the circumstance of remote teaching. Thank you so much Julia!
 
