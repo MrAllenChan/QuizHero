@@ -59,38 +59,10 @@ public class QuizDaoTest {
     @Test
     public void addQuiz() {
         Quiz quiz = new Quiz(fileId_1, 1, "A", 0, 0, 0, 0);
-        List<Quiz> list = new ArrayList<>();
-        assertEquals(list, quizDao.getSingleQuizStat(fileId_1, 1));
+        assertEquals(null, quizDao.getSingleQuizStat(fileId_1, 1));
         quizDao.add(quiz);
-        list.add(quiz);
-        assertEquals(list, quizDao.getSingleQuizStat(fileId_1, 1));
+        assertEquals(quiz, quizDao.getSingleQuizStat(fileId_1, 1));
     }
-
-    // wrong fileId case will not happen: quiz is constructed based on the info passed from frontend
-//    @Test (expected = DaoException.class)
-//    public void addQuizNonExistedFile() {
-//        Quiz quiz = new Quiz(fileId_1 + "wrong", 1, "A", 0, 0, 0, 0);
-//        List<Quiz> list = new ArrayList<>();
-//        quizDao.add(quiz);
-//    }
-
-//    @Test
-//    public void getAllQuizStat() {
-//        Quiz quiz1 = new Quiz(fileId_1, 1, "A", 0, 0, 0, 0);
-//        Quiz quiz2 = new Quiz(fileId_2, 1, "A", 0, 0, 0, 0);
-//        Quiz quiz3 = new Quiz(fileId_1, 2, "A", 0, 0, 0, 0);
-//        Quiz quiz4 = new Quiz(fileId_2, 2, "A", 0, 0, 0, 0);
-//        List<Quiz> list = new ArrayList<>();
-//        quizDao.add(quiz1);
-//        list.add(quiz1);
-//        quizDao.add(quiz2);
-//        list.add(quiz2);
-//        quizDao.add(quiz3);
-//        list.add(quiz3);
-//        quizDao.add(quiz4);
-//        list.add(quiz4);
-//        assertEquals(list, quizDao.getAllQuizStat());
-//    }
 
     @Test
     public void getSingleQuizStat() {

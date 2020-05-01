@@ -168,20 +168,45 @@ public class ApiServerTest {
 
 //        test fetch file api
         final String URL = "http://127.0.0.1:7000/fetch";
-        HttpResponse<JsonNode> jsonResponse = Unirest.get(URL)
-                .queryString(map).asJson();
+        //use String class to workaround
+        HttpResponse<String> jsonResponse = Unirest.get(URL)
+                .queryString(map).asString();
         assertEquals(200, jsonResponse.getStatus());
-        assertNotEquals(0, jsonResponse.getBody().getArray().length());
+        assertNotEquals(0, jsonResponse.getBody().length());
     }
 
-//    @Test
-//    public void fetchFileReturn400() throws UnirestException {
-//        final String URL = "http://127.0.0.1:7000/fetch";
-//        HttpResponse<JsonNode> jsonResponse = Unirest.get(URL)
-//                .queryString("fileId", "r").asJson();
-//        assertEquals(200, jsonResponse.getStatus());
-//        assertNotEquals(0, jsonResponse.getBody().getArray().length());
-//    }
+    @Test
+    public void fetchFileReturn400() throws UnirestException {
+        //upload test.md
+        File upload = new File("src/test/resources/test.md");
+        Map<String, Object> file = new HashMap<>();
+        file.put("file", upload);
+        file.put("userId", "1");
+        final String up = "http://127.0.0.1:7000/upload";
+        String result = Unirest.post(up).fields(file).asObject(String.class).getBody();
+        System.out.println("result to string is :" + result);
+        String seg[] = result.split("\"");
+        String fileId = seg[7];
+        System.out.println("fileId is : " + fileId);
+        Map<String, Object> map = new HashMap<>();
+        //missing argument return 400
+//        map.put("fileId", fileId);
+
+//        test fetch file api
+        final String URL = "http://127.0.0.1:7000/fetch";
+        //use String class to workaround
+        HttpResponse<String> jsonResponse = Unirest.get(URL)
+                .queryString(map).asString();
+        assertEquals(400, jsonResponse.getStatus());
+    }
+
+    @Test
+    public void fetchFileReturn500() throws UnirestException {
+        final String URL = "http://127.0.0.1:7000/fetch";
+        HttpResponse<String> jsonResponse = Unirest.get(URL)
+                .queryString("fileId", "wrong file id").asString();
+        assertEquals(500, jsonResponse.getStatus());
+    }
 
     @Test
     public void changeFilePermissionReturn201() throws UnirestException {
@@ -222,23 +247,23 @@ public class ApiServerTest {
         assertEquals(400, jsonResponse.getStatus());
     }
 
-//    @Test
-//    public void checkFilePermissionReturn200() throws UnirestException {
-//        File upload = new File("src/test/resources/test.md");
-//        Map<String, Object> file = new HashMap<>();
-//        file.put("file", upload);
-//        file.put("userId", "1");
-//        final String up = "http://127.0.0.1:7000/upload";
-//        String result = Unirest.post(up).fields(file).asObject(String.class).getBody();
-//        String seg[] = result.split("\"");
-//        String fileId = seg[7];
-//
-//        final String URL = "http://127.0.0.1:7000/filepermission";
-//        HttpResponse<JsonNode> jsonResponse = Unirest.get(URL)
-//                .queryString("fileId", fileId).asJson();
-//        assertEquals(200, jsonResponse.getStatus());
-//        assertNotEquals(0, jsonResponse.getBody().getArray().length());
-//    }
+    @Test
+    public void checkFilePermissionReturn200() throws UnirestException {
+        File upload = new File("src/test/resources/test.md");
+        Map<String, Object> file = new HashMap<>();
+        file.put("file", upload);
+        file.put("userId", "1");
+        final String up = "http://127.0.0.1:7000/upload";
+        String result = Unirest.post(up).fields(file).asObject(String.class).getBody();
+        String seg[] = result.split("\"");
+        String fileId = seg[7];
+
+        final String URL = "http://127.0.0.1:7000/filepermission";
+        HttpResponse<String> jsonResponse = Unirest.get(URL)
+                .queryString("fileId", fileId).asString();
+        assertEquals(200, jsonResponse.getStatus());
+        assertNotEquals(0, jsonResponse.getBody().length());
+    }
 
     @Test
     public void checkFilePermissionReturn400() throws UnirestException {
@@ -332,7 +357,22 @@ public class ApiServerTest {
     }
 
     @Test
-    public void checkQuizPermissionReturn200(){}
+    public void checkQuizPermissionReturn200() throws UnirestException {
+        File upload = new File("src/test/resources/test.md");
+        Map<String, Object> file = new HashMap<>();
+        file.put("file", upload);
+        file.put("userId", "1");
+        final String up = "http://127.0.0.1:7000/upload";
+        String result = Unirest.post(up).fields(file).asObject(String.class).getBody();
+        String seg[] = result.split("\"");
+        String fileId = seg[7];
+
+        final String URL = "http://127.0.0.1:7000/quizpermission";
+        HttpResponse<String> jsonResponse = Unirest.get(URL)
+                .queryString("fileId", fileId).asString();
+        assertEquals(200, jsonResponse.getStatus());
+        assertNotEquals(0, jsonResponse.getBody().length());
+    }
 
     @Test
     public void checkQuizPermissionReturn400() throws UnirestException {
@@ -352,23 +392,23 @@ public class ApiServerTest {
     }
 
 
-//    @Test
-//    public void deleteFileReturn201() throws UnirestException {
-//        File upload = new File("src/test/resources/test.md");
-//        Map<String, Object> file = new HashMap<>();
-//        file.put("file", upload);
-//        file.put("userId", "1");
-//        final String up = "http://127.0.0.1:7000/upload";
-//        String result = Unirest.post(up).fields(file).asObject(String.class).getBody();
-//        String seg[] = result.split("\"");
-//        String fileId = seg[7];
-//
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("fileId", fileId);
-//        final String URL = "http://127.0.0.1:7000/deletefile";
-//        HttpResponse<JsonNode> jsonResponse = Unirest.post(URL).fields(map).asJson();
-//        assertEquals(201, jsonResponse.getStatus());
-//    }
+    @Test
+    public void deleteFileReturn201() throws UnirestException {
+        File upload = new File("src/test/resources/test.md");
+        Map<String, Object> file = new HashMap<>();
+        file.put("file", upload);
+        file.put("userId", "1");
+        final String up = "http://127.0.0.1:7000/upload";
+        String result = Unirest.post(up).fields(file).asObject(String.class).getBody();
+        String seg[] = result.split("\"");
+        String fileId = seg[7];
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("fileId", fileId);
+        final String URL = "http://127.0.0.1:7000/deletefile";
+        HttpResponse<String> jsonResponse = Unirest.post(URL).fields(map).asString();
+        assertEquals(201, jsonResponse.getStatus());
+    }
 
     @Test
     public void deleteFileReturn400() throws UnirestException {
