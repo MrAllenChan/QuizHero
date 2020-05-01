@@ -39,6 +39,10 @@ Here we list some major challenges we met, and how we finally overcame them.
 5. Login feature requires much more refactoring of code than we anticipated. We have to redesign and refine API, DAOs and Model on back-end a lot for processing and storing login information as well as managing user-file information in database.
 
 ### If We could Go Back?
+As we said above, there were many difficulties when we at the beginning of our project. So if we could go back to the very start of this project, we would make some improvements:
+
+* Do sufficient research to collect information we need. We developed front-end and back-end in different frameworks at the beginning, thinking that we can easily combine them later. But we found out this is not the right way to do this after wasting some time. This will not happen in the next project!
+* We didn't use some feature in GitHub, for example, branches until instructors asked to do so. All the team members worked in the master branch so we can easily conflict with each other in the repository. After using branches, we worked on our own branches and merged with master branch if needed, which makes the development more smoothly.
 
 ### Looking Ahead
 Besides the remaining 2 nice-to-haves that we could implement, we think there are many other cool features that can be implemented to make this application a more powerful education tool:
