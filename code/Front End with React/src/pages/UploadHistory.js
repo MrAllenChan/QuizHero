@@ -1,30 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import '../App.css'
 // import '../utils/index.css';
 import {Link} from "react-router-dom";
-import {List, Button, Skeleton, Menu, Layout, Icon, message} from 'antd';
+import {List, Button, Menu, Layout, message} from 'antd';
 import axios from "axios";
 import {BASE_URL} from "../config/config";
 import separateQuestion from "../components/Parse";
 import {CopyToClipboard} from "react-copy-to-clipboard";
-import template from "../components/template";
-// import marpitConvert from "../components/Marpit";
-const { Header, Content, Footer } = Layout;
+import marpitConvert from "../components/Marpit";
+const {Header} = Layout;
 
-
-const demoData = [
-    {title : 'demo.md'},
-    {title : 'presentation.md'},
-    {title : 'oose.md'},
-    {title : 'design pattern .md'}
-]
 
 class UploadHistory extends React.Component {
     state = {
         fileList: [],
-        MarkDownFile : "",
         data : "",
         fileId : ""
     };
@@ -58,10 +48,7 @@ class UploadHistory extends React.Component {
         axios.get(BASE_URL + "/fetch",  {params})
             .then(res => {
                 console.log("AAA", res.data);
-                this.setState({
-                    MarkDownFile: res.data,
-                })
-                this.callSeparateQuestion();
+                this.callSeparateQuestion(res.data);
                 message.success(`File ${fileId} fetched successfully.`);
             })
             .catch((error) => {
@@ -69,12 +56,11 @@ class UploadHistory extends React.Component {
             })
     }
 
-    callSeparateQuestion =()=>{
-        var data = separateQuestion(this.state.MarkDownFile);
+    callSeparateQuestion =(rawString)=>{
+        var data = separateQuestion(rawString);
         data = JSON.stringify(data)
         localStorage.setItem("data", data)
         this.jump();
-        // this.getMarpit();
     }
 
     jump =()=> {
@@ -100,7 +86,7 @@ class UploadHistory extends React.Component {
             .catch((error)=> message.error(error));
     }
 
-    onDownload = (fileId, fileName) => {
+    onDownload = (fileId, fileName, fileType) => {
         function fakeClick(obj) {
             var ev = document.createEvent("MouseEvents");
             ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
@@ -118,13 +104,13 @@ class UploadHistory extends React.Component {
         let params = {
             fileId: fileId
         }
-
         console.log(fileId)
         axios.get(BASE_URL + "/fetch", {params})
             .then(res => {
                 console.log("AAA", res.data);
-                exportRaw(fileName, res.data);
-                message.success(`File ${fileName} ${fileId} downloaded successfully.`)
+                if (fileType === "raw") exportRaw(fileName, res.data);
+                else if (fileType === "HTML") exportRaw(`${fileName}.html`, marpitConvert(res.data));
+                message.success(`File ${fileName} downloaded successfully.`)
             })
             .catch((error) => {
                 console.log(error);
@@ -136,49 +122,14 @@ class UploadHistory extends React.Component {
         const formData = new FormData();
         formData.append('fileId', fileId);
         axios.post(BASE_URL + "/deletefile", formData)
-            .then(() => {this.componentDidMount();
-            message.success(`File ${fileId} deleted successfully`)})
+            .then(() => {
+                this.componentDidMount();
+                message.success(`File ${fileId} deleted successfully`)})
             .catch((error => {
                 this.componentDidMount();
                 alert(`Fail to delete File ${fileId}. ${error}`)
             }))
-        // this.componentDidMount();
     }
-
-    // getData = callback => {
-        // reqwest({
-        //     url: fakeDataUrl,
-        //     type: 'json',
-        //     method: 'get',
-        //     contentType: 'application/json',
-        //     success: res => {
-        //         callback(res);
-        //     },
-        // });
-    // };
-
-    // onLoadMore = () => {
-    //     this.setState({
-    //         loading: true,
-    //         list: this.state.data.concat([...new Array(count)].map(() => ({ loading: true, name: {} }))),
-    //     });
-    //     this.getData(res => {
-    //         const data = this.state.data.concat(res.results);
-    //         this.setState(
-    //             {
-    //                 data,
-    //                 list: data,
-    //                 loading: false,
-    //             },
-    //             () => {
-    //                 // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
-    //                 // In real scene, you can using public method of react-virtualized:
-    //                 // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
-    //                 window.dispatchEvent(new Event('resize'));
-    //             },
-    //         );
-    //     });
-    // };
 
     handleLogOut(){
         localStorage.setItem("username",null)
@@ -246,9 +197,12 @@ class UploadHistory extends React.Component {
                                       //     </Button>
                                       // </Link>,
                                       // Start/Stop sharing file button
-                                      <CopyToClipboard
-                                          onCopy={() => this.startSharing(item.fileId)}
-                                          text={item.fileId}>
+                                      <Button size={"small"}
+                                              onClick={() => this.onDownload(item.fileId, item.fileName, "HTML")}>
+                                          Download HTML
+                                      </Button>,
+                                      <CopyToClipboard text={item.fileId}
+                                                       onCopy={() => this.startSharing(item.fileId)}>
                                           <Button size={"small"}>
                                               Start sharing
                                           </Button>
@@ -259,12 +213,9 @@ class UploadHistory extends React.Component {
                                       </Button>
                                   ]}
                               >
-                                  {/*<Skeleton avatar title={false} loading={item.loading} active>*/}
                                   <List.Item.Meta style={{float:"left", marginLeft:"0px", width: "0px"}}
-                                      title={<a onClick={() => this.onDownload(item.fileId, item.fileName)}>{item.fileName}</a>}
+                                      title={<a onClick={() => this.onDownload(item.fileId, item.fileName, "raw")}>{item.fileName}</a>}
                                   />
-                                      {/*<div>content</div>*/}
-                                  {/*</Skeleton>*/}
                               </List.Item>
                           )}
                     />

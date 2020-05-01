@@ -81,33 +81,16 @@ class MyUpload extends React.Component{
         this.state.display_name = this.display_name('none');
     }
 
-    onDownload = () => {
-        function fakeClick(obj) {
-            var ev = document.createEvent("MouseEvents");
-            ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-            obj.dispatchEvent(ev);
-        }
-        function exportRaw(name, data) {
-            var urlObject = window.URL || window.webkitURL || window;
-            var export_blob = new Blob([data]);
-            var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
-            save_link.href = urlObject.createObjectURL(export_blob);
-            save_link.download = name;
-            fakeClick(save_link);
-        }
-        exportRaw(this.state.fileName, this.state.rawString);
-    }
-
     /**
-     * download the html file after uploaded.
+     * download raw file or HTML file after uploaded.
      */
-
-    downloadHTML = () => {
+    onDownload = (fileType) => {
         function fakeClick(obj) {
             var ev = document.createEvent("MouseEvents");
             ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
             obj.dispatchEvent(ev);
         }
+
         function exportRaw(name, data) {
             var urlObject = window.URL || window.webkitURL || window;
             var export_blob = new Blob([data]);
@@ -116,7 +99,10 @@ class MyUpload extends React.Component{
             save_link.download = name;
             fakeClick(save_link);
         }
-        exportRaw(`${this.state.fileName}.html`, this.state.marpitResult);
+
+        if (fileType === "raw") exportRaw(this.state.fileName, this.state.rawString);
+        else if (fileType === "HTML") exportRaw(`${this.state.fileName}.html`, this.state.marpitResult);
+        else console.log("Wrong fileType provided")
     }
 
     /**
@@ -262,8 +248,8 @@ class MyUpload extends React.Component{
                             <Upload
                                 onChange={this.onChange}
                                 beforeUpload={this.beforeUpload}
-                                onDownload={this.onDownload}
-                                onPreview={this.onDownload}
+                                onDownload={() => this.onDownload("raw")}
+                                onPreview={() => this.onDownload("raw")}
                                 onRemove={this.onRemove}
                                 {...props}>
 
@@ -281,7 +267,7 @@ class MyUpload extends React.Component{
                                 </Button>
                             </Link>
                             <Button size={"median"} style={{marginLeft: 10}}
-                                    onClick={this.downloadHTML}>
+                                    onClick={() => this.onDownload("HTML")}>
                                 Download HTML
                             </Button>
                         </div>

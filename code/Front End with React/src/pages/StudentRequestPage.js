@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import {Form, Input, Button, Checkbox, message, Icon} from "antd";
+import {Input, Button, message} from "antd";
 import {Link} from "react-router-dom"
 import logo from "../fig/logo.png";
 import axios from "axios";
 import {BASE_URL} from "../config/config";
 import separateQuestion from "../components/Parse";
-import marpitConvert from "../components/Marpit";
 
 const {Search} = Input;
 
@@ -16,7 +15,6 @@ class StudentRequestPage extends Component{
         this.state = {
             fileId : "",
             permission : false,
-            MarkDownFile : "",
             display_name:'none'
         }
     }
@@ -55,9 +53,7 @@ class StudentRequestPage extends Component{
             axios.get(BASE_URL + "/fetch",  {params})
                 .then(res => {
                     console.log("AAA", res.data);
-                    this.setState({
-                        MarkDownFile: res.data,
-                    }, this.callSeparateQuestion)
+                    this.callSeparateQuestion(res.data);
                     message.success(`File ${this.state.fileId} fetched successfully.`)
                 })
                 .catch((error) => {
@@ -68,43 +64,11 @@ class StudentRequestPage extends Component{
         }
     }
 
-    callSeparateQuestion =()=>{
-        var data = separateQuestion(this.state.MarkDownFile);
+    callSeparateQuestion =(rawString)=>{
+        var data = separateQuestion(rawString);
         data = JSON.stringify(data);
         localStorage.setItem("data", data);
-        this.getMarpit();
         this.state.display_name = this.display_name();
-    }
-
-    // Marpit for download
-    getMarpit=()=>{
-        const marpitResult = marpitConvert(this.state.MarkDownFile)
-        this.setState({
-            marpitResult : marpitResult
-        })
-    }
-
-
-    // onChange = (e) => {
-    //     this.setState({fileId : e})
-    // }
-
-
-    downloadHTML = () => {
-        function fakeClick(obj) {
-            var ev = document.createEvent("MouseEvents");
-            ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-            obj.dispatchEvent(ev);
-        }
-        function exportRaw(name, data) {
-            var urlObject = window.URL || window.webkitURL || window;
-            var export_blob = new Blob([data]);
-            var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
-            save_link.href = urlObject.createObjectURL(export_blob);
-            save_link.download = name;
-            fakeClick(save_link);
-        }
-        exportRaw('presentation.html', this.state.marpitResult);
     }
 
     display_name () {
@@ -125,10 +89,6 @@ class StudentRequestPage extends Component{
                 <header className="App-header">
 
                     <img src={logo} className="App-logo" alt="logo"/>
-                    {/*<input type="text"/>*/}
-                    {/*<Input placeholder="Please enter code" onChange={this.onChange}/>*/}
-
-                    {/*<Link to={{pathname: '/student', query: this.state.data}}>*/}
                         <Search
                             style={{width: 400}}
                             placeholder="input shared code"
@@ -137,16 +97,12 @@ class StudentRequestPage extends Component{
                             onSearch={this.onSearch}
                         />
                     <div style={{display:this.state.display_name}}>
-                    <Link to={{pathname: '/student', query: this.state.data}} target = '_blank'>
-                        <Button size={"large"} style={{marginLeft: 10}}>
-                            <Icon/>Go to Presentation
-                        </Button>
-                    </Link>
-                    {/*<Button onClick={this.downloadHTML} size={"large"} style={{marginLeft: 10}}>*/}
-                    {/*    <Icon/>Download HTML*/}
-                    {/*</Button>*/}
+                        <Link to={{pathname: '/student', query: this.state.data}} target = '_blank'>
+                            <Button size={"large"} style={{marginLeft: 10}}>
+                                Go to Presentation
+                            </Button>
+                        </Link>
                     </div>
-                    {/*</Link>*/}
                 </header>
             </div>
         );
