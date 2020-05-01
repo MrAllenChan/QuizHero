@@ -1,9 +1,15 @@
+/**
+ * The QuizStatistic component is to render quiz result statistic data as chart at ResultPresenter page.
+ */
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import axios from 'axios'
 import {Button} from 'antd'
 import {BASE_URL} from "../config/config"
 
+/**
+ * The class QuizStatistic is to get quiz statistic data and render the data as chart.
+ */
 class QuizStatistic extends React.Component {
 
     constructor(props){
@@ -19,11 +25,17 @@ class QuizStatistic extends React.Component {
         this.getStatistic();
     }
 
+    /**
+     * get statistic data again
+     */
     refreshStatistic = () =>{
         console.log("Push");
         this.getStatistic();
-    } 
+    }
 
+    /**
+     * get statistic data from backend according to fileId and questionId.
+     */
     getStatistic = ()=>{
         let params = {
             fileId : this.state.fileId,
@@ -44,6 +56,10 @@ class QuizStatistic extends React.Component {
         });
     }
 
+    /**
+     * Render chart of quiz Statistic data for each question
+     * @returns {*}
+     */
     render() {
         // const {chartData} = this.props;
         // const charData = [];

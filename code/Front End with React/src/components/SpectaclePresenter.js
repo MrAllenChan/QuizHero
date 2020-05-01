@@ -1,39 +1,15 @@
+/**
+ * The Spectacle component is to render slides and quiz access button.
+ */
 import React from 'react';
 import { render } from 'react-dom';
 import { Upload, message, Button, Icon } from 'antd';
 import defaultTheme from '../theme/default-theme';
-import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Notes, CodePane} from '../lib';
-// import createTheme from 'spectacle/lib/themes/default';
+import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Notes, CodePane} from '../lib_presenter';
 
-// import createTheme from 'spectacle-theme-nova';
- 
-
-// const customStyles = {
-//     global: {
-//       body: { background: 'white' }
-//     }
-//   };
-// const myTheme = createTheme(null, customStyles);
-
-// SPECTACLE_CLI_THEME_START
-// const theme = {
-//     colors: {
-//         primary: '#f00', // header color
-//         secondary: '#00f', // paragraph color
-//         tertiary: '#fff', // background color
-//         quaternary: '#000' // hyperlink color
-//     },
-//     fontSizes: {
-//         h1: '70px',
-//         h2: '40px',
-//         text:'30px',
-//         header: '64px',
-//         paragraph: '28px'
-//     }
-// };
-// SPECTACLE_CLI_THEME_END
-
-// SPECTACLE_CLI_TEMPLATE_START
+/**
+ * Set a template for Sepctacle <Flexbox>
+ */
 const template = () => (
     <FlexBox
         justifyContent="space-between"
@@ -50,26 +26,10 @@ const template = () => (
     </FlexBox>
 );
 
-// SPECTACLE_CLI_TEMPLATE_END
 
-// const Presentation = () => (
-//     <Deck loop theme={theme} template={template}>
-//         {/*<Markdown containsSlides>{mdContent}</Markdown>*/}
-//         <Slide>
-//             <Heading>Welcome to Spectacle</Heading>
-//         </Slide>
-//         <Slide>
-//             <Heading>Next, We will do some in class quiz</Heading>
-//             <Upload>
-//                 <Button
-//                     onDownload={this.onDownload}>
-//                     <Icon type = 'upload' /> Click to Next page
-//                 </Button>
-//             </Upload>
-//         </Slide>
-//     </Deck>
-// );
-
+/**
+ * Slides class to get slides data and render slides by using spectacle
+ */
 class Slides extends React.Component{
     constructor(props) {
         super(props);
@@ -79,11 +39,18 @@ class Slides extends React.Component{
 
     }
 
+    /**
+     * The onclick function is to callback quiz page when click "start quiz".
+     */
     onClick = () => {
         this.toQuizCallback(1);
         console.log(this.slides)
     }
 
+    /**
+     *The render function is to get composite slides data and render them as slides page using Spectacle.
+     * @returns {*}
+     */
     render(){
         const buttonStyle = {
             backgroundColor:"#ecc",
@@ -93,7 +60,10 @@ class Slides extends React.Component{
             boarderRadius:"3px",
             fontSize:"20px"
         };
-
+        /**
+         * Get slides data and composite slides data into <Slide> tag
+         * @type {*[]}
+         */
         const content = [];
         var quizBlockCount = 0;
         for (var i = 0; i < this.slides.length; i ++) {
@@ -114,7 +84,7 @@ class Slides extends React.Component{
                         <Heading>
                             <Button
                                 onClick={() => {this.toQuizCallback(count)}} style={buttonStyle}>
-                                <Icon /> Click to start quiz
+                                Click to start quiz
                             </Button>
                         </Heading>
 
@@ -128,34 +98,19 @@ class Slides extends React.Component{
 
                 )
             }
-
-
         }
 
-
+        /**
+         * return rendered slides page
+         */
         return (
-            // <Deck loop theme={defaultTheme} template={template}>
-            //
-            //     <Markdown containsSlides>{this.slides}</Markdown>
-            //     {/*quiz reminder page*/}
-            //     <Slide backgroundColor={"#fff"}>
-            //         <Heading>Now lets do some funny quizzes!</Heading>
-            //         <Heading>
-            //             <Button
-            //                 onClick={this.onClick} style={buttonStyle}>
-            //                 <Icon /> Click to start quiz
-            //             </Button>
-            //         </Heading>
-            //
-            //     </Slide>
-            //     <Markdown containsSlides>{this.slides}</Markdown>
-            // </Deck>
+
             <Deck loop theme={defaultTheme} template={template} transition={["slide"]}>
                 {content}
             </Deck>
         );
     }
-    // render (<Presentation />, document.getElementById('root'));
+
 }
 
 export default Slides;

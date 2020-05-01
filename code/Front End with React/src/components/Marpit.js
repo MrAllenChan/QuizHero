@@ -1,4 +1,12 @@
+/**
+ * Using Marpit component to render slides
+ */
+
 import Marpit from "@marp-team/marpit";
+
+/**
+ * marpitConvert create new marpit variable, get data and add theme to it.
+ */
 
 const marpitConvert=(rawString)=> {
     // this.setState({
@@ -28,9 +36,16 @@ const marpitConvert=(rawString)=> {
     }
     `
     marpit.themeSet.default = marpit.themeSet.add(theme)
-    // 3. Render markdown
+
+    /**
+     * render markdown using marpit
+     */
     const {html, css} = marpit.render(rawString);
-    // 4. Use output in your HTML
+
+    /**
+     * create filestring to store HTML string
+     * @type {string}
+     */
     let filestring = `
         <!DOCTYPE html>
         <html><body>
