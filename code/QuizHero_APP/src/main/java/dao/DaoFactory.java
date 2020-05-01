@@ -17,7 +17,7 @@ public class DaoFactory {
         // This class is not meant to be instantiated!
     }
 
-    private static void clearDatabase() throws URISyntaxException{
+    private static void clearDatabase() {
         dropInsFileTableIfExists(sql2o);
         dropQuizTableIfExists(sql2o);
         dropInstructorTableIfExists(sql2o);

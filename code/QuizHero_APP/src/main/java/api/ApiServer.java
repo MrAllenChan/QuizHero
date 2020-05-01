@@ -30,7 +30,7 @@ public final class ApiServer {
         return 7000;
     }
 
-    public static void start() throws URISyntaxException{
+    public static void start() throws URISyntaxException {
         // instantiate Sql2o and get DAOs
         DaoFactory.instantiateSql2o();
         FileDao fileDao = DaoFactory.getFileDao();
@@ -41,8 +41,6 @@ public final class ApiServer {
         // add some sample data
         if (INITIALIZE_WITH_SAMPLE_DATA) {
             DaoUtil.addSampleUsers(instructorDao);
-//            DaoUtil.addSampleQuizzes(quizDao);
-//            DaoUtil.addSampleUserFiles(instructorDao);
         }
 
         // Routing
@@ -237,7 +235,7 @@ public final class ApiServer {
         app.get("/fetch", context -> {
             try {
                 String fileId = Objects.requireNonNull(context.queryParam("fileId")); // get file id from form-data
-                System.out.println("file id: " + fileId);
+                System.out.println("fetch file id: " + fileId);
                 InputStream in = fileDao.getFile(fileId);
                 InputStream inputStream = new BufferedInputStream(in); /* BufferedInputStream is used to improve the performance of the inside InputStream */
                 context.result(inputStream);
