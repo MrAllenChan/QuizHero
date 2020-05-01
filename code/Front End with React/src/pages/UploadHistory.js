@@ -61,16 +61,16 @@ class UploadHistory extends React.Component {
                 this.setState({
                     MarkDownFile: res.data,
                 })
-                this.callSeparateQuestion(fileId)
-                message.success(`File ${fileId} fetched successfully.`)
+                this.callSeparateQuestion();
+                message.success(`File ${fileId} fetched successfully.`);
             })
             .catch((error) => {
                 alert(`Fail to fetch File ${fileId}. ${error}`)
             })
     }
 
-    callSeparateQuestion =(fileId)=>{
-        var data = separateQuestion(this.state.MarkDownFile, fileId);
+    callSeparateQuestion =()=>{
+        var data = separateQuestion(this.state.MarkDownFile);
         data = JSON.stringify(data)
         localStorage.setItem("data", data)
         this.jump();
