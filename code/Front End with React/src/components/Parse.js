@@ -117,31 +117,32 @@ const parseQuiz = (quizString, fileId) => {
                         choice = String.fromCharCode(charCode + 1);
 
                         // send correct answer to backend
-
-                        const formData = {
-                            fileId: fileId,
-                            // questionId : quizBlock.length + 1,
-                            questionId: count,
-                            answer: String.fromCharCode(charCode),
-                            countA: 0,
-                            countB: 0,
-                            countC: 0,
-                            countD: 0,
+                        if (fileId) {
+                            const formData = {
+                                fileId: fileId,
+                                // questionId : quizBlock.length + 1,
+                                questionId: count,
+                                answer: String.fromCharCode(charCode),
+                                countA: 0,
+                                countB: 0,
+                                countC: 0,
+                                countD: 0,
+                            }
+                            count++;
+                            console.log(formData)
+                            axios
+                                .post(BASE_URL + "/quiz", formData, {
+                                    headers: {
+                                        "Content-Type": "multipart/form-data"
+                                    }
+                                })
+                                .then(res => {
+                                    console.log("quiz initialize success");
+                                })
+                                .catch((error) => {
+                                    console.log(error)
+                                });
                         }
-                        count++;
-                        console.log(formData)
-                        axios
-                            .post(BASE_URL + "/quiz", formData, {
-                                headers: {
-                                    "Content-Type": "multipart/form-data"
-                                }
-                            })
-                            .then(res => {
-                                console.log("quiz initialize success");
-                            })
-                            .catch((error) => {
-                                console.log(error)
-                            });
                     } else if (line[0] === '*' && line.slice(2, 5) === "[ ]") {
                         // parse wrong choice
                         parsedChoice = line.slice(6, line.length);

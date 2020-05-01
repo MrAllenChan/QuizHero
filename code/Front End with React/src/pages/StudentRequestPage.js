@@ -69,7 +69,7 @@ class StudentRequestPage extends Component{
     }
 
     callSeparateQuestion =()=>{
-        var data = separateQuestion(this.state.MarkDownFile, this.state.fileId);
+        var data = separateQuestion(this.state.MarkDownFile);
         data = JSON.stringify(data);
         localStorage.setItem("data", data);
         this.getMarpit();
