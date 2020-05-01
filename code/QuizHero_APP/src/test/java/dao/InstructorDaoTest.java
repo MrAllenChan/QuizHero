@@ -21,15 +21,13 @@ public class InstructorDaoTest {
     private FileDao fileDao;
     private InstructorDao instructorDao;
     private QuizDao quizDao;
-    private RecordDao recordDao;
 
     @Before
     public void setup() throws URISyntaxException {
-        DaoFactory.instantiateSql2o();
+        DaoFactory.connectDatabase();
         fileDao = DaoFactory.getFileDao();
         instructorDao = DaoFactory.getInstructorDao();
         quizDao = DaoFactory.getQuizDao();
-        recordDao = DaoFactory.getRecordDao();
     }
 
     @Test

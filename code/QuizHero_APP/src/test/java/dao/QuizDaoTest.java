@@ -4,6 +4,7 @@ import exception.DaoException;
 import model.File;
 import model.Instructor;
 import model.Quiz;
+import model.Record;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +26,6 @@ public class QuizDaoTest {
     private FileDao fileDao;
     private InstructorDao instructorDao;
     private QuizDao quizDao;
-    private RecordDao recordDao;
     String fileId_1;
     String fileId_2;
     int instructorId_1;
@@ -33,11 +33,10 @@ public class QuizDaoTest {
 
     @Before
     public void setup() throws URISyntaxException, IOException {
-        DaoFactory.instantiateSql2o();
+        DaoFactory.connectDatabase();
         fileDao = DaoFactory.getFileDao();
         instructorDao = DaoFactory.getInstructorDao();
         quizDao = DaoFactory.getQuizDao();
-        recordDao = DaoFactory.getRecordDao();
         //add instructor to empty instructor table; this instructor has instructorId of 1
         Instructor jSmith = new Instructor("John Smith", "jsmith@jhu.edu", "jsmith");
         instructorDao.registerUser(jSmith);
@@ -59,38 +58,10 @@ public class QuizDaoTest {
     @Test
     public void addQuiz() {
         Quiz quiz = new Quiz(fileId_1, 1, "A", 0, 0, 0, 0);
-        List<Quiz> list = new ArrayList<>();
-        assertEquals(list, quizDao.getSingleQuizStat(fileId_1, 1));
+        assertEquals(null, quizDao.getSingleQuizStat(fileId_1, 1));
         quizDao.add(quiz);
-        list.add(quiz);
-        assertEquals(list, quizDao.getSingleQuizStat(fileId_1, 1));
+        assertEquals(quiz, quizDao.getSingleQuizStat(fileId_1, 1));
     }
-
-    // wrong fileId case will not happen: quiz is constructed based on the info passed from frontend
-//    @Test (expected = DaoException.class)
-//    public void addQuizNonExistedFile() {
-//        Quiz quiz = new Quiz(fileId_1 + "wrong", 1, "A", 0, 0, 0, 0);
-//        List<Quiz> list = new ArrayList<>();
-//        quizDao.add(quiz);
-//    }
-
-//    @Test
-//    public void getAllQuizStat() {
-//        Quiz quiz1 = new Quiz(fileId_1, 1, "A", 0, 0, 0, 0);
-//        Quiz quiz2 = new Quiz(fileId_2, 1, "A", 0, 0, 0, 0);
-//        Quiz quiz3 = new Quiz(fileId_1, 2, "A", 0, 0, 0, 0);
-//        Quiz quiz4 = new Quiz(fileId_2, 2, "A", 0, 0, 0, 0);
-//        List<Quiz> list = new ArrayList<>();
-//        quizDao.add(quiz1);
-//        list.add(quiz1);
-//        quizDao.add(quiz2);
-//        list.add(quiz2);
-//        quizDao.add(quiz3);
-//        list.add(quiz3);
-//        quizDao.add(quiz4);
-//        list.add(quiz4);
-//        assertEquals(list, quizDao.getAllQuizStat());
-//    }
 
     @Test
     public void getSingleQuizStat() {
@@ -142,5 +113,44 @@ public class QuizDaoTest {
         quizDao.add(quiz4);
         List<Quiz> list = new ArrayList<>();
         assertEquals(list, quizDao.getQuizStatByFileId(fileId_2 + "wrong"));
+    }
+
+    @Test
+    public void updateQuizStatOneRecord() {
+        Quiz quiz1 = new Quiz(fileId_1, 1, "A", 0, 0, 0, 0);
+        quizDao.add(quiz1);
+        List<Quiz> list = new ArrayList<>();
+        list.add(quiz1);
+        assertEquals(list, quizDao.getQuizStatByFileId(fileId_1));
+
+        Record record = new Record(fileId_1, 1, 'C');
+        quizDao.updateQuizStat(record);
+        Quiz quiz2 = new Quiz(fileId_1, 1, "A", 0, 0, 1, 0);
+        List<Quiz> update = new ArrayList<>();
+        list.add(quiz2);
+        assertNotEquals(update, quizDao.getQuizStatByFileId(fileId_1));
+    }
+
+    @Test
+    public void updateQuizStatMultipleRecords() {
+        Quiz quiz1 = new Quiz(fileId_1, 1, "A", 0, 0, 0, 0);
+        Quiz quiz2 = new Quiz(fileId_1, 2, "A", 0, 0, 0, 0);
+        quizDao.add(quiz1);
+        quizDao.add(quiz2);
+
+        Record record1 = new Record(fileId_1, 1, 'C');
+        Record record2 = new Record(fileId_1, 1, 'A');
+        Record record3 = new Record(fileId_1, 2, 'D');
+        Record record4 = new Record(fileId_1, 1, 'A');
+        quizDao.updateQuizStat(record1);
+        quizDao.updateQuizStat(record2);
+        quizDao.updateQuizStat(record3);
+        quizDao.updateQuizStat(record4);
+        Quiz quiz1Update = new Quiz(fileId_1, 1, "A", 2, 0, 1, 0);
+        Quiz quiz2Update = new Quiz(fileId_1, 2, "A", 0,0,0,1);
+        List<Quiz> update = new ArrayList<>();
+        update.add(quiz1Update);
+        update.add(quiz2Update);
+        assertEquals(update, quizDao.getQuizStatByFileId(fileId_1));
     }
 }

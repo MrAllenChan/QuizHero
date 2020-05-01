@@ -225,6 +225,7 @@ public final class ApiServer {
      * @param instructorDao call instructorDao to update instructor table
      */
     private static void register(InstructorDao instructorDao) {
+        // instructor login action, return user including his/her id
         app.post("/register", ctx -> {
             Instructor instructor = ctx.bodyAsClass(Instructor.class);
             try {

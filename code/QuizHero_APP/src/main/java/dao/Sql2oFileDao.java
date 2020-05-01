@@ -16,6 +16,7 @@ public class Sql2oFileDao implements FileDao{
         this.sql2o = sql2o;
     }
 
+    @Override
     public InputStream getFile(String fileId) {
         checkFileExist(fileId);
         ByteArrayInputStream byteStream;
@@ -31,6 +32,7 @@ public class Sql2oFileDao implements FileDao{
         }
     }
 
+    @Override
     public void storeFile(File file) {
         try (Connection conn = sql2o.open()) {
             String sql = "insert into file values (:fileId, :fileName, :filePermission, :quizPermission, :fileContent)";
@@ -62,6 +64,7 @@ public class Sql2oFileDao implements FileDao{
         }
     }
 
+    @Override
     public void changeFilePermission(String fileId, boolean filePermission) {
         checkFileExist(fileId);
         try (Connection conn = sql2o.open()) {
@@ -75,6 +78,7 @@ public class Sql2oFileDao implements FileDao{
         }
     }
 
+    @Override
     public Boolean checkFilePermission(String fileId) {
         try (Connection conn = sql2o.open()) {
             String sql = "SELECT filePermission from file WHERE fileId = :fileId";
@@ -87,6 +91,7 @@ public class Sql2oFileDao implements FileDao{
         }
     }
 
+    @Override
     public void changeQuizPermission(String fileId, boolean quizPermission) {
         checkFileExist(fileId);
         try (Connection conn = sql2o.open()) {
@@ -100,6 +105,7 @@ public class Sql2oFileDao implements FileDao{
         }
     }
 
+    @Override
     public Boolean checkQuizPermission(String fileId) {
         try (Connection conn = sql2o.open()) {
             String sql = "SELECT quizPermission from file WHERE fileId = :fileId";
@@ -112,6 +118,7 @@ public class Sql2oFileDao implements FileDao{
         }
     }
 
+    @Override
     public void deleteFile(String fileId) {
         checkFileExist(fileId);
         try (Connection conn = sql2o.open()) {
@@ -138,6 +145,7 @@ public class Sql2oFileDao implements FileDao{
         }
     }
 
+    @Override
     public void checkFileExist(String fileId) {
         try (Connection conn = sql2o.open()) {
             String sql = "SELECT quizPermission from file WHERE fileId = :fileId";
