@@ -18,24 +18,47 @@ Notes: this is my private notes. The student can not see that.
 
 ---
 
-## Contents of the course
+## Start Presenter Mode!
+
+- Press **`Option + P`** to open presenter mode. Open a second audience window & view your private notes to better support your presentation.
+
+<p align = "center">
+<img width = "50%" src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004291524presenter_mode.gif' alt='202004291524presenter_mode'/>
+</p>
+
+---
+
+## Share with your students!
+
+- **Share the file code** with your students so they can fetch the presentation slides!
+
+<p align="center">
+<img width = "50%" src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290306stu_view.gif' alt='202004290306stu_view'/>
+</p>
+
+---
+
+## Start quiz and view statistics
+
+- click **`start quiz`** button to **release quiz permission** (Students won't be able to take quiz without permission.)
+
+<p align = "center">
+<img width = "50%" src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290301ins_quiz_stat.gif' alt='202004290301ins_quiz_stat'/>
+</p>
+
+---
+
+## Contents of the course: let's start!
 
 * Design Principles: SOLID
 
 * Several Funny Quizzes!
 
-Notes: This feature is fantastic. Only I can see the notes in presenter mode.
-
----
-
-## Now let's start!
-
-<!--![datboi-w120](https://media.giphy.com/media/xohHbwcnOhqbS/giphy.gif)-->
-<p align="center">
-  <img width="60%" src="https://media.giphy.com/media/xohHbwcnOhqbS/giphy.gif">
+<p align="left">
+  <img width="15%" src="https://media.giphy.com/media/xohHbwcnOhqbS/giphy.gif">
 </p>
 
-Notes: I can put anything here. I love my small cheat sheet.
+Notes: This feature is fantastic. Only I can see the notes in presenter mode.
 
 ---
 
@@ -49,7 +72,7 @@ Design principles are (often opinionated) guidelines derived from experience of 
 
 ## The SOLID design principles
 
-The SOLID design principles were promoted by *Robert C. Martin* and are some of the best-known design principles in object-oriented software development. SOLID is a mnemonic acronym for the following five principles:
+The SOLID design principles are some of the best-known design principles in object-oriented software development. SOLID is a mnemonic acronym for the following five principles:
 
 - Single Responsibility Principle
 - Open/Closed Principle
@@ -72,11 +95,16 @@ Essentially means design your application in a way to keep existing code from br
 
 ## A good design example of Open/Closed Principle
 
+<p align = "center">
+<img width = "50%" src='https://i.imgur.com/bXGiP7R.jpg' alt='bXGiP7R'/>
+</p>
+
+- New functionality does not require a rewrite of existing code
+- Also applies **Dependency Inversion Principle** (DIP)
+
 ---
 
-## Quiz: part 1
-
-Are you ready?
+## Quiz Part 1: Are you ready?
 
 ---
 
@@ -105,11 +133,21 @@ The dependency inversion principle **does not only change the direction** of the
 
 ---
 
-## Quiz: part 2
-
-Go for it!
+## Quiz Part 2: Go for it!
 
 ---
+
+> Question: Which SOLID design principle is most closely described by the given statement: classes should depend on abstractions rather than implementations.
+* [ ] A. Interface Segregation Principle
+* [ ] B. Open/Closed Principle.
+* [ ] C. Liskov Substitution Principle.
+* [x] D. Dependency Inversion Principle
+
+> Question: Which is one of the most widely used java design pattern?
+* [ ] A. Composite Pattern
+* [ ] B. Dependency Injection Pattern
+* [x] C. Factory Pattern
+* [ ] D. Singleton Pattern
 
 > Question: Which framework do you use to develop your backend server?
 * [ ] A. SpringBoot
@@ -117,14 +155,14 @@ Go for it!
 * [ ] C. SparkJava
 * [ ] D. Tomcat
 
-> Question: Which design pattern do you apply?
-* [ ] A. Composite Pattern
-* [x] B. Dependency Injection Pattern
-* [ ] C. Factory Pattern
-* [ ] D. Singleton Pattern
-
 ---
 
 ## Hope you enjoy QuizHero!
+
+- Feel excited? Start writing your own presentation slides!!
+
+<p align = "center">
+<img width = "50%" src='https://raw.githubusercontent.com/MrAllenChan/uPic/master/uPic/202004290230ins_view_slides.gif' alt='202004290230ins_view_slides'/>
+</p>
 
 Notes: this is my private notes. The student can not see that.
