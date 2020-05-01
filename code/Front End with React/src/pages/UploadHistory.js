@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
+import '../App.css'
 // import '../utils/index.css';
 import {Link} from "react-router-dom";
 import {List, Button, Skeleton, Menu, Layout, Icon, message} from 'antd';
@@ -64,7 +65,7 @@ class UploadHistory extends React.Component {
                 message.success(`File ${fileId} fetched successfully.`)
             })
             .catch((error) => {
-                alert(`Fail to fetch File ${fileId}.`)
+                alert(`Fail to fetch File ${fileId}. ${error}`)
             })
     }
 
@@ -87,7 +88,7 @@ class UploadHistory extends React.Component {
         formData.append('permission', true);
         axios.post(BASE_URL + "/filepermission", formData)
             .then(()=> message.success(`Share code ${fileId} is copied on your clipboard`))
-            .catch(()=> message.error('error'));
+            .catch((error)=> message.error(error));
     }
 
     stopSharing=(fileId)=>{
@@ -96,7 +97,7 @@ class UploadHistory extends React.Component {
         formData.append('permission', false);
         axios.post(BASE_URL + "/filepermission", formData)
             .then(()=> message.success(`File ${fileId} stop sharing`))
-            .catch(()=> message.error('error'));
+            .catch((error)=> message.error(error));
     }
 
     onDownload = (fileId, fileName) => {
@@ -127,8 +128,21 @@ class UploadHistory extends React.Component {
             })
             .catch((error) => {
                 console.log(error);
-                alert(`Fail to fetch File ${fileId}.`)
+                alert(`Fail to fetch File ${fileId}. ${error}`)
             })
+    }
+
+    deleteFile =(fileId)=> {
+        const formData = new FormData();
+        formData.append('fileId', fileId);
+        axios.post(BASE_URL + "/deletefile", formData)
+            .then(() => {this.componentDidMount();
+            message.success(`File ${fileId} deleted successfully`)})
+            .catch((error => {
+                this.componentDidMount();
+                alert(`Fail to delete File ${fileId}. ${error}`)
+            }))
+        // this.componentDidMount();
     }
 
     // getData = callback => {
@@ -194,10 +208,10 @@ class UploadHistory extends React.Component {
                     <div className="logo" />
                     <Menu theme="white" mode="horizontal" defaultSelectedKeys={['2']}>
 
-                        <Menu.Item key="1" style={{marginLeft:"160px"}}>
+                        <Menu.Item key="1" style={{display:"inline-block",float:"left", marginLeft:"30px", width: "150px"}}>
                             <Link to={'/HomePage'}>Upload</Link>
                         </Menu.Item>
-                        <Menu.Item key="2">
+                        <Menu.Item key="2" style={{display:"inline-block",float:"left", width: "150px"}}>
                             <Link to={'/history'}>History</Link>
                         </Menu.Item>
 
@@ -217,7 +231,14 @@ class UploadHistory extends React.Component {
                           renderItem={item => (
                               <List.Item
                                   actions={[
-                                      <Button size={"small"} onClick={() => this.fetchFile(item.fileId)}>Presenter Mode</Button>,
+                                      <Button size={'small'}
+                                              onClick={() => this.deleteFile(item.fileId)}>
+                                          Delete
+                                      </Button>,
+                                      <Button size={"small"}
+                                              onClick={() => this.fetchFile(item.fileId)}>
+                                          Presenter Mode
+                                      </Button>,
                                       // <Link to={{pathname: '/presenter'}} target = '_blank'>
                                       //     <Button size={"small"} style={{marginLeft: 10}}
                                       //             onClick={() => this.fetchFile(item.fileId)}>
@@ -228,18 +249,18 @@ class UploadHistory extends React.Component {
                                       <CopyToClipboard
                                           onCopy={() => this.startSharing(item.fileId)}
                                           text={item.fileId}>
-                                          <Button size={"small"} style={{marginLeft: 10}}>
-                                              <Icon/>Start sharing
+                                          <Button size={"small"}>
+                                              Start sharing
                                           </Button>
                                       </CopyToClipboard>,
-                                      <Button size={"small"} style={{marginLeft: 10}}
+                                      <Button size={"small"}
                                               onClick={() => this.stopSharing(item.fileId)}>
-                                          <Icon/>Stop sharing
+                                          Stop sharing
                                       </Button>
                                   ]}
                               >
                                   {/*<Skeleton avatar title={false} loading={item.loading} active>*/}
-                                  <List.Item.Meta
+                                  <List.Item.Meta style={{float:"left", marginLeft:"0px", width: "0px"}}
                                       title={<a onClick={() => this.onDownload(item.fileId, item.fileName)}>{item.fileName}</a>}
                                   />
                                       {/*<div>content</div>*/}

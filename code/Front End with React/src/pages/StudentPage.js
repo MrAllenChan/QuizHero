@@ -19,11 +19,11 @@ class StudentPage extends Component {
             // answer: '',
             // answersCount: {},
             result: '',
-            fileId: props.location.query.fileId,
+            fileId: JSON.parse(localStorage.getItem("data")).fileId,
             quizBlockCounter : 0,
-            quizList: props.location.query.quiz,
-            quizQuestions:props.location.query.quiz[0],
-            slides: props.location.query.slidesString,
+            quizList: JSON.parse(localStorage.getItem("data")).quiz,
+            quizQuestions:JSON.parse(localStorage.getItem("data")).quiz[0],
+            slides: JSON.parse(localStorage.getItem("data")).slidesString,
         };
 
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
@@ -31,34 +31,34 @@ class StudentPage extends Component {
 
     componentDidMount() {
 
-        const shuffledAnswerOptions = this.state.quizQuestions.map(question =>
-            this.shuffleArray(question.answers)
-        );
+        // const shuffledAnswerOptions = this.state.quizQuestions.map(question =>
+        //     this.shuffleArray(question.answers)
+        // );
         this.setState({
             question: this.state.quizQuestions[0].question,
-            answerOptions: shuffledAnswerOptions[0]
+            answerOptions: this.state.quizQuestions[0].answers
         });
     }
 
-    shuffleArray(array) {
-        var currentIndex = array.length,
-            temporaryValue,
-            randomIndex;
-
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-
-        return array;
-    }
+    // shuffleArray(array) {
+    //     var currentIndex = array.length,
+    //         temporaryValue,
+    //         randomIndex;
+    //
+    //     // While there remain elements to shuffle...
+    //     while (0 !== currentIndex) {
+    //         // Pick a remaining element...
+    //         randomIndex = Math.floor(Math.random() * currentIndex);
+    //         currentIndex -= 1;
+    //
+    //         // And swap it with the current element.
+    //         temporaryValue = array[currentIndex];
+    //         array[currentIndex] = array[randomIndex];
+    //         array[randomIndex] = temporaryValue;
+    //     }
+    //
+    //     return array;
+    // }
 
     handleAnswerSelected(event) {
         this.setUserAnswer(event.currentTarget.value);
@@ -202,9 +202,9 @@ class StudentPage extends Component {
             message.success(`Start quiz for presentation ${this.state.fileId}.`)
             const quizQuestions = this.state.quizList[quizBlockNumber];
 
-            const shuffledAnswerOptions = quizQuestions.map(question =>
-                this.shuffleArray(question.answers)
-            );
+            // const shuffledAnswerOptions = quizQuestions.map(question =>
+            //     this.shuffleArray(question.answers)
+            // );
             const questionId = 1;
             const counter = 0;
 
@@ -219,7 +219,7 @@ class StudentPage extends Component {
                 counter : counter,
                 quizQuestions : quizQuestions,
                 question: quizQuestions[0].question,
-                answerOptions: shuffledAnswerOptions[0],
+                answerOptions: quizQuestions[0].answers,
                 quizFlag : 1,
                 questionCounter : questionCounter
             })

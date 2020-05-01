@@ -5,10 +5,13 @@ import model.File;
 import java.io.InputStream;
 
 public interface FileDao {
-    public InputStream getFile(int id);
-    public void storeFile(File file);
-    public void changeFilePermission(int fileId, boolean permission);
-    public Boolean checkFilePermission(int fileId);
-    public void changeQuizPermission(int fileId, boolean permission);
-    public Boolean checkQuizPermission(int fileId);
+    InputStream getFile(String fileId);
+    void storeFile(File file);
+    void storeInsFile(File file);
+    void changeFilePermission(String fileId, boolean permission);
+    Boolean checkFilePermission(String fileId);
+    void changeQuizPermission(String fileId, boolean permission);
+    Boolean checkQuizPermission(String fileId);
+    void deleteFile(String fileId);
+    void checkFileExist(String fileId);
 }

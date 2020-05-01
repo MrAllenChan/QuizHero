@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Upload, message, Button, Icon } from 'antd';
 import defaultTheme from '../theme/default-theme';
-import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Notes} from '../lib';
+import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Notes, CodePane} from '../lib';
 // import createTheme from 'spectacle/lib/themes/default';
 
 // import createTheme from 'spectacle-theme-nova';
@@ -109,7 +109,7 @@ class Slides extends React.Component{
 
                 )
                 content.push(
-                    <Slide style={{backgroundColor:"#fff"}}>
+                    <Slide style={{backgroundColor:"#fff"}} align="flex-start">
                         <Heading>Now lets do some funny quizzes!</Heading>
                         <Heading>
                             <Button

@@ -16,7 +16,7 @@ class BackButton extends React.Component{
         return (
             <Button
                 onClick={this.OnClick}>
-                <Icon /> Back to Slides
+                Back to Slides
             </Button>
         )
     }

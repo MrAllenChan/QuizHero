@@ -14,6 +14,13 @@
   }
 .login-form-button {
   width: 400px;
+  margin-top: 80px;
+  background-color: #00A9F4 !important;
+  border-color: #00A9F4 !important;
+  }
+
+  .register-button-real{
+    width: 400px;
   background-color: #00A9F4 !important;
   border-color: #00A9F4 !important;
   }

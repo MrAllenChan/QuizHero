@@ -57,7 +57,7 @@ class StudentRequestPage extends Component{
                     console.log("AAA", res.data);
                     this.setState({
                         MarkDownFile: res.data,
-                    }, this.generateSlides)
+                    }, this.callSeparateQuestion)
                     message.success(`File ${this.state.fileId} fetched successfully.`)
                 })
                 .catch((error) => {
@@ -68,16 +68,12 @@ class StudentRequestPage extends Component{
         }
     }
 
-    generateSlides = () => {
-        this.callSeparateQuestion();
-        this.state.display_name = this.display_name();
-    }
-
     callSeparateQuestion =()=>{
-        const data = separateQuestion(this.state.MarkDownFile, this.state.fileId);
-        console.log(data)
-        this.setState({data : data});
+        var data = separateQuestion(this.state.MarkDownFile, this.state.fileId);
+        data = JSON.stringify(data);
+        localStorage.setItem("data", data);
         this.getMarpit();
+        this.state.display_name = this.display_name();
     }
 
     // Marpit for download
@@ -142,13 +138,13 @@ class StudentRequestPage extends Component{
                         />
                     <div style={{display:this.state.display_name}}>
                     <Link to={{pathname: '/student', query: this.state.data}} target = '_blank'>
-                        <Button onClick={this.onClick} size={"large"} style={{marginLeft: 10}}>
+                        <Button size={"large"} style={{marginLeft: 10}}>
                             <Icon/>Go to Presentation
                         </Button>
                     </Link>
-                    <Button onClick={this.downloadHTML} size={"large"} style={{marginLeft: 10}}>
-                        <Icon/>Download HTML
-                    </Button>
+                    {/*<Button onClick={this.downloadHTML} size={"large"} style={{marginLeft: 10}}>*/}
+                    {/*    <Icon/>Download HTML*/}
+                    {/*</Button>*/}
                     </div>
                     {/*</Link>*/}
                 </header>
