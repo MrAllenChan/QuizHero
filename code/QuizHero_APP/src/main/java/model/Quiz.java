@@ -10,14 +10,29 @@ public class Quiz {
     private int countB;
     private int countC;
     private int countD;
-//    private HashMap<Character, String> count;
-//    private HashMap<Character, String> statistics;
 
+    /**
+     * This method is the constructor of the class
+     *
+     * @param fileId id for the file
+     * @param questionId id for the question
+     */
     public Quiz(String fileId, int questionId) {
         this.fileId = fileId;
         this.questionId = questionId;
     }
 
+    /**
+     * This method is the constructor of the class
+     *
+     * @param fileId id for the file
+     * @param questionId id for the question
+     * @param answer the answer recorded
+     * @param countA the count of choice A
+     * @param countB the count of choice B
+     * @param countC the count of choice C
+     * @param countD the count of choice D
+     */
     public Quiz(String fileId, int questionId, String answer, int countA, int countB, int countC, int countD) {
         this.fileId = fileId;
         this.questionId = questionId;
@@ -26,51 +41,73 @@ public class Quiz {
         this.countB = countB;
         this.countC = countC;
         this.countD = countD;
-//        statistics = calPercentage();
     }
 
+    /**
+     * This method is used to get the value of private variable
+     * named answer
+     */
     public String getAnswer() {return answer;}
 
+    /**
+     * This method is used to set the value of private variable
+     * named answer
+     */
     public String setAnswer() {return answer;}
 
+    /**
+     * This method is used to get the value of private variable
+     * named countA
+     */
     public int getCountA() {
         return countA;
     }
 
+    /**
+     * This method is used to get the value of private variable
+     * named countB
+     */
     public int getCountB() {
         return countB;
     }
 
+    /**
+     * This method is used to get the value of private variable
+     * named countC
+     */
     public int getCountC() {
         return countC;
     }
 
+    /**
+     * This method is used to get the value of private variable
+     * named countD
+     */
     public int getCountD() {
         return countD;
     }
 
+    /**
+     * This method is used to get the value of private variable
+     * named fileId
+     */
     public String getFileId() {
         return fileId;
     }
 
+    /**
+     * This method is used to get the value of private variable
+     * named questionId
+     */
     public int getQuestionId() {
         return questionId;
     }
 
-//    public void getCountMap() {
-//        count = new HashMap<>();
-//        DecimalFormat df = new DecimalFormat("0.00");
-//        float total = countA + countB + countC + countD;
-//        count.put('A', df.format(countA / total * 100) + "%");
-//        count.put('B', df.format(countB / total * 100) + "%");
-//        count.put('C', df.format(countC / total * 100) + "%");
-//        count.put('D', df.format(countD / total * 100) + "%");
-////        for (String val : count.values()) {
-////            System.out.println(val);
-////        }
-//
-//    }
 
+    /**
+     * This method overrides the toString method of the class
+     * to display specific content of the class information
+     */
     @Override
     public String toString() {
         return "Quiz{" +
@@ -84,6 +121,11 @@ public class Quiz {
                 '}';
     }
 
+    /**
+     * This method overrides the equals method of the class
+     * to implement specific functionality of the equals function
+     * to the class
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,6 +140,11 @@ public class Quiz {
                 Objects.equals(answer, quiz.answer);
     }
 
+    /**
+     * This method overrides the hashCode method of the class
+     * to implement specific functionality of the hashCode function
+     * to the class
+     */
     @Override
     public int hashCode() {
         return Objects.hash(fileId, questionId, answer, countA, countB, countC, countD);
