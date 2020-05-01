@@ -22,7 +22,6 @@ import java.util.*;
  * @version 1.0
  */
 public final class ApiServer {
-
     public static boolean INITIALIZE_WITH_SAMPLE_DATA = true;
     public static int PORT = getHerokuAssignedPort();
     private static Javalin app;
@@ -46,17 +45,16 @@ public final class ApiServer {
 
     /**
      * This method is used to start application server
-     * also obtain various DAOs from DaoFactor including fileDao, instructorDao, quizDao, recordDao
+     * obtain various DAOs from DaoFactory including fileDao, instructorDao, quizDao
      * finally handle exceptions
-     * @throws URISyntaxException
+     * @exception URISyntaxException exception occurs if a string could not be parsed as a URI reference
      */
-    public static void start() throws URISyntaxException{
+    public static void start() throws URISyntaxException {
         // instantiate Sql2o and get DAOs
-        DaoFactory.instantiateSql2o();
+        DaoFactory.connectDatabase();
         FileDao fileDao = DaoFactory.getFileDao();
         InstructorDao instructorDao = DaoFactory.getInstructorDao();
         QuizDao quizDao = DaoFactory.getQuizDao();
-        RecordDao recordDao = DaoFactory.getRecordDao();
 
         // add some sample data
         if (INITIALIZE_WITH_SAMPLE_DATA) {
@@ -65,7 +63,7 @@ public final class ApiServer {
 
         // Routing
         getHomepage();
-        routing(fileDao, instructorDao, quizDao, recordDao);
+        routing(fileDao, instructorDao, quizDao);
 
         // start application server
         startJavalin();
@@ -87,18 +85,17 @@ public final class ApiServer {
 
     /**
      * This method is used to open various routes
-     * @param fileDao DAO for file table
+     * @param fileDao       DAO for file table
      * @param instructorDao DAO for instructor table
-     * @param quizDao DAO for quiz table
-     * @param recordDao DAO for quiz table
+     * @param quizDao       DAO for quiz table
      */
-    private static void routing(FileDao fileDao, InstructorDao instructorDao, QuizDao quizDao, RecordDao recordDao) {
+    private static void routing(FileDao fileDao, InstructorDao instructorDao, QuizDao quizDao) {
         // fetch quiz statistics
         getQuizStatByFileId(quizDao);
 
         // update quiz statistics
         postQuiz(quizDao);
-        postRecords(recordDao);
+        postRecords(quizDao);
 
         // login and register
         login(instructorDao);
@@ -155,6 +152,7 @@ public final class ApiServer {
     /**
      * This method is used to open the route to
      * add a quiz question to the database
+     * pass data to the Quiz class
      * @param quizDao call quizDao to update quiz table
      */
     private static void postQuiz(QuizDao quizDao) {
@@ -175,14 +173,15 @@ public final class ApiServer {
     /**
      * This method is used to open the route to
      * update the quiz table using a piece of incoming record
-     * @param recordDao call recordDAO to update quiz table
+     * pass data to the Record class
+     * @param quizDao call quizDao to update quiz table
      */
-    private static void postRecords(RecordDao recordDao) {
+    private static void postRecords(QuizDao quizDao) {
         // student adds a record of a Quiz question through HTTP POST request
         app.post("/record", ctx -> {
             Record record = ctx.bodyAsClass(Record.class);
             try {
-                recordDao.add(record);
+                quizDao.updateQuizStat(record);
                 ctx.json(record);
                 ctx.contentType("application/json");
                 ctx.status(201); // created successfully
@@ -220,6 +219,7 @@ public final class ApiServer {
 
     /**
      * This method is used to open the route to register a new instructor
+     * pass data to the Instructor class
      * if register successful, send status code 201
      * if user already exists, send status code 403, request forbidden
      * @param instructorDao call instructorDao to update instructor table
@@ -243,7 +243,7 @@ public final class ApiServer {
     /**
      * This method is used to open the route for instructor to upload a file
      * receive file stream and corresponding user id from front-end
-     * pass data to the File model
+     * pass data to the File class
      * @param fileDao call fileDao to update file table
      */
     private static void uploadFile(FileDao fileDao) {

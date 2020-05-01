@@ -2,6 +2,7 @@ package dao;
 
 import exception.DaoException;
 import model.Quiz;
+import model.Record;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
@@ -37,13 +38,12 @@ public class Sql2oQuizDao implements QuizDao {
                     .executeAndFetchFirst(Quiz.class);
         }
         catch (Sql2oException ex) {
-            throw new DaoException("Cannot find this single quiz with file ID: " +
-                    fileId + " and question ID: " + questionId, ex);
+            throw new DaoException("database error" + ex.getMessage(), ex);
         }
     }
 
     @Override
-    public void add(Quiz quiz) throws DaoException {
+    public void add(Quiz quiz) {
         // handel the case that quiz is initialized with null fileId and questionId values
         String fileId = quiz.getFileId();
         int questionId = quiz.getQuestionId();
@@ -67,13 +67,42 @@ public class Sql2oQuizDao implements QuizDao {
                         .addParameter("C", quiz.getCountC())
                         .addParameter("D", quiz.getCountD())
                         .executeUpdate();
-
-//                quiz.setId(id);
             } catch (Sql2oException ex) {
                 throw new DaoException("Unable to add the quiz", ex);
             }
         } else {
             throw new DaoException("quiz already exists, unable to add this quiz");
+        }
+    }
+
+    @Override
+    public void updateQuizStat(Record record) {
+        // get file id, question id and the answer of a student
+        String fileId = record.getFileId();
+        int questionId = record.getQuestionId();
+        String choice = "count" + record.getChoice();
+        if (fileId == null || fileId.length() == 0 || questionId == 0) {
+            throw new DaoException("FileId and questionId can not be empty!");
+        }
+
+        Quiz singleQuiz = getSingleQuizStat(fileId, questionId);
+
+        if (singleQuiz != null) {
+            // update Quiz table using the incoming record
+            String sql = "UPDATE quiz Set " + choice + " = " + choice + " + 1 WHERE " +
+                    "fileId = :fileId AND questionId = :questionId";
+            System.out.println(sql);
+            try (Connection conn = sql2o.open()) {
+                conn.createQuery(sql)
+                        .addParameter("fileId", fileId)
+                        .addParameter("questionId", questionId)
+                        .executeUpdate();
+                System.out.println("New record updated in quiz table.");
+            } catch (Sql2oException ex) {
+                throw new DaoException("Unable to update record to quiz table", ex);
+            }
+        } else {
+            throw new DaoException("quiz not exists, unable to update using this record.");
         }
     }
 }
