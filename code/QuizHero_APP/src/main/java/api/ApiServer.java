@@ -12,16 +12,29 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.util.*;
 
+/**
+ * ApiServer class is used for implementing the RESTful API
+ * This class opens various routes, handles requests from front-end, and passes data to the Model
+ * Calls DAOs to interact with PostgreSQL database
+ * Sends data back to the client (front-end)
+ * Controller Layer in MVC pattern
+ * @author Ziming Chen, Nanxi Ye, Chenghao Sun
+ * @version 1.0
+ */
 public final class ApiServer {
-
     public static boolean INITIALIZE_WITH_SAMPLE_DATA = true;
     public static int PORT = getHerokuAssignedPort();
     private static Javalin app;
 
-    private ApiServer() {
-        // This class is not meant to be instantiated!
-    }
+    /* This class is not meant to be instantiated! */
+    private ApiServer() {}
 
+    /**
+     * This method is used to return the appropriate port number for the application
+     * if application is deployed on Heroku, return the port assigned by Heroku
+     * otherwise, return 7000 as default
+     * @return port number for the application
+     */
     private static int getHerokuAssignedPort() {
         String herokuPort = System.getenv("PORT");
         if (herokuPort != null) {
@@ -30,35 +43,38 @@ public final class ApiServer {
         return 7000;
     }
 
-    public static void start() throws URISyntaxException{
+    /**
+     * This method is used to start application server
+     * obtain various DAOs from DaoFactory including fileDao, instructorDao, quizDao
+     * finally handle exceptions
+     * @exception URISyntaxException exception occurs if a string could not be parsed as a URI reference
+     */
+    public static void start() throws URISyntaxException {
         // instantiate Sql2o and get DAOs
-        DaoFactory.instantiateSql2o();
+        DaoFactory.connectDatabase();
         FileDao fileDao = DaoFactory.getFileDao();
         InstructorDao instructorDao = DaoFactory.getInstructorDao();
         QuizDao quizDao = DaoFactory.getQuizDao();
-        RecordDao recordDao = DaoFactory.getRecordDao();
 
         // add some sample data
         if (INITIALIZE_WITH_SAMPLE_DATA) {
             DaoUtil.addSampleUsers(instructorDao);
-//            DaoUtil.addSampleQuizzes(quizDao);
-//            DaoUtil.addSampleUserFiles(instructorDao);
         }
 
         // Routing
         getHomepage();
-        routing(fileDao, instructorDao, quizDao, recordDao);
+        routing(fileDao, instructorDao, quizDao);
 
         // start application server
         startJavalin();
 
         // Handle exceptions
         app.exception(ApiError.class, (exception, ctx) -> {
-            ApiError err = (ApiError) exception;
+//            ApiError err = (ApiError) exception;
             Map<String, Object> jsonMap = new HashMap<>();
-            jsonMap.put("status", err.getStatus());
-            jsonMap.put("errorMessage", err.getMessage());
-            ctx.status(err.getStatus());
+            jsonMap.put("status", exception.getStatus());
+            jsonMap.put("errorMessage", exception.getMessage());
+            ctx.status(exception.getStatus());
             ctx.json(jsonMap);
         });
     }
@@ -67,13 +83,19 @@ public final class ApiServer {
         app.stop();
     }
 
-    private static void routing(FileDao fileDao, InstructorDao instructorDao, QuizDao quizDao, RecordDao recordDao) {
+    /**
+     * This method is used to open various routes
+     * @param fileDao       DAO for file table
+     * @param instructorDao DAO for instructor table
+     * @param quizDao       DAO for quiz table
+     */
+    private static void routing(FileDao fileDao, InstructorDao instructorDao, QuizDao quizDao) {
         // fetch quiz statistics
         getQuizStatByFileId(quizDao);
 
         // update quiz statistics
         postQuiz(quizDao);
-        postRecords(recordDao);
+        postRecords(quizDao);
 
         // login and register
         login(instructorDao);
@@ -90,9 +112,11 @@ public final class ApiServer {
         deleteFile(fileDao);
     }
 
+    /**
+     * This method is used to get the homepage from resources/public
+     * Catch-all route for the single-page application; The ReactJS application
+     */
     private static void getHomepage() {
-        // Catch-all route for the single-page application;
-        // The ReactJS application
         app = Javalin.create(config -> {
             config.addStaticFiles("/public");
             config.enableCorsForAllOrigins();
@@ -100,6 +124,11 @@ public final class ApiServer {
         });
     }
 
+    /**
+     * This method is used to open the route to get the quiz statistics of
+     * all the quizzes in a single file and send to the front-end
+     * @param quizDao call quizDao to get data from quiz table
+     */
     private static void getQuizStatByFileId(QuizDao quizDao) {
         // handle HTTP Get request to retrieve Quiz statistics
         app.get("/quizstat", ctx -> {
@@ -120,20 +149,12 @@ public final class ApiServer {
         });
     }
 
-//    private static void getSingleQuizStat(QuizDao quizDao) {
-//        // handle HTTP Get request to retrieve statistics of a single question in a file
-//        app.get("/quizstat/:fileid/:questionid", ctx -> {
-//            int fileId = Integer.parseInt(ctx.pathParam("fileid"));
-//            int questionId = Integer.parseInt(ctx.pathParam("questionid"));
-//            Quiz quiz = quizDao.getSingleQuizStat(fileId, questionId);
-//            if (quiz == null) {
-//                throw new ApiError("Unable to find quiz", 500);
-//            }
-//            ctx.json(quiz);
-//            ctx.status(200);
-//        });
-//    }
-
+    /**
+     * This method is used to open the route to
+     * add a quiz question to the database
+     * pass data to the Quiz class
+     * @param quizDao call quizDao to update quiz table
+     */
     private static void postQuiz(QuizDao quizDao) {
         // quizzes are initialized once a markdown in quiz format is uploaded
         app.post("/quiz", ctx -> {
@@ -149,12 +170,18 @@ public final class ApiServer {
         });
     }
 
-    private static void postRecords(RecordDao recordDao) {
+    /**
+     * This method is used to open the route to
+     * update the quiz table using a piece of incoming record
+     * pass data to the Record class
+     * @param quizDao call quizDao to update quiz table
+     */
+    private static void postRecords(QuizDao quizDao) {
         // student adds a record of a Quiz question through HTTP POST request
         app.post("/record", ctx -> {
             Record record = ctx.bodyAsClass(Record.class);
             try {
-                recordDao.add(record);
+                quizDao.updateQuizStat(record);
                 ctx.json(record);
                 ctx.contentType("application/json");
                 ctx.status(201); // created successfully
@@ -164,6 +191,13 @@ public final class ApiServer {
         });
     }
 
+    /**
+     * This method is used to open the route for instructor to login
+     * also call instructorDao to check user identity
+     * if login successful, send status code 201
+     * if wrong user information, send status code 403, request forbidden
+     * @param instructorDao dao for instructor table
+     */
     private static void login(InstructorDao instructorDao) {
         // instructor login action, return user including his/her id
         app.post("/login", ctx -> {
@@ -183,8 +217,14 @@ public final class ApiServer {
         });
     }
 
+    /**
+     * This method is used to open the route to register a new instructor
+     * pass data to the Instructor class
+     * if register successful, send status code 201
+     * if user already exists, send status code 403, request forbidden
+     * @param instructorDao call instructorDao to update instructor table
+     */
     private static void register(InstructorDao instructorDao) {
-        // instructor login action, return user including his/her id
         app.post("/register", ctx -> {
             Instructor instructor = ctx.bodyAsClass(Instructor.class);
             try {
@@ -200,11 +240,15 @@ public final class ApiServer {
         });
     }
 
-    // Upload a file and save it to the local file system
+    /**
+     * This method is used to open the route for instructor to upload a file
+     * receive file stream and corresponding user id from front-end
+     * pass data to the File class
+     * @param fileDao call fileDao to update file table
+     */
     private static void uploadFile(FileDao fileDao) {
         app.post("/upload", context -> {
-            // get file part
-            UploadedFile uploadedFile = context.uploadedFile("file");
+            UploadedFile uploadedFile = context.uploadedFile("file"); // get file part
             try (InputStream inputStream = Objects.requireNonNull(uploadedFile).getContent()) {
                 // fetch user id from form-data, require argument not null
                 int userId = Integer.parseInt(Objects.requireNonNull(context.formParam("userId")));
@@ -232,7 +276,11 @@ public final class ApiServer {
         });
     }
 
-    // front-end fetches the specified file
+    /**
+     * This method is used to open the route for front-end to fetch a file
+     * get file stream from database, and send the stream to front-end
+     * @param fileDao call fileDao to get data from file table
+     */
     private static void fetchFile(FileDao fileDao) {
         app.get("/fetch", context -> {
             try {
@@ -251,8 +299,12 @@ public final class ApiServer {
         });
     }
 
+    /**
+     * This method is used to open the route for front-end to change
+     * the file permission of a single file
+     * @param fileDao call fileDao to update file table
+     */
     private static void changeFilePermission(FileDao fileDao) {
-        // instructor login action, return user including his/her id
         app.post("/filepermission", ctx -> {
             try {
                 String fileId = Objects.requireNonNull(ctx.formParam("fileId"));
@@ -268,8 +320,13 @@ public final class ApiServer {
         });
     }
 
+    /**
+     * This method is used to open the route for front-end to check
+     * the file permission of a single file
+     * get file permission status from database and send to the front-end
+     * @param fileDao call fileDao to get file permission status from file table
+     */
     private static void checkFilePermission(FileDao fileDao) {
-        // instructor login action, return user including his/her id
         app.get("/filepermission", ctx -> {
             try {
                 String fileId = Objects.requireNonNull(ctx.queryParam("fileId"));
@@ -285,6 +342,11 @@ public final class ApiServer {
         });
     }
 
+    /**
+     * This method is used to open the route for front-end to get the file history
+     * get the list of files of uploaded by the instructor, and send to the front-end
+     * @param instructorDao call instructorDao to fetch data
+     */
     private static void getFileListFromInstructor(InstructorDao instructorDao) {
         app.get("/history", ctx -> {
             try {
@@ -301,8 +363,12 @@ public final class ApiServer {
         });
     }
 
+    /**
+     * This method is used to open the route for front-end to
+     * change the quiz permission of a single file
+     * @param fileDao call fileDao to update file table
+     */
     private static void changeQuizPermission(FileDao fileDao) {
-        // instructor login action, return user including his/her id
         app.post("/quizpermission", ctx -> {
             try {
                 String fileId = Objects.requireNonNull(ctx.formParam("fileId"));
@@ -318,8 +384,13 @@ public final class ApiServer {
         });
     }
 
+    /**
+     * This method is used to open the route for front-end to check
+     * the quiz permission of a single file
+     * get quiz permission status from database and send to the front-end
+     * @param fileDao call fileDao to get quiz permission status from file table
+     */
     private static void checkQuizPermission(FileDao fileDao) {
-        // instructor login action, return user including his/her id
         app.get("/quizpermission", ctx -> {
             try {
                 String fileId = Objects.requireNonNull(ctx.queryParam("fileId"));
@@ -335,8 +406,11 @@ public final class ApiServer {
         });
     }
 
+    /**
+     * This method is used to open the route for front-end to delete a certain file
+     * @param fileDao call fileDao to delete all the file data
+     */
     private static void deleteFile(FileDao fileDao) {
-        // instructor login action, return user including his/her id
         app.post("/deletefile", ctx -> {
             try {
                 String fileId = Objects.requireNonNull(ctx.formParam("fileId"));
@@ -352,6 +426,9 @@ public final class ApiServer {
         });
     }
 
+    /**
+     * This method is used to create gson mapping and start Javalin
+     */
     private static void startJavalin() {
         Gson gson = new Gson();
         JavalinJson.setFromJsonMapper(gson::fromJson);
