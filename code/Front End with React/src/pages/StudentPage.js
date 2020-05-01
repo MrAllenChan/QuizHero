@@ -5,7 +5,9 @@ import axios from 'axios'
 import Slides from "../components/Spectacle";
 import {BASE_URL} from "../config/config"
 import {message} from "antd";
-
+/**
+ * StudentPage renders presenter's version of slides and quizzes.
+ */
 class StudentPage extends Component {
     constructor(props) {
         super(props);
@@ -16,8 +18,6 @@ class StudentPage extends Component {
             questionId: 1,
             question: '',
             answerOptions: [],
-            // answer: '',
-            // answersCount: {},
             result: '',
             fileId: JSON.parse(localStorage.getItem("data")).fileId,
             quizBlockCounter : 0,
@@ -25,42 +25,20 @@ class StudentPage extends Component {
             quizQuestions:JSON.parse(localStorage.getItem("data")).quiz[0],
             slides: JSON.parse(localStorage.getItem("data")).slidesString,
         };
-
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
     }
 
     componentDidMount() {
-
-        // const shuffledAnswerOptions = this.state.quizQuestions.map(question =>
-        //     this.shuffleArray(question.answers)
-        // );
         this.setState({
             question: this.state.quizQuestions[0].question,
             answerOptions: this.state.quizQuestions[0].answers
         });
     }
 
-    // shuffleArray(array) {
-    //     var currentIndex = array.length,
-    //         temporaryValue,
-    //         randomIndex;
-    //
-    //     // While there remain elements to shuffle...
-    //     while (0 !== currentIndex) {
-    //         // Pick a remaining element...
-    //         randomIndex = Math.floor(Math.random() * currentIndex);
-    //         currentIndex -= 1;
-    //
-    //         // And swap it with the current element.
-    //         temporaryValue = array[currentIndex];
-    //         array[currentIndex] = array[randomIndex];
-    //         array[randomIndex] = temporaryValue;
-    //     }
-    //
-    //     return array;
-    // }
-
     handleAnswerSelected(event) {
+        /**
+         * check whether it is the last question after selecting an answer.
+         */
         this.setUserAnswer(event.currentTarget.value);
         console.log(event.currentTarget.value);
         if (this.state.questionId < this.state.quizQuestions.length) {
@@ -71,21 +49,12 @@ class StudentPage extends Component {
     }
 
     setUserAnswer(answer) {
+        /**
+         * Send the chosen answer to the server.
+         */
         var answerArray = answer.split(" ");
         var type = answerArray[0];
         var questionCounter = answerArray[1];
-        // var answerContent = answerArray[2];
-        console.log(answerArray)
-        // this.setState((state, props) => ({
-        //     answersCount: {
-        //         ...state.answersCount,
-        //         [answer]: (state.answersCount[type] || 0) + 1
-        //     },
-        //     answer: type
-        // }));
-
-        //send choice to back-end
-        // const BASE_URL = document.location.origin;
         const formData = {
             fileId : this.state.fileId,
             questionId : parseInt(questionCounter),
@@ -107,6 +76,9 @@ class StudentPage extends Component {
     }
 
     setNextQuestion() {
+        /**
+         * set parameters to be the next question.
+         */
         const counter = this.state.counter + 1;
         const questionId = this.state.questionId + 1;
         const questionCounter = this.state.questionCounter + 1;
@@ -121,37 +93,6 @@ class StudentPage extends Component {
         });
     }
 
-    // setNextPart() {
-    //     const questionId = 1;
-    //     const questionCounter = this.state.questionCounter + 1;
-    //     const counter = 0;
-    //     const quizBlockCounter = this.state.quizBlockCounter + 1;
-    //     const quizQuestions = this.state.quizList[quizBlockCounter];
-    //     const shuffledAnswerOptions = quizQuestions.map(question =>
-    //         this.shuffleArray(question.answers)
-    //     );
-    //
-    //     this.setState({
-    //         questionId : questionId,
-    //         counter : counter,
-    //         quizBlockCounter : quizBlockCounter,
-    //         quizQuestions : quizQuestions,
-    //         question: quizQuestions[0].question,
-    //         answerOptions: shuffledAnswerOptions[0],
-    //         questionCounter: questionCounter
-    //     })
-    //
-    // }
-
-    // getResults() {
-    //     const answersCount = this.state.answersCount;
-    //     const answersCountKeys = Object.keys(answersCount);
-    //     const answersCountValues = answersCountKeys.map(key => answersCount[key]);
-    //     const maxAnswerCount = Math.max.apply(null, answersCountValues);
-    //
-    //     return answersCountKeys.filter(key => answersCount[key] === maxAnswerCount);
-    // }
-
     setResults(result) {
         this.setState({
             result : 1
@@ -159,6 +100,9 @@ class StudentPage extends Component {
     }
 
     renderQuiz() {
+        /**
+         * Render the quiz page
+         */
         return (
             <Quiz
                 answer={this.state.answer}
@@ -178,10 +122,12 @@ class StudentPage extends Component {
     }
 
     checkQuizPermission = (quizBlockNumber) => {
+        /**
+         * This function sends a get request to backend to check whether students can do the quiz.
+         */
         let params = {
             fileId: this.state.fileId
         }
-
         axios.get(BASE_URL + "/quizpermission",  {params})
             .then(res => {
                 console.log("AAA", res.data);
@@ -196,15 +142,13 @@ class StudentPage extends Component {
     }
 
     toQuizCallback = (quizBlockNumber) => {
+        /**
+         * This function initializes params needed for quiz page berore rendering it.
+         */
         console.log(quizBlockNumber)
-
         if (this.state.quizpermission === true){
             message.success(`Start quiz for presentation ${this.state.fileId}.`)
             const quizQuestions = this.state.quizList[quizBlockNumber];
-
-            // const shuffledAnswerOptions = quizQuestions.map(question =>
-            //     this.shuffleArray(question.answers)
-            // );
             const questionId = 1;
             const counter = 0;
 
@@ -241,8 +185,6 @@ class StudentPage extends Component {
         return (
             <div className="Quiz-page">
                 <div className="Quiz-header">
-                    {/*<img src={logo} className="App-logo" alt="logo" />*/}
-                    {/*<h2>React Quiz</h2>*/}
                 </div>
                 {this.state.result ? this.renderResult() : this.renderQuiz()}
 

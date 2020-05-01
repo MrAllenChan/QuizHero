@@ -2,18 +2,9 @@ import React , { Component } from  'react';
 import {Button, Icon} from 'antd';
 import logo from '../fig/logo.png';
 import template from "../components/template";
-import MyUpload from './UploadPage'
-import PresentPage from "./PresentPage";
-import StudentPage from "./StudentPage";
-import Slides from "../components/Spectacle"
-import quizStatistic from "../components/QuizStatistic"
-import {dimValueGetter} from "echarts/src/component/marker/markerHelper";
-// import {
-//     BrowserRouter,
-//     Switch,
-//     Route,
-//     Link
-//   } from "react-router-dom";
+/**
+ * The page HomePage is the first page when visiting QuizHero. The user choose to be a presenter or a student here.
+ */
 
 class FirstPage extends Component {
 
@@ -30,6 +21,9 @@ class FirstPage extends Component {
         window.location = "/StudentRequestPage";
     }
 
+    /**
+     * onDownload is a callback function triggered when click the "download template" button.
+     */
     onDownload = () => {
         function fakeClick(obj) {
             var ev = document.createEvent("MouseEvents");

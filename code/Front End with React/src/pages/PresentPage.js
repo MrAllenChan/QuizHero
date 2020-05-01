@@ -5,7 +5,9 @@ import axios from 'axios'
 import {Button, Icon, message} from "antd";
 import Slides from "../components/Spectacle";
 import {BASE_URL} from "../config/config"
-
+/**
+ * PresentPage renders presenter's version of slides and quizzes.
+ */
 class PresentPage extends Component {
     constructor(props) {
         super(props);
@@ -16,8 +18,6 @@ class PresentPage extends Component {
             questionCounter : 1,
             question: '',
             answerOptions: [],
-            // answer: '',
-            // answersCount: {},
             result: '',
             fileId: JSON.parse(localStorage.getItem("data")).fileId,
             quizCounter : 0,
@@ -27,42 +27,20 @@ class PresentPage extends Component {
         };
         console.log(this.state.quizList)
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
-        this.skipQuestion = this.skipQuestion.bind(this);
     }
 
     componentDidMount() {
         console.log(this.state.quizQuestions)
-        // const shuffledAnswerOptions = this.state.quizQuestions.map(question =>
-        //     this.shuffleArray(question.answers)
-        // );
         this.setState({
             question: this.state.quizQuestions[0].question,
             answerOptions: this.state.quizQuestions[0].answers
         });
     }
 
-    // shuffleArray(array) {
-    //     var currentIndex = array.length,
-    //         temporaryValue,
-    //         randomIndex;
-    //
-    //     // While there remain elements to shuffle...
-    //     while (0 !== currentIndex) {
-    //         // Pick a remaining element...
-    //         randomIndex = Math.floor(Math.random() * currentIndex);
-    //         currentIndex -= 1;
-    //
-    //         // And swap it with the current element.
-    //         temporaryValue = array[currentIndex];
-    //         array[currentIndex] = array[randomIndex];
-    //         array[randomIndex] = temporaryValue;
-    //     }
-    //
-    //     return array;
-    // }
-
     handleAnswerSelected(event) {
-        this.setUserAnswer(event.currentTarget.value);
+        /**
+         * check whether it is the last question after selecting an answer.
+         */
         console.log(event.currentTarget.value);
         if (this.state.questionId < this.state.quizQuestions.length) {
             setTimeout(() => this.setNextQuestion(), 300);
@@ -71,47 +49,13 @@ class PresentPage extends Component {
         }
     }
 
-    setUserAnswer(answer) {
-        var answerArray = answer.split(" ");
-        var type = answerArray[0];
-        var questionCounter = answerArray[1];
-        // var answerContent = answerArray[2];
-        console.log(answerArray)
-        // this.setState((state, props) => ({
-        //     answersCount: {
-        //         ...state.answersCount,
-        //         [answer]: (state.answersCount[type] || 0) + 1
-        //     },
-        //     answer: type
-        // }));
-
-        //send choice to back-end
-        // const BASE_URL = document.location.origin;
-        // const formData = {
-        //     fileId : this.state.fileId,
-        //     questionId : parseInt(questionCounter),
-        //     choice : type
-        // }
-        // console.log(formData)
-        // axios
-        //     .post(BASE_URL+"/record", formData, {
-        //         headers: {
-        //             "Content-Type": "multipart/form-data"
-        //         }
-        //     })
-        //     .then(() => {
-        //         console.log("upload success");
-        //     })
-        //     .catch((error) => {
-        //         console.log("error")
-        //     });
-    }
-
     setNextQuestion() {
+        /**
+         * set parameters to be the next question.
+         */
         const counter = this.state.counter + 1;
         const questionId = this.state.questionId + 1;
         const questionCounter = this.state.questionCounter + 1;
-        // console.log(this.state.quizQuestions);
         this.setState({
             counter: counter,
             questionId: questionId,
@@ -122,46 +66,6 @@ class PresentPage extends Component {
         });
     }
 
-    // setNextPart() {
-    //     const questionId = 1;
-    //     const counter = 0;
-    //     const quizCounter = this.state.quizCounter + 1;
-    //     const questionCounter = this.state.questionCounter + 1;
-    //     const quizQuestions = this.state.quizList[quizCounter];
-    //     const shuffledAnswerOptions = quizQuestions.map(question =>
-    //         this.shuffleArray(question.answers)
-    //     );
-    //
-    //     this.setState({
-    //         questionId : questionId,
-    //         counter : counter,
-    //         quizCounter : quizCounter,
-    //         quizQuestions : quizQuestions,
-    //         question: quizQuestions[0].question,
-    //         answerOptions: shuffledAnswerOptions[0],
-    //         questionCounter: questionCounter
-    //
-    //     })
-    //
-    // }
-
-    skipQuestion() {
-        if (this.state.questionId < this.state.quizQuestions.length) {
-            setTimeout(() => this.setNextQuestion(), 300);
-        } else {
-            setTimeout(() => this.setResults(), 300);
-        }
-    }
-
-    // getResults() {
-    //     const answersCount = this.state.answersCount;
-    //     const answersCountKeys = Object.keys(answersCount);
-    //     const answersCountValues = answersCountKeys.map(key => answersCount[key]);
-    //     const maxAnswerCount = Math.max.apply(null, answersCountValues);
-    //
-    //     return answersCountKeys.filter(key => answersCount[key] === maxAnswerCount);
-    // }
-
     setResults(result) {
         this.setState({
             result : 1
@@ -169,6 +73,9 @@ class PresentPage extends Component {
     }
 
     renderQuiz() {
+        /**
+         * Render the quiz page
+         */
         return (
             <div>
                 <Quiz
@@ -182,7 +89,7 @@ class PresentPage extends Component {
                 />
                 <h3>Presenter's response will not be recorded.</h3>
                 <Button
-                    onClick={this.skipQuestion}>
+                    onClick={this.handleAnswerSelected}>
                     <Icon /> Skip
                 </Button>
             </div>
@@ -190,6 +97,9 @@ class PresentPage extends Component {
     }
 
     startQuiz=()=>{
+        /**
+         * This function sends a post request to backend to set quizpermission to true so that students can do the quiz.
+         */
         const formData = new FormData();
         formData.append('fileId', this.state.fileId);
         formData.append('permission', true);
@@ -199,6 +109,9 @@ class PresentPage extends Component {
     }
 
     stopQuiz=()=>{
+        /**
+         * This function sends a post request to backend to set quizpermission to false so that students are not allowed to do the quiz.
+         */
         const formData = new FormData();
         formData.append('fileId', this.state.fileId);
         formData.append('permission', false);
@@ -208,14 +121,12 @@ class PresentPage extends Component {
     }
 
     toQuizCallback = (quizBlockNumber) => {
+        /**
+         * This function initializes params needed for quiz page berore rendering it.
+         */
         this.startQuiz();
         console.log(quizBlockNumber)
-
         const quizQuestions = this.state.quizList[quizBlockNumber];
-
-        // const shuffledAnswerOptions = quizQuestions.map(question =>
-        //     this.shuffleArray(question.answers)
-        // );
         const questionId = 1;
         const counter = 0;
 
@@ -253,8 +164,6 @@ class PresentPage extends Component {
         return (
             <div className="Quiz-page">
                 <div className="Quiz-header">
-                    {/*<img src={logo} className="App-logo" alt="logo" />*/}
-                    {/*<h2>React Quiz</h2>*/}
                 </div>
                 {this.state.result ? this.renderResult() : this.renderQuiz()}
 
