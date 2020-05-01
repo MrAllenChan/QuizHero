@@ -1,10 +1,14 @@
 import axios from "axios";
 import {BASE_URL} from "../config/config";
 
-const separateQuestion = (rawString, fileId) => {
+/**
+ * The separateQuestion function is a function to tell slides and quiz in rawString and separate rawString into slide array and question array.
+ * @param rawString
+ * @param fileId
+ * @returns {{quiz: any[], slidesString: any[], fileId: *}}
+ */
 
-    // rawstring分成slide array 和 question array,
-    // 赋值给slideStringList, quizStringList
+const separateQuestion = (rawString, fileId) => {
 
     var slides = new Array(100);
     var questions = new Array(100);
@@ -50,20 +54,19 @@ const separateQuestion = (rawString, fileId) => {
     return data;
 }
 
-//question变成quizLists(quiz, quizBlock, quizLists)
+
+/**
+ * The parseQuiz function is to parse quizString to quizLists which contains quizBlock.
+ * Each quizBlock has a list of single quiz.
+ * @param quizString
+ * @param fileId
+ * @returns {any[]}
+ */
+
 const parseQuiz = (quizString, fileId) => {
-    // this.separateQuestion(this.state.rawString);
-    // var quizList = new Array();
-    // var data = this.state.quizString;
-    // var quizzes = data.split("\n\n");
-    // var parsedChoice;
-    // console.log(this.state.quizString);
-    // console.log(this.state.quizString.length);
+
     var length = quizString.length;
     var quizLists = new Array();
-    // for(var i = 0; i < length; i ++) {
-    //     quizLists[i]=new Array();
-    // }
     console.log(length);
     var count = 1;
     for (var index = 0; index < length; index ++) {

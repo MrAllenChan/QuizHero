@@ -1,3 +1,6 @@
+/**
+ * add default-theme for slides page.
+ */
 export default {
     colors: {
         primary: '#000', // paragraph color
