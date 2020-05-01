@@ -1,3 +1,7 @@
+/**
+ * The component parse is to parse slides and quiz from the rawString got from upload page.
+ */
+
 import axios from "axios";
 import {BASE_URL} from "../config/config";
 
@@ -81,7 +85,11 @@ const parseQuiz = (quizString, fileId) => {
         var parsedChoice;
         var quizBlock = new Array();
         console.log(quizBlock);
-
+        /**
+         * parse each single questions
+         * post the correct answer data to backend
+         * store the question data in quizBlock
+         */
         for (var i = 0; i < quizzes.length; i++) {
             var choice = "A";
             var quiz = {

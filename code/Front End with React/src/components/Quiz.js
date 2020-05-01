@@ -5,7 +5,18 @@ import Question from '../components/Question';
 import QuestionCount from '../components/QuestionCount';
 import AnswerOption from '../components/AnswerOption';
 
+/**
+ * The Quiz function is to render each question including number of question, problem and answer options.
+ * @param props
+ * @returns {*}
+ * @constructor
+ */
 function Quiz(props) {
+    /**
+     * The renderAnswerOptions is to render answer options for each problem.
+     * @param key
+     * @returns {*}
+     */
     function renderAnswerOptions(key) {
         return (
             <AnswerOption
@@ -20,6 +31,9 @@ function Quiz(props) {
         );
     }
 
+    /**
+     * Render number of quiz question, question and answer options.
+     */
     return (
         <CSSTransitionGroup
             className="container"
@@ -41,6 +55,10 @@ function Quiz(props) {
     );
 }
 
+/**
+ * Set the parameter type of each problem.
+ * @type {{questionId: Validator<NonNullable<number>>, answer: Validator<NonNullable<string>>, question: Validator<NonNullable<string>>, questionTotal: Validator<NonNullable<number>>, onAnswerSelected: Validator<NonNullable<(...args: any[]) => any>>, answerOptions: Validator<NonNullable<any[]>>}}
+ */
 Quiz.propTypes = {
     answer: PropTypes.string.isRequired,
     answerOptions: PropTypes.array.isRequired,

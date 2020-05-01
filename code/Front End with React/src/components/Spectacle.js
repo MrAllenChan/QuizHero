@@ -1,3 +1,6 @@
+/**
+ * The Spectacle component is to render slides and quiz access button.
+ */
 import React from 'react';
 import { render } from 'react-dom';
 import { Upload, message, Button, Icon } from 'antd';
