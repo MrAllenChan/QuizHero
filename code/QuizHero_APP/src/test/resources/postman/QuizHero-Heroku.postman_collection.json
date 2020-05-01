@@ -83,36 +83,6 @@
 			"response": []
 		},
 		{
-			"name": "https://quiz-hero.herokuapp.com/register",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"name\": \"allen1\",\n\t\"email\": \"zchen85@jhu.edu\",\n\t\"pswd\": \"9998\"\n}"
-				},
-				"url": {
-					"raw": "https://quiz-hero.herokuapp.com/register",
-					"protocol": "https",
-					"host": [
-						"quiz-hero",
-						"herokuapp",
-						"com"
-					],
-					"path": [
-						"register"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "https://quiz-hero.herokuapp.com/upload",
 			"request": {
 				"method": "POST",
@@ -134,7 +104,7 @@
 						},
 						{
 							"key": "userId",
-							"value": "2",
+							"value": "3",
 							"type": "text"
 						}
 					],
@@ -172,7 +142,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"fileId\": 44567,\n\t\"questionId\": 1,\n\t\"answer\": \"C\",\n\t\"countA\": 0,\n\t\"countB\": 0,\n\t\"countC\": 0,\n\t\"countD\": 0\n}"
+					"raw": "{\n\t\"fileId\": \"2ca1357f-8ee3-413c-b0f7-76ebc2ce770c\",\n\t\"questionId\": 1,\n\t\"answer\": \"C\",\n\t\"countA\": 0,\n\t\"countB\": 0,\n\t\"countC\": 0,\n\t\"countD\": 0\n}"
 				},
 				"url": {
 					"raw": "https://quiz-hero.herokuapp.com/quiz",
@@ -202,7 +172,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"fileId\": 44567,\n\t\"questionId\": 1,\n\t\"choice\": \"B\"\n}"
+					"raw": "{\n\t\"fileId\": \"2ca1357f-8ee3-413c-b0f7-76ebc2ce770c\",\n\t\"questionId\": 1,\n\t\"choice\": \"B\"\n}"
 				},
 				"url": {
 					"raw": "https://quiz-hero.herokuapp.com/record",
@@ -231,7 +201,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://quiz-hero.herokuapp.com/quizstat?fileId=44567",
+					"raw": "https://quiz-hero.herokuapp.com/quizstat?fileId=2ca1357f-8ee3-413c-b0f7-76ebc2ce770c",
 					"protocol": "https",
 					"host": [
 						"quiz-hero",
@@ -244,7 +214,7 @@
 					"query": [
 						{
 							"key": "fileId",
-							"value": "44567"
+							"value": "2ca1357f-8ee3-413c-b0f7-76ebc2ce770c"
 						}
 					]
 				}
@@ -263,7 +233,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://quiz-hero.herokuapp.com/fetch?fileId=44567",
+					"raw": "https://quiz-hero.herokuapp.com/fetch?fileId=2ca1357f-8ee3-413c-b0f7-76ebc2ce770c",
 					"protocol": "https",
 					"host": [
 						"quiz-hero",
@@ -276,7 +246,7 @@
 					"query": [
 						{
 							"key": "fileId",
-							"value": "44567"
+							"value": "2ca1357f-8ee3-413c-b0f7-76ebc2ce770c"
 						}
 					]
 				}
@@ -295,7 +265,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://quiz-hero.herokuapp.com/filepermission?fileId=44567",
+					"raw": "https://quiz-hero.herokuapp.com/filepermission?fileId=2ca1357f-8ee3-413c-b0f7-76ebc2ce770c",
 					"protocol": "https",
 					"host": [
 						"quiz-hero",
@@ -308,7 +278,7 @@
 					"query": [
 						{
 							"key": "fileId",
-							"value": "44567"
+							"value": "2ca1357f-8ee3-413c-b0f7-76ebc2ce770c"
 						}
 					]
 				}
@@ -331,7 +301,7 @@
 					"formdata": [
 						{
 							"key": "fileId",
-							"value": "44567",
+							"value": "2ca1357f-8ee3-413c-b0f7-76ebc2ce770c",
 							"type": "text"
 						},
 						{
@@ -368,7 +338,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://quiz-hero.herokuapp.com/quizpermission?fileId=44567",
+					"raw": "https://quiz-hero.herokuapp.com/quizpermission?fileId=2ca1357f-8ee3-413c-b0f7-76ebc2ce770c",
 					"protocol": "https",
 					"host": [
 						"quiz-hero",
@@ -381,7 +351,7 @@
 					"query": [
 						{
 							"key": "fileId",
-							"value": "44567"
+							"value": "2ca1357f-8ee3-413c-b0f7-76ebc2ce770c"
 						}
 					]
 				}
@@ -404,7 +374,7 @@
 					"formdata": [
 						{
 							"key": "fileId",
-							"value": "44567",
+							"value": "2ca1357f-8ee3-413c-b0f7-76ebc2ce770c",
 							"type": "text"
 						},
 						{
@@ -424,6 +394,68 @@
 					],
 					"path": [
 						"quizpermission"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://quiz-hero.herokuapp.com/delete",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fileId",
+							"value": "2ca1357f-8ee3-413c-b0f7-76ebc2ce770c",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://quiz-hero.herokuapp.com/deletefile",
+					"protocol": "https",
+					"host": [
+						"quiz-hero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"deletefile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://quiz-hero.herokuapp.com/history",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quiz-hero.herokuapp.com/history?instructorId=1",
+					"protocol": "https",
+					"host": [
+						"quiz-hero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"history"
+					],
+					"query": [
+						{
+							"key": "instructorId",
+							"value": "1"
+						}
 					]
 				}
 			},
