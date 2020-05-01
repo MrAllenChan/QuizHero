@@ -33,8 +33,8 @@ However, "The beginning is always the hardest". As we conquered those problems o
 Here we list some major challenges we met, and how we finally overcame them.
 
 1. We met difficulties when we tried to connect our frontend with backend. We solved it by adding static build files built from React project to Javalin resources/public folder. Later when we deploy the application, we push the entire project including build files of front-end to Heroku.
-2. quiz tags/marks & parsing algorithm
-3. Develop separate student page for students to access the slides and quizzes from open Internet
+2. quiz tags/marks & parsing algorithm. We solved this problem by dividing slides and quizzes into two part first. Then we substituted quizzes by a certain symbol in the slides so that we can add quizzes in the correct place of the slides. Finally we parsed each quiz so that we obtained questions and answers for each quiz.
+3. Develop separate student page for students to access the slides and quizzes from open Internet. We developed this feature by saving a copy of file when presenter uploaded it to the server. After the file has been stored successfully, the presenter can get a code which can be shared to students so that their browser can fetch file from database and render a different version on it.
 4. How to store the files. Previously, we wrote a series of methods to store files locally and the logic works all well when we tested the server at localhost. However, during deployment process we found that the Heroku file system is ephemeral, and we cannot upload markdown files and save them in the file system of the server. Hence, we have to completely abandon the previous logic. Finally, we decided to store the content of markdown files as byte stream in the PostgreSQL database, in which way we were able to store files in a persistent way and successfully fetch them.
 5. Login feature requires much more refactoring of code than we anticipated. We have to redesign and refine API, DAOs and Model on back-end a lot for processing and storing login information as well as managing user-file information in database.
 
