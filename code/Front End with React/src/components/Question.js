@@ -1,3 +1,7 @@
+/**
+ * Component Question is to get the question data
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 

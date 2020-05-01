@@ -23,16 +23,14 @@ public class FileDaoTest {
     private FileDao fileDao;
     private InstructorDao instructorDao;
     private QuizDao quizDao;
-    private RecordDao recordDao;
     int instructorId;
 
     @Before
     public void setup() throws URISyntaxException {
-        DaoFactory.instantiateSql2o();
+        DaoFactory.connectDatabase();
         fileDao = DaoFactory.getFileDao();
         instructorDao = DaoFactory.getInstructorDao();
         quizDao = DaoFactory.getQuizDao();
-        recordDao = DaoFactory.getRecordDao();
         //add instructor to empty instructor table; this instructor has instructorId of 1
         Instructor jSmith = new Instructor("John Smith", "jsmith@jhu.edu", "jsmith");
         instructorDao.registerUser(jSmith);

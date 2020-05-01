@@ -6,10 +6,13 @@ import axios from 'axios';
 import {BASE_URL} from "../config/config"
 import {Link} from "react-router-dom"
 import {CopyToClipboard} from 'react-copy-to-clipboard'
-import logo from "../fig/logo.png";
-const { Header, Content, Footer } = Layout;
+import logo from "../fig/logo.png"
 
-// const fs = require('fs');
+/**
+ * UploadPage renders the page where the presenter can upload his/her markdown file.
+ */
+
+const { Header, Content, Footer } = Layout;
 const props = {
     name: 'file',
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
@@ -21,7 +24,6 @@ const props = {
 class MyUpload extends React.Component{
     constructor(props) {
         super(props);
-        // this.beforeUpload.bind = this.beforeUpload.bind(this);
     }
     state = {
         file:"",
@@ -32,7 +34,6 @@ class MyUpload extends React.Component{
         marpitResult:"",
         display_name:'none'
     }
-
 
     beforeUpload = (file) => {
         if (this.state.file === ""){
@@ -61,14 +62,10 @@ class MyUpload extends React.Component{
                 fileName :info.file.name
             })
             message.success(`${info.file.name} file uploaded successfully`);
+            // Send uploaded
             this.sendFile()
                 .then(this.readFile)
                 .then(this.callSeparateQuestion);
-            // this.sendFile()
-            //     .then(this.trans);
-            // this.readFile()
-            //     .then(this.convertText);
-
             this.state.display_name = this.display_name('block');
 
         } else if (info.file.status === 'error') {
@@ -84,12 +81,16 @@ class MyUpload extends React.Component{
         this.state.display_name = this.display_name('none');
     }
 
-    onDownload = () => {
+    /**
+     * download raw file or HTML file after uploaded.
+     */
+    onDownload = (fileType) => {
         function fakeClick(obj) {
             var ev = document.createEvent("MouseEvents");
             ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
             obj.dispatchEvent(ev);
         }
+
         function exportRaw(name, data) {
             var urlObject = window.URL || window.webkitURL || window;
             var export_blob = new Blob([data]);
@@ -98,27 +99,15 @@ class MyUpload extends React.Component{
             save_link.download = name;
             fakeClick(save_link);
         }
-        exportRaw(this.state.fileName, this.state.rawString);
+
+        if (fileType === "raw") exportRaw(this.state.fileName, this.state.rawString);
+        else if (fileType === "HTML") exportRaw(`${this.state.fileName}.html`, this.state.marpitResult);
+        else console.log("Wrong fileType provided")
     }
 
-    downloadHTML = () => {
-        function fakeClick(obj) {
-            var ev = document.createEvent("MouseEvents");
-            ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-            obj.dispatchEvent(ev);
-        }
-        function exportRaw(name, data) {
-            var urlObject = window.URL || window.webkitURL || window;
-            var export_blob = new Blob([data]);
-            var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
-            save_link.href = urlObject.createObjectURL(export_blob);
-            save_link.download = name;
-            fakeClick(save_link);
-        }
-        exportRaw(`${this.state.fileName}.html`, this.state.marpitResult);
-    }
-
-    // send markdown file to backend and set the database returned fileId to state
+    /**
+     * send markdown file to backend and set the database returned fileId to state
+     */
     sendFile =() => {
         var file = this.state.file;
         var p = new Promise((resolve, reject) => {
@@ -140,6 +129,11 @@ class MyUpload extends React.Component{
         return p;
     }
 
+    /**
+     * This is a function that read the uploaded file into a string.
+     * @returns {Promise<unknown>}
+     */
+
     readFile=()=>{
         var file = this.state.file;
         var p = new Promise((resolve, reject) => {
@@ -157,11 +151,15 @@ class MyUpload extends React.Component{
         return p;
     }
 
+    /**
+     * CallSeparateQuestion is the function that parse the raw string to a JSON parameter which contains quizzes and slides.
+     */
     callSeparateQuestion =()=>{
         var data = separateQuestion(this.state.rawString, this.state.fileId);
-        console.log(data)
-        data = JSON.stringify(data)
-        localStorage.setItem("data",data)
+        console.log(data);
+        data.fileId = this.state.fileId;
+        data = JSON.stringify(data);
+        localStorage.setItem("data",data);
         this.setState({data : data});
         this.getMarpit();
     }
@@ -219,16 +217,15 @@ class MyUpload extends React.Component{
                 textDecoration: "underline",
                 cursor: "pointer"
         };
-
+        /**
+         * Render NavBar and all other buttons on upload page.
+         */
         return(
             <div className="App">
                 <Header style={{height: 0, padding: 0, position: 'fixed', zIndex: 1, width: '100%' }}>
                     <div className="logo" />
                     <Menu theme="white" mode="horizontal" defaultSelectedKeys={['1']}>
 
-                        {/*<Menu.Item key="1">Upload </Menu.Item>*/}
-
-                        {/*<Menu.Item key="2">History </Menu.Item>*/}
                         <Menu.Item key="1" style={{display:"inline-block",float:"left", marginLeft:"30px", width: "150px"}}>
                             <Link to={'/HomePage'}>Upload</Link>
                         </Menu.Item>
@@ -240,8 +237,6 @@ class MyUpload extends React.Component{
                              Welcome, {username}
                              <button onClick={this.handleLogOut} style={logOutBtnStyle}>Log Out</button>
                         </div>
-                        
-
                     </Menu>
                 </Header>
                 
@@ -254,8 +249,8 @@ class MyUpload extends React.Component{
                             <Upload
                                 onChange={this.onChange}
                                 beforeUpload={this.beforeUpload}
-                                onDownload={this.onDownload}
-                                onPreview={this.onDownload}
+                                onDownload={() => this.onDownload("raw")}
+                                onPreview={() => this.onDownload("raw")}
                                 onRemove={this.onRemove}
                                 {...props}>
 
@@ -272,13 +267,8 @@ class MyUpload extends React.Component{
                                     Presenter mode
                                 </Button>
                             </Link>
-                            {/*<Link to={{pathname: '/student', query: this.state.data}} target = '_blank'>*/}
-                            {/*    <Button size={"large"} style={{marginLeft: 10, marginRight:10}}>*/}
-                            {/*        <Icon/>Student mode*/}
-                            {/*    </Button>*/}
-                            {/*</Link>*/}
                             <Button size={"median"} style={{marginLeft: 10}}
-                                    onClick={this.downloadHTML}>
+                                    onClick={() => this.onDownload("HTML")}>
                                 Download HTML
                             </Button>
                         </div>

@@ -1,9 +1,18 @@
+/**
+ * The ResultPresenter component is to show instructor the result chart of quiz
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransitionGroup } from 'react-transition-group';
 import QuizStatictic from './QuizStatistic'
 import BackButton from './Button'
 
+/**
+ * The function ResultPresenter is to render statistic data and back button
+ * @param props
+ * @returns {*}
+ * @constructor
+ */
 function ResultPresenter(props) {
     return (
         <div>

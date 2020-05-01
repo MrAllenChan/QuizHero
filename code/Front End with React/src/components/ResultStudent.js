@@ -1,9 +1,17 @@
+/**
+ * The ResultStudent component is to show student the end page of quiz.
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransitionGroup } from 'react-transition-group';
-import QuizStatictic from './QuizStatistic'
 import BackButton from './Button'
 
+/**
+ * The ResultStudent function is to inform students that the quiz has been finished
+ * @param props
+ * @returns {*}
+ * @constructor
+ */
 function ResultStudent(props) {
     return (
         <div>

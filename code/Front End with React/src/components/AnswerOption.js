@@ -1,6 +1,16 @@
+/**
+ * The AnswerOption component is to render answer options for each question.
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Render answer options for questions.
+ * @param props
+ * @returns {*}
+ * @constructor
+ */
 function AnswerOption(props) {
     return (
         <li className="answerOption">
@@ -21,6 +31,10 @@ function AnswerOption(props) {
     );
 }
 
+/**
+ * Set the types of AnswerOption
+ * @type {{answerContent: Validator<NonNullable<string>>, answer: Validator<NonNullable<string>>, answerType: Validator<NonNullable<string>>, onAnswerSelected: Validator<NonNullable<(...args: any[]) => any>>}}
+ */
 AnswerOption.propTypes = {
     answerType: PropTypes.string.isRequired,
     answerContent: PropTypes.string.isRequired,

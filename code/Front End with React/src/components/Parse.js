@@ -1,10 +1,18 @@
+/**
+ * The component parse is to parse slides and quiz from the rawString got from upload page.
+ */
+
 import axios from "axios";
 import {BASE_URL} from "../config/config";
 
-const separateQuestion = (rawString, fileId) => {
+/**
+ * The separateQuestion function is a function to tell slides and quiz in rawString and separate rawString into slide array and question array.
+ * @param rawString
+ * @param fileId
+ * @returns {{quiz: any[], slidesString: any[], fileId: *}}
+ */
 
-    // rawstring分成slide array 和 question array,
-    // 赋值给slideStringList, quizStringList
+const separateQuestion = (rawString, fileId) => {
 
     var slides = new Array(100);
     var questions = new Array(100);
@@ -43,27 +51,25 @@ const separateQuestion = (rawString, fileId) => {
 
     var questions = parseQuiz(quizString, fileId);
     var data = {
-        fileId: fileId,
         quiz: questions,
         slidesString: slideString
     }
     return data;
 }
 
-//question变成quizLists(quiz, quizBlock, quizLists)
+
+/**
+ * The parseQuiz function is to parse quizString to quizLists which contains quizBlock.
+ * Each quizBlock has a list of single quiz.
+ * @param quizString
+ * @param fileId
+ * @returns {any[]}
+ */
+
 const parseQuiz = (quizString, fileId) => {
-    // this.separateQuestion(this.state.rawString);
-    // var quizList = new Array();
-    // var data = this.state.quizString;
-    // var quizzes = data.split("\n\n");
-    // var parsedChoice;
-    // console.log(this.state.quizString);
-    // console.log(this.state.quizString.length);
+
     var length = quizString.length;
     var quizLists = new Array();
-    // for(var i = 0; i < length; i ++) {
-    //     quizLists[i]=new Array();
-    // }
     console.log(length);
     var count = 1;
     for (var index = 0; index < length; index ++) {
@@ -78,7 +84,11 @@ const parseQuiz = (quizString, fileId) => {
         var parsedChoice;
         var quizBlock = new Array();
         console.log(quizBlock);
-
+        /**
+         * parse each single questions
+         * post the correct answer data to backend
+         * store the question data in quizBlock
+         */
         for (var i = 0; i < quizzes.length; i++) {
             var choice = "A";
             var quiz = {
@@ -106,31 +116,32 @@ const parseQuiz = (quizString, fileId) => {
                         choice = String.fromCharCode(charCode + 1);
 
                         // send correct answer to backend
-
-                        const formData = {
-                            fileId: fileId,
-                            // questionId : quizBlock.length + 1,
-                            questionId: count,
-                            answer: String.fromCharCode(charCode),
-                            countA: 0,
-                            countB: 0,
-                            countC: 0,
-                            countD: 0,
+                        if (fileId) {
+                            const formData = {
+                                fileId: fileId,
+                                // questionId : quizBlock.length + 1,
+                                questionId: count,
+                                answer: String.fromCharCode(charCode),
+                                countA: 0,
+                                countB: 0,
+                                countC: 0,
+                                countD: 0,
+                            }
+                            count++;
+                            console.log(formData)
+                            axios
+                                .post(BASE_URL + "/quiz", formData, {
+                                    headers: {
+                                        "Content-Type": "multipart/form-data"
+                                    }
+                                })
+                                .then(res => {
+                                    console.log("quiz initialize success");
+                                })
+                                .catch((error) => {
+                                    console.log(error)
+                                });
                         }
-                        count++;
-                        console.log(formData)
-                        axios
-                            .post(BASE_URL + "/quiz", formData, {
-                                headers: {
-                                    "Content-Type": "multipart/form-data"
-                                }
-                            })
-                            .then(res => {
-                                console.log("quiz initialize success");
-                            })
-                            .catch((error) => {
-                                console.log(error)
-                            });
                     } else if (line[0] === '*' && line.slice(2, 5) === "[ ]") {
                         // parse wrong choice
                         parsedChoice = line.slice(6, line.length);
