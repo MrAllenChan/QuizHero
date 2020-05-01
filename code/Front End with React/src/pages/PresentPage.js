@@ -3,7 +3,7 @@ import Quiz from '../components/Quiz';
 import ResultPresenter from '../components/ResultPresenter';
 import axios from 'axios'
 import {Button, Icon, message} from "antd";
-import Slides from "../components/Spectacle";
+import Slides from "../components/SpectaclePresenter";
 import {BASE_URL} from "../config/config"
 /**
  * PresentPage renders presenter's version of slides and quizzes.

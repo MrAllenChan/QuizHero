@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Quiz from '../components/Quiz';
 import ResultStudent from '../components/ResultStudent';
 import axios from 'axios'
-import Slides from "../components/Spectacle";
+import Slides from "../components/SpectacleStudent";
 import {BASE_URL} from "../config/config"
 import {message} from "antd";
 /**
