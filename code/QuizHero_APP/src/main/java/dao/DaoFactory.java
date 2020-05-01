@@ -7,24 +7,36 @@ import org.sql2o.Sql2oException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-
-public class DaoFactory {
+/**
+ * DaoFactory class is used for constructing and creating connections to the database
+ * Create tables in the database and create DAOs and return DAOs to other classes who want to use
+ * Factory Design Pattern
+ * @author Ziming Chen, Nanxi Ye, Chenghao Sun
+ * @version 1.0
+ */
+public final class DaoFactory {
     public static boolean DROP_TABLES_IF_EXIST = true;
     public static String PATH_TO_DATABASE_FILE = "./Store.db";
     private static Sql2o sql2o;
 
-    private DaoFactory() {
-        // This class is not meant to be instantiated!
-    }
+    /* This class is not meant to be instantiated! */
+    private DaoFactory() {}
 
-    private static void clearDatabase() throws URISyntaxException{
+    /**
+     * Drop all the tables in the database.
+     */
+    private static void clearDatabase(){
         dropInsFileTableIfExists(sql2o);
         dropQuizTableIfExists(sql2o);
         dropInstructorTableIfExists(sql2o);
         dropFileTableIfExists(sql2o);
     }
 
-    public static void instantiateSql2o() throws URISyntaxException {
+    /**
+     * This method is used to instantiate a Sql2o that connects to the PostgreSQL database
+     * @exception URISyntaxException exception occurs if a string could not be parsed as a URI reference
+     */
+    public static void connectDatabase() throws URISyntaxException {
         if (sql2o == null) {
             final String URI;
             final String USERNAME;
@@ -52,6 +64,10 @@ public class DaoFactory {
         }
     }
 
+    /**
+     * create instructor table
+     * @param sql2o instance of Sql2o class
+     */
     private static void createInstructorTable(Sql2o sql2o) {
         String sql = "CREATE TABLE IF NOT EXISTS instructor(" +
                 "instructorId SERIAL," +
@@ -70,6 +86,10 @@ public class DaoFactory {
         }
     }
 
+    /**
+     * create quiz table
+     * @param sql2o instance of Sql2o class
+     */
     private static void createQuizTable(Sql2o sql2o) {
         String sql = "CREATE TABLE IF NOT EXISTS quiz(" +
 //                "id SERIAL PRIMARY KEY," +
@@ -92,6 +112,10 @@ public class DaoFactory {
         }
     }
 
+    /**
+     * create file table
+     * @param sql2o instance of Sql2o class
+     */
     private static void createFileTable(Sql2o sql2o) {
         String sql = "create table if not exists file(" +
                 "fileId VARCHAR(50) PRIMARY KEY, " +
@@ -109,6 +133,10 @@ public class DaoFactory {
         }
     }
 
+    /**
+     * create ins_file table
+     * @param sql2o instance of Sql2o class
+     */
     private static void createInsFileTable(Sql2o sql2o) {
         String sql = "CREATE TABLE IF NOT EXISTS ins_file(" +
                 "instructorId Integer," +
@@ -126,6 +154,10 @@ public class DaoFactory {
         }
     }
 
+    /**
+     * drop quiz table
+     * @param sql2o instance of Sql2o class
+     */
     private static void dropQuizTableIfExists(Sql2o sql2o) {
         String sql = "DROP TABLE IF EXISTS Quiz;";
 
@@ -137,6 +169,10 @@ public class DaoFactory {
         }
     }
 
+    /**
+     * drop instructor table
+     * @param sql2o instance of Sql2o class
+     */
     private static void dropInstructorTableIfExists(Sql2o sql2o) {
         String sql = "DROP TABLE IF EXISTS instructor;";
 
@@ -148,6 +184,10 @@ public class DaoFactory {
         }
     }
 
+    /**
+     * drop ins_file table
+     * @param sql2o instance of Sql2o class
+     */
     private static void dropInsFileTableIfExists(Sql2o sql2o) {
         String sql = "DROP TABLE IF EXISTS ins_file;";
 
@@ -159,6 +199,10 @@ public class DaoFactory {
         }
     }
 
+    /**
+     * drop file table
+     * @param sql2o instance of Sql2o class
+     */
     private static void dropFileTableIfExists(Sql2o sql2o) {
         String sql = "DROP TABLE IF EXISTS file;";
 
@@ -170,25 +214,32 @@ public class DaoFactory {
         }
     }
 
+    /**
+     * This method creates the file table and an instance of Sql2oFileDao and returns it
+     * @return dao for file table
+     */
     public static FileDao getFileDao() {
-//        instantiateSql2o();
         createFileTable(sql2o);
         return new Sql2oFileDao(sql2o);
     }
 
+    /**
+     * This method creates the instructor table and ins_file table
+     * and an instance of Sql2oInstructorDao and returns it
+     * @return dao for instructor table and ins_file table
+     */
     public static InstructorDao getInstructorDao() {
         createInstructorTable(sql2o);
         createInsFileTable(sql2o);
         return new Sql2oInstructorDao(sql2o);
     }
 
+    /**
+     * This method creates the quiz table and an instance of Sql2oQuizDao and returns it
+     * @return dao for quiz table
+     */
     public static QuizDao getQuizDao() {
         createQuizTable(sql2o);
         return new Sql2oQuizDao(sql2o);
     }
-
-    public static RecordDao getRecordDao() {
-        return new Sql2oRecordDao(sql2o);
-    }
-
 }
