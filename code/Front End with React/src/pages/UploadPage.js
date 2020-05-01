@@ -156,9 +156,10 @@ class MyUpload extends React.Component{
      */
     callSeparateQuestion =()=>{
         var data = separateQuestion(this.state.rawString, this.state.fileId);
-        console.log(data)
-        data = JSON.stringify(data)
-        localStorage.setItem("data",data)
+        console.log(data);
+        data.fileId = this.state.fileId;
+        data = JSON.stringify(data);
+        localStorage.setItem("data",data);
         this.setState({data : data});
         this.getMarpit();
     }

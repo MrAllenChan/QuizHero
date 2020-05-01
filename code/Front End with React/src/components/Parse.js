@@ -51,7 +51,6 @@ const separateQuestion = (rawString, fileId) => {
 
     var questions = parseQuiz(quizString, fileId);
     var data = {
-        fileId: fileId,
         quiz: questions,
         slidesString: slideString
     }

@@ -4,7 +4,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransitionGroup } from 'react-transition-group';
-import QuizStatictic from './QuizStatistic'
 import BackButton from './Button'
 
 /**

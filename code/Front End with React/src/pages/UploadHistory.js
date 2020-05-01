@@ -48,7 +48,7 @@ class UploadHistory extends React.Component {
         axios.get(BASE_URL + "/fetch",  {params})
             .then(res => {
                 console.log("AAA", res.data);
-                this.callSeparateQuestion(res.data);
+                this.callSeparateQuestion(res.data, fileId);
                 message.success(`File ${fileId} fetched successfully.`);
             })
             .catch((error) => {
@@ -56,9 +56,10 @@ class UploadHistory extends React.Component {
             })
     }
 
-    callSeparateQuestion =(rawString)=>{
+    callSeparateQuestion =(rawString, fileId)=>{
         var data = separateQuestion(rawString);
-        data = JSON.stringify(data)
+        data.fileId = fileId;
+        data = JSON.stringify(data);
         localStorage.setItem("data", data)
         this.jump();
     }

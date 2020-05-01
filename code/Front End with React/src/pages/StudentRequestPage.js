@@ -66,6 +66,7 @@ class StudentRequestPage extends Component{
 
     callSeparateQuestion =(rawString)=>{
         var data = separateQuestion(rawString);
+        data.fileId = this.state.fileId;
         data = JSON.stringify(data);
         localStorage.setItem("data", data);
         this.state.display_name = this.display_name();

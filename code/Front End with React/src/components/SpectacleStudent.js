@@ -84,7 +84,7 @@ class Slides extends React.Component{
                         <Heading>
                             <Button
                                 onClick={() => {this.toQuizCallback(count)}} style={buttonStyle}>
-                                <Icon /> Click to start quiz
+                                Click to start quiz
                             </Button>
                         </Heading>
 

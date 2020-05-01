@@ -3,9 +3,7 @@
  */
 
 import React from 'react';
-import { render } from 'react-dom';
-import { Upload, message, Button, Icon } from 'antd';
-import Slides from "./SpectaclePresenter";
+import { Button } from 'antd';
 
 /**
  * BackButton class is to render "Back to slides" button on quiz page
