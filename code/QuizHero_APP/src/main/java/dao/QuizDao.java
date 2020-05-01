@@ -5,6 +5,12 @@ import model.Record;
 
 import java.util.List;
 
+/**
+ * QuizDao interface defines methods related to the quiz table
+ * e.g. add a quiz, update quiz statistics, get quiz statistics
+ * @author Ziming Chen, Nanxi Ye, Chenghao Sun
+ * @version 1.0
+ */
 public interface QuizDao {
     /**
      * This method is used to add a quiz to the quiz table in database

@@ -1,9 +1,14 @@
 package dao;
 
 import model.File;
-
 import java.io.InputStream;
 
+/**
+ * FileDao interface defines methods related to the file table
+ * e.g. store file, get file, delete file, change quiz and file permission
+ * @author Ziming Chen, Nanxi Ye, Chenghao Sun
+ * @version 1.0
+ */
 public interface FileDao {
     /**
      * This method is used to get the file stream from the database

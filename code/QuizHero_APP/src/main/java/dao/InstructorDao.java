@@ -5,6 +5,12 @@ import model.Instructor;
 
 import java.util.List;
 
+/**
+ * InstructorDao interface defines methods related to the instructor table
+ * e.g. user login, user register, get files of a user
+ * @author Ziming Chen, Nanxi Ye, Chenghao Sun
+ * @version 1.0
+ */
 public interface InstructorDao {
     /**
      * This method is used to verify registered user information for given input

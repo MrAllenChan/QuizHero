@@ -10,8 +10,6 @@ public class Quiz {
     private int countB;
     private int countC;
     private int countD;
-//    private HashMap<Character, String> count;
-//    private HashMap<Character, String> statistics;
 
     public Quiz(String fileId, int questionId) {
         this.fileId = fileId;
@@ -26,12 +24,9 @@ public class Quiz {
         this.countB = countB;
         this.countC = countC;
         this.countD = countD;
-//        statistics = calPercentage();
     }
 
     public String getAnswer() {return answer;}
-
-    public String setAnswer() {return answer;}
 
     public int getCountA() {
         return countA;
@@ -56,20 +51,6 @@ public class Quiz {
     public int getQuestionId() {
         return questionId;
     }
-
-//    public void getCountMap() {
-//        count = new HashMap<>();
-//        DecimalFormat df = new DecimalFormat("0.00");
-//        float total = countA + countB + countC + countD;
-//        count.put('A', df.format(countA / total * 100) + "%");
-//        count.put('B', df.format(countB / total * 100) + "%");
-//        count.put('C', df.format(countC / total * 100) + "%");
-//        count.put('D', df.format(countD / total * 100) + "%");
-////        for (String val : count.values()) {
-////            System.out.println(val);
-////        }
-//
-//    }
 
     @Override
     public String toString() {

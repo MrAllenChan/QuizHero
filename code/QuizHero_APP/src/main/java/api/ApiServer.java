@@ -70,7 +70,7 @@ public final class ApiServer {
 
         // Handle exceptions
         app.exception(ApiError.class, (exception, ctx) -> {
-//            ApiError err = (ApiError) exception;
+            // ApiError err = (ApiError) exception;
             Map<String, Object> jsonMap = new HashMap<>();
             jsonMap.put("status", exception.getStatus());
             jsonMap.put("errorMessage", exception.getMessage());
@@ -125,7 +125,7 @@ public final class ApiServer {
     }
 
     /**
-     * This method is used to open the route to get the quiz statistics of
+     * This method is used to open the route for front-end to get the quiz statistics of
      * all the quizzes in a single file and send to the front-end
      * @param quizDao call quizDao to get data from quiz table
      */
@@ -150,9 +150,9 @@ public final class ApiServer {
     }
 
     /**
-     * This method is used to open the route to
-     * add a quiz question to the database
+     * This method is used to open the route for front-end to post a new quiz question
      * pass data to the Quiz class
+     * call quizDao to add a quiz question to the database
      * @param quizDao call quizDao to update quiz table
      */
     private static void postQuiz(QuizDao quizDao) {
@@ -171,9 +171,9 @@ public final class ApiServer {
     }
 
     /**
-     * This method is used to open the route to
-     * update the quiz table using a piece of incoming record
+     * This method is used to open the route for front-end to post a record of a quiz question
      * pass data to the Record class
+     * call quizDao to update the quiz table using the incoming record
      * @param quizDao call quizDao to update quiz table
      */
     private static void postRecords(QuizDao quizDao) {
@@ -193,7 +193,7 @@ public final class ApiServer {
 
     /**
      * This method is used to open the route for instructor to login
-     * also call instructorDao to check user identity
+     * call instructorDao to check user identity
      * if login successful, send status code 201
      * if wrong user information, send status code 403, request forbidden
      * @param instructorDao dao for instructor table
@@ -218,7 +218,7 @@ public final class ApiServer {
     }
 
     /**
-     * This method is used to open the route to register a new instructor
+     * This method is used to open the route for front-end to register a new instructor
      * pass data to the Instructor class
      * if register successful, send status code 201
      * if user already exists, send status code 403, request forbidden
