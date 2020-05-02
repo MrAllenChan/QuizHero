@@ -1,0 +1,255 @@
+{
+  "info": {
+    "_postman_id": "705531db-5dcc-4a86-b23e-54a8703ee22a",
+    "name": "HW03",
+    "description": "HTTP Requests for HW3: CourseReVU App",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "http://localhost:7000/courses",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:7000/courses",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "7000",
+          "path": [
+            "courses"
+          ]
+        },
+        "description": "Get all courses"
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:7000/courses",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"name\": \"Data Strucutres\",\n\t\"url\": \"jhu-ds.com\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:7000/courses",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "7000",
+          "path": [
+            "courses"
+          ],
+          "query": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ]
+        },
+        "description": "Add a course"
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:7000/courses",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"name\": null,\n\t\"url\": null\n}"
+        },
+        "url": {
+          "raw": "http://localhost:7000/courses",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "7000",
+          "path": [
+            "courses"
+          ]
+        },
+        "description": "Add course with null name"
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:7000/courses/2/reviews",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:7000/courses/2/reviews",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "7000",
+          "path": [
+            "courses",
+            "2",
+            "reviews"
+          ]
+        },
+        "description": "Get all reviewes for a course"
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:7000/courses/42/reviews",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:7000/courses/42/reviews",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "7000",
+          "path": [
+            "courses",
+            "42",
+            "reviews"
+          ]
+        },
+        "description": "Get reviews for a course that does not exist!"
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:7000/courses/3/reviews",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"rating\": 5,\n\t\"comment\": \"added this through postman\",\n\t\"courseId\": 3\n}"
+        },
+        "url": {
+          "raw": "http://localhost:7000/courses/3/reviews",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "7000",
+          "path": [
+            "courses",
+            "3",
+            "reviews"
+          ]
+        },
+        "description": "Add a review to a course."
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:7000/courses/2/reviewsWrongId",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"rating\": 5,\n\t\"comment\": \"postman: this must not go through\",\n\t\"courseId\": 200\n}"
+        },
+        "url": {
+          "raw": "http://localhost:7000/courses/2/reviews",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "7000",
+          "path": [
+            "courses",
+            "2",
+            "reviews"
+          ]
+        },
+        "description": "Add a review for a course"
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:7000/courses/42/reviews",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"rating\": 5,\n\t\"comment\": \"postman: this must not go through\",\n\t\"courseId\": 42\n}"
+        },
+        "url": {
+          "raw": "http://localhost:7000/courses/42/reviews",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "7000",
+          "path": [
+            "courses",
+            "42",
+            "reviews"
+          ]
+        },
+        "description": "Add review to a course that does not exist!"
+      },
+      "response": []
+    }
+  ],
+  "protocolProfileBehavior": {}
+}
