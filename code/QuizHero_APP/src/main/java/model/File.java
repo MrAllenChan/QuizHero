@@ -6,21 +6,21 @@ import java.util.UUID;
 
 
 /**
- * File class is used to manage the attributes of the file objects including
- * file id, file name, file permission, quiz permission , file content and
+ * File class is the data model of a File. Each object of File class
+ * stores the relevant data of a single file, such as file id, file name
+ * file permission, quiz permission, file content and
  * the corresponding instructor id who owns the file.
  *
  * @author Ziming Chen, Nanxi Ye, Chenghao Sun
  * @version 1.0
  */
 public class File {
-    private int instructorId;
-    private String fileId;
-    private String fileName;
-    private Boolean filePermission; // permission control of access to entire file
-    private Boolean quizPermission; // permission control of access to all quizzes in a file
-    private InputStream fileContent;
-
+    private int instructorId; // id of the instructor who uploads the file
+    private String fileId; // unique file id of the file
+    private String fileName; // name of the file
+    private Boolean filePermission; // permission control of access to viewing the file
+    private Boolean quizPermission; // permission control of access to all quizzes in the file
+    private InputStream fileContent; // byte stream of the file content
 
     /**
      * This method is the constructor of the class
@@ -59,7 +59,7 @@ public class File {
 
     /**
      * This method is used to generated the UUID of the file
-     * to be used as file id
+     * @return unique file id
      */
     private String generateUniqueFileId() {
         return UUID.randomUUID().toString();
@@ -67,7 +67,7 @@ public class File {
 
     /**
      * This method is used to get the private variable value
-     * named instructorId
+     * @return named instructorId
      */
     public Integer getInstructorId() {
         return instructorId;
@@ -75,7 +75,7 @@ public class File {
 
     /**
      * This method is used to get the private variable value
-     * named fileId
+     * @return named fileId
      */
     public String getFileId() {
         return fileId;
@@ -83,7 +83,7 @@ public class File {
 
     /**
      * This method is used to get the private variable value
-     * named fileName
+     * @return named fileName
      */
     public String getFileName() {
         return fileName;
@@ -91,7 +91,7 @@ public class File {
 
     /**
      * This method is used to get the private variable value
-     * named filePermission
+     * @return named filePermission
      */
     public Boolean getFilePermission() {
         return filePermission;
@@ -99,7 +99,7 @@ public class File {
 
     /**
      * This method is used to get the private variable value
-     * named quizPermission
+     * @return named quizPermission
      */
     public Boolean getQuizPermission() {
         return quizPermission;
@@ -107,7 +107,7 @@ public class File {
 
     /**
      * This method is used to get the private variable value
-     * named fileContent
+     * @return named fileContent
      */
     public InputStream getFileContent() {
         return fileContent;
