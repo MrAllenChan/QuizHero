@@ -1,18 +1,11 @@
-import Axios from "axios";
-import {BASE_URL} from "../../config/config"
-
-
+/**
+ * Define standard login actions
+ * @type {string}
+ */
 
 export const ADD_USERNAME = "ADD_USERNAME";
 
-
 export const userLoginAction = (username, instructorId) => {
-
-
-    let userInfo = {
-        // username:username,
-        // instructionId:instructionId
-    }
 
     return {
         type: ADD_USERNAME,

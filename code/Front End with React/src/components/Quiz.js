@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransitionGroup } from 'react-transition-group';
-import Question from '../components/Question';
-import QuestionCount from '../components/QuestionCount';
-import AnswerOption from '../components/AnswerOption';
+import Question from './quiz_components/Question';
+import QuestionCount from './quiz_components/QuestionCount';
+import AnswerOption from './quiz_components/AnswerOption';
 
 /**
  * The Quiz function is to render each question including number of question, problem and answer options.

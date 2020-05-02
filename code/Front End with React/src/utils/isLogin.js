@@ -1,3 +1,8 @@
+/**
+ * return login status
+ * @returns {boolean}
+ */
+
 export const isLogin = () => {
     let isLogin = localStorage.getItem("isLogin")
     if (isLogin === "1") {

@@ -5,7 +5,7 @@ import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import axios from 'axios'
 import {Button} from 'antd'
-import {BASE_URL} from "../config/config"
+import {BASE_URL} from "../../config/config"
 
 /**
  * The class QuizStatistic is to get quiz statistic data and render the data as chart.
