@@ -1,3 +1,7 @@
+/**
+ * StudentRequestPage is used for student to input shared code and go to corresponding presentation.
+ */
+
 import React, { Component } from "react";
 import {Input, Button, message} from "antd";
 import {Link} from "react-router-dom"
@@ -5,7 +9,7 @@ import logo from "../fig/logo.png";
 import axios from "axios";
 import {BASE_URL} from "../config/config";
 import separateQuestion from "../components/Parse";
-const {Search} = Input;
+const { Search } = Input;
 
 class StudentRequestPage extends Component{
     constructor(props) {
@@ -104,7 +108,10 @@ class StudentRequestPage extends Component{
             })
         }
     };
-    
+
+    /**
+     * return rendered StudentRequestPage. Use <Search/> from "antd" as the search bar.
+     */
     render() {
         return (
             <div className="App">

@@ -1,3 +1,8 @@
+/**
+ * The UploadHistory is the history page for the login user (presenter), where the user can open the previous presentation,
+ * download raw Markdown file and static HTML file, delete the presentation from the database and control the sharing permission.
+ */
+
 import React from 'react';
 import 'antd/dist/antd.css';
 import '../App.css'
@@ -8,12 +13,8 @@ import {BASE_URL} from "../config/config";
 import separateQuestion from "../components/Parse";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import marpitConvert from "../components/Marpit";
-const {Header} = Layout;
+const { Header } = Layout;
 
-/**
- * The UploadHistory is the history page for the login user (presenter), where the user can open the previous presentation,
- * download raw Markdown file and static HTML file, delete the presentation from the database and control the sharing permission.
- */
 
 class UploadHistory extends React.Component {
     state = {
@@ -190,6 +191,9 @@ class UploadHistory extends React.Component {
         window.location = "/login"
     }
 
+    /**
+     * return rendered UploadHistory page. Use <List.Item/> to show the list of uploaded files.
+     */
     render() {
         const { fileList } = this.state;
 

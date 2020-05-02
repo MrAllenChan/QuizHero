@@ -1,3 +1,7 @@
+/**
+ * UploadPage renders the page where the presenter can upload his/her markdown file.
+ */
+
 import { Upload, message, Button, Icon, Layout, Menu} from 'antd';
 import React from "react";
 import marpitConvert from '../components/Marpit'
@@ -7,12 +11,7 @@ import {BASE_URL} from "../config/config"
 import {Link} from "react-router-dom"
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import logo from "../fig/logo.png"
-
-/**
- * UploadPage renders the page where the presenter can upload his/her markdown file.
- */
-
-const { Header, Content, Footer } = Layout;
+const { Header } = Layout;
 const props = {
     name: 'file',
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
@@ -246,8 +245,9 @@ class MyUpload extends React.Component{
         window.location = "/login"
     }
 
-
-
+    /**
+     * return rendered UploadPage
+     */
     render(){
         const username = localStorage.getItem("username")?localStorage.getItem("username"):"";
 

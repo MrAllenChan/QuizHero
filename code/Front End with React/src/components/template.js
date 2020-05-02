@@ -1,3 +1,8 @@
+/**
+ * This is a template for user to download on the First page
+ * @type {string}
+ */
+
 const template = `# QuizHero Demonstration
 
 See our GitHub repository:

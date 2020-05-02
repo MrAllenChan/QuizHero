@@ -1,5 +1,5 @@
 /**
- * Using Marpit component to render slides
+ * Using Marpit component to render static HTML slides for download
  */
 
 import Marpit from "@marp-team/marpit";
@@ -7,7 +7,6 @@ import Marpit from "@marp-team/marpit";
 /**
  * marpitConvert create new marpit variable, get data and add theme to it.
  */
-
 const marpitConvert=(rawString)=> {
     // this.setState({
     //     rawString : result
