@@ -1,7 +1,11 @@
-// src/router/router.js
+/**
+ * AppRouter route the application between different pages.
+ * It is a combination of PublicRouter (do not require login) and PrivateRouter (require login)
+ */
+
 import React, { Component } from "react";
 import { createBrowserHistory } from "history";
-import { Switch, Route, Redirec, Router } from "react-router-dom";
+import { Switch, Router } from "react-router-dom";
 import FirstPage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";

@@ -1,5 +1,8 @@
-import { ADD_USERNAME } from "../actions/loginActions";
+/**
+ * login
+ */
 
+import { ADD_USERNAME } from "../actions/loginActions";
 
 const initialState = {
     username: null,
