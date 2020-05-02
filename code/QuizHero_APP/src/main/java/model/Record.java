@@ -2,6 +2,15 @@ package model;
 
 import java.util.Objects;
 
+
+/**
+ * Record class is used to manage the attributes of the record objects including the
+ * correct answer to the corresponding question id, the question id and the id of the
+ * file that contains the question.
+ *
+ * @author Ziming Chen, Nanxi Ye, Chenghao Sun
+ * @version 1.0
+ */
 public class Record {
 
     private String fileId;

@@ -1,7 +1,14 @@
 package model;
 import java.util.Objects;
 
-// A Quiz object corresponds to a single question in a file
+/**
+ * Quiz class is used to manage the attributes of the quiz objects which corresponds
+ * to a single question in a file, including the question id, the answer to the question,
+ * the count of each answer option A, B, C and D and also the corresponding file id.
+ *
+ * @author Ziming Chen, Nanxi Ye, Chenghao Sun
+ * @version 1.0
+ */
 public class Quiz {
     private String fileId;
     private int questionId;
