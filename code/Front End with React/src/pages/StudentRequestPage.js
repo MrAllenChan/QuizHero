@@ -1,3 +1,7 @@
+/**
+ * StudentRequestPage is used for student to input shared code and go to corresponding presentation.
+ */
+
 import React, { Component } from "react";
 import {Input, Button, message} from "antd";
 import {Link} from "react-router-dom"
@@ -5,8 +9,7 @@ import logo from "../fig/logo.png";
 import axios from "axios";
 import {BASE_URL} from "../config/config";
 import separateQuestion from "../components/Parse";
-
-const {Search} = Input;
+const { Search } = Input;
 
 class StudentRequestPage extends Component{
     constructor(props) {
@@ -19,7 +22,11 @@ class StudentRequestPage extends Component{
         }
     }
 
-    onSearch = (value, event) => {
+    /**
+     * Search the input shared code. If the presenter release the permission, go and call fetchFile(); else alert error.
+     * @param value
+     */
+    onSearch = (value) => {
         this.setState({
             display_name : 'none'
         })
@@ -36,7 +43,6 @@ class StudentRequestPage extends Component{
                     permission : res.data,
                     MarkDownFile : ""
                 }, this.fetchFile);
-                // alert(`File ${value} found.`)
             })
             .catch((error) => {
                 alert("File doesn't exist!")
@@ -44,6 +50,9 @@ class StudentRequestPage extends Component{
 
     }
 
+    /**
+     * fetchFile from the back end and callSeparateQuestion(rawString) to prepare for the presentation.
+     */
     fetchFile =()=> {
         let params = {
             fileId: this.state.fileId
@@ -64,6 +73,18 @@ class StudentRequestPage extends Component{
         }
     }
 
+    /**
+     * callSeparateQuestion(rawString) is a helper function to call separateQuestion from Parse.js
+     * separateQuestion(rawString) will parse the raw string to a JSON parameter which contains quizzes and slides.
+     * data = {
+     *     fileId : fileId,
+     *     quiz : [],
+     *     slidesString : []
+     * }
+     * which will be set to localStorage in browser, which will be used in PresenterPage.js
+     * @param rawString
+     * @param fileId
+     */
     callSeparateQuestion =(rawString)=>{
         var data = separateQuestion(rawString);
         data.fileId = this.state.fileId;
@@ -72,6 +93,10 @@ class StudentRequestPage extends Component{
         this.state.display_name = this.display_name();
     }
 
+    /**
+     * Show or hide the button depending on whether student has the permission of opening the presentation.
+     * @param status
+     */
     display_name () {
         if (this.state.display_name === 'none') {
             this.setState({
@@ -83,7 +108,10 @@ class StudentRequestPage extends Component{
             })
         }
     };
-    
+
+    /**
+     * return rendered StudentRequestPage. Use <Search/> from "antd" as the search bar.
+     */
     render() {
         return (
             <div className="App">

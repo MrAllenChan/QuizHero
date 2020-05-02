@@ -2,9 +2,10 @@ package model;
 import java.util.Objects;
 
 /**
- * Quiz class is used to manage the attributes of the quiz objects which corresponds
- * to a single question in a file, including the question id, the answer to the question,
- * the count of each answer option A, B, C and D and also the corresponding file id.
+ * Quiz class is the data model of a Quiz. Each object of a Quiz class
+ * corresponds to a single question and stores relevant data of a quiz question in a file,
+ * including the corresponding file id. question id, the answer to the question,
+ * and the count of each option A, B, C and D.
  *
  * @author Ziming Chen, Nanxi Ye, Chenghao Sun
  * @version 1.0
@@ -52,19 +53,13 @@ public class Quiz {
 
     /**
      * This method is used to get the value of private variable
-     * named answer
+     * @return named answer
      */
     public String getAnswer() {return answer;}
 
     /**
-     * This method is used to set the value of private variable
-     * named answer
-     */
-    public String setAnswer() {return answer;}
-
-    /**
      * This method is used to get the value of private variable
-     * named countA
+     * @return named countA
      */
     public int getCountA() {
         return countA;
@@ -72,7 +67,7 @@ public class Quiz {
 
     /**
      * This method is used to get the value of private variable
-     * named countB
+     * @return named countB
      */
     public int getCountB() {
         return countB;
@@ -80,7 +75,7 @@ public class Quiz {
 
     /**
      * This method is used to get the value of private variable
-     * named countC
+     * @return named countC
      */
     public int getCountC() {
         return countC;
@@ -88,7 +83,7 @@ public class Quiz {
 
     /**
      * This method is used to get the value of private variable
-     * named countD
+     * @return named countD
      */
     public int getCountD() {
         return countD;
@@ -96,7 +91,7 @@ public class Quiz {
 
     /**
      * This method is used to get the value of private variable
-     * named fileId
+     * @return named fileId
      */
     public String getFileId() {
         return fileId;
@@ -104,7 +99,7 @@ public class Quiz {
 
     /**
      * This method is used to get the value of private variable
-     * named questionId
+     * @return named questionId
      */
     public int getQuestionId() {
         return questionId;

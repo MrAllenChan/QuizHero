@@ -11,7 +11,6 @@ import {BASE_URL} from "../config/config";
  * @param fileId
  * @returns {{quiz: any[], slidesString: any[], fileId: *}}
  */
-
 const separateQuestion = (rawString, fileId) => {
 
     var slides = new Array(100);
@@ -65,7 +64,6 @@ const separateQuestion = (rawString, fileId) => {
  * @param fileId
  * @returns {any[]}
  */
-
 const parseQuiz = (quizString, fileId) => {
 
     var length = quizString.length;
