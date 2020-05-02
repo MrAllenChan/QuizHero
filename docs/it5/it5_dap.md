@@ -92,6 +92,5 @@
 # Final Retrospective
 > It is similar to iteration retrospective but you look back over the entire five iterations. In particular, revisit your original project proposal, note on what has changes, what features you have/have not delivered. Briefly note the challenges you had. And, finally, reflect on how you would do it again if you could go back in time and start at iteration 1. You don't need a time machine to achieve this. The next software project you develop, you will start at iteration 1, and I am sure it will be a great one.
 
-- Please redirect to docs/Final_retrospective.md for our final retrospective.
-[link to final retrospective](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/Final_Retrospective.md)
+- Please redirect to docs/Final_Retrospective.md to view our [final retrospective.](https://github.com/jhu-oose/2020-spring-group-QuizHero/blob/master/docs/Final_Retrospective.md)
 
