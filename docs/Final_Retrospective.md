@@ -23,6 +23,10 @@ There are 2 nice-to-have features we have not delivered or decided not to delive
     * This feature is more complicated than we initially anticipated. Also, we have already delivered so many essential features within such a limited time, and we decide to focus on perfecting what we have achieved.
 
 #### 3. What have changed
+Besides the some minor wording changes in order to describe the requirment more precisely, we break down one of the nice-to-have as we actually looked into and developed it.
+* The orginal nice-to-have "As an instructor, I want to set a limitation of the slides, so that students cannot view the slides I haven’t presented." was carefully reconsidered (thanks to Julia's advice). We decided to break down this nice-to-have into two parts, so that the instructor can have better control of the entire flow.
+   * As an instructor, I want to control the permission of opening the files I upload, so that I can prompt my students to view the slides at the right time.
+   * As an instructor, I want to control the permission of starting quiz inside the slides, so that I can prompt my students to answer the quiz at the right time.
 
 ### Recall the Whole Development Process 
 
@@ -33,23 +37,28 @@ However, "The beginning is always the hardest". As we conquered those problems o
 Here we list some major challenges we met, and how we finally overcame them.
 
 1. We met difficulties when we tried to connect our frontend with backend. We solved it by adding static build files built from React project to Javalin resources/public folder. Later when we deploy the application, we push the entire project including build files of front-end to Heroku.
-2. quiz tags/marks & parsing algorithm
-3. Develop separate student page for students to access the slides and quizzes from open Internet
+2. quiz tags/marks & parsing algorithm. We solved this problem by dividing slides and quizzes into two part first. Then we substituted quizzes by a certain symbol in the slides so that we can add quizzes in the correct place of the slides. Finally we parsed each quiz so that we obtained questions and answers for each quiz.
+3. Develop separate student page for students to access the slides and quizzes from open Internet. We developed this feature by saving a copy of file when presenter uploaded it to the server. After the file has been stored successfully, the presenter can get a code which can be shared to students so that their browser can fetch file from database and render a different version on it.
 4. How to store the files. Previously, we wrote a series of methods to store files locally and the logic works all well when we tested the server at localhost. However, during deployment process we found that the Heroku file system is ephemeral, and we cannot upload markdown files and save them in the file system of the server. Hence, we have to completely abandon the previous logic. Finally, we decided to store the content of markdown files as byte stream in the PostgreSQL database, in which way we were able to store files in a persistent way and successfully fetch them.
 5. Login feature requires much more refactoring of code than we anticipated. We have to redesign and refine API, DAOs and Model on back-end a lot for processing and storing login information as well as managing user-file information in database.
 
 ### If We could Go Back?
+As we said above, there were many difficulties when we at the beginning of our project. So if we could go back to the very start of this project, we would make some improvements:
+
+* Do sufficient research to collect information we need. We developed front-end and back-end in different frameworks -- Spark and React, which are not easy to be combined at the beginning. Later we had to change to Javalin as our back-end framework so that both parts can work together. It wasted lots of works and time. This will not happen in the next project!
+* We didn't use some feature in GitHub, for example, branches until instructors asked to do so. All the team members worked in the master branch so we can easily conflict with each other in the repository. After using branches, we worked on our own branches and merged with master branch if needed, which makes the development more smoothly.
 
 ### Looking Ahead
 Besides the remaining 2 nice-to-haves that we could implement, we think there are many other cool features that can be implemented to make this application a more powerful education tool:
 
 * Currently the style of presentation slides is preset in our code. In future, we could open the styling design to users for customization. This could be achieved by allowing users to upload their own CSS files.
 * Another feature would be online editing/realtime rendering. If the user were able to edit Markdown online and to have a separate window showing how it looks like in real time after converting markdown to slides, it would provide a better user experience, especially for those who don't have much experience in Markdown writing.
+* Currently, if the presenter wants to edit an existing presentation, he/she can only upload a new one (optionally delete the old one). Version control would be a very useful feature that allows the presenter to make modifications on an existing presentation file, as well as go back to the older version.
 * For the quiz design, currently we limit the format of quiz to be MCQ with 4 questions at most. In the future, we plan to extend the format of quiz such as allowing instructors to write essay questions or MCQ with multiple answers.
 * The design of quiz in our application is more for interactions between students and instructors than actual grading. If instructors want their quizzes closer to the format of an actual exam, some encryption processes and more strict access to files will be needed.
 
 ### To Our Advisor
-Julia really helps us a lot through the entire 5 iterations. She always provides her best insights and suggestions on our project, from drawing up a blue print to developing the application as well as improving the user experience. Sometimes we felt that she was a bit strict, but it turns out she pushes the best of us and we wouldn't have accomplished all of these without her support and high expectation for us.
+Julia really helps us a lot through the entire 5 iterations. She always provides her best insights and suggestions on our project, from drawing up a blueprint to developing the application as well as improving the user experience. Sometimes we felt that she was a bit strict, but it turns out she pushes the best of us and we wouldn't have accomplished all of these without her support and high expectation for us.
 
 She has always been very responsive to our questions and emails. We really appreciate her time and effort for this semester, especially under the circumstance of remote teaching. Thank you so much Julia!
 

@@ -102,7 +102,7 @@
 						},
 						{
 							"key": "userId",
-							"value": "4",
+							"value": "2",
 							"type": "text"
 						}
 					],
@@ -121,13 +121,6 @@
 					"port": "7000",
 					"path": [
 						"upload"
-					],
-					"query": [
-						{
-							"key": "file",
-							"value": null,
-							"disabled": true
-						}
 					]
 				}
 			},
@@ -146,7 +139,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"fileId\": 3099,\n\t\"questionId\": 2,\n\t\"answer\": \"D\",\n\t\"countA\": 0,\n\t\"countB\": 0,\n\t\"countC\": 0,\n\t\"countD\": 0\n}"
+					"raw": "{\n\t\"fileId\": \"de5f1eca-36a6-412e-8839-4b2f6230f483\",\n\t\"questionId\": 1,\n\t\"answer\": \"B\",\n\t\"countA\": 0,\n\t\"countB\": 0,\n\t\"countC\": 0,\n\t\"countD\": 0\n}"
 				},
 				"url": {
 					"raw": "http://localhost:7000/quiz",
@@ -175,7 +168,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"fileId\": 3099,\n\t\"questionId\": 2,\n\t\"choice\": \"C\"\n}"
+					"raw": "{\n\t\"fileId\": \"de5f1eca-36a6-412e-8839-4b2f6230f483\",\n\t\"questionId\": 1,\n\t\"choice\": \"A\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:7000/record",
@@ -203,7 +196,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:7000/quizstat?fileId=3099",
+					"raw": "http://localhost:7000/quizstat?fileId=de5f1eca-36a6-412e-8839-4b2f6230f483",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -215,7 +208,7 @@
 					"query": [
 						{
 							"key": "fileId",
-							"value": "3099"
+							"value": "de5f1eca-36a6-412e-8839-4b2f6230f483"
 						}
 					]
 				}
@@ -234,7 +227,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:7000/fetch?fileId=3099",
+					"raw": "http://localhost:7000/fetch?fileId=ed752b9a-e98f-4461-a283-125a7b9e3a9d",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -246,7 +239,7 @@
 					"query": [
 						{
 							"key": "fileId",
-							"value": "3099"
+							"value": "ed752b9a-e98f-4461-a283-125a7b9e3a9d"
 						}
 					]
 				},
@@ -271,7 +264,7 @@
 					"formdata": [
 						{
 							"key": "fileId",
-							"value": "3099",
+							"value": "ed752b9a-e98f-4461-a283-125a7b9e3a9d",
 							"type": "text"
 						},
 						{
@@ -313,7 +306,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:7000/filepermission?fileId=3099",
+					"raw": "http://localhost:7000/filepermission?fileId=ed752b9a-e98f-4461-a283-125a7b9e3a9d",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -325,7 +318,7 @@
 					"query": [
 						{
 							"key": "fileId",
-							"value": "3099"
+							"value": "ed752b9a-e98f-4461-a283-125a7b9e3a9d"
 						}
 					]
 				}
@@ -349,7 +342,7 @@
 					"formdata": [
 						{
 							"key": "fileId",
-							"value": "3099",
+							"value": "ed752b9a-e98f-4461-a283-125a7b9e3a9d",
 							"type": "text"
 						},
 						{
@@ -391,7 +384,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:7000/quizpermission?fileId=3099",
+					"raw": "http://localhost:7000/quizpermission?fileId=ed752b9a-e98f-4461-a283-125a7b9e3a9d",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -403,7 +396,92 @@
 					"query": [
 						{
 							"key": "fileId",
-							"value": "3099"
+							"value": "ed752b9a-e98f-4461-a283-125a7b9e3a9d"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:7000/deletefile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fileId",
+							"value": "bbcce371-7d09-4b06-8332-bfb8c37a8669",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/deletefile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"deletefile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:7000/history",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/history?instructorId=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"history"
+					],
+					"query": [
+						{
+							"key": "instructorId",
+							"value": "2"
 						}
 					]
 				}
