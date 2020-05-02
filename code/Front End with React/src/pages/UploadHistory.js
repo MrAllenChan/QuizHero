@@ -1,7 +1,6 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import '../App.css'
-// import '../utils/index.css';
 import {Link} from "react-router-dom";
 import {List, Button, Menu, Layout, message} from 'antd';
 import axios from "axios";
@@ -11,6 +10,10 @@ import {CopyToClipboard} from "react-copy-to-clipboard";
 import marpitConvert from "../components/Marpit";
 const {Header} = Layout;
 
+/**
+ * The UploadHistory is the history page for the login user (presenter), where the user can open the previous presentation,
+ * download raw Markdown file and static HTML file, delete the presentation from the database and control the sharing permission.
+ */
 
 class UploadHistory extends React.Component {
     state = {
@@ -19,6 +22,10 @@ class UploadHistory extends React.Component {
         fileId : ""
     };
 
+    /**
+     * componentDidMount() is the function mounted whenever this page is loaded (refreshed).
+     * componentDidMount() request all the history files by sending the instructorId to back end.
+     */
     componentDidMount() {
         let params = {
             instructorId : localStorage.getItem("instructorId")
@@ -40,7 +47,12 @@ class UploadHistory extends React.Component {
             });
     }
 
-    fetchFile =(fileId)=> {
+    /**
+     * presenterMode(fileId) is the function used to open the presenter mode from the history page.
+     * @param fileId
+     * presenterMode(fileId) fetch the file with fileId and pass the rawSting to callSeparateQuestion(rawString, fileId).
+     */
+    presenterMode =(fileId)=> {
         let params = {
             fileId: fileId
         }
@@ -56,6 +68,18 @@ class UploadHistory extends React.Component {
             })
     }
 
+    /**
+     * callSeparateQuestion(rawString, fileId) is a helper function to call separateQuestion from Parse.js
+     * separateQuestion(rawString) will parse the raw string to a JSON parameter which contains quizzes and slides.
+     * data = {
+     *     fileId : fileId,
+     *     quiz : [],
+     *     slidesString : []
+     * }
+     * which will be set to localStorage in browser, which will be used in PresenterPage.js
+     * @param rawString
+     * @param fileId
+     */
     callSeparateQuestion =(rawString, fileId)=>{
         var data = separateQuestion(rawString);
         data.fileId = fileId;
@@ -64,11 +88,18 @@ class UploadHistory extends React.Component {
         this.jump();
     }
 
+    /**
+     * jump() is a function to help jump to a new tab '/presenter'
+     */
     jump =()=> {
         console.log('jump')
         window.open('/presenter');
     }
 
+    /**
+     * startSharing(fileId) is a function for presenter to open the sharing permission.
+     * @param fileId
+     */
     startSharing=(fileId)=>{
         const formData = new FormData();
         formData.append('fileId', fileId);
@@ -78,6 +109,10 @@ class UploadHistory extends React.Component {
             .catch((error)=> message.error(error));
     }
 
+    /**
+     * stopSharing(fileId) is a function for presenter to stop sharing.
+     * @param fileId
+     */
     stopSharing=(fileId)=>{
         const formData = new FormData();
         formData.append('fileId', fileId);
@@ -87,6 +122,13 @@ class UploadHistory extends React.Component {
             .catch((error)=> message.error(error));
     }
 
+    /**
+     * onDownload(fileId, fileName, fileType) is used to handle download request, both raw Markdown file and static HTML file.
+     * It is decided by the last parameter fileType.
+     * @param fileId
+     * @param fileName
+     * @param fileType
+     */
     onDownload = (fileId, fileName, fileType) => {
         function fakeClick(obj) {
             var ev = document.createEvent("MouseEvents");
@@ -119,6 +161,11 @@ class UploadHistory extends React.Component {
             })
     }
 
+    /**
+     * delete(fileId) is used to delete the corresponding file from the database.
+     * Note: componentDidMount() is called to refresh the page.
+     * @param fileId
+     */
     deleteFile =(fileId)=> {
         const formData = new FormData();
         formData.append('fileId', fileId);
@@ -132,6 +179,9 @@ class UploadHistory extends React.Component {
             }))
     }
 
+    /**
+     * Clear localStorage in browser when logout.
+     */
     handleLogOut(){
         localStorage.setItem("username",null)
         localStorage.setItem("instructorId",0)
@@ -188,12 +238,15 @@ class UploadHistory extends React.Component {
                                           Delete
                                       </Button>,
                                       <Button size={"small"}
-                                              onClick={() => this.fetchFile(item.fileId)}>
+                                              onClick={() => this.presenterMode(item.fileId)}>
                                           Presenter Mode
                                       </Button>,
+                                      /**
+                                       * This is another way to write the function of jump to a new tab {pathname: '/presenter'}
+                                       */
                                       // <Link to={{pathname: '/presenter'}} target = '_blank'>
                                       //     <Button size={"small"} style={{marginLeft: 10}}
-                                      //             onClick={() => this.fetchFile(item.fileId)}>
+                                      //             onClick={() => this.presenterMode(item.fileId)}>
                                       //         <Icon/>Presenter Mode
                                       //     </Button>
                                       // </Link>,
