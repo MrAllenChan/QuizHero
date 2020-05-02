@@ -4,6 +4,7 @@ import exception.DaoException;
 import model.File;
 import model.Instructor;
 import org.apache.commons.io.IOUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.sql2o.Sql2oException;
@@ -35,6 +36,11 @@ public class FileDaoTest {
         Instructor jSmith = new Instructor("John Smith", "jsmith@jhu.edu", "jsmith");
         instructorDao.registerUser(jSmith);
         instructorId = jSmith.getInstructorId();
+    }
+
+    @After
+    public void clearTable() {
+        DaoFactory.clearDatabase();
     }
 
     @Test

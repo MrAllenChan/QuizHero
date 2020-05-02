@@ -53,6 +53,7 @@ public class ApiServerTest {
     // stop server
     @AfterClass
     public static void afterClass() {
+        DaoFactory.clearDatabase();
         ApiServer.stop();
     }
 

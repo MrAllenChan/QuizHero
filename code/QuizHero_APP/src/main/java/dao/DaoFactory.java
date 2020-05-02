@@ -25,7 +25,7 @@ public final class DaoFactory {
     /**
      * Drop all the tables in the database.
      */
-    private static void clearDatabase(){
+    public static void clearDatabase(){
         dropInsFileTableIfExists(sql2o);
         dropQuizTableIfExists(sql2o);
         dropInstructorTableIfExists(sql2o);

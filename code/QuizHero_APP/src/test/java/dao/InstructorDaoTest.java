@@ -4,6 +4,7 @@ import exception.LoginException;
 import exception.RegisterException;
 import model.File;
 import model.Instructor;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,6 +29,11 @@ public class InstructorDaoTest {
         fileDao = DaoFactory.getFileDao();
         instructorDao = DaoFactory.getInstructorDao();
         quizDao = DaoFactory.getQuizDao();
+    }
+
+    @After
+    public void clearTable() {
+        DaoFactory.clearDatabase();
     }
 
     @Test
