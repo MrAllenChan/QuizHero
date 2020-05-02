@@ -4,8 +4,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransitionGroup } from 'react-transition-group';
-import QuizStatictic from './QuizStatistic'
-import BackButton from './Button'
+import QuizStatictic from './quiz_components/QuizStatistic'
+import BackButton from './quiz_components/Button'
 
 /**
  * The function ResultPresenter is to render statistic data and back button
@@ -26,7 +26,6 @@ function ResultPresenter(props) {
                 transitionAppearTimeout={500}
             >
             <div>
-                {/* Thank you for taking the quiz, your score is <strong>{props.quizResult}</strong>! */}
                 Thank you for finishing the quiz, here are the statistics:
             </div>
             </CSSTransitionGroup>

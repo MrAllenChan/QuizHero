@@ -1,3 +1,7 @@
+/**
+ * UploadPage renders the page where the presenter can upload his/her markdown file.
+ */
+
 import { Upload, message, Button, Icon, Layout, Menu} from 'antd';
 import React from "react";
 import marpitConvert from '../components/Marpit'
@@ -7,12 +11,7 @@ import {BASE_URL} from "../config/config"
 import {Link} from "react-router-dom"
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import logo from "../fig/logo.png"
-
-/**
- * UploadPage renders the page where the presenter can upload his/her markdown file.
- */
-
-const { Header, Content, Footer } = Layout;
+const { Header } = Layout;
 const props = {
     name: 'file',
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
@@ -35,6 +34,11 @@ class MyUpload extends React.Component{
         display_name:'none'
     }
 
+    /**
+     * Catch the uploaded file and handle multiple uploads error.
+     * @param file
+     * @returns {boolean}
+     */
     beforeUpload = (file) => {
         if (this.state.file === ""){
             console.log("FILEEE",file);
@@ -47,6 +51,11 @@ class MyUpload extends React.Component{
         }
     }
 
+    /**
+     * Handle different upload status.
+     * Mainly used to initiate 1. sendFile 2. ReadFile 3. callSeparateQuestion if upload status is "done".
+     * @param info
+     */
     onChange = (info) => {
         if (info.file.status !== 'uploading') {
             console.log(info.file, info.fileList);
@@ -74,6 +83,9 @@ class MyUpload extends React.Component{
         }
     }
 
+    /**
+     * Remove the previously uploaded file to upload a new file.
+     */
     onRemove = () => {
         this.setState({
             file: ""
@@ -82,7 +94,11 @@ class MyUpload extends React.Component{
     }
 
     /**
-     * download raw file or HTML file after uploaded.
+     * onDownload(fileType) is used to handle download request, both raw Markdown file and static HTML file.
+     * It is decided by fileType.
+     * @param fileId
+     * @param fileName
+     * @param fileType
      */
     onDownload = (fileType) => {
         function fakeClick(obj) {
@@ -133,7 +149,6 @@ class MyUpload extends React.Component{
      * This is a function that read the uploaded file into a string.
      * @returns {Promise<unknown>}
      */
-
     readFile=()=>{
         var file = this.state.file;
         var p = new Promise((resolve, reject) => {
@@ -152,7 +167,16 @@ class MyUpload extends React.Component{
     }
 
     /**
-     * CallSeparateQuestion is the function that parse the raw string to a JSON parameter which contains quizzes and slides.
+     * callSeparateQuestion(rawString, fileId) is a helper function to call separateQuestion from Parse.js
+     * separateQuestion(rawString) will parse the raw string to a JSON parameter which contains quizzes and slides.
+     * data = {
+     *     fileId : fileId,
+     *     quiz : [],
+     *     slidesString : []
+     * }
+     * which will be set to localStorage in browser, which will be used in PresenterPage.js
+     * @param rawString
+     * @param fileId
      */
     callSeparateQuestion =()=>{
         var data = separateQuestion(this.state.rawString, this.state.fileId);
@@ -164,7 +188,9 @@ class MyUpload extends React.Component{
         this.getMarpit();
     }
 
-    // Marpit for download
+    /**
+     *  call marpitConvert in Marpit.js for downloading static HTML
+      */
     getMarpit=()=>{
         const marpitResult = marpitConvert(this.state.rawString)
         this.setState({
@@ -172,6 +198,10 @@ class MyUpload extends React.Component{
         })
     }
 
+    /**
+     * startSharing(fileId) is a function for presenter to open the sharing permission.
+     * @param fileId
+     */
     startSharing=()=>{
         const formData = new FormData();
         formData.append('fileId', this.state.fileId);
@@ -181,6 +211,10 @@ class MyUpload extends React.Component{
             .catch(()=> message.error('error'));
     }
 
+    /**
+     * stopSharing(fileId) is a function for presenter to stop sharing.
+     * @param fileId
+     */
     stopSharing=()=>{
         const formData = new FormData();
         formData.append('fileId', this.state.fileId);
@@ -190,12 +224,19 @@ class MyUpload extends React.Component{
             .catch(()=> message.error('error'));
     }
 
+    /**
+     * Show or hide the button depending on whether there's a file uploaded or not.
+     * @param status
+     */
     display_name (status) {
         this.setState({
             display_name:status
         })
     };
-    
+
+    /**
+     * Clear localStorage in browser when logout.
+     */
     handleLogOut(){
         localStorage.setItem("username",null)
         localStorage.setItem("instructorId",0)
@@ -204,8 +245,9 @@ class MyUpload extends React.Component{
         window.location = "/login"
     }
 
-
-
+    /**
+     * return rendered UploadPage
+     */
     render(){
         const username = localStorage.getItem("username")?localStorage.getItem("username"):"";
 

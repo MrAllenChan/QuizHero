@@ -1,10 +1,11 @@
+/**
+ * The page HomePage is the first page when visiting QuizHero. The user choose to be a presenter or a student here.
+ */
+
 import React , { Component } from  'react';
 import {Button, Icon} from 'antd';
 import logo from '../fig/logo.png';
 import template from "../components/template";
-/**
- * The page HomePage is the first page when visiting QuizHero. The user choose to be a presenter or a student here.
- */
 
 class FirstPage extends Component {
 

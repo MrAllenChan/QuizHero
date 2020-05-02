@@ -4,7 +4,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransitionGroup } from 'react-transition-group';
-import BackButton from './Button'
+import BackButton from './quiz_components/Button'
 
 /**
  * The ResultStudent function is to inform students that the quiz has been finished
@@ -25,7 +25,6 @@ function ResultStudent(props) {
                 transitionAppearTimeout={500}
             >
                 <div>
-                    {/* Thank you for taking the quiz, your score is <strong>{props.quizResult}</strong>! */}
                     Thank you for finishing the quiz, please go back to the slides.
                 </div>
             </CSSTransitionGroup>

@@ -4,7 +4,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Upload, message, Button, Icon } from 'antd';
-import defaultTheme from '../theme/default-theme';
+import defaultTheme from './spectacle_theme/default-theme';
 import { Box, Deck, FlexBox, FullScreen, Markdown, Progress, Slide, Heading, Notes, CodePane} from '../lib_presenter';
 
 /**
