@@ -3,6 +3,15 @@ package model;
 import java.util.List;
 import java.util.Objects;
 
+
+/**
+ * Instructor class is used to manage the attributes of the instructor objects including
+ * instructor id, the instructor's name, the instructor's email as his/her login
+ * account and the password he is used to login
+ *
+ * @author Ziming Chen, Nanxi Ye, Chenghao Sun
+ * @version 1.0
+ */
 public class Instructor {
     private Integer instructorId;
     private String name;
