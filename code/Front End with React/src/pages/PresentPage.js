@@ -1,3 +1,7 @@
+/**
+ * PresentPage renders presenter's version of slides and quizzes.
+ */
+
 import React, { Component } from 'react';
 import Quiz from '../components/Quiz';
 import ResultPresenter from '../components/ResultPresenter';
@@ -5,9 +9,7 @@ import axios from 'axios'
 import {Button, Icon, message} from "antd";
 import Slides from "../components/SpectaclePresenter";
 import {BASE_URL} from "../config/config"
-/**
- * PresentPage renders presenter's version of slides and quizzes.
- */
+
 class PresentPage extends Component {
     constructor(props) {
         super(props);
@@ -37,10 +39,10 @@ class PresentPage extends Component {
         });
     }
 
+    /**
+     * check whether it is the last question after selecting an answer.
+     */
     handleAnswerSelected(event) {
-        /**
-         * check whether it is the last question after selecting an answer.
-         */
         console.log(event.currentTarget.value);
         if (this.state.questionId < this.state.quizQuestions.length) {
             setTimeout(() => this.setNextQuestion(), 300);
@@ -49,10 +51,10 @@ class PresentPage extends Component {
         }
     }
 
+    /**
+     * set parameters to be the next question.
+     */
     setNextQuestion() {
-        /**
-         * set parameters to be the next question.
-         */
         const counter = this.state.counter + 1;
         const questionId = this.state.questionId + 1;
         const questionCounter = this.state.questionCounter + 1;
@@ -72,10 +74,10 @@ class PresentPage extends Component {
         });
     }
 
+    /**
+     * Render the quiz page
+     */
     renderQuiz() {
-        /**
-         * Render the quiz page
-         */
         return (
             <div>
                 <Quiz
@@ -96,10 +98,10 @@ class PresentPage extends Component {
         );
     }
 
+    /**
+     * This function sends a post request to backend to set quizpermission to true so that students can do the quiz.
+     */
     startQuiz=()=>{
-        /**
-         * This function sends a post request to backend to set quizpermission to true so that students can do the quiz.
-         */
         const formData = new FormData();
         formData.append('fileId', this.state.fileId);
         formData.append('permission', true);
@@ -108,10 +110,10 @@ class PresentPage extends Component {
             .catch(()=> message.error('error'));
     }
 
+    /**
+     * This function sends a post request to backend to set quizpermission to false so that students are not allowed to do the quiz.
+     */
     stopQuiz=()=>{
-        /**
-         * This function sends a post request to backend to set quizpermission to false so that students are not allowed to do the quiz.
-         */
         const formData = new FormData();
         formData.append('fileId', this.state.fileId);
         formData.append('permission', false);
@@ -120,10 +122,10 @@ class PresentPage extends Component {
             .catch(()=> message.error('error'));
     }
 
+    /**
+     * This function initializes params needed for quiz page berore rendering it.
+     */
     toQuizCallback = (quizBlockNumber) => {
-        /**
-         * This function initializes params needed for quiz page berore rendering it.
-         */
         this.startQuiz();
         console.log(quizBlockNumber)
         const quizQuestions = this.state.quizList[quizBlockNumber];

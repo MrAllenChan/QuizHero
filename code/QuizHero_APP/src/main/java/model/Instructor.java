@@ -5,19 +5,18 @@ import java.util.Objects;
 
 
 /**
- * Instructor class is used to manage the attributes of the instructor objects including
- * instructor id, the instructor's name, the instructor's email as his/her login
- * account and the password he is used to login
+ * Instructor class is the data model of an Instructor. Each object of Instructor class
+ * stores relevant data of a single instructor such as instructor id
+ * instructor's name, instructor's email and password
  *
  * @author Ziming Chen, Nanxi Ye, Chenghao Sun
  * @version 1.0
  */
 public class Instructor {
-    private Integer instructorId;
-    private String name;
-    private String email;
-    private String pswd;
-
+    private Integer instructorId; // unique id of instructor
+    private String name; // name of instructor
+    private String email; // email of instructor
+    private String pswd; // password of instructor
 
     /**
      * This method is the constructor of the class
@@ -43,7 +42,7 @@ public class Instructor {
 
     /**
      * This method is used to get the private variable value
-     * named instructorId
+     * @return named instructorId
      */
     public Integer getInstructorId() {
         return instructorId;
@@ -52,7 +51,7 @@ public class Instructor {
 
     /**
      * This method is used to get the private variable value
-     * named name
+     * @return named name
      */
     public String getName() {
         return name;
@@ -61,7 +60,7 @@ public class Instructor {
 
     /**
      * This method is used to get the private variable value
-     * named email
+     * @return named email
      */
     public String getEmail() {
         return email;
@@ -70,7 +69,7 @@ public class Instructor {
 
     /**
      * This method is used to get the private variable value
-     * named pswd
+     * @return named pswd
      */
     public String getPswd() {
         return pswd;

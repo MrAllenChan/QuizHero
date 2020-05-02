@@ -4,9 +4,9 @@ import java.util.Objects;
 
 
 /**
- * Record class is used to manage the attributes of the record objects including the
- * correct answer to the corresponding question id, the question id and the id of the
- * file that contains the question.
+ * Record class is the data model of a Record. Each object of Record class
+ * corresponds to a single record and stores relevant data of a record,
+ * including the corresponding file id, question id and the choice made by a student.
  *
  * @author Ziming Chen, Nanxi Ye, Chenghao Sun
  * @version 1.0
@@ -32,7 +32,7 @@ public class Record {
 
     /**
      * This method is used to get the private variable value
-     * named fileId
+     * @return named fileId
      */
     public String getFileId() {
         return fileId;
@@ -40,7 +40,7 @@ public class Record {
 
     /**
      * This method is used to get the private variable value
-     * named questionId
+     * @return named questionId
      */
     public int getQuestionId() {
         return questionId;
@@ -48,7 +48,7 @@ public class Record {
 
     /**
      * This method is used to get the private variable value
-     * named choice
+     * @return named choice
      */
     public char getChoice() {
         return choice;

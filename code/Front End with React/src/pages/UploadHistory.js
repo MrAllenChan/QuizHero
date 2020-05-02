@@ -191,9 +191,6 @@ class UploadHistory extends React.Component {
         window.location = "/login"
     }
 
-    /**
-     * return rendered UploadHistory page. Use <List.Item/> to show the list of uploaded files.
-     */
     render() {
         const { fileList } = this.state;
 
