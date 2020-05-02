@@ -202,7 +202,7 @@ class UploadHistory extends React.Component {
         const logOutBtnStyle = {
             background: "none",
             border: "none",
-            paddingLeft: "5px",
+            paddingLeft: "7px",
             color: "#1890FF",
             textDecoration: "underline",
             cursor: "pointer"
@@ -210,7 +210,7 @@ class UploadHistory extends React.Component {
 
         return (
             <div className="App">
-                <Header style={{height: 0, padding: 0, position: 'fixed', zIndex: 1, width: '100%' }}>
+                <Header style={{height: 50, padding: 0, position: 'fixed', zIndex: 1, width: '100%' }}>
                     <div className="logo" />
                     <Menu theme="white" mode="horizontal" defaultSelectedKeys={['2']}>
 
@@ -221,7 +221,7 @@ class UploadHistory extends React.Component {
                             <Link to={'/history'}>History</Link>
                         </Menu.Item>
 
-                        <div style={{display:"inline-block",float:"right",paddingRight:"30px"}}>
+                        <div style={{display:"inline-block",float:"right",paddingRight:"60px"}}>
                             Welcome, {username}
                             <button onClick={this.handleLogOut} style={logOutBtnStyle}>Log Out</button>
                         </div>

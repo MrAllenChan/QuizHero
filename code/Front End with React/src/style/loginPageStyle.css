@@ -3,21 +3,24 @@
 }
 
   .login-page-container{
+    background-color: #ffffff !important;
     text-align: center;
-    margin-top: 12vh;
+    min-height: 100vh;
+    margin-top: 3vh;
   }
 
   .login-form{
-    width:400px;
+    width:  400px;
     height: 400px;
     margin: 0 auto !important;
   }
-.login-form-button {
-  width: 400px;
-  margin-top: 80px;
-  background-color: #00A9F4 !important;
-  border-color: #00A9F4 !important;
-  }
+
+  .login-form-button {
+    width: 400px;
+    margin-top: 80px;
+    background-color: #00A9F4 !important;
+    border-color: #00A9F4 !important;
+    }
 
   .register-button-real{
     width: 400px;

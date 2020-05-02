@@ -254,7 +254,7 @@ class MyUpload extends React.Component{
         const logOutBtnStyle = {
                 background: "none",
                 border: "none",
-                paddingLeft: "5px",
+                paddingLeft: "7px",
                 color: "#1890FF",
                 textDecoration: "underline",
                 cursor: "pointer"
@@ -275,7 +275,7 @@ class MyUpload extends React.Component{
                             <Link to={'/history'}>History</Link>
                         </Menu.Item>
                         
-                        <div style={{display:"inline-block",float:"right",paddingRight:"30px"}}>
+                        <div style={{display:"inline-block",float:"right",paddingRight:"60px"}}>
                              Welcome, {username}
                              <button onClick={this.handleLogOut} style={logOutBtnStyle}>Log Out</button>
                         </div>
