@@ -1,3 +1,7 @@
+/**
+ * StudentPage renders presenter's version of slides and quizzes.
+ */
+
 import React, { Component } from 'react';
 import Quiz from '../components/Quiz';
 import ResultStudent from '../components/ResultStudent';
@@ -5,9 +9,7 @@ import axios from 'axios'
 import Slides from "../components/SpectacleStudent";
 import {BASE_URL} from "../config/config"
 import {message} from "antd";
-/**
- * StudentPage renders presenter's version of slides and quizzes.
- */
+
 class StudentPage extends Component {
     constructor(props) {
         super(props);
@@ -35,10 +37,10 @@ class StudentPage extends Component {
         });
     }
 
+    /**
+     * check whether it is the last question after selecting an answer.
+     */
     handleAnswerSelected(event) {
-        /**
-         * check whether it is the last question after selecting an answer.
-         */
         this.setUserAnswer(event.currentTarget.value);
         console.log(event.currentTarget.value);
         if (this.state.questionId < this.state.quizQuestions.length) {
@@ -48,10 +50,10 @@ class StudentPage extends Component {
         }
     }
 
+    /**
+     * Send the chosen answer to the server.
+     */
     setUserAnswer(answer) {
-        /**
-         * Send the chosen answer to the server.
-         */
         var answerArray = answer.split(" ");
         var type = answerArray[0];
         var questionCounter = answerArray[1];
@@ -75,10 +77,10 @@ class StudentPage extends Component {
             });
     }
 
+    /**
+     * set parameters to be the next question.
+     */
     setNextQuestion() {
-        /**
-         * set parameters to be the next question.
-         */
         const counter = this.state.counter + 1;
         const questionId = this.state.questionId + 1;
         const questionCounter = this.state.questionCounter + 1;
@@ -99,10 +101,10 @@ class StudentPage extends Component {
         });
     }
 
+    /**
+     * Render the quiz page
+     */
     renderQuiz() {
-        /**
-         * Render the quiz page
-         */
         return (
             <Quiz
                 answer={this.state.answer}
@@ -121,10 +123,10 @@ class StudentPage extends Component {
         return <ResultStudent toSlidesCallback={this.toSlidesCallback} />;
     }
 
+    /**
+     * This function sends a get request to backend to check whether students can do the quiz.
+     */
     checkQuizPermission = (quizBlockNumber) => {
-        /**
-         * This function sends a get request to backend to check whether students can do the quiz.
-         */
         let params = {
             fileId: this.state.fileId
         }
@@ -141,10 +143,10 @@ class StudentPage extends Component {
             })
     }
 
+    /**
+     * This function initializes params needed for quiz page berore rendering it.
+     */
     toQuizCallback = (quizBlockNumber) => {
-        /**
-         * This function initializes params needed for quiz page berore rendering it.
-         */
         console.log(quizBlockNumber)
         if (this.state.quizpermission === true){
             message.success(`Start quiz for presentation ${this.state.fileId}.`)
