@@ -45,7 +45,7 @@ Here we list some major challenges we met, and how we finally overcame them.
 ### If We could Go Back?
 As we said above, there were many difficulties when we at the beginning of our project. So if we could go back to the very start of this project, we would make some improvements:
 
-* Do sufficient research to collect information we need. We developed front-end and back-end in different frameworks at the beginning, thinking that we can easily combine them later. But we found out this is not the right way to do this after wasting some time. This will not happen in the next project!
+* Do sufficient research to collect information we need. We developed front-end and back-end in different frameworks -- Spark and React, which are not easy to be combined at the beginning. Later we had to change to Javalin as our back-end framework so that both parts can work together. It wasted lots of works and time. This will not happen in the next project!
 * We didn't use some feature in GitHub, for example, branches until instructors asked to do so. All the team members worked in the master branch so we can easily conflict with each other in the repository. After using branches, we worked on our own branches and merged with master branch if needed, which makes the development more smoothly.
 
 ### Looking Ahead

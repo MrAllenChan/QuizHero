@@ -4,6 +4,15 @@ import java.io.InputStream;
 import java.util.Objects;
 import java.util.UUID;
 
+
+/**
+ * File class is used to manage the attributes of the file objects including
+ * file id, file name, file permission, quiz permission , file content and
+ * the corresponding instructor id who owns the file.
+ *
+ * @author Ziming Chen, Nanxi Ye, Chenghao Sun
+ * @version 1.0
+ */
 public class File {
     private int instructorId;
     private String fileId;

@@ -182,13 +182,13 @@ Notes: Presenter mode is so cool.
 
 ## How is QuizHero Built?
 
-- [React](): The front-end is based on React framework
-- [Spectacle](): Convert raw markdown content to dynamic slide decks.
-- [Javalin](): Application server for creating REST API
-- [PostgreSQL](): Relational Database Management System (RDBMS). 
-- [Gradle](): Automation build system
-- [Postman](): Test API server
-- [JUnit](): Unit testing framework
+- [React](https://github.com/facebook/react/): The front-end is based on React framework
+- [Spectacle](https://github.com/FormidableLabs/spectacle): Convert raw markdown content to dynamic slide decks.
+- [Javalin](https://javalin.io/): Application server for creating REST API
+- [PostgreSQL](https://www.postgresql.org/): Relational Database Management System (RDBMS). 
+- [Gradle](https://gradle.org/): Automation build system
+- [Postman](https://www.postman.com/): Test API server
+- [JUnit](https://junit.org/junit5/): Unit testing framework
 
 ## Acknowledgements
 
