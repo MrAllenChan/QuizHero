@@ -18,15 +18,23 @@ import PublicRoute from "./PublicRoute"
 
 const history = createBrowserHistory();
 
+/**
+ * Map the state from reducer to the props of the component
+ * to get the data from the store
+ *
+ * @param {object}  state from reducer
+ */
 const mapStateToProps = state =>{
   return{
     instructorId: state.setUserName.instructorId
   }
 }
 
+/**
+ * Frontend Router Component
+ *
+ */
 class AppRouter extends Component {
-
-
   render() {
     const {instructorId} = this.props;
     return (
@@ -42,37 +50,6 @@ class AppRouter extends Component {
           <PrivateRoute component={UploadHistory} path="/history" exact />
       </Switch>
       </Router>
-
-
-        // <Route>
-        //   <GuardProvider>
-        //     <GuardedRoute path="/" exact render={() => <Redirect to="/FirstPage" />} />
-        //     <GuardedRoute
-        //       path="/login"
-        //       component={LoginPage}
-        //     ></GuardedRoute>
-        //     <GuardedRoute
-        //       path="/register"
-        //       component={RegisterPage}
-        //     ></GuardedRoute>
-        //     <GuardedRoute
-        //         path="/FirstPage"
-        //         exact
-        //         component={FirstPage}
-        //     ></GuardedRoute>
-        //     <GuardedRoute path="/StudentRequestPage" exact component={StudentRequestPage} />
-        //     {/* <GuardProvider guards={[requireLogin]}> */}
-        //     <GuardProvider>
-        //       <GuardedRoute path="/HomePage" component={MyUpload} />
-        //       <GuardedRoute path="/presenter" component={PresentPage}/>
-        //       <GuardedRoute path="/student" component={StudentPage}/>
-        //       <GuardedRoute path="/history" component={UploadHistory}/>
-            // </GuardProvider>
-            // {/* <Route path="/" exact render={() => <Redirect to="/HomePage" />} /> */}
-            // {/* <Route path="/RecordPersonTable" component={RecordPersonTable} />
-            // <Route path="/AttendanceTable" component={AttendanceTable} /> */}
-        //   </GuardProvider>
-        // </Route>
      
     );
   }

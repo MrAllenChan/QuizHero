@@ -5,63 +5,91 @@ import { connect } from "react-redux";
 import "../style/loginPageStyle.css";
 import { BASE_URL } from "../config/config";
 import logo from "../fig/logo.png";
-import axios from "axios"
+import axios from "axios";
 
-const mapStateToProps = (state) => {};
-const mapDispatchToProps = (dispatch) => {};
-
+/**
+ * Page for user registration
+ *
+ * @param {object} props Component props
+ */
 class RegisterPage extends Component {
   onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
 
+  /**
+   * Form button listener, triggered when the register form is submitted
+   * by the button
+   *
+   * @param {object} event
+   */
   handleSubmit = (err, values) => {
-    let username = this.props.form.getFieldValue('username')?this.props.form.getFieldValue('username'):null
-    let email = this.props.form.getFieldValue('email')?this.props.form.getFieldValue('email'):null
-    let password = this.props.form.getFieldValue('password')?this.props.form.getFieldValue('password'):null
+    let username = this.props.form.getFieldValue("username")
+      ? this.props.form.getFieldValue("username")
+      : null;
+    let email = this.props.form.getFieldValue("email")
+      ? this.props.form.getFieldValue("email")
+      : null;
+    let password = this.props.form.getFieldValue("password")
+      ? this.props.form.getFieldValue("password")
+      : null;
 
-    if(email === null || password === null || username === null){
-      message.error("All fields must be filled")
+    if (email === null || password === null || username === null) {
+      message.error("All fields must be filled");
       return;
     }
-    var regEmail = new RegExp('(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])');
-    if(!regEmail.test(email)){
-      message.error("Please enter email in correct format!")
+    var regEmail = new RegExp(
+      "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])"
+    );
+    if (!regEmail.test(email)) {
+      message.error("Please enter email in correct format!");
       return;
     }
 
-    if (password.length < 6){
-      message.error("Password must be at least 6 characters!")
+    if (password.length < 6) {
+      message.error("Password must be at least 6 characters!");
       return;
     }
 
     let params = {
       name: username,
-      email:email,
-      pswd : password
-    }
+      email: email,
+      pswd: password,
+    };
 
-    axios.post(BASE_URL+"/register",params).then(res=>{
-        console.log(res.status)
-        if(res.status === 201){
-          message.loading("Register success, directing you to HomePage",[2],onclose=()=>{
-            console.log(res)
-            // this.props.login(res.data.name, res.data.instructorId);
-            localStorage.setItem("instructorId", res.data.instructorId)
-            localStorage.setItem("username", res.data.name)
-            localStorage.setItem("isLogin", 1)
-            window.location = "/HomePage"
-          });
-
+    axios
+      .post(BASE_URL + "/register", params)
+      .then((res) => {
+        console.log(res.status);
+        if (res.status === 201) {
+          message.loading(
+            "Register success, directing you to HomePage",
+            [2],
+            (onclose = () => {
+              console.log(res);
+              // this.props.login(res.data.name, res.data.instructorId);
+              localStorage.setItem("instructorId", res.data.instructorId);
+              localStorage.setItem("username", res.data.name);
+              localStorage.setItem("isLogin", 1);
+              window.location = "/HomePage";
+            })
+          );
         }
-    }).catch(err=>{
-        console.log(err)
-        message.error("Account already exists. Please use another email address!")
-    })
-  }
+      })
+      .catch((err) => {
+        console.log(err);
+        message.error(
+          "Account already exists. Please use another email address!"
+        );
+      });
+  };
 
-
-
+  /**
+   * Back button listener, triggered when the back button is pressed
+   * The page will be redirect to the login page
+   *
+   * @param {object} event
+   */
   backButtonHandler = () => {
     window.location.replace(BASE_URL + "/login");
   };
@@ -72,8 +100,8 @@ class RegisterPage extends Component {
     const validateMessages = {
       required: ` is required!`,
       types: {
-        email: ` is not validate email!`
-      }
+        email: ` is not validate email!`,
+      },
     };
 
     return (
@@ -112,8 +140,8 @@ class RegisterPage extends Component {
                 message: "Please input your email!",
               },
               {
-                type: 'email',
-                message: "Please use a valid email!"
+                type: "email",
+                message: "Please use a valid email!",
               },
             ]}
           >
@@ -165,4 +193,4 @@ class RegisterPage extends Component {
   }
 }
 
-export default Form.create({ name: "LoginPage" })(connect(mapStateToProps, mapDispatchToProps)(RegisterPage))
+export default Form.create({ name: "LoginPage" })(RegisterPage)
